@@ -21,6 +21,9 @@
     <aside class="article-toc" id="article-toc" aria-label="{{ if eq site.Language.Lang "zh" }}文章目录{{ else }}Table of contents{{ end }}">
       <p class="toc-title">{{ if eq site.Language.Lang "zh" }}目录{{ else }}Contents{{ end }}</p>
       {{ $toc | safeHTML }}
+      <p class="reading-progress" data-reading-progress data-label="{{ if eq site.Language.Lang "zh" }}你在这条路径上走了 %s%{{ else }}You have travelled %s% of this path.{{ end }}">
+        {{ if eq site.Language.Lang "zh" }}你在这条路径上走了 0%{{ else }}You have travelled 0% of this path.{{ end }}
+      </p>
     </aside>
     {{ end }}
   </div>

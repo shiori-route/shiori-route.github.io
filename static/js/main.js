@@ -50,3 +50,24 @@ if(headings.length){
   },{rootMargin:"-15% 0px -70% 0px"});
   headings.forEach(heading=>observer.observe(heading));
 }
+
+const prose=document.querySelector(".article-grid .prose");
+const toc=document.querySelector("#article-toc");
+const progressLabel=toc?.querySelector("[data-reading-progress]");
+if(prose&&toc&&progressLabel){
+  let frame;
+  const updateReadingProgress=()=>{
+    const start=prose.getBoundingClientRect().top+window.scrollY;
+    const finish=Math.max(start+1,start+prose.offsetHeight-window.innerHeight);
+    const percentage=Math.round(Math.min(1,Math.max(0,(window.scrollY-start)/(finish-start)))*100);
+    toc.style.setProperty("--reading-progress",percentage);
+    progressLabel.textContent=progressLabel.dataset.label.replace("%s",percentage);
+    frame=undefined;
+  };
+  const scheduleReadingProgress=()=>{
+    if(frame===undefined)frame=requestAnimationFrame(updateReadingProgress);
+  };
+  updateReadingProgress();
+  window.addEventListener("scroll",scheduleReadingProgress,{passive:true});
+  window.addEventListener("resize",scheduleReadingProgress);
+}

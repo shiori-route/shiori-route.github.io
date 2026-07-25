@@ -413,6 +413,30 @@ footer a:focus-visible {
 
 .prose a {
   padding-bottom: 2px;
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(
+      color-mix(in srgb, currentColor 25%, transparent),
+      color-mix(in srgb, currentColor 25%, transparent)
+    );
+  background-size: 0 1px, 100% 1px;
+}
+
+.prose a:hover,
+.prose a:focus-visible,
+footer a:hover,
+footer a:focus-visible {
+  background-size: 100% 1px, 100% 1px;
+}
+
+footer a {
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(
+      color-mix(in srgb, currentColor 25%, transparent),
+      color-mix(in srgb, currentColor 25%, transparent)
+    );
+  background-size: 0 1px, 100% 1px;
 }
 
 .prose code {
@@ -453,10 +477,24 @@ footer a:focus-visible {
 }
 
 .article-toc nav > ul {
+  position: relative;
   margin: 0;
   padding: 0;
   border-left: 1px solid var(--line);
   list-style: none;
+}
+
+.article-toc nav > ul::before {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: -1px;
+  width: 2px;
+  height: calc(var(--reading-progress, 0) * 1%);
+  max-height: 100%;
+  background: var(--ribbon);
+  content: "";
+  transition: height .12s linear;
 }
 
 .article-toc ul {
@@ -486,6 +524,16 @@ footer a:focus-visible {
 .article-toc li.is-active-branch > a {
   color: var(--ink);
   font-weight: 600;
+}
+
+.reading-progress {
+  margin: 30px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .72rem;
+  font-style: italic;
+  line-height: 1.55;
 }
 
 .not-found { min-height: 72vh; padding: 120px 0; }
