@@ -1,0 +1,496 @@
+{
+  "date": "2026-07-28",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 4,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2607.24260",
+        "version": 1,
+        "title": "KAP: Bridging the Knowledge Selection-Runtime Consumption Gap in LLM Systems",
+        "authors": [
+          "Shuo Wang",
+          "Fang Xi",
+          "Wenyuan Huang",
+          "Qing Wang",
+          "Junming Su"
+        ],
+        "abstract": "Modern LLM systems increasingly rely on knowledge-selection processes that produce high-value structured priors, such as ranked evidence, graph topology, multimodal alignment, and confidence signals. Yet LLM serving remains fundamentally oblivious to this rich structure: once such signals are serialized into a prompt, the backend observes only a flat token sequence, forcing dense and uniform consumption of the full key-value (KV) state during decoding. We term this architectural mismatch the Knowledge Selection-Runtime Consumption (KSRC) gap: richer contexts enlarge the full-prompt KV footprint and decode-time memory traffic, increasing latency and degrading throughput even when reasoning depends on only a small fraction of the context. To bridge the gap, we propose Knowledge Access Planning (KAP), a paradigm-shifting execution abstraction that elevates structured knowledge priors from passive prompt-construction hints into first-class physical execution artifacts. KAP establishes a universal intermediate representation (IR)-the runtime access plan-which compiles structured knowledge signals to govern physical KV access without altering logical prompt semantics, model weights, or training procedures. Through this IR, KAP shifts LLM serving from token-aware context consumption to plan-driven, knowledge-aware runtime consumption. We instantiate KAP with GraphSpec, a compiler-executor realization connecting structured knowledge selection to an LLM serving backend. We derive a phase-boundary model for the positive-speedup regime of plan-guided execution. Across 4K-128K long-context QA workloads, GraphSpec maintains answer quality comparable to full-context decoding while decoupling physical KV consumption from prompt length, reducing proposal-time KV access to 5.5% of source KV state at 128K, and fundamentally shifting the scaling trajectory of long-context generation.",
+        "categories": [
+          "cs.LG"
+        ],
+        "published": "2026-07-27T10:51:38Z",
+        "updated": "2026-07-27T10:51:38Z",
+        "abstract_url": "https://arxiv.org/abs/2607.24260v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.24260v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.24260v1",
+        "relevance_score": 9,
+        "novelty_score": 8,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.81,
+        "priority": "deep_read",
+        "matched_topics": [
+          "knowledge-aware runtime",
+          "LLM serving systems",
+          "communication and computation overlap",
+          "round coalescing",
+          "protocol selection"
+        ],
+        "short_summary_zh": "提出Knowledge Access Planning (KAP)，将结构化知识选择信号编译为运行时访问计划（IR），从而在不改动模型权重或语义的前提下按计划访问KV状态，实例化实现GraphSpec在超长上下文QA上显著减少解码时KV访问量并保持答案质量。",
+        "short_summary_en": "Proposes Knowledge Access Planning (KAP), an IR-driven paradigm that compiles structured knowledge priors into runtime access plans to govern KV access during LLM serving without changing model weights; GraphSpec instantiation reduces decode-time KV access massively while preserving answer quality on long-context QA workloads.",
+        "why_interesting_zh": "直接切中‘网络/运行时-aware消耗’问题：把选择信号提升为物理执行控制能显著减少KV传输/内存访问，这对受通信带宽或加密开销约束的安全LLM推理非常有价值。",
+        "why_interesting_en": "Directly addresses runtime consumption inefficiencies by compiling knowledge-selection structure into physical access plans; this can substantially reduce KV I/O and thus is highly relevant for bandwidth- or crypto-constrained secure LLM inference and MPC runtimes.",
+        "relation_to_my_work_zh": "高度相关：KAP对减少解码阶段的KV访问、降低编码化/加密传输代价、并支持计划驱动的调度/协议选择都可直接迁移到安全LLM或MPC推理平台。",
+        "relation_to_my_work_en": "Highly relevant. KAP's plan-driven KV access could be applied to secure LLM inference stacks (MPC/HE) to reduce encrypted KV transfer, reduce rounds, and enable dependency-aware scheduling and protocol selection at decode time.",
+        "possible_transfer_zh": "可将IR与MPC运行时结合以：1) 编译出只需访问最小KV子集的加密访问计划；2) 按计划合并/重排通信轮次以减少轮次与WAN延迟；3) 用作协议选择器（不同分块使用不同保密协议）。",
+        "possible_transfer_en": "Potential transfers: 1) compile plans that specify minimal encrypted KV accesses to cut ciphertext traffic; 2) coalesce/reorder planned accesses to reduce communication rounds and WAN latency; 3) drive adaptive protocol selection per access block (e.g., use faster secret-sharing for hot items).",
+        "possible_overlap_or_conflict_zh": "需验证计划生成是否始终不改变语义与模型输出置信度；跨安全边界的计划执行需考虑信息泄露风险。",
+        "possible_overlap_or_conflict_en": "Must verify that compiled plans preserve prompt semantics and do not leak selection patterns; executing plans under cryptographic protocols may introduce side-channels if access patterns correlate with secret data.",
+        "questions_to_verify_zh": [
+          "GraphSpec如何从选择信号生成访问计划（编译器算法与成本模型细节）？",
+          "计划驱动执行在加密/秘密共享环境下如何实现而不泄露访问模式？",
+          "在实际WAN与受限CPU的MPC节点上，端到端延迟/吞吐改善有无实测？"
+        ],
+        "questions_to_verify_en": [
+          "How does GraphSpec compile structured selection signals into access plans (compiler algorithm and cost model details)?",
+          "How can plan-driven execution be implemented under encryption/secret-sharing without leaking access patterns?",
+          "Are there end-to-end measurements of latency/throughput improvements in real WAN and constrained-MPC-node deployments?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2607.24260v1",
+        "research_problem_zh": "当结构化知识（排序证据、图拓扑、多模态对齐、置信度等）被序列化进提示后，LLM 运行时只能看到平坦的 token 序列，导致解码阶段必须密集且均匀地消费整个 key-value (KV) 状态；这在长上下文场景下放大了内存/带宽开销与延迟，尽管推理可能只依赖上下文的一小部分——即作者所称的“知识选择-运行时消费（KSRC）差距”。",
+        "research_problem_en": "LLM serving backends observe only a flat token sequence once structured knowledge priors are serialized into prompts. This forces dense, uniform KV-state consumption during decoding, inflating memory/traffic and latency for long contexts even when only a small subset of the context is relevant—the Knowledge Selection-Runtime Consumption (KSRC) gap.",
+        "core_method_zh": "提出 Knowledge Access Planning (KAP)：把结构化知识先验提升为一等运行时执行工件（runtime access plan）——一种通用中间表示（IR），在不改变提示语义或模型权重的前提下，编译结构化知识信号以指导物理 KV 访问。作者给出了 GraphSpec 作为编译器-执行器实现，并建立了一个相位边界模型来刻画何时能获得加速。",
+        "core_method_en": "Introduce Knowledge Access Planning (KAP): elevate structured knowledge priors into first-class runtime artifacts (a runtime access plan IR) that govern physical KV access without altering prompt semantics or model weights. They instantiate KAP with GraphSpec (a compiler-executor) and derive a phase-boundary model characterizing the positive-speedup regime.",
+        "contributions_zh": [
+          "定义并形式化 KSRC 差距（Knowledge Selection-Runtime Consumption gap）的概念。",
+          "提出 KAP 抽象与一个通用中间表示（runtime access plan），把知识选择结果映射到物理 KV 访问策略。",
+          "实现 GraphSpec：将编译器与执行器连接以在长上下文 QA 工作负载中按计划访问 KV，显著降低解码时的 KV 访问量。",
+          "通过相位边界模型分析何种条件下计划驱动执行能带来正向加速。"
+        ],
+        "contributions_en": [
+          "Formulate the KSRC (Knowledge Selection–Runtime Consumption) gap.",
+          "Propose KAP and a runtime access plan IR to control physical KV access based on structured priors.",
+          "Implement GraphSpec (compiler–executor) to decouple physical KV consumption from prompt length across long-context QA workloads.",
+          "Derive a phase-boundary model for when plan-guided execution yields speedup."
+        ],
+        "why_watch_zh": "若你在研究隐私保护的长上下文推理或 MPC 下的 LLM 推理运行时，KAP 的“把高层选择信息编译为物理访问计划”的思想可能直接转化为减少通信与交互轮次、选择性访问加密/共享数据的机制，从而对 WAN 延迟和轮次复杂度有直接启发。",
+        "why_watch_en": "If you work on privacy-preserving or MPC-backed LLM inference, KAP’s idea of compiling high-level knowledge selection into concrete runtime access plans could inspire mechanisms to reduce communication/rounds and selectively access encrypted/shared KV state—relevant for WAN latency and round-complexity optimization.",
+        "direct_relation_zh": "与“LLM 推理”、“网络感知运行时”、“管线化执行”、“依赖感知调度”和“减少解码时 KV 访问/通信”直接相关；对“安全多方计算/隐私保护推理”（间接）有可迁移启发，尤其是在如何把逻辑选择转为物理访问策略以降低通信成本上。",
+        "direct_relation_en": "Directly relates to LLM serving, network-aware runtimes, pipeline execution, dependency-aware scheduling, and reducing KV-access/communication during decoding; offers transferable insights to secure MPC/PP inference on how to transform logical selection into physical access policies to cut communication.",
+        "transferable_mechanisms_zh": [
+          "把高层选择信号编译为运行时访问计划（IR）—可用于决定何时/如何请求加密/共享数据以减少轮次。",
+          "按需求解耦物理数据访问与逻辑上下文长度—可用于 MPC 中选择性解密或按需开销分配。",
+          "相位边界性能模型—可用于预估计划驱动执行在不同延迟/带宽下的收益边界。",
+          "GraphSpec 的编译器-执行器分离思想—方便在现有 MPC 运行时插入访问策略层。"
+        ],
+        "transferable_mechanisms_en": [
+          "Compiling high-level selection signals into a runtime access plan IR—could govern when/how to fetch encrypted/shared data to reduce rounds.",
+          "Decoupling physical data access from logical context length—helps selective reveal or on-demand computation in MPC.",
+          "Phase-boundary performance model—to predict when plan-driven execution yields net gains under varying latency/bandwidth.",
+          "Compiler–executor separation (GraphSpec)—eases inserting an access-planning layer into existing MPC runtimes."
+        ],
+        "potential_overlap_zh": "与 MPC/隐私推理工作在“减少数据搬移、按需访问大状态（KV）”方面的优化目标高度重合；与“运行时调度/批处理/延迟隐藏”研究共享技术诉求。",
+        "potential_overlap_en": "High overlap with MPC/PP inference goals of reducing data movement and on-demand access to large KV-states; shares techniques with runtime scheduling, batching and latency-hiding research.",
+        "potential_conflict_zh": "抽象强调保持逻辑语义不变但改变物理访问：这可能在安全/隐私上下文中引入访问模式侧信道（access-pattern leakage）。基于摘要分析无法判断作者是否讨论或缓解此类泄露风险——需在全文验证。",
+        "potential_conflict_en": "Shifting physical access while preserving logical semantics may introduce access-pattern side channels relevant to security/privilege contexts. The abstract does not indicate whether such leakage is analyzed or mitigated—requires full-text verification.",
+        "full_text_questions_zh": [
+          "runtime access plan（IR）的格式、语义与表述能力如何？是否是可分发/可证明不改变语义的？",
+          "GraphSpec 如何映射高层选择（例如证据排序、图拓扑）到具体的 KV 访问操作？有没有形式化保证？",
+          "在何种条件下相位边界模型成立？对网络延迟/带宽/并行度的假设是什么？",
+          "作者是否评估了访问计划带来的访问模式泄露或侧信道风险？",
+          "实现细节：是否有开源实现、可复现的基准、以及与现有 LLM 服务（或加密/安全后端）的集成示例？"
+        ],
+        "full_text_questions_en": [
+          "What is the runtime access plan IR format, semantics, and expressive power? Is it distributable/provably semantics-preserving?",
+          "How does GraphSpec map high-level selections (ranked evidence, graph topology) into concrete KV access operations? Are there formal guarantees?",
+          "Under what assumptions does the phase-boundary model hold? What are latency/bandwidth/parallelism assumptions?",
+          "Do the authors analyze or mitigate access-pattern side-channel leakage introduced by selective access plans?",
+          "Implementation: is there open-source code, reproducible benchmarks, and examples of integration with secure/backed LLM runtimes?"
+        ],
+        "experiment_checks_zh": [
+          "比较基线：与完整上下文解码、基于启发的检索-拼接策略和逐段/分块解码的吞吐/延迟/质量比较。",
+          "质量保持检验：在长文档 QA 上逐条比对答案一致性、置信度和回退情形（当计划遗漏关键信息时）。",
+          "端到端延迟/带宽消耗：测量 KV 访问次数、网络字节数和解码延迟在不同上下文长度下的剖面。",
+          "安全性评估：对访问模式泄露做定量测试（例如通过访问序列预测原始上下文的风险）。",
+          "消耗-收益边界：验证相位边界模型预测与实际测量是否匹配，覆盖不同网络条件（LAN/WAN）和并行度。"
+        ],
+        "experiment_checks_en": [
+          "Baselines: compare against full-context decoding, heuristic retrieval/concatenation, and chunked decoding for throughput/latency/quality.",
+          "Quality preservation: per-instance answer consistency, confidence, and failure modes when plans omit relevant context.",
+          "End-to-end profile: KV access counts, network bytes, and decode latency across context lengths.",
+          "Security tests: quantify access-pattern leakage risk (e.g., can access sequences be used to infer sensitive context?).",
+          "Cost–benefit boundary: validate phase-boundary model against measurements under varied network conditions (LAN vs WAN) and parallelism."
+        ],
+        "tracking_targets": [
+          "是否开源 GraphSpec 实现与运行时 API（GitHub/工件链接）",
+          "论文补充材料：相位边界模型的推导与参数化假设",
+          "实验基准与数据集（4K–128K 长上下文 QA 数据）与复现脚本",
+          "是否讨论或提供针对访问模式泄露的缓解措施",
+          "后续工作/被引用情况（是否有将此想法应用于安全/加密后端的衍生工作）"
+        ],
+        "next_steps_zh": [
+          "阅读全文验证 IR 细节与访问-语义不变性证明（或经验验证）；重点看是否讨论访问模式泄露。",
+          "如果有开源实现，尝试在受控环境下把计划层插入现有 MPC/加密推理管线，测量轮次与字节数变化。",
+          "借鉴相位边界模型为自己的 MPC 运行时构建收益预估器并进行小规模仿真。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to inspect the IR, semantics-preservation arguments, and any access-pattern leakage analysis.",
+          "If code is available, attempt to integrate a plan layer into an MPC/encrypted inference pipeline and measure rounds/bytes.",
+          "Adapt the phase-boundary model to build a payoff estimator for your MPC runtime and run small-scale simulations."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.24162",
+        "version": 1,
+        "title": "Agent-UCT: Upper Confidence Bounds Applied to Trees for Agentic Workflow Optimization with Cost-Awareness",
+        "authors": [
+          "Yang Li",
+          "Hai Liu",
+          "Dian Shao",
+          "Yu Wang",
+          "Xiyu Chen",
+          "Sergey Volkov",
+          "Bozhi Wang",
+          "Ziyu Sun",
+          "Sihang Liu",
+          "Ye Luo",
+          "Xiaowei Zhang"
+        ],
+        "abstract": "Optimizing agentic workflows, such as retrieval-augmented generation (RAG) pipelines, requires navigating a combinatorial space of discrete component choices under tight evaluation budgets. Existing approaches - heuristic search, black-box optimization, and standard tree search methods - do not explicitly exploit the compositional structure of these workflows, leading to redundant computation and inefficient budget allocation. We introduce Agent-UCT (Agent-based Cost-Aware Upper Confidence Bounds Applied to Trees), a tree search algorithm that extends UCT with a reuse-aware regularization term derived from a bipartite prefix reuse graph. Agent-UCT biases selection toward branches that leverage previously materialized configuration prefixes, reducing redundant execution while maintaining effective exploration. Our framework, RAGSpace, unifies heterogeneous RAG components from LongRAG, LightRAG, and Self-RAG into a five-dimensional configuration space, enabling systematic cross-framework recombination. WTB (Workflow Test Bench) provides deterministic replay, content-addressable caching, and transactional consistency, ensuring that intermediate states are materialized once and reused across the search. Experiments on HotpotQA and UltraDomain demonstrate that Agent-UCT identifies configurations with the highest out-of-sample performance among the evaluated fixed framework presets. Under full-pool evaluation, bipartite prefix reuse reduces logical search cost by 73.6% relative to the no-prefix-sharing cost upper bound. Compared with full-pool evaluation, sampling-based evaluation further achieves a 4.2x wall-clock speedup. Agent-UCT, RAGSpace, and WTB together provide a unified framework for cost-aware, reproducible, and compositionally efficient agentic workflow optimization.",
+        "categories": [
+          "cs.AI",
+          "cs.LG"
+        ],
+        "published": "2026-07-27T08:41:18Z",
+        "updated": "2026-07-27T08:41:18Z",
+        "abstract_url": "https://arxiv.org/abs/2607.24162v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.24162v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.24162v1",
+        "relevance_score": 5,
+        "novelty_score": 4,
+        "transferability_score": 5,
+        "systems_score": 5,
+        "confidence": 0.79,
+        "priority": "deep_read",
+        "matched_topics": [
+          "dependency-aware scheduling",
+          "batching",
+          "round coalescing",
+          "pipeline execution",
+          "network-aware runtime",
+          "protocol selection",
+          "communication and computation overlap"
+        ],
+        "short_summary_zh": "基于题目与摘要：引入Agent-UCT，一种将UCB/UCT扩展为考虑前缀重用的树搜索算法，用于在组合化agentic工作流（例如RAG系统）中在有限评估预算下高效搜索配置空间。通过二部前缀重用图构造重用感知正则化，倾向选择能够利用已物化前缀的分支以减少重复执行。配套系统RAGSpace统一多框架组件空间，WTB提供确定性重放、内容寻址缓存与事务一致性以保证中间态只物化一次并可重用。实验显示显著的逻辑搜索成本与墙时加速。",
+        "short_summary_en": "Based on title and abstract: the paper presents Agent-UCT, a reuse-aware UCT variant that adds a regularization term derived from a bipartite prefix-reuse graph to bias tree search toward branches that reuse previously materialized workflow prefixes. The authors package this in RAGSpace (a unified RAG component space) and WTB (deterministic replay, content-addressable caching, transactional consistency) to avoid redundant execution; reported reductions in logical search cost and wall-clock speedups are substantial.",
+        "why_interesting_zh": "高度相关且可能直接可迁移到MPC/DAG调度与运行时：重用感知搜索、内容寻址缓存、确定性重放与事务一致性正是减少WAN轮次/重复通信、批处理与流水线执行所需的要素。",
+        "why_interesting_en": "Highly relevant and immediately transferable to MPC runtimes and compilers: the reuse-aware search, prefix-materialization, content-addressable caching, and deterministic replay mechanisms directly address redundant execution, batching opportunities, and cost-aware configuration search in expensive distributed secure computations.",
+        "relation_to_my_work_zh": "基于题目与摘要：与依赖关系感知调度、批处理与轮次合并的研究高度契合。可作为设计MPC运行时策略搜索、协议选择与缓存机制的参考或基础。强烈建议深入阅读与复现其系统组件（WTB）设计细节。",
+        "relation_to_my_work_en": "Based on title and abstract: directly applicable to dependency-aware DAG scheduling, round coalescing, batching, and protocol-selection problems in MPC runtimes. The ideas around prefix reuse, transactional caching, and deterministic replay could map to materializing intermediate secure computations and reusing them across candidate plans—recommend deep reading.",
+        "possible_transfer_zh": "可迁移项包括：1) 二部前缀重用图用于判别何时合并/重用已计算秘密共享子表达式；2) 内容寻址缓存与确定性重放用于在搜索/编译时避免重复交互；3) 重用感知的搜索正则化可用于协议选型优化，纳入网络/费用模型。",
+        "possible_transfer_en": "Concrete transfers: 1) bipartite prefix-reuse graph to identify reusable secret-shared subexpressions for coalescing rounds; 2) content-addressable caches and deterministic replay to avoid re-executing identical subprotocols during compile/search; 3) reuse-aware regularization in search/optimizer to bias toward low-cost, high-reuse execution plans while incorporating network cost models.",
+        "possible_overlap_or_conflict_zh": "若已存在MPC中类似的中间态物化或重用机制，需比较一致性与安全语义（例如缓存是否泄露信息）。摘要未提及安全策略，需关注机密性相关影响。",
+        "possible_overlap_or_conflict_en": "Possible overlap with prior MPC techniques for caching/materializing intermediate results; crucial to inspect how content-addressable caching and replay affect confidentiality and whether the paper discusses security/consistency trade-offs—abstract does not mention security guarantees.",
+        "questions_to_verify_zh": [
+          "WTB的内容寻址缓存与确定性重放如何处理机密性与访问控制（是否有信息泄露风险）？",
+          "二部前缀重用图的计算成本和规模在大候选空间中如何？是否有近似/增量更新策略？",
+          "实验中是否包含网络模型（WAN延迟/带宽）以及在真实分布式环境中的评测？"
+        ],
+        "questions_to_verify_en": [
+          "How do WTB's content-addressable caches and deterministic replay mechanisms preserve confidentiality and access control (any leakage risks)?",
+          "What are the costs and scalability of constructing/maintaining the bipartite prefix-reuse graph in large candidate spaces—are there approximation/incremental update methods?",
+          "Do experiments account for realistic network models (WAN latency/bandwidth) and include evaluations in distributed deployments?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2607.24162v1",
+        "research_problem_zh": "在由离散组件组合（例如不同检索器、重排序器、生成器等）构成的 agentic 工作流（如 RAG 管线）中，搜索最佳组件配置是一个组合爆炸的问题。现有方法未显式利用工作流的组合/前缀复用结构，导致冗余计算和低效的预算分配。",
+        "research_problem_en": "Optimizing agentic, compositional workflows (e.g., RAG pipelines) requires searching a combinatorial space of discrete component choices under tight evaluation budgets. Existing methods don’t exploit compositional/prefix reuse, causing redundant computation and inefficient budget allocation.",
+        "core_method_zh": "提出 Agent-UCT：在 UCT（Upper Confidence bounds for Trees）上加入基于二分前缀复用图的重用感知正则项，引导搜索偏好利用已物化的配置前缀以减少重复执行；并提供 RAGSpace（统一的五维配置空间）与 WTB（事务性、可重放的缓存与物化系统）来支持可复现且高效的工作流搜索。",
+        "core_method_en": "Introduce Agent-UCT: extend UCT with a reuse-aware regularizer derived from a bipartite prefix-reuse graph to bias selection toward branches that reuse previously materialized configuration prefixes. Provide RAGSpace (a unified configuration space) and WTB (deterministic replay, content-addressable caching, transactional materialization) to enable reproducible, cost-aware workflow search.",
+        "contributions_zh": [
+          "Agent-UCT 算法：在树搜索中引入重用感知选择策略以减少冗余执行。",
+          "构建 RAGSpace：将异构 RAG 组件统一入一个可组合的配置空间，支持跨框架重组。",
+          "实现 WTB：提供确定性重放、内容寻址缓存和事务一致性以确保配置前缀只物化一次并可重用。",
+          "实验显示在 HotpotQA 与 UltraDomain 上通过前缀复用显著降低逻辑搜索成本并取得更佳的离样性能。"
+        ],
+        "contributions_en": [
+          "Agent-UCT algorithm: incorporate reuse-aware selection into tree search to cut redundant executions.",
+          "RAGSpace: unify heterogeneous RAG components into a composable configuration space.",
+          "WTB: deterministic replay, content-addressable caching, and transactional consistency so prefixes are materialized once and reused.",
+          "Empirical results showing large reductions in logical search cost and better out-of-sample configurations on HotpotQA and UltraDomain."
+        ],
+        "why_watch_zh": "对 MPC 编译器/运行时与协议选择问题非常相关：Agent-UCT 的前缀物化与重用思想可直接用于缓存中间加密/预处理状态，降低在搜索不同协议/调度/分解策略时的重复代价；WTB 的事务化缓存理念也有利于安全侯选方案的批量评估与复用。",
+        "why_watch_en": "Highly relevant to MPC compilers and runtime protocol selection: Agent-UCT’s prefix materialization and reuse can be applied to cache intermediate encrypted/preprocessed states, reducing repeated cost when searching protocol/scheduling/design choices. WTB’s transactional caching is useful for batched evaluation of secure candidates.",
+        "direct_relation_zh": "直接相关于“编译器指令/数据流调度”、“依赖感知调度/批处理/重用”、“协议选择”和“性能模型/成本感知的系统搜索”。对“安全多方计算”与“隐私推理”中减少预处理/带宽/轮次有很强的可迁移性。",
+        "direct_relation_en": "Directly relates to compiler instruction/dataflow scheduling, dependency-aware batching/reuse, protocol choice, and cost-aware system search. Strongly transferable to MPC and privacy-preserving inference for reducing preprocessing, bandwidth, and rounds.",
+        "transferable_mechanisms_zh": [
+          "基于前缀重用的成本正则化：在搜索时显式优化物化/重用收益，适配 MPC 的预处理/OT/Beaver 杠杆。",
+          "内容寻址缓存与事务一致性（WTB）：保证中间加密态只物化一次并安全重用，减少重复通信与计算。",
+          "将异构组件嵌入一个统一配置空间（RAGSpace）的建模方法，可用于把不同加密协议/编译策略归一化以便联合搜索。"
+        ],
+        "transferable_mechanisms_en": [
+          "Prefix-reuse cost regularization: explicitly optimize for materialization/reuse gains during search—applicable to MPC preprocessing/OT/Beaver artifacts.",
+          "Content-addressable caching and transactional consistency (WTB): ensure intermediate encrypted states are materialized once and safely reused to cut redundant comm/comp.",
+          "Modeling heterogeneous components in a unified configuration space (RAGSpace): enables joint search over different crypto protocols/compilation strategies."
+        ],
+        "potential_overlap_zh": "与 MPC 优化任务（协议选择、预处理重用、编译器级别的指令重排）目标非常重叠；与在线/自适应系统中成本感知搜索和缓存一致性机制也有交叉。",
+        "potential_overlap_en": "Strong overlap with MPC optimization tasks (protocol choice, preprocessing reuse, instruction reordering in compilers); intersects with cost-aware search and caching consistency in adaptive systems.",
+        "potential_conflict_zh": "WTB 与前缀物化依赖于在服务器端持久化中间结果：在安全/合规环境下，这可能与数据隐私或最小暴露原则冲突。摘要中未说明如何在保密性要求下实现物化与重用（如密文或秘密共享下的安全物化策略）。",
+        "potential_conflict_en": "WTB and prefix materialization rely on persisting intermediate results on the server side; in security-sensitive contexts this may conflict with privacy/minimal-exposure requirements. The abstract does not state how materialization and reuse are performed securely (e.g., under ciphertext or secret-sharing).",
+        "full_text_questions_zh": [
+          "Agent-UCT 中的重用正则项是如何度量与计算的？是否有可调参数或理论界限？",
+          "WTB 中物化前缀的存储格式与一致性语义是什么？是否支持加密/秘密共享下的安全物化？",
+          "RAGSpace 的五维配置是什么？如何将异构组件映射到该空间？",
+          "是否有对比在启发式缓存/简单基线（例如 LRU 或简单内容地址缓存）下的增益？",
+          "实验中评估的真实开销（壁钟时间、I/O、内存）与逻辑搜索成本之间的折衷如何？"
+        ],
+        "full_text_questions_en": [
+          "How is the reuse regularizer in Agent-UCT quantified and computed? Are there tunable parameters or theoretical bounds?",
+          "What are the storage format and consistency semantics for materialized prefixes in WTB? Does it support secure materialization under encryption/secret-sharing?",
+          "What are the five dimensions of RAGSpace and how are heterogeneous components embedded into it?",
+          "Do authors compare against simple caching baselines (LRU, naive content-addressable caches) to show added value?",
+          "How do wall-clock costs (I/O, memory) trade off with logical search cost reductions in experiments?"
+        ],
+        "experiment_checks_zh": [
+          "验证重用带来的真实壁钟加速：测量包括缓存命中率、重复执行次数、I/O 与总时间的端到端指标（而非只报告逻辑执行次数）。",
+          "基线比较：Agent-UCT vs 普通 UCT、启发式搜索、贪心与随机抽样，并在不同缓存容量/存储延迟下重复实验。",
+          "安全/隔离性检查：在需要时评估物化前缀在加密或隔离执行环境下的可行性与额外开销。",
+          "消融实验：去掉重用正则项、不同重用图构建策略与不同配置空间刻画的影响。"
+        ],
+        "experiment_checks_en": [
+          "Validate real wall-clock speedups from reuse: measure cache hit rates, redundant-execution counts, I/O, and total time (not just logical cost).",
+          "Baselines: compare Agent-UCT to plain UCT, heuristic search, greedy, and random sampling across cache sizes/storage latencies.",
+          "Security/isolation checks: evaluate feasibility and overhead of materializing prefixes under encryption or in isolated execution.",
+          "Ablations: remove reuse regularizer, vary reuse-graph construction, and alter configuration-space parametrization."
+        ],
+        "tracking_targets": [
+          "WTB 与 Agent-UCT 的实现与是否开源（重用图、缓存后端实现）",
+          "是否有将 WTB 思想用于加密/共享中间态的后续工作或衍生实现",
+          "RAGSpace 的定义文档与跨框架适配器列表",
+          "实验中报告的缓存命中率、IO/内存消耗与壁钟时间详细数据"
+        ],
+        "next_steps_zh": [
+          "阅读全文关注 WTB 的物化实现与安全模型，判断能否在 MPC 场景下安全地物化中间态。",
+          "借鉴 Agent-UCT 的正则化方法，在为 MPC 协议选择或编译器搜索时引入重用感知的奖励/成本项并做原型对比。",
+          "在小规模基准上实现内容寻址的安全缓存（例如对密文/共享数据的哈希地址）并测试命中/重用收益。"
+        ],
+        "next_steps_en": [
+          "Read the full paper focusing on WTB’s materialization implementation and security model to see applicability to MPC.",
+          "Adapt Agent-UCT’s reuse-regularized search to protocol/compile-space search for MPC and prototype comparisons.",
+          "Implement a content-addressable secure cache (e.g., hashed addresses for ciphertext/secret-shares) on a small benchmark to measure hits/reuse gains."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.24398",
+        "version": 1,
+        "title": "DeepNC: A Fast GNN-based Pre-Verification Surrogate for TSN Configuration",
+        "authors": [
+          "Jiayi Zhu",
+          "Jing Lin",
+          "Zelong Tian",
+          "Feng He",
+          "Luxi Zhao"
+        ],
+        "abstract": "Time-Sensitive Networking (TSN) is critical to deterministic communication in safety-critical domains, with formal verification such as Network Calculus (NC) serving as the cornerstone for schedulability guarantees. However, during automated configuration-space exploration, repeated schedulability analysis consumes over 90% of the total configuration time, becoming the primary bottleneck for large-scale TSN configurations. To address this challenge, we propose DeepNC, a novel pre-verification surrogate module that pioneers the structural fusion of NC principles into a Graph Neural Network (GNN) for TSN configuration-space exploration. Rather than replacing formal verification, DeepNC acts as a high-speed pre-verification filter, reserving computationally expensive formal verification only for promising candidates. Extensive evaluations demonstrate that DeepNC significantly improves worst-case delay prediction accuracy over state-of-the-art learning-based methods, increasing the average $R^2$ by 55.8% and reducing the average MAPE by 65.3%. More importantly, its high-fidelity regression substantially reduces the number of formal verification calls during configuration-space exploration by 93.25%, while accelerating NC-based verification by more than two orders of magnitude.",
+        "categories": [
+          "cs.NI"
+        ],
+        "published": "2026-07-27T13:14:13Z",
+        "updated": "2026-07-27T13:14:13Z",
+        "abstract_url": "https://arxiv.org/abs/2607.24398v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.24398v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.24398v1",
+        "relevance_score": 8,
+        "novelty_score": 8,
+        "transferability_score": 8,
+        "systems_score": 7,
+        "confidence": 0.8,
+        "priority": "read",
+        "matched_topics": [
+          "learned cost models",
+          "performance modeling",
+          "network-aware systems",
+          "pre-verification surrogate"
+        ],
+        "short_summary_zh": "DeepNC将网络计算（Network Calculus, NC）的结构性原理与图神经网络（GNN）融合，作为时间敏感网络（TSN）配置空间探索前置高效的预验证过滤器。摘要宣称显著提高延迟预测R^2和降低MAPE，并将需要运行昂贵NC形式化验证的候选数减少约93%，总验证速度提升两个数量级以上。",
+        "short_summary_en": "DeepNC structurally fuses Network Calculus (NC) principles into a Graph Neural Network as a fast pre-verification surrogate for TSN configuration search. The abstract claims large gains in worst-case delay prediction accuracy versus prior learning methods and reduces formal NC verification calls by ~93%, accelerating verification by two+ orders of magnitude.",
+        "why_interesting_zh": "直接对应“用学习模型替代或筛选掉部分昂贵分析/验证”的思路：在MPC编译/运行时中也存在大量形式化或成本模型评估（如延迟/带宽/轮次评估），高保真预筛选器可显著缩短配置搜索与调度时间。",
+        "why_interesting_en": "This embodies the idea of using a learned, structure-aware surrogate to avoid expensive formal analysis. MPC compilers/runtimes that repeatedly evaluate cost models (round complexity, WAN schedules, protocol selection) could benefit from such pre-verification filters.",
+        "relation_to_my_work_zh": "可用于MPC后端在选择协议/分片/调度时的快速候选筛选，减小对昂贵成本模型或仿真评估的依赖，加速自动化调优和配置搜索。",
+        "relation_to_my_work_en": "Potential application: use DeepNC-like surrogates in MPC backends to rapidly filter candidate protocol selections, scheduling decisions, or partitionings before invoking costly formal cost models or simulators.",
+        "possible_transfer_zh": "将NC的结构性引入GNN的做法可被类比为将MPC成本模型（轮次、通信量、网速/延迟敏感性）结构化为图/因子并训练高保真回归器作为预筛选器；还能用于在线配置空间探索与自适应选择。",
+        "possible_transfer_en": "Transferrable: structurally embedding domain-specific analysis (here NC) into a GNN surrogate. Analogously, embed MPC cost-model structure into learned predictors to pre-filter candidate schedules/protocols and reduce calls to exact analyzers.",
+        "possible_overlap_or_conflict_zh": "需注意抽象中并未取代形式化验证，仅作为高保真预筛选；将其迁移至安全计算需评估误判（false negatives）对安全或客户SLA的影响。",
+        "possible_overlap_or_conflict_en": "As in the abstract, the surrogate is a pre-filter, not a replacement for formal verification. For MPC adoption, one must quantify false negatives/positives and their impact on correctness, privacy, or SLA violations.",
+        "questions_to_verify_zh": [
+          "抽象如何将NC原理融入GNN（特征、约束或损失项）？",
+          "在何种分布/拓扑/流量条件下训练和评估，泛化能力如何？",
+          "预验证器的误报/漏报率（尤其是漏报导致跳过可验证但不安全的候选）是多少？",
+          "该方法对训练数据需求与线下生成成本如何（是否需要大量NC调用来构建训练集）？"
+        ],
+        "questions_to_verify_en": [
+          "How exactly are NC principles fused into the GNN (features, constraints, loss terms)?",
+          "What topologies/traffic distributions were used for training and evaluation, and how does the surrogate generalize?",
+          "What are the false-positive/false-negative rates of the pre-verifier—particularly false negatives that skip candidates requiring formal verification?",
+          "What is the training data cost (number of NC evaluations) needed to build the surrogate?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2607.24398v1",
+        "research_problem_zh": "在对时延敏感的领域中（例如 TSN），形式化的可调度性验证（Network Calculus）是关键，但在自动化配置空间探索过程中，反复调用昂贵的形式化验证成为时间瓶颈——占据配置探索时间的绝大部分。",
+        "research_problem_en": "For Time-Sensitive Networking (TSN), formal schedulability verification (Network Calculus) is essential, but repeated expensive verification calls dominate configuration-space exploration time and become the primary bottleneck.",
+        "core_method_zh": "提出 DeepNC：一种将 Network Calculus 原理结构化地融合进图神经网络（GNN）的预验证代理（pre-verification surrogate）。DeepNC 作为高吞吐的过滤层，仅把高置信候选保留给昂贵的形式验证，从而显著减少需要调用 NC 的次数并加速整体探索。",
+        "core_method_en": "Propose DeepNC: a pre-verification surrogate that structurally fuses Network Calculus principles into a Graph Neural Network (GNN). DeepNC acts as a high-throughput filter that reserves expensive formal NC verification for promising candidates, reducing the number of NC calls dramatically.",
+        "contributions_zh": [
+          "把 Network Calculus 结构性原则融入 GNN，形成高保真回归模型用于延迟预测。",
+          "将该学习模型用作 pre-verification 过滤器，在配置空间探索中显著降低正式验证次数并加速搜索。",
+          "在基准上展示相对于现有学习方法更高的预测准确度（R^2 提升与 MAPE 降低）并减少 >93% 的形式化验证调用。"
+        ],
+        "contributions_en": [
+          "Incorporate Network Calculus structure into a GNN to build a high-fidelity regression delay predictor.",
+          "Use the learned model as a pre-verification filter to drastically cut formal verification calls during configuration search.",
+          "Show large improvements in prediction accuracy and a >93% reduction in NC verification calls on benchmarks."
+        ],
+        "why_watch_zh": "方法学上把领域知识（Network Calculus）嵌入到学习代理中用于预筛选，这一套路对 MPC/安全系统同样有启发：在需要昂贵形式/代价评估（例如精确的通信/轮次成本模型或安全性证明）前先用轻量代理高吞吐地过滤候选策略或调度方案，可大幅缩短搜索时间。",
+        "why_watch_en": "Embedding domain knowledge into a learned pre-verification surrogate is a transferable pattern: before expensive formal/costly evaluations (e.g., exact comm/round cost models or proofs), use a fast surrogate to filter candidates—this can accelerate search in MPC/runtime design.",
+        "direct_relation_zh": "与“性能建模/学习成本模型”、“配置空间搜索的预筛选”以及“减少昂贵验证/评估调用”的目标直接相关；对 MPC 的协议配置、调度策略或编译器验证流程具有可迁移价值。",
+        "direct_relation_en": "Directly relevant to performance modeling/learned cost models, pre-filtering in configuration search, and cutting expensive verification/evaluation calls; transferable to MPC protocol configuration, scheduling, and compiler validation.",
+        "transferable_mechanisms_zh": [
+          "将领域形式化（Network Calculus）以结构化方式注入 GNN 架构以提高预测保真度——可模仿为把通信/轮次成本模型注入学习器。",
+          "用高保真回归器做 pre-verification 过滤，以减少昂贵的精确验证（例如形式证明或昂贵的运行时测量）。",
+          "对误判代价（false negatives/positives）及其对总体搜索效率影响的系统性评估思路，可直接借鉴。"
+        ],
+        "transferable_mechanisms_en": [
+          "Structurally inject formal domain knowledge into a GNN to boost fidelity—can be applied to communication/round-cost predictors.",
+          "Use a high-fidelity regressor as a pre-verification filter to reduce expensive precise checks (formal proofs or costly run-time measurements).",
+          "Systematic evaluation of false-negative/false-positive costs and their effect on overall search efficiency is reusable."
+        ],
+        "potential_overlap_zh": "与“学习型性能模型”、“配置空间搜索预筛选”和“基于图结构建模的延迟/资源预测”研究高度重合；可以直接迁移到需要频繁调用成本模型或验证的 MPC 配置探索场景。",
+        "potential_overlap_en": "High overlap with learned performance models, pre-filtering in configuration search, and graph-structured latency/resource prediction; directly applicable to MPC configuration exploration that relies on costly cost-model evaluations.",
+        "potential_conflict_zh": "预验证器误判（尤其是假阴性，即过滤掉可行/优良候选）会导致搜索遗漏最优解；在安全领域，使用学习代理过滤可能需要额外保证不会影响安全性或合规性。摘要中未说明误判的具体代价与缓解策略。",
+        "potential_conflict_en": "Surrogate false negatives (filtering out valid/good candidates) can cause missed optima; in security contexts using learned filters may necessitate guarantees that filtering cannot compromise safety/compliance. The abstract does not detail mitigation for such misclassification costs.",
+        "full_text_questions_zh": [
+          "DeepNC 如何把 Network Calculus 的约束/方程映射到 GNN 架构或损失函数中？有无具体结构化操作（例如守恒/单调性约束）？",
+          "训练数据来源与泛化性：模型是否在不同拓扑/负载分布下稳定？训练集是否覆盖稀有但关键的边界情形？",
+          "错误分类代价评估：作者如何权衡假阳性（浪费形式验证）与假阴性（遗漏可行解）的代价？",
+          "与传统 NC 的接口如何设计：被筛选出的候选如何和形式验证器交互、回退或修正策略是什么？"
+        ],
+        "full_text_questions_en": [
+          "How exactly is Network Calculus encoded into the GNN architecture/loss (e.g., conservation/monotonicity constraints)?",
+          "Training data and generalization: does the model generalize across topologies and load distributions, and does the training set cover rare boundary cases?",
+          "How are false-positive (wasted NC calls) vs false-negative (missed viable configs) costs weighed and controlled?",
+          "What is the interface between the surrogate and the formal NC verifier: how are candidates passed/backtracked/rectified?"
+        ],
+        "experiment_checks_zh": [
+          "核查预测质量指标（R^2、MAPE）是否按实例分布报告，关注最坏情况（尾部误差）而非只看平均值。",
+          "测量整体搜寻时间节省中的三个分项：代理推断时间、节省的形式验证调用时间、以及由误判导致的额外回溯成本。",
+          "对不同拓扑规模与负载场景做稳健性测试，特别是对边界/饱和条件下的误判率与后果进行量化。",
+          "与不注入 NC 结构知识的黑盒回归模型做对比，证明结构化设计带来的具体好处。"
+        ],
+        "experiment_checks_en": [
+          "Check prediction metrics (R^2, MAPE) reported per-instance distribution, emphasizing worst-case/tail errors, not just averages.",
+          "Break down total search time savings into surrogate inference time, saved formal verification time, and extra backtracking cost from misclassifications.",
+          "Robustness tests across topology sizes and load scenarios, especially quantifying misclassification rates and consequences under boundary/saturation cases.",
+          "Compare to black-box regressors that don’t encode NC structure to demonstrate benefits from structural injection."
+        ],
+        "tracking_targets": [
+          "是否开源 DeepNC 模型、训练数据与与 NC 验证器的接口实现",
+          "有关模型泛化性、训练集覆盖度与在不同拓扑/负载下的性能剖面数据",
+          "作者对误判成本的定量分析与任何后续改进（例如保守筛选策略）"
+        ],
+        "next_steps_zh": [
+          "阅读全文关注如何把领域规则注入 GNN（架构/损失/约束），并评估是否能把类似手段用于通信/轮次成本建模。",
+          "在自己的配置搜索流程中尝试用轻量代理做预筛选，先从保守阈值开始以避免假阴性带来的风险。",
+          "复现作者的误判成本分析并按需设计保守回退策略（例如低阈值候选仍保留一部分到正式验证）。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to see how domain rules are injected into the GNN (architecture/loss/constraints) and evaluate applying similar techniques to comm/round-cost models.",
+          "Try a lightweight surrogate pre-filter in your configuration search pipeline, starting with conservative thresholds to avoid false-negative risks.",
+          "Reproduce the authors’ misclassification-cost analysis and design conservative fallback strategies (e.g., always send low-confidence candidates for formal check)."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.24434",
+        "version": 1,
+        "title": "DraftExpert: Expansion-Aware Self-Speculative Decoding for End-Device MoE Inference",
+        "authors": [
+          "Dengke Han"
+        ],
+        "abstract": "Large Mixture-of-Experts (MoE) language models are attractive for end-device deployment because only a small subset of experts is active per token, but their routed expert weights often exceed accelerator memory. We target latency-critical single-user settings where routed experts are staged on demand from CPU memory to a GPU or from Flash to a mobile NPU. In this setting, self-speculative decoding faces a new bottleneck: increasing the draft expert set improves accuracy but triggers extra expert loading, while cheap small-footprint drafts have low acceptance; moreover, verifying a multi-token block activates the union of target experts and is no longer close to one target step. We propose DraftExpert, an expansion-aware self-speculative decoding framework for expert-offloaded MoE inference. DraftExpert trains one lightweight accelerator-resident draft expert per layer by self-distilling residual, logit/token, and router-agreement signals from the frozen target MoE. At inference time, it uses a fixed-footprint shared+top-1+draft-expert drafter together with confidence--expansion truncation and target-expert prefetching, while final tokens are still exactly verified by the target model. On DeepSeek-V2-Lite and Moonlight-16B-A3B across CPU-GPU and Flash-NPU offload, DraftExpert improves decode throughput by 1.45x on average, raises draft acceptance to 84~87%, and achieves 86~88% prefetch hit rates.",
+        "categories": [
+          "cs.AI",
+          "cs.LG"
+        ],
+        "published": "2026-07-27T13:44:42Z",
+        "updated": "2026-07-27T13:44:42Z",
+        "abstract_url": "https://arxiv.org/abs/2607.24434v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.24434v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.24434v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 7,
+        "systems_score": 8,
+        "confidence": 0.75,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "network-aware runtime",
+          "latency hiding",
+          "prefetching",
+          "pipeline execution"
+        ],
+        "short_summary_zh": "DraftExpert是面向端设备部署的MoE推理的自我投机解码（self-speculative decoding）框架，针对专家权重被分级存放（CPU↔GPU或Flash↔NPU）的场景提出。它训练每层一个轻量草稿专家（draft expert）通过自蒸馏目标MoE的残差、logit/token和路由一致性信号；推理时结合共享+top-1+draft策略、置信-扩展截断和目标专家预取，以在保持最终精确验证的同时提高吞吐与预取命中率。",
+        "short_summary_en": "DraftExpert is an expansion-aware self-speculative decoding framework for end-device MoE inference where routed experts are offloaded. It trains one lightweight draft expert per layer via self-distillation of residuals, logits, and router agreement, and at inference uses shared+top-1+draft drafter, confidence-expansion truncation, and target-expert prefetching. Claims: ~1.45x throughput, high draft acceptance and prefetch hit rates across CPU-GPU and Flash-NPU setups.",
+        "why_interesting_zh": "直接涉及分级存储、按需调度/预取与规避加载延迟——这些问题在WAN-limited或受限内存的安全推理（例如需在客户端/服务端之间分发密钥/参数）场景中高度相关。",
+        "why_interesting_en": "Directly relevant to offload/prefetch problems: staged expert loading, speculative drafts, and prefetch strategies can inspire latency-hiding and resource-management techniques in secure LLM inference or MPC runtimes that stage heavy artifacts.",
+        "relation_to_my_work_zh": "可借鉴的机制包括训练小型草稿模型以降低候选扩展的加载、基于置信度和扩展截断的预取策略、以及如何在保持最终精确性前提下做投机执行，适用于MPC/安全推理的专家/碎片预取与流水线。",
+        "relation_to_my_work_en": "Mechanisms to borrow: lightweight draft models to reduce load-triggered transfers, confidence/expansion truncation for conservative prefetching, and speculatively verifying final tokens—applicable to MPC runtimes that stage preprocessing, garbled circuits, or model shards.",
+        "possible_transfer_zh": "可将草稿-目标二层策略用于MPC：训练小型本地模型预测需要的预处理/数据分片以决定何时从远端拉取大块数据；或在跨数据中心部署时用于隐藏WAN加载延迟。",
+        "possible_transfer_en": "Potential transfers: use lightweight local drafts to predict which heavy artifacts to stage in MPC (e.g., preprocessing, circuit fragments), apply confidence-based truncation to limit prefetch expansion, and keep exact verification on the critical path.",
+        "possible_overlap_or_conflict_zh": "在安全/保密设置中需明确：草稿模型的训练数据与蒸馏信号是否泄露敏感信息；预取与缓存策略需兼顾隐私与同步语义。",
+        "possible_overlap_or_conflict_en": "Security concerns: draft training and distilled signals might leak sensitive information; prefetch/caching policies must be reconciled with privacy constraints and synchronization semantics in MPC.",
+        "questions_to_verify_zh": [
+          "草稿专家的训练是否使用或暴露目标专家的敏感权重/数据？",
+          "在受限或加密内存/受监管环境中，预取与缓存的安全性如何保证？",
+          "投机失败时的额外开销（网络/IO与验证时间）如何量化？"
+        ],
+        "questions_to_verify_en": [
+          "Does training lightweight draft experts access or expose target experts' sensitive weights/data?",
+          "How are prefetch and caching secured when memory is encrypted or in regulated environments?",
+          "What is the overhead (network/IO and verification time) when speculation fails?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
