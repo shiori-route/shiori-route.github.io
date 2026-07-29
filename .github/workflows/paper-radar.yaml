@@ -18,6 +18,8 @@ jobs:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -69,3 +71,14 @@ jobs:
       - name: Push changes
         if: steps.commit.outputs.changed == 'true'
         run: git push origin HEAD:main
+
+  deploy:
+    needs: update
+    if: needs.update.outputs.changed == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/pages.yaml
+    with:
+      ref: main
