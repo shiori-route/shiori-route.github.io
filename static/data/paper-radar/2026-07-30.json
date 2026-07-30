@@ -1,0 +1,498 @@
+{
+  "date": "2026-07-30",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 4,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2607.26710",
+        "version": 1,
+        "title": "PowerAtlas: Towards Electricity-Computing Co-Scheduling for Power Systems",
+        "authors": [
+          "Kaiwen Jiang",
+          "Siya Xu",
+          "Ziyue Zhu",
+          "Chao Yang",
+          "Anh Tuan Luu",
+          "Haoran Luo"
+        ],
+        "abstract": "The rapid growth of AI workloads is turning data centers into large-scale, volatile, yet spatiotemporally flexible grid loads, creating an urgent need for coordinated electricity-computing scheduling. Under stringent grid constraints, schedules from general-purpose large language models (LLMs) are often infeasible, causing line-flow violations and unserved load. We present PowerAtlas, an LLM-agent framework for electricity-computing co-scheduling that integrates historical instances, domain knowledge, and physical constraints to produce joint decisions satisfying both grid operational rules and the service-level agreements (SLAs) of computing tasks. Working with a provincial power utility in China, we built an experimental electricity-computing network and validated the decision loop on real data-center data; from de-identified operational data we further constructed ECBench, a benchmark of 2,000 scheduling instances with oracle-optimal solutions. Experiments across eleven LLMs demonstrate the effectiveness of PowerAtlas under realistic physical operating conditions, with consistent feasibility and cost gains across three open-weight backbones. Our code is publicly available at https://github.com/JAVA-Jiang/PowerAtlas.",
+        "categories": [
+          "cs.LG"
+        ],
+        "published": "2026-07-29T09:53:50Z",
+        "updated": "2026-07-29T09:53:50Z",
+        "abstract_url": "https://arxiv.org/abs/2607.26710v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.26710v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.26710v1",
+        "relevance_score": 9,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.82,
+        "priority": "deep_read",
+        "matched_topics": [
+          "electricity-computing co-scheduling",
+          "network-aware systems",
+          "dependency-aware scheduling",
+          "DAG scheduling",
+          "resource-aware runtime",
+          "learned cost models"
+        ],
+        "short_summary_zh": "基于标题与摘要：PowerAtlas是一个将历史实例、领域知识与物理约束整合入LLM代理的电力-计算联合调度框架，旨在同时满足电网运行规则與计算任务SLA。作者与中国省级电力公司合作搭建了实验网络、构造了含2000个实例的ECBench基准，并在多款公开权重LLM上验证了可行性与成本/可行性收益。代码开源。",
+        "short_summary_en": "Based on the title and abstract: PowerAtlas is an LLM-agent framework for electricity–computing co-scheduling that incorporates historical instances, domain knowledge, and power-grid physical constraints to produce joint schedules respecting grid rules and computing SLAs. They constructed an experimental testbed, the ECBench benchmark (2,000 instances with oracle optima), and show consistent feasibility and cost gains across multiple LLM backbones; code is public.",
+        "why_interesting_zh": "直接对你的主要兴趣相关：它把 scheduling/optimization、physical constraints 与 LLM-based decision agents结合，解决在受限网络/电力约束下的联合调度问题。方法、基准与实测数据对研究网络感知运行时、依赖约束调度、以及协议选择具有高度参考价值。",
+        "why_interesting_en": "Directly relevant: combines scheduling optimization under physical constraints with LLM agents to produce feasible, cost-efficient electricity–computing co-schedules. The benchmark, testbed, and empirical validation are valuable if you study network-aware runtimes, dependency‑aware scheduling, or protocol selection under constrained infrastructure.",
+        "relation_to_my_work_zh": "基于标题与摘要：若你的课题涉及MPC运行时的网络/电源约束调度、延迟/吞吐权衡、或依赖DAG的任务调度，PowerAtlas 提供了方法学（历史/知识整合、物理约束嵌入、可行性优先的解法）和基准可直接借鉴或对比。",
+        "relation_to_my_work_en": "If you work on MPC runtime scheduling, WAN-aware protocol selection, or DAG/batch scheduling under infrastructure constraints, PowerAtlas' approach (incorporating historical instances, constraints, and LLM decision agents) and ECBench benchmark could be directly applicable for evaluation and inspiration.",
+        "possible_transfer_zh": "可迁移点：用基准化实例集与oracle对比来量化可行性；把物理约束嵌入决策代理的方式；历史实例检索与知识引导的LLM决策循环；以及把可行性校验作为首要目标的调度策略设计。",
+        "possible_transfer_en": "Transferable ideas: using an oracle-labeled benchmark to measure feasibility/cost tradeoffs; embedding physical constraints into decision agents; retrieval of historical instances and domain-knowledge conditioning for LLM agents; and prioritizing feasibility checks in scheduler design.",
+        "possible_overlap_or_conflict_zh": "需核实基准与开放权重LLM的选择细节、约束建模精度、以及是否存在对比到经典优化求解器或实时调度器的公平比较。",
+        "possible_overlap_or_conflict_en": "Verify details of the benchmark, LLM backbones used, fidelity of constraint models, and whether comparisons to classical optimization or production schedulers are fair and comprehensive.",
+        "questions_to_verify_zh": [
+          "ECBench的实例来源、约束形式与oracle最优解如何构造/验证？是公开的还是脱敏数据？",
+          "LLM在产生可行解时如何保证严格满足物理约束（是否有后验可行性校验或修复器）？",
+          "与传统数学规划/在线调度器相比，PowerAtlas在延迟、鲁棒性与运算成本上如何权衡？"
+        ],
+        "questions_to_verify_en": [
+          "How are ECBench instances generated and how are oracle-optimal solutions constructed/validated (is data de-identified/public)?",
+          "How do LLM agents ensure strict feasibility of physical constraints—are there post-hoc feasibility checks or repair mechanisms?",
+          "How does PowerAtlas compare to classical optimization or production schedulers in latency, robustness, and computational overhead?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2607.26710v1",
+        "research_problem_zh": "在电网约束和计算任务SLA并存的场景下，如何自动为大规模数据中心和电力系统联合生成可行且成本优的调度决策（电力-计算协同调度）？",
+        "research_problem_en": "How to automatically produce feasible, cost-effective joint schedules for data-center computing and power-system operation (electricity-computing co-scheduling) under strict grid physical constraints and computing SLAs?",
+        "core_method_zh": "提出一个基于大语言模型的Agent框架（PowerAtlas），将历史实例、领域知识和物理约束融入决策回路，生成满足电网运行规则与计算任务SLA的联合决策；并构建了ECBench基准与实网/实验网络验证。",
+        "core_method_en": "An LLM-agent framework (PowerAtlas) that integrates historical instances, domain knowledge and physical constraints into a decision loop to produce joint electricity-computing schedules; includes creation of the ECBench benchmark and experiments on a constructed electricity-computing testbed and de-identified operational data.",
+        "contributions_zh": [
+          "提出PowerAtlas，一种用于电力-计算协同调度的LLM-Agent框架，能将物理电网约束与计算SLA联合考虑。",
+          "构建ECBench——包含2,000条具有Oracle最优解的调度实例的基准（从去标识化运维数据构造）。",
+          "在真实数据中心和实验电网上对多种开权重LLM进行了实验验证，展示在可行性和成本上的一致收益。",
+          "公开实现代码和基准。"
+        ],
+        "contributions_en": [
+          "Introduce PowerAtlas, an LLM-agent framework for electricity-computing co-scheduling that jointly accounts for physical grid constraints and computing SLAs.",
+          "Construct ECBench, a 2,000-instance benchmark with oracle-optimal solutions derived from de-identified operational data.",
+          "Empirical validation on an experimental electricity-computing network and experiments across multiple open-weight LLM backbones showing consistent feasibility and cost improvements.",
+          "Public release of code and benchmark artifacts."
+        ],
+        "why_watch_zh": "与本人的研究主题在调度、网络/资源感知运行时和约束驱动优化上高度相关：论文探讨将复杂物理约束嵌入决策回路并用模型/策略生成可行调度，这些机制可能迁移到MPC/私有推理的运行时调度与协议选择。",
+        "why_watch_en": "Highly relevant to scheduling, network-aware runtimes and constraint-driven optimization: it studies embedding complex physical constraints into decision loops and using model-driven policies to generate feasible schedules. Mechanisms may transfer to MPC/private inference runtimes and protocol selection.",
+        "direct_relation_zh": "中等偏高 — 直接与“依赖感知调度/DAG调度”、“网络/资源感知运行时”和“策略驱动调度”相关，但未直接讨论MPC或加密协议的通信轮数等。",
+        "direct_relation_en": "Medium–high direct relevance — closely tied to dependency-aware/DAG scheduling, network/resource-aware runtimes and policy-driven scheduling, but does not explicitly address MPC/cryptographic protocol round complexity or secure computation frameworks.",
+        "transferable_mechanisms_zh": [
+          "将外部物理约束（电网规则）显式编码入调度决策的约束整合策略。",
+          "基于历史实例与域知识的示例检索/回路构造用于生成可行方案（可迁移为运行时的决策缓存/启发式）。",
+          "用基准数据与Oracle解进行验证与压力测试（基准构建方法）。",
+          "在实际网络/系统上闭环验证决策的部署与评估流程。"
+        ],
+        "transferable_mechanisms_en": [
+          "Techniques to explicitly incorporate external physical constraints into scheduling decisions (constraint-integration).",
+          "Use of historical-instance retrieval and domain-knowledge-informed decision loops to generate feasible plans (can map to runtime decision caches/heuristics).",
+          "Construction of benchmarks with oracle solutions for validation and stress-testing.",
+          "Closed-loop deployment and empirical validation on an experimental system for assessing feasibility and costs."
+        ],
+        "potential_overlap_zh": "方法学上与MPC运行时调度、DAG/依赖感知批处理和网络感知调度重叠；ECBench可作为评估调度策略的参考模板。",
+        "potential_overlap_en": "Methodologically overlaps with MPC runtime scheduling, DAG/dependency-aware batching and network-aware scheduling; ECBench could serve as a template for evaluating scheduling strategies.",
+        "potential_conflict_zh": "若直接把LLM-Agent决策应用于安全/隐私敏感的MPC场景，可靠性和鲁棒性（模型误判、随机性）可能与安全边界冲突；电力系统对可解释性和强安全约束的要求高。",
+        "potential_conflict_en": "Directly applying LLM-agent decisions in security/privacy-sensitive MPC settings raises concerns about reliability and robustness (model mispredictions, nondeterminism), and power systems also demand high explainability and strict safety guarantees that may conflict with opaque LLM policies.",
+        "full_text_questions_zh": [
+          "LLM如何接收并严格满足电网的物理约束（约束编码与硬约束/软约束区分）？",
+          "决策回路的实时性和时延如何？决策计算本身是否成为瓶颈？",
+          "ECBench的构造细节：实例分布、约束类型、Oracle最优解如何计算/验证？",
+          "与传统优化器或专门调度器的基线对比细节与消融（例如：传统MILP、启发式、在线算法）。",
+          "在不同故障/观测不确定性情形下的鲁棒性和安全保障如何评估？"
+        ],
+        "full_text_questions_en": [
+          "How are grid physical constraints encoded and strictly enforced by the LLM (hard vs soft constraints)?",
+          "What is the real-time latency of the decision loop and can the decision computation become a bottleneck?",
+          "Details of ECBench construction: instance distributions, constraint types, and how oracle-optimal solutions were computed/validated.",
+          "Baselines and ablations against classical optimizers (MILP), heuristics and online algorithms — how comprehensive are the comparisons?",
+          "How is robustness under faults/observation uncertainty evaluated and are safety guarantees provided?"
+        ],
+        "experiment_checks_zh": [
+          "确认ECBench实例覆盖范围与标签（约束种类、负荷/任务分布）是否公开且可复现。",
+          "比较基线包括严格优化器（如MILP/凸优化）、启发式和在线调度器，检查可行性率与成本差异。",
+          "测量决策生成延迟与规模伸缩性（当数据中心/电网规模扩大时）。",
+          "对LLM参数/随机性敏感性分析以及在观测不完全/错误数据下的鲁棒性测试。",
+          "评估在异常（突发负荷/设备故障）情形下的安全性与回退策略。"
+        ],
+        "experiment_checks_en": [
+          "Verify ECBench coverage and labels (constraint kinds, load/task distributions) are published and reproducible.",
+          "Ensure baselines include exact optimizers (e.g., MILP/convex solvers), heuristics and online schedulers; check feasibility rates and cost deltas.",
+          "Measure decision-generation latency and scalability as data-center/grid size increases.",
+          "Analyze sensitivity to LLM seeds/parameters and robustness under partial/noisy observations.",
+          "Evaluate safety and fallback strategies under anomalies (sudden load spikes, equipment faults)."
+        ],
+        "tracking_targets": [
+          "PowerAtlas LLM-agent scheduling",
+          "ECBench benchmark (2,000 instances)",
+          "electricity-computing co-scheduling",
+          "LLM-in-the-loop constraint integration",
+          "real-data experimental electricity-computing network"
+        ],
+        "next_steps_zh": [
+          "阅读论文以获取ECBench的具体样本/标签与Oracle解计算方法，评估其是否可用于MPC调度评估。",
+          "基于论文中约束整合思路，设计将MPC协议通信/轮次与物理资源约束联合的调度模型。",
+          "测试LLM-决策在延迟敏感（WAN）的加密推理场景下的可行性并加固可解释性与安全性。"
+        ],
+        "next_steps_en": [
+          "Read the paper for ECBench sample/label details and oracle-solution computation to assess reuse for MPC-scheduling evaluation.",
+          "Adapt the paper's constraint-integration approach to jointly schedule MPC protocol communication/rounds with physical resource constraints.",
+          "Test LLM-driven decisions under latency-sensitive (WAN) encrypted inference and add explainability/safety hardening."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.26877",
+        "version": 1,
+        "title": "Hybrid Workflow Composition for Extreme-Scale Data Processing: A Case Study on the HL-LHC (Extended Version)",
+        "authors": [
+          "Alan Malta Rodrigues",
+          "Douglas Thain"
+        ],
+        "abstract": "High-Throughput Computing (HTC) environments tailored for high-concurrency resource efficiency require sophisticated orchestration to manage petabyte-scale data across heterogeneous resources. A critical but often overlooked challenge is workflow composition: the strategic grouping of tasksets within a Directed Acyclic Graph (DAG) to mitigate execution overhead while maximizing resource utilization. This paper presents a novel simulation framework for characterizing the interplay between taskset granularity and system-level constraints (e.g., job latency, failure rate, throughput, and I/O bandwidth). By exploring a high-dimensional parameter space, we quantify the performance sensitivity of diverse workflow topologies. Our results demonstrate that hybrid composition strategies, which dynamically balance taskset independence with execution grouping, can yield up to 3.8x throughput increase and a 14.9x reduction in network overhead. We further propose a multi-metric objective function that enables policy-driven optimization, allowing system architects to navigate the Pareto frontier between throughput, I/O cost, and CPU efficiency. These findings provide a rigorous foundation for automated workflow synthesis in distributed systems, offering a scalable model for next-generation scientific pipelines. All artifacts are publicly available.",
+        "categories": [
+          "cs.DC",
+          "cs.SE"
+        ],
+        "published": "2026-07-29T13:07:31Z",
+        "updated": "2026-07-29T13:07:31Z",
+        "abstract_url": "https://arxiv.org/abs/2607.26877v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.26877v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.26877v1",
+        "relevance_score": 9,
+        "novelty_score": 7,
+        "transferability_score": 9,
+        "systems_score": 9,
+        "confidence": 0.88,
+        "priority": "read",
+        "matched_topics": [
+          "DAG scheduling",
+          "dependency-aware scheduling",
+          "workflow synthesis",
+          "batching",
+          "communication and computation overlap",
+          "resource-aware scheduling"
+        ],
+        "short_summary_zh": "基于标题和摘要：提出用于极限规模数据处理的混合工作流组成（hybrid composition）与一个仿真框架，研究任务集粒度对系统级约束（作业延迟、失败率、吞吐、I/O带宽）的影响，发现动态平衡独立性與分组执行的混合策略可显著提升吞吐并减少网络开销，提供多目标优化目标函数与公开数据。",
+        "short_summary_en": "Title-and-abstract-based: Introduces a hybrid workflow composition approach and simulation framework for extreme-scale data processing (HL-LHC case), exploring taskset granularity effects on latency, failure, throughput, and I/O. Shows dynamic hybrid grouping can improve throughput up to 3.8x and reduce network overhead 14.9x, and proposes a multi-metric objective to navigate trade-offs; artifacts are public.",
+        "why_interesting_zh": "直接切中依赖感知DAG调度、任务分组/批处理与网络效率等核心主题；对MPC runtimes或MP-SPDZ那类需要在WAN高延迟情形下调度大量独立/依赖任务的系统有直接借鉴意义。",
+        "why_interesting_en": "Directly relevant to dependency-aware DAG scheduling, batching, and network-aware runtimes—applicable to MPC runtimes (e.g., MP-SPDZ) that must group/partition secure tasks across high-latency links to minimize rounds and I/O.",
+        "relation_to_my_work_zh": "若你研究MPC运行时、DAG调度或WAN场景下的协议选择，该仿真方法、复合分组策略和多目标优化可作为评估和设计任务分组策略的参考或基线。",
+        "relation_to_my_work_en": "If you study MPC runtimes, DAG scheduling, or protocol selection under WAN latency, the simulation framework, hybrid grouping strategies, and multi-objective objective function are directly applicable as evaluation tools or design ideas.",
+        "possible_transfer_zh": "可把工作流分组策略映射到MPC的子任务聚合（批处理/轮次合并）、I/O/带宽成本建模、以及在调度器中实现多目标折衷（吞吐 vs 延迟 vs 通信）。",
+        "possible_transfer_en": "Workflow grouping strategies can map to MPC subtask aggregation (batching/round coalescing), I/O/bandwidth cost modeling, and embedding multi-objective trade-offs (throughput vs latency vs communication) into schedulers.",
+        "possible_overlap_or_conflict_zh": "摘要基于仿真结果；将其结论应用到安全计算需验证在保密/同步开销、加密通信和协同协议中是否保有类似收益。",
+        "possible_overlap_or_conflict_en": "Results are simulation-based; applying conclusions to secure computation requires validating gains under cryptographic synchronization, secrecy constraints, and protocol-specific overheads.",
+        "questions_to_verify_zh": [
+          "仿真是否包含WAN延迟、连接性波动和加密通信开销模型？",
+          "多目标目标函数如何权衡延迟与通信成本，是否可插入到现有调度器？",
+          "公开工件是否包含可复用的成本模型与示例DAGs？"
+        ],
+        "questions_to_verify_en": [
+          "Does the simulator model WAN latency, connectivity variability, and encryption/crypto communication overheads?",
+          "How does the multi-metric objective trade off latency vs communication costs and can it be plugged into existing schedulers?",
+          "Do the public artifacts include reusable cost models and representative DAGs?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2607.26877v1",
+        "research_problem_zh": "在高并发的高吞吐（HTC）环境中，如何对DAG工作流中的任务集合进行分组（taskset composition），以在减小执行开销的同时最大化资源利用并满足延迟、失败率、I/O带宽等系统约束？",
+        "research_problem_en": "In high-concurrency High-Throughput Computing (HTC) environments, how to compose/group tasksets in a DAG to reduce execution overhead while maximizing resource utilization under constraints like latency, failure rate, throughput, and I/O bandwidth?",
+        "core_method_zh": "提出一个仿真框架，用于在高维参数空间中探索任务粒度与系统约束的相互作用；提出混合组合策略与多度量目标函数，借由策略驱动优化在吞吐、I/O成本和CPU效率间导航Pareto前沿。",
+        "core_method_en": "A simulation framework that explores the interaction between task granularity and system-level constraints across a high-dimensional parameter space; proposes hybrid composition strategies and a multi-metric objective function to enable policy-driven optimization and Pareto-frontier navigation between throughput, I/O cost and CPU efficiency.",
+        "contributions_zh": [
+          "实现并开源一个用于分析任务集粒度与系统约束交互的仿真框架与实验工件。",
+          "系统化量化各种工作流拓扑下的性能敏感性（包括吞吐、网络开销等）。",
+          "提出混合任务组合策略并证明在多种情景下能显著提高吞吐与减少网络开销。",
+          "设计一个多指标目标函数，支持在不同优化目标间的策略权衡并探索Pareto前沿。"
+        ],
+        "contributions_en": [
+          "Implement and open-source a simulation framework to analyze interactions between taskset granularity and system constraints.",
+          "Systematically quantify performance sensitivity of diverse workflow topologies (throughput, network overhead, etc.).",
+          "Propose hybrid composition strategies that yield significant throughput increases and network overhead reductions in multiple scenarios.",
+          "Design a multi-metric objective enabling policy-driven trade-offs and Pareto-frontier exploration."
+        ],
+        "why_watch_zh": "高度相关：直接触及DAG/依赖感知调度、批处理/合并策略和网络开销与延迟权衡——这些是MPC运行时（例如MP-SPDZ）在WAN下的调度与批合并设计中需要解决的问题。仿真/建模方法可迁移以预测安全计算的通信开销与整体吞吐。",
+        "why_watch_en": "Highly relevant: directly addresses DAG/dependency-aware scheduling, batching/grouping strategies, and trade-offs between network overhead and latency — all central to MPC runtimes (e.g., MP-SPDZ) operating over WANs. The simulation/modeling approach can be adapted to predict secure-computation communication costs and throughput.",
+        "direct_relation_zh": "高 — 论文中的任务合并、混合策略、多目标优化与仿真评估与“依赖感知调度”“批处理/轮次合并”“网络感知运行时”高度契合。",
+        "direct_relation_en": "High — the task-grouping, hybrid strategies, multi-objective optimization and simulation evaluation strongly align with dependency-aware scheduling, batching/round-coalescing and network-aware runtime topics.",
+        "transferable_mechanisms_zh": [
+          "仿真驱动的成本模型构建与敏感性分析（可用于估计MPC通信/计算成本）。",
+          "混合任务组合策略（在独立与合并之间动态平衡），可映射为批处理/合并算法。",
+          "多指标/策略驱动优化和Pareto分析，用于在延迟与吞吐或安全开销之间做权衡。",
+          "广泛的工作流拓扑参数化与自动化策略搜索（用于自动化调度器设计）。"
+        ],
+        "transferable_mechanisms_en": [
+          "Simulation-driven cost-model construction and sensitivity analysis (can estimate MPC communication/computation costs).",
+          "Hybrid task-composition strategies (dynamic trade-off between independence and grouping) that map to batching/merging algorithms.",
+          "Multi-metric/policy-driven optimization and Pareto analysis to trade off latency vs throughput or security overheads.",
+          "Parameterized workflow-topology exploration and automated policy search for scheduler design."
+        ],
+        "potential_overlap_zh": "可直接用于构建针对MPC场景的仿真器：加入协议轮次、加密通信开销、WAN延迟模型后可用于评估调度与批处理策略。",
+        "potential_overlap_en": "Can be directly used to build MPC-focused simulators: by adding protocol-rounds, cryptographic communication costs, and WAN latency models it can evaluate scheduling and batching strategies for secure computation.",
+        "potential_conflict_zh": "HTC假设（如任务失效模型、I/O行为）可能与MPC场景下的安全/隐私约束不同；仿真结论需针对加密开销与轮次重新校准。",
+        "potential_conflict_en": "HTC assumptions (failure models, I/O behavior) may differ from MPC-specific security/privacy constraints; simulation conclusions must be recalibrated for cryptographic costs and protocol rounds.",
+        "full_text_questions_zh": [
+          "仿真框架的可配置参数（网络模型、任务时延分布、失败模型）有哪些？能否插入自定义通信成本/加密模型？",
+          "混合组合策略如何决策（启发式、学习策略或搜索）以及在线/离线开销？",
+          "实验是否包含WAN延迟、跨数据中心拓扑与不同故障率的评估？",
+          "如何从仿真策略映射到实际调度器/执行引擎（实现复杂度与兼容性）？"
+        ],
+        "full_text_questions_en": [
+          "Which parameters are configurable in the simulator (network model, task-duration distributions, failure models)? Can custom communication/cryptographic cost models be plugged in?",
+          "How are hybrid composition strategies decided (heuristic, learned policy or search) and what are the online/offline overheads?",
+          "Do experiments include WAN latencies, cross-datacenter topologies and varying failure rates?",
+          "How are simulation strategies mapped to a real scheduler/execution engine (implementation complexity and compatibility)?"
+        ],
+        "experiment_checks_zh": [
+          "验证仿真模型是否公开并可复现；检查网络与I/O模型是否与目标部署（例如MP-SPDZ）匹配。",
+          "对比多种DAG拓扑与任务分布，检查性能变化的一致性。",
+          "在引入模拟的MPC通信开销/轮次后重跑仿真，检查结论是否稳健。",
+          "验证策略的在线执行开销与收敛时间（若为学习策略）。"
+        ],
+        "experiment_checks_en": [
+          "Verify the simulator is published and reproducible; check whether network and I/O models match target deployments (e.g., MP-SPDZ).",
+          "Compare across diverse DAG topologies and task distributions to ensure consistent performance trends.",
+          "Rerun simulations after adding MPC communication/round costs to test robustness of conclusions.",
+          "Validate online execution overhead and convergence time if strategies are learned."
+        ],
+        "tracking_targets": [
+          "hybrid workflow composition strategies",
+          "HTC DAG simulation framework",
+          "multi-metric objective / Pareto frontier",
+          "throughput vs network-overhead results",
+          "artifacts & code release"
+        ],
+        "next_steps_zh": [
+          "获取并运行作者的仿真器，尝试插入MPC协议的通信/轮次成本模型。",
+          "用论文的多目标优化框架来权衡MPC中的轮次、通信和吞吐率目标。",
+          "将混合任务集合策略映射为MP-SPDZ或其他MPC运行时中的批处理/调度策略并进行小规模测试。"
+        ],
+        "next_steps_en": [
+          "Obtain and run the authors' simulator and plug in MPC protocol communication/round-cost models.",
+          "Use the paper's multi-objective framework to trade off rounds, communications and throughput in MPC.",
+          "Map hybrid taskset strategies to batching/scheduling policies in MP-SPDZ or other MPC runtimes and run small-scale tests."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.26849",
+        "version": 1,
+        "title": "ToxScreen: Detecting Whether an LLM Has Been Poisoned",
+        "authors": [
+          "Anthony Hughes",
+          "Nicole Xing",
+          "Collin Francel",
+          "Andy Kim",
+          "Andrew Draganov"
+        ],
+        "abstract": "As large language models (LLMs) are deployed in high-stakes domains, adversaries may poison training data to implant backdoors: hidden triggers that covertly manipulate model behavior at inference time. We ask whether a defender can recover such a trigger under realistic affordances, namely white-box access to the weights and knowledge of the behavior of concern, but no training data, no trusted reference model, no knowledge of the trigger, and no certainty that the model is poisoned. To evaluate whether a defender can recover such a trigger under realistic settings, we release ToxScreen, a benchmark of roughly 800 backdoored models spanning attack objectives, trigger mechanisms, poisoning rates, model scales, and backdoor training mechanisms. We also assert that the backdoors are high-quality: they achieve high attack success rates, generalize to unseen harmful inputs, and preserve clean-task performance. Scoring recovery of the planted trigger, we find that gradient-based prompt optimization fails in recovery, whereas a token look-up that ranks candidates by attack-success rate recovers the trigger wherever the backdoor is effective. To understand this more, we study the relationship between attack behaviors and the weights of an LLM. We find a phenomenon whereby backdoors operate via different mechanistic strategies than jailbreaks, allowing defenders to filter jailbreaks. Finally, no method reliably surfaces every backdoor, but a broadly jailbreakable model is itself anomalous, a useful signal even when the exact trigger is not recovered. We release all models and evaluation code",
+        "categories": [
+          "cs.CR",
+          "cs.LG"
+        ],
+        "published": "2026-07-29T12:35:58Z",
+        "updated": "2026-07-29T12:35:58Z",
+        "abstract_url": "https://arxiv.org/abs/2607.26849v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.26849v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.26849v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 6,
+        "confidence": 0.8,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "privacy-preserving machine learning",
+          "model integrity detection",
+          "protocol selection"
+        ],
+        "short_summary_zh": "ToxScreen 是一个包含约 800 个带后门（backdoor）模型的基准，用于评估在现实条件下是否能在没有训练数据、没有可信参考模型、且仅有白盒权重访问的条件下恢复后门触发器。作者发现基于梯度的 prompt 优化在恢复上失败，而基于 token 查找并按攻击成功率排序的方法在大多数有效后门上能恢复触发器。论文还分析了后门与 jailbreak 的机理差异，并发布了模型与代码。",
+        "short_summary_en": "ToxScreen is a benchmark of ~800 backdoored LLMs to study whether defenders (with white-box weight access but no training data or trusted model) can recover triggers. Gradient-based prompt optimization fails broadly; a token lookup ranked by attack success recovers triggers where backdoors are effective. The work analyzes mechanistic differences between backdoors and jailbreaks and releases models and code.",
+        "why_interesting_zh": "对在受限可见性条件下保证模型完整性的工程问题直接相关。若你做受保护环境中的 LLM 推理（例如通过 MPC 或加密推理），能够在没有原始训练数据的条件下鉴别或近似定位后门触发器，是一个关键能力——尤其当权重可白盒访问但运行约束（加密、量化）存在时。",
+        "why_interesting_en": "Directly relevant to model integrity for LLM inference in constrained settings. If you run LLMs under MPC/secure inference, detecting or recovering backdoor triggers without training data is crucial—especially when weights are available but evaluation is constrained by encryption/quantization.",
+        "relation_to_my_work_zh": "可参考其白盒检测策略和基准设计：在 MPC 场景中，可能需要把“触发器检测”转为可在受限（加密）权重下执行的协议，或把 token-lookup 类方法与安全验证（证明/审计）结合。",
+        "relation_to_my_work_en": "You can borrow the white-box detection strategies and benchmark methodology. In MPC contexts you might need to adapt detection into protocols that work with encrypted/obfuscated weights or combine token-lookup techniques with secure attestation/zero-knowledge proofs.",
+        "possible_transfer_zh": "1) 将 token 查找与攻击成功率评估整合进受保护推理流水线的离线审计流程；2) 设计在加密权重下的可验证检测协议（例如使用安全多方或同态运算对触发器候选进行黑盒测试）；3) 利用“异常可 jailbreak”作为模型异常性指标来触发更深层的审计/回滚。",
+        "possible_transfer_en": "1) Integrate token-lookup + attack-success scoring into offline audits for protected inference pipelines; 2) design verifiable detection protocols that operate on encrypted weights (via MPC/Homomorphic ops) to test trigger candidates; 3) use high jailbreakability as an anomaly signal to trigger further audits or rollback.",
+        "possible_overlap_or_conflict_zh": "若你的工作涉及模型供应链或合规性检测，可能与已有检测/防御工具目标重合；实践上白盒访问假设在某些部署（托管云、受限模型二进制）下并不成立，需要注意假设边界。",
+        "possible_overlap_or_conflict_en": "Overlaps with existing model-integrity detection efforts. Note the white-box access assumption may not hold in many deployments (hosted APIs, obfuscated binaries), so applicability depends on deployment constraints.",
+        "questions_to_verify_zh": [
+          "生成的 800 个后门模型的构造细节？覆盖哪些触发器类型、注入比例、模型规模与训练流程？",
+          "所谓“白盒权重访问”在 ToxScreen 中具体指什么？是否假定能够按词元/权重逐项读取？在加密/量化权重下方法是否可行？",
+          "token lookup 的搜索空间与计算成本如何？在大型词表或大模型上可否扩展到生产可行的审计流程？"
+        ],
+        "questions_to_verify_en": [
+          "Details on the ~800 backdoored models: what trigger types, poisoning rates, model scales, and training recipes are covered?",
+          "What exactly does ‘white-box weight access’ mean in their setup — is per-token/per-weight reading assumed? Would methods work with encrypted or quantized weights?",
+          "What is the computational/search cost of the token-lookup approach, and is it scalable to production-sized vocabularies and large models?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2607.26849v1",
+        "research_problem_zh": "在没有训练数据、没有可信参考模型、仅能白盒访问模型权重并知道可疑行为的情况下，能否恢复并识别植入LLM中的后门触发器？",
+        "research_problem_en": "Can a defender recover and detect backdoor triggers implanted in LLMs given white-box access to weights but no training data, no trusted reference model, no prior on the trigger, and uncertainty about whether a model is poisoned?",
+        "core_method_zh": "发布ToxScreen基准（约800个被植入后门的模型）用于评估触发器恢复方法；比较梯度基优化与基于token检索按攻击成功率排序的方法，发现token查找在后门有效时能恢复触发器，并研究后门在权重/行为上的表征差异（与jailbreak区分）。",
+        "core_method_en": "Release ToxScreen, a benchmark of ~800 backdoored LLMs to evaluate trigger-recovery methods; compare gradient-based prompt optimization vs token-lookup ranked by attack-success, finding token lookups can recover triggers when backdoors are effective, and study how backdoors manifest in weights/behavior differently from jailbreaks.",
+        "contributions_zh": [
+          "发布大规模后门模型基准ToxScreen并提供评估代码与模型。",
+          "系统评估恢复方法：发现梯度基的prompt优化在恢复上失败，而按攻击成功率排序的token查找能在有效后门下恢复触发器。",
+          "揭示后门在行为和权重上的机制性差异，并提出“广泛可jailbreak的模型”作为异常信号。"
+        ],
+        "contributions_en": [
+          "Release ToxScreen, a large benchmark of backdoored models with evaluation code and models.",
+          "Empirically evaluate recovery methods: gradient-based prompt optimization fails at recovery while token-lookups ranked by attack-success can recover triggers when backdoors are effective.",
+          "Characterize mechanistic differences between backdoors and jailbreaks in model behavior/weights and propose that broadly jailbreakable models are anomalous and useful signals even if triggers are not exactly recovered."
+        ],
+        "why_watch_zh": "对安全和隐私保留的LLM推理相关：若将LLM部署在受保护/加密推理框架（如MPC）中，模型是否含有后门仍是风险点。基准、检测方法和行为异常信号的发现可为私有推理部署前的模型审查提供参考。",
+        "why_watch_en": "Relevant to secure/private LLM inference: backdoors in models are a risk even when models are served through protected/encrypted inference (e.g., MPC). The benchmark, detection methods and behavioral anomaly signals can inform model vetting before private deployment.",
+        "direct_relation_zh": "中等偏低 — 主题属模型安全与后门检测，与MPC调度/运行时主题非直接重合，但对“隐私保护的模型推理/部署前审查”有实际关联。",
+        "direct_relation_en": "Medium–low direct relevance — focused on model security and backdoor detection rather than MPC scheduling/runtime; but relevant to privacy-preserving model inference and pre-deployment vetting of models used in MPC.",
+        "transferable_mechanisms_zh": [
+          "构建大规模对抗模型基准的实践（可用于评估在私有推理下的后门可见性）。",
+          "基于攻击成功率的黑盒/白盒token排名来定位触发器（可移植为私有推理场景下的检测工具）。",
+          "通过行为异常度量（如广泛可jailbreak性）作为弱信号进行异常检测。"
+        ],
+        "transferable_mechanisms_en": [
+          "Practices for building large-scale adversarial model benchmarks to evaluate detectability under private inference.",
+          "Token-ranking by attack-success as a method to locate triggers (can be adapted to private-inference detection tooling).",
+          "Using behavioral anomaly metrics (e.g., broadly jailbreakable) as weak signals for model anomaly detection."
+        ],
+        "potential_overlap_zh": "与“安全的LLM推理/隐私保护ML”主题重叠：在将模型用于MPC推理前需要检测后门；检测技术与评估流程可并入隐私保护部署管线。",
+        "potential_overlap_en": "Overlaps with secure LLM inference/privacy-preserving ML: models should be checked for backdoors prior to MPC-based inference; detection techniques and evaluation workflows can be integrated into private-deployment pipelines.",
+        "potential_conflict_zh": "若检测方法需对模型进行大量白盒操作或生成攻击样本，可能与某些对模型权重或推理过程保密的部署策略（法律或合约限制）发生冲突。",
+        "potential_conflict_en": "If detection methods require extensive white-box probing or generating attack samples, they may conflict with deployments that must keep model weights or inference processes confidential due to policy/contract constraints.",
+        "full_text_questions_zh": [
+          "ToxScreen模型是如何构造和分类的（后门类型、触发器形式、投毒率、模型规模分布）？",
+          "token查找按攻击成功率的具体实现细节：搜索空间、采样策略和计算成本如何？",
+          "梯度基方法为何失败，作者对机制性的解释是什么？",
+          "检测方法的误报/漏报率如何？在未被植入模型上会产生多少噪声信号？",
+          "这些检测方法能否在仅提供加密接口（如MPC黑箱推理）的情形下应用？"
+        ],
+        "full_text_questions_en": [
+          "How are ToxScreen models constructed and categorized (backdoor types, trigger forms, poisoning rates, model-size distribution)?",
+          "Details of the token-lookup by attack-success: search space, sampling strategy and computational cost?",
+          "Why do gradient-based methods fail and what mechanistic explanations do the authors offer?",
+          "What are false-positive/false-negative rates of the detection methods; how noisy are signals on clean models?",
+          "Can these detection methods be adapted to settings where only an encrypted/obfuscated inference interface (e.g., MPC black-box) is available?"
+        ],
+        "experiment_checks_zh": [
+          "检查ToxScreen数据集与模型是否公开与可复现，并核验后门的有效性指标（攻击成功率、对干净任务的保留）。",
+          "对比不同模型规模、触发器类型与投毒率下方法的检测率与误报率。",
+          "评估token查找方法的计算负载，是否在现实部署前可行。",
+          "验证在被防御/微调后的模型上检测方法是否仍有效（鲁棒性）。"
+        ],
+        "experiment_checks_en": [
+          "Check ToxScreen dataset/models are published and reproducible and verify backdoor efficacy metrics (attack success rate, clean-task retention).",
+          "Compare detection rates and false positives across model scales, trigger types and poisoning rates.",
+          "Measure computational cost of token-lookup method to assess feasibility in real deployments.",
+          "Verify robustness of detection on models that have been defended or fine-tuned."
+        ],
+        "tracking_targets": [
+          "ToxScreen benchmark (~800 backdoored models)",
+          "token-lookup recovery method",
+          "characterization of backdoor vs jailbreak behavior",
+          "released models & evaluation code"
+        ],
+        "next_steps_zh": [
+          "下载并审查ToxScreen基准与代码，评估是否能在MPC黑箱推理场景下重现相关检测信号。",
+          "将论文提出的异常信号（如广泛可jailbreak性）纳入模型上线审查流程以强化私有推理安全。",
+          "评估检测方法对在运行时通过MPC/TEE提供服务的模型的适用性与实现成本。"
+        ],
+        "next_steps_en": [
+          "Download and inspect ToxScreen benchmark and code to evaluate whether detection signals can be reproduced under MPC black-box inference.",
+          "Incorporate anomaly signals (e.g., broadly jailbreakable) into pre-deployment vetting for models intended for private inference.",
+          "Assess applicability and cost of these detection methods for models served via MPC/TEE at runtime."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.26639",
+        "version": 1,
+        "title": "Borrowed Strength: Best-of-N Search over a Code EncodingBreaks Self-Check Jailbreak Defenses",
+        "authors": [
+          "Haoyu Zhang",
+          "Shibo Zheng",
+          "Xiangchen Guan",
+          "Zhuoxi Wang",
+          "Zijian Xiao",
+          "Mohammad Zandsalimy",
+          "Shanu Sushmita"
+        ],
+        "abstract": "A self-check defense asks the target model to assess a request before answering it; SAGE, the strongest published instance, reports an average 99% defense success rate. We show it can be breached by composing two attacks that are individually harmless against it: an established code-completion encoding and an established best-of-N search, neither of which exceeds 4.7% of behaviors alone. Composed, with the search budget spent on the encoding, they reach 67/22/15% across three open targets, and the effect persists on a 70B target. We then explain the composition rather than only reporting it. First, a self-check defense borrows its strength from the target: SAGE does not detect the attack, it asks the model to, and the four targets convert that request into an explicit refusal between 32% and 97% of the time, which orders the spread in defended coverage even though undefended reach is near-identical. Second, which attack survives is decided by the type of defense, and it inverts: against transform defenses the code encoding retains far more of its undefended reach than the character search, while against gate defenses the ordering flips. We account for this with the number of independent probes an attack delivers to a defense's decision boundary. Finally, we report a validity defect we found and repaired in our own pipeline, a deterministic attack under greedy decoding has no best-of-N variation channel at all, and give the one-line diagnostic that detects it. All claims rest on 310,000 generations scored by a human-validated judge.",
+        "categories": [
+          "cs.AI",
+          "cs.CR"
+        ],
+        "published": "2026-07-29T09:01:26Z",
+        "updated": "2026-07-29T09:01:26Z",
+        "abstract_url": "https://arxiv.org/abs/2607.26639v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.26639v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.26639v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 6,
+        "systems_score": 6,
+        "confidence": 0.83,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "privacy-preserving machine learning",
+          "adaptive systems",
+          "LLM serving systems"
+        ],
+        "short_summary_zh": "基于标题与摘要：本文展示了对“自检”型拒绝防护（以SAGE为代表）的新攻击——将两个单独几乎无害的策略（代码补全型编码与best-of-N搜索）组合后，能显著突破防护，且作者分析了为何组合有效并报告了实证与一个修复性诊断。论文结果基于约31万次生成并有人类验证判断。",
+        "short_summary_en": "Based on the title and abstract: the paper shows that a strong self-check jailbreak defense (SAGE) can be broken by composing two individually weak attack primitives (a code-completion encoding and a best-of-N search). The authors analyze why the composition works, relate attack success to defense type, report a reproducibility/diagnostic fix, and support claims with ~310k human-judged generations.",
+        "why_interesting_zh": "这篇工作切入点与安全的LLM推理直接相关：它揭示了组合式攻击如何绕过模型自检，分析了防御决策边界的成因，能为设计更强的在线/运行时防护机制提供启发。对想做安全推理或部署安全LLM推断的系统研究者很有价值。",
+        "why_interesting_en": "This is directly relevant to secure LLM inference: it demonstrates how compositional attack strategies can defeat model self-check defenses, analyzes the underlying decision-boundary mechanisms, and provides diagnostics. That can inform stronger runtime defenses for deployed LLM services.",
+        "relation_to_my_work_zh": "基于标题与摘要：若你的研究方向涉及安全LLM推理或运行时防护（例如在私有/受限环境下的对话代理），本文提供可借鉴的攻击/防御分析方法；如果专注于MPC的安全推理，实现安全LLM服务时也应考虑这些合成攻击向量。",
+        "relation_to_my_work_en": "Based on the title and abstract: if you work on secure LLM inference or runtime defenses (including private or MPC-backed inference), the attack taxonomy and diagnostic may be relevant. For MPC-based LLM serving, the paper highlights threat modes that runtime self-checks alone may not mitigate.",
+        "possible_transfer_zh": "可迁移点包括：对防御决策边界（model-as-verifier）进行定量分析的思路；best-of-N与编码器组合作为面对交互式防护的攻击模型；以及用于在线检测的轻量诊断方法。",
+        "possible_transfer_en": "Transferable ideas: quantitative analysis of defense decision boundaries (model-as-verifier), composing sampling/search strategies as an attack model against interactive defenses, and simple diagnostics to detect deterministic best-of-N failure modes.",
+        "possible_overlap_or_conflict_zh": "可能与现有自检/拒绝策略工作重叠，需确认比较基线与目标模型集合；若后续对抗性训练或新防御已发布，结果可能冲突。",
+        "possible_overlap_or_conflict_en": "Potential overlap/conflict with prior work on self-check defenses and any newer post-abstract defenses; check which baselines and model checkpoints were used and whether newer mitigations exist.",
+        "questions_to_verify_zh": [
+          "基于摘要：作者使用了哪些具体模型与版本？是否包含 closed-weight targets？",
+          "防御被击穿的衡量指标与阈值如何定义（例如“防护成功率”如何计算）？",
+          "best-of-N与编码的参数选择对成功率有多敏感？是否在多种采样/解码策略下复现？",
+          "人类评判的标准与质量控制如何执行？是否公开判定集？"
+        ],
+        "questions_to_verify_en": [
+          "Based on the abstract: which exact model checkpoints and sizes were tested (open vs closed weights)?",
+          "How is the defense ‘success rate’ defined and measured in the experiments?",
+          "How sensitive are attack success rates to best-of-N budget, encoding choices, and decoding strategy?",
+          "What were the human-judging protocols and can the judged dataset or rubrics be inspected?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
