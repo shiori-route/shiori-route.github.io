@@ -1,0 +1,763 @@
+{
+  "date": "2026-07-31",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 8,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2607.28191",
+        "version": 1,
+        "title": "Secure Aggregation for Privacy-Preserving Federated Learning on Clinical EEG Data",
+        "authors": [
+          "Pouya Rajabi",
+          "Mohsen Toorani"
+        ],
+        "abstract": "Federated learning enables multiple institutions to train shared models without exchanging raw clinical EEG data, but it does not fully prevent privacy leakage from individual model updates. This paper presents a privacy-preserving federated learning framework for clinical EEG data using masking-based secure aggregation as the core protection mechanism. The framework combines graph-based communication, threshold secret sharing, dropout-resilient aggregation, local update clipping, an optional Bloom filter-based privacy-preserving record-linkage initialization module, and auxiliary-notary-based verifiability. It supports both semi-honest and malicious aggregation settings and is implemented using the Flower federated learning framework. The secure-aggregation variants are evaluated in a simulated cross-silo healthcare setting using TUH EEG-derived data under different client configurations. Under the stated assumptions, the secure variants hide individual updates from the aggregation server. The results show that these variants remain compatible with federated model training, although malicious-setting safeguards and lightweight consistency-checking mechanisms introduce additional computation, communication, and round-duration overhead. The semi-honest variant provides the lowest overhead among the secure configurations, while malicious and auxiliary-notary variants offer stronger consistency, integrity, and lightweight verification support at higher cost.",
+        "categories": [
+          "cs.CR",
+          "cs.DC",
+          "cs.LG"
+        ],
+        "published": "2026-07-30T13:28:39Z",
+        "updated": "2026-07-30T13:28:39Z",
+        "abstract_url": "https://arxiv.org/abs/2607.28191v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.28191v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.28191v1",
+        "relevance_score": 10,
+        "novelty_score": 7,
+        "transferability_score": 9,
+        "systems_score": 9,
+        "confidence": 0.81,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure multiparty computation",
+          "secure computation",
+          "secure aggregation",
+          "MPC runtime",
+          "communication rounds",
+          "round complexity",
+          "dropout-resilient aggregation",
+          "WAN latency"
+        ],
+        "short_summary_zh": "基于题目与摘要：本文提出一个用于临床EEG数据的隐私保护联邦学习框架，以掩码型安全聚合为核心，结合图式通信（graph-based communication）、阈值秘密共享、对丢失/下线的鲁棒聚合、本地更新裁剪、可选的布隆过滤器隐私记录链接初始化模块，以及辅助公证人实现可验证性。支持半诚实与恶意聚合设置，并在Flower框架下实现；在模拟的跨机房（cross-silo）医疗场景与TUH EEG派生数据上评估，报告了安全性保证与不同安全配置在计算、通信与轮时长上的额外开销。摘要有限制：仅基于标题与摘要。",
+        "short_summary_en": "Title-and-abstract-based: The paper presents a privacy-preserving federated learning framework for clinical EEG data centered on masking-based secure aggregation. It integrates graph-based communication, threshold secret sharing, dropout-resilient aggregation, local update clipping, an optional Bloom-filter PRL initialization, and auxiliary-notary verifiability. It claims support for semi-honest and malicious aggregation settings, implements the variants in the Flower FL framework, and evaluates them in simulated cross-silo settings on TUH-derived EEG data reporting overhead trade-offs. Analysis limited to title/abstract.",
+        "why_interesting_zh": "与MPC/安全聚合直接相关：摘要描述了若干实用工程措施（掩码聚合、阈值共享、dropout鲁棒性、验证机制），并讨论了半诚实与恶意场景下的开销权衡。若你做MPC运行时、协议选择或WAN部署，此文可能包含可移植的实现细节与实测性能数据。基于摘要。",
+        "why_interesting_en": "Directly relevant to secure aggregation and MPC runtimes: the abstract outlines practical components (masking-based aggregation, threshold sharing, dropout tolerance, local clipping, Bloom-filter PRL, auxiliary notaries) and evaluates trade-offs under semi-honest vs malicious settings. For work on MPC runtime, protocol selection, WAN deployment, and round complexity, this could provide transferable implementation patterns and measured overheads. Title-and-abstract-based.",
+        "relation_to_my_work_zh": "高度相关。如果你的研究涉及MPC协议在跨机房/低带宽高延迟网络中的部署、secure aggregation实现或运行时调度，此论文的实现选择与评估方法值得深入阅读并可能直接借鉴到MP-SPDZ或类似运行时中。基于摘要。",
+        "relation_to_my_work_en": "Highly relevant. If you work on deploying MPC/secure aggregation across data centers or WANs, or on secure aggregation implementations and runtime scheduling (MP-SPDZ, compilers, DAG execution), the described design choices and empirical overheads are potentially directly applicable. Analysis title-and-abstract-based.",
+        "possible_transfer_zh": "可迁移点包括：掩码型安全聚合与阈值共享的组合实现技巧，dropout-鲁棒聚合策略，布隆过滤器做私有记录链接的思路，辅助公证人用于轻量可验证性；这些均可整合入MPC运行时以改进可用性与部署健壮性。基于摘要。",
+        "possible_transfer_en": "Transferable ideas: combinations of masking-based aggregation with threshold secret sharing, dropout-resilient aggregation algorithms, Bloom-filter-based privacy-preserving record linkage for client initialization, and auxiliary-notary verifiability — all applicable to MPC runtimes to improve robustness and verifiability. Title-and-abstract-based.",
+        "possible_overlap_or_conflict_zh": "可能与已有secure-aggregation或MPC聚合实现（研究或工程）在功能上重叠；若你已有类似实现，须对比协议假设（半诚实/恶意）、通信拓扑（graph-based comms）和效率测度。若你的工作旨在理论证明则本工作更偏工程实现与评测。基于摘要。",
+        "possible_overlap_or_conflict_en": "Likely overlap with other secure-aggregation/MPC aggregation implementations. If you have existing implementations, compare threat models (semi-honest vs malicious), comms topology (graph-based), and measured overheads. This paper appears engineering-focused rather than theoretical. Title-and-abstract-based.",
+        "questions_to_verify_zh": [
+          "掩码型安全聚合的具体协议细节（掩码生成/撤销、密钥管理）是什么？",
+          "图式通信（graph-based communication）指的拓扑与路由策略如何设计？是否优化了WAN下的轮次/带宽？",
+          "在恶意设置中如何实现阈值秘密共享与辅助公证人的交互，代价是多少？",
+          "dropout-鲁棒聚合的数学保证与在不同客户端丢失率下的实验结果如何？",
+          "论文提供实现代码、基准脚本或在Flower上的插件以便复现吗？若有，测量的是哪类网络/延迟/带宽配置？"
+        ],
+        "questions_to_verify_en": [
+          "What are the precise protocol mechanics for the masking-based secure aggregation (mask generation, reveal, key management)?",
+          "What topology and routing does 'graph-based communication' denote; does it optimize rounds/bandwidth for WAN deployments?",
+          "In malicious settings, how is threshold secret sharing integrated with auxiliary notaries, and what are the interaction and performance costs?",
+          "What formal guarantees (if any) does the dropout-resilient aggregation provide, and how do results vary with client dropout rates?",
+          "Is the implementation (Flower plugins, scripts) available for reproduction, and what network/delay/bandwidth configurations were used in measurements?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2607.28191v1",
+        "research_problem_zh": "基于联邦学习的临床EEG模型训练在不共享原始数据的前提下仍可能通过模型更新泄露个体隐私。论文旨在为跨机构临床EEG联邦学习提供一个保护个体更新的安全聚合框架，同时兼顾掉线容忍与可验证性。 （仅基于标题和摘要的分析）",
+        "research_problem_en": "Federated learning for clinical EEG can leak private information via model updates. The paper aims to provide a masking-based secure-aggregation framework for cross-silo EEG federated learning that preserves privacy of individual updates while supporting dropout resilience and verifiability. (Analysis based only on title+abstract)",
+        "core_method_zh": "以掩码（masking-based）安全聚合为核心，结合图式通信（graph-based communication）、阈值秘密分享（threshold secret sharing）、对客户端掉线容忍的聚合、局部更新裁剪、可选的基于Bloom filter的隐私记录关联初始化，以及辅助公证人（auxiliary-notary）机制来实现一致性/可验证性。实现基于Flower框架并在模拟跨筒仓（cross-silo）TUH EEG数据上评估。",
+        "core_method_en": "Uses masking-based secure aggregation as the core, augmented with graph-based communication, threshold secret sharing, dropout-resilient aggregation, local-update clipping, an optional Bloom-filter-based privacy-preserving record-linkage initialization, and auxiliary-notary verifiability. Implemented on Flower and evaluated in a simulated cross-silo TUH EEG setting. (From title+abstract)",
+        "contributions_zh": [
+          "提出一个面向临床EEG的隐私保护联邦学习框架，核心为掩码式安全聚合。",
+          "设计并实现了半诚实和恶意聚合两类变体，以及辅助公证人可验证性模块和可选的Bloom filter初始模块。",
+          "在模拟跨筒仓（cross-silo）配置下以TUH EEG派生数据进行实现和评估，报告了计算、通信和轮次时长开销。",
+          "分析了半诚实变体与恶意/公证人变体在开销与一致性/完整性保障间的权衡。"
+        ],
+        "contributions_en": [
+          "A privacy-preserving federated learning framework for clinical EEG centered on masking-based secure aggregation.",
+          "Design and implementation of semi-honest and malicious-setting aggregation variants, an auxiliary-notary verifiability option, and an optional Bloom-filter-based privacy-preserving record-linkage initialization.",
+          "Implementation on the Flower framework and evaluation in simulated cross-silo settings using TUH EEG-derived data; reported computation, communication, and round-duration overheads.",
+          "Characterization of trade-offs: lowest overhead for semi-honest variant vs. stronger integrity/consistency for malicious/notary variants at increased cost."
+        ],
+        "why_watch_zh": "基于标题与摘要：对研究者关注将安全聚合部署到跨机构医疗场景（掉线、多种威胁模型）很有价值。其对掩码、阈值分享、掉线容忍与轻量级可验证性组合的工程化描述，对想把MPC/秘密分享机制集成到联邦训练或生产系统的人士有直接参考价值。",
+        "why_watch_en": "Based on title+abstract: Valuable for researchers/practitioners who want to deploy secure aggregation in cross-silo medical settings (dropout, different threat models). The combination of masking, threshold sharing, dropout resilience and lightweight verifiability is engineerable and relevant for those integrating secret-sharing/MPC techniques into federated training or production systems.",
+        "direct_relation_zh": "与主要主题的直接关系：中高。安全聚合与阈值秘密分享属于安全计算/秘密分享范畴，直接相关；但摘要未提及通用MPC实现（如MP-SPDZ）、编译器或轮次复杂度的形式化分析。",
+        "direct_relation_en": "Direct relation to primary topics: medium–high. Secure aggregation and threshold secret sharing are within secure computation/secret-sharing scope and thus directly relevant. However, the abstract does not mention general-purpose MPC runtimes (e.g., MP-SPDZ), MPC compilers, or formal round-complexity analysis.",
+        "transferable_mechanisms_zh": [
+          "掩码式安全聚合的工程实现与部署经验（可移植到其他联邦/分布式聚合场景）。",
+          "阈值秘密分享与掉线容忍的组合策略（对长WAN延迟或不稳定节点有借鉴）。",
+          "局部更新裁剪与带宽/通信优化策略。",
+          "Bloom filter用于隐私记录关联的初始化方法（可移用于隐私联邦数据对齐）。",
+          "辅助公证人机制作为轻量可验证性方案，可迁移到需要审计/一致性检查的分布式隐私系统。"
+        ],
+        "transferable_mechanisms_en": [
+          "Engineering and deployment patterns for masking-based secure aggregation (applicable to other federated/distributed aggregation scenarios).",
+          "Combination strategies of threshold secret sharing with dropout-resilient aggregation (useful under WAN latency/unreliable nodes).",
+          "Local update clipping as a bandwidth/communication mitigation tactic.",
+          "Bloom-filter-based privacy-preserving record linkage for initialization/data alignment.",
+          "Auxiliary-notary lightweight verifiability for auditability and consistency checks in privacy-preserving distributed systems."
+        ],
+        "potential_overlap_zh": "与隐私保护机器学习、联邦学习安全聚合文献高度重合；与MPC/秘密分享实现的工程整合问题（部署、网络开销、掉线处理）存在交叉。",
+        "potential_overlap_en": "High overlap with privacy-preserving ML and secure aggregation literature; intersects with engineering/integration questions for MPC/secret-sharing deployments (deployment, network overhead, dropout handling).",
+        "potential_conflict_zh": "摘要中的安全/性能结论基于“在所述假设下”——部署假设或威胁模型若与目标系统不同，性能/安全性结论可能不适用。文中可能使用模拟网络环境，真实WAN环境效果可能不同。",
+        "potential_conflict_en": "Security/performance claims are qualified by “under stated assumptions” — if threat model or deployment assumptions differ, security or performance conclusions may not transfer. Evaluation appears simulated; real WAN behavior may diverge.",
+        "full_text_questions_zh": [
+          "掩码方案的具体协议（掩码生成/撤销）与安全证明细节是什么？",
+          "阈值秘密分享的参数（门限、字段大小）如何选择？对安全性证明有何依赖？",
+          "系统如何在通信轮次上组织协议？轮次数与每轮大小是多少？",
+          "掉线场景的处理流程和对全局收敛/精度的影响如何量化？",
+          "Bloom filter PRL模块的假阳性率与整体训练精度/带宽之间的权衡如何？",
+          "辅助公证人的信任假设、部署成本与攻击面有哪些？",
+          "评估是否在真实WAN或仿真网络；指标是否包含端到端延迟、带宽使用与轮次时长的细分？",
+          "如何与现有通用MPC框架（例如MP-SPDZ、EMP）或分布式安全库集成？是否有API/接口说明？"
+        ],
+        "full_text_questions_en": [
+          "What are the exact masking protocol steps and any formal security proofs or reduction assumptions?",
+          "What threshold secret-sharing parameters are used (threshold, field), and how are they chosen with security guarantees?",
+          "How is the protocol organized in communication rounds? What are the number of rounds and per-round message sizes?",
+          "How does dropout handling affect convergence/accuracy and what are quantitative trade-offs?",
+          "What is the Bloom-filter PRL false-positive rate and its impact on accuracy and bandwidth?",
+          "What are the trust assumptions, deployment architecture and attacker model for the auxiliary-notary mechanism?",
+          "Was evaluation performed on real WAN links or only simulated networks? Are per-round latencies and bandwidth breakdowns reported?",
+          "How would this system integrate with general-purpose MPC runtimes (e.g., APIs, secret-sharing formats)?"
+        ],
+        "experiment_checks_zh": [
+          "验证安全性声明：在半诚实与恶意设定下是否真的隐藏单个更新（需要实测或攻击模拟）。",
+          "在不同客户端数量、dropout率和通信带宽下，给出每轮时长、总通信量与CPU开销分解。",
+          "测试在真实WAN（高延迟/低带宽）场景下的性能，并与模拟结果对比。",
+          "评估Bloom filter PRL的误差率对隐私与训练质量的影响。",
+          "测量辅助公证人机制的额外通信与信任边界，以及对一致性检查的覆盖率。"
+        ],
+        "experiment_checks_en": [
+          "Verify security claims: empirically test whether individual updates are hidden under semi-honest and malicious settings (e.g., attack simulations).",
+          "Report per-round duration, total communication, and CPU costs across varying client counts, dropout rates, and bandwidth limits.",
+          "Evaluate performance on real WAN links (high-latency/low-bandwidth) and compare to simulated results.",
+          "Measure Bloom-filter PRL false-positive/negative rates and impacts on privacy and model quality.",
+          "Quantify auxiliary-notary overhead (communication, compute) and the extent of consistency/integrity coverage."
+        ],
+        "tracking_targets": [
+          "masking-based secure aggregation variants",
+          "threshold secret-sharing + dropout-resilience design",
+          "Bloom-filter PRL initialization",
+          "auxiliary-notary verifiability module",
+          "reported per-variant overhead numbers (compute, comm, round-duration)"
+        ],
+        "next_steps_zh": [
+          "获取并阅读论文全文，重点阅读安全证明、协议轮次和消息格式。",
+          "检查实现（如果开源）以查看与常见MPC/秘密分享格式的兼容性，评估与MP-SPDZ或其他运行时集成的可行性。",
+          "在真实WAN环境或跨区域云实例上复现关键实验，关注轮次时长与带宽瓶颈。",
+          "评估将其dropout与可验证性模块迁移到需要轮次合并/延迟掩盖的MPC推理任务（例如安全LLM推理）的可行性。"
+        ],
+        "next_steps_en": [
+          "Obtain and read the full paper, focusing on security proofs, protocol rounds and message formats.",
+          "If implementation is public, inspect compatibility with common MPC/secret-sharing formats and assess integration feasibility with MP-SPDZ or other runtimes.",
+          "Reproduce key experiments on real WAN links or cross-region cloud instances to study round duration and bandwidth bottlenecks.",
+          "Evaluate adapting dropout-resilience and verifiability modules to MPC inference workloads (e.g., secure LLM inference) where round coalescing and network-aware runtime matter."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.28150",
+        "version": 1,
+        "title": "SmartGen: Seamless Disaggregated LLM Inference with Selective KV Cache Transfer",
+        "authors": [
+          "Xuchuan Luo",
+          "Jiacheng Shen",
+          "Xin Wang",
+          "Yangfan Zhou"
+        ],
+        "abstract": "Disaggregating the prefill and decoding stages of large language model (LLM) inference into two separate sets of nodes is widely adopted in today's LLM serving systems. However, such an architecture poses significant challenges for self-hosted LLM deployments on rented cloud instances, since transferring enormous key-value (KV) caches between disaggregated nodes can easily saturate the limited inter-node network bandwidth. In this paper, we propose to mitigate the network bottleneck by selectively transferring essential KV cache entries across the two stages. There are two challenges to achieve selective KV cache transfer, i.e., accurate KV selection during the prefill stage, and efficient KV fetching during the decoding stage. To address these challenges, we design SmartGen, a KV cache transfer engine that allows seamless disaggregated LLM inference with three data transfer paths. Specifically, we leverage 1) a profile-based proactive transfer path to identify and push essential KV cache entries to the decoding node during the prefill stage, 2) a parallel on-demand transfer path to simultaneously fetch remote and local KV cache entries during the decoding stage, and 3) a speculative transfer path to finally deliver all KV caches to the decoding node. Experimental results show that SmartGen reduces time-to-second-token by up to 4.3x compared with the typical full KV cache transfer approach while offering comparable subsequent decoding performance and accuracy.",
+        "categories": [
+          "cs.DC"
+        ],
+        "published": "2026-07-30T12:56:05Z",
+        "updated": "2026-07-30T12:56:05Z",
+        "abstract_url": "https://arxiv.org/abs/2607.28150v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.28150v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.28150v1",
+        "relevance_score": 9,
+        "novelty_score": 8,
+        "transferability_score": 9,
+        "systems_score": 9,
+        "confidence": 0.85,
+        "priority": "deep_read",
+        "matched_topics": [
+          "network-aware runtime",
+          "communication and computation overlap",
+          "latency hiding",
+          "RPC batching",
+          "pipeline execution",
+          "WAN latency"
+        ],
+        "short_summary_zh": "基于题目与摘要：SmartGen提出在预填充(prefill)与解码(disaggregate)分离的LLM推理架构中，选择性传输关键KV缓存条目以缓解跨节点带宽瓶颈。设计包含三条数据路径：基于profile的预推送、解码时的并行按需获取，以及最终的投机性全量传输。作者报告相较于完整KV传输，在time-to-second-token上最高可加速4.3倍，同时保持解码性能与准确性。",
+        "short_summary_en": "Based on title and abstract: SmartGen addresses the network bottleneck in disaggregated LLM inference by selectively transferring essential KV cache entries between prefill and decoding nodes. It implements three transfer paths: a profile-based proactive push during prefill, a parallel on-demand fetch during decoding, and a speculative full transfer as fallback. The authors claim up to 4.3x reduction in time-to-second-token versus full-KV transfer with comparable decoding performance. (Title+abstract only)",
+        "why_interesting_zh": "直接对应网络感知运行时、延迟隐藏与通信/计算重叠等关键问题；选择性状态传输的思想可能直接迁移到需要跨节点传输大状态（例如MPC的中间状态、秘钥/缓存等）的系统以降低WAN带宽需求与初始延迟。",
+        "why_interesting_en": "Directly relevant to network-aware runtimes, latency hiding, and overlapping communication with computation. The selective-state-transfer approach could be applied to systems that must move large state across nodes (for example MPC intermediate state or caches) to reduce WAN bandwidth and startup latency. (Title+abstract only)",
+        "relation_to_my_work_zh": "高度相关：思路可用于设计MPC/隐私推理场景下的分离化部署（如precompute/online节点），通过预测/配置重要状态条目来减少跨节点传输并降低time-to-first/second-token类延迟。",
+        "relation_to_my_work_en": "Highly relevant: the approach can inform designs for disaggregated MPC or private inference deployments (precompute vs online nodes) by predicting/packing essential state to reduce cross-node transfers and startup latency. (Title+abstract only)",
+        "possible_transfer_zh": "可将三路径策略迁移为：1) 基于历史或模型剖面的预传输重要秘密/预计算结果，2) 解码/在线阶段的并行按需获取以掩盖网络延迟，3) 异步/投机性同步以保证完整性；需验证安全/一致性影响。",
+        "possible_transfer_en": "Possible transfers: (1) profile-based proactive pushing of essential secrets/precomputes, (2) parallel on-demand fetching during online phase to hide latency, (3) speculative/asynchronous full synchronization as fallback — but security and consistency implications must be examined. (Title+abstract only)",
+        "possible_overlap_or_conflict_zh": "若MPC部署对状态保密性与一致性有严格要求，选择性传输机制需额外设计以保证泄露与同步安全，可能与安全模型产生冲突。",
+        "possible_overlap_or_conflict_en": "Selective transfer may conflict with strict secrecy/consistency requirements in MPC deployments; ensuring no unintended leakage or race conditions will require protocol-level adjustments. (Title+abstract only)",
+        "questions_to_verify_zh": [
+          "如何准确选择“关键KV条目”？profile生成的特征与适应性如何定义？",
+          "并行按需路径的延迟/带宽开销与实现复杂度如何权衡？",
+          "投机性全传输作为fallback的触发条件与对吞吐/并发会话的影响是什么？",
+          "在存在丢包/网络抖动或节点失效情况下，正确性与一致性如何保证？是否对安全性或隐私有额外风险？",
+          "实验对比的基线、模型规模、网络拓扑与带宽假设有哪些？"
+        ],
+        "questions_to_verify_en": [
+          "How are ‘essential’ KV entries selected accurately — what profile features and adaptation mechanisms are used?",
+          "What are the latency/bandwidth costs and implementation complexity trade-offs of the parallel on-demand path?",
+          "What are the trigger conditions and throughput/concurrency impacts of the speculative full transfer fallback?",
+          "How is correctness and consistency ensured under packet loss, jitter, or node failure, and are there added security/privacy risks?",
+          "What baselines, model scales, and network topologies/bandwidth assumptions are used in experiments?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2607.28150v1",
+        "research_problem_zh": "在分离预填（prefill）和解码（decoding）阶段的分离式LLM推理部署中，跨节点传输巨大的键值（KV）缓存会耗尽节点间网络带宽。论文提出选择性传输关键KV缓存条目以缓解网络瓶颈，同时保证解码性能。 （仅基于标题和摘要）",
+        "research_problem_en": "Disaggregated LLM inference that splits prefill and decoding stages suffers from heavy KV cache transfers that can saturate inter-node bandwidth. The paper proposes selective transfer of essential KV cache entries to mitigate this while preserving decoding performance. (Analysis based only on title+abstract)",
+        "core_method_zh": "提出SmartGen KV缓存传输引擎，采用三条数据路径：1）基于剖面（profile）的主动预推路径，在预填阶段识别并推送重要KV项；2）并行按需路径，在解码阶段并行获取远程与本地KV；3）投机传输路径以最终将所有KV送达解码节点。通过多路径并行与预测减少time-to-second-token。",
+        "core_method_en": "Designs SmartGen, a KV cache transfer engine with three data paths: (1) profile-based proactive transfer during prefill to push essential entries, (2) parallel on-demand transfer to concurrently fetch remote and local entries during decoding, and (3) a speculative transfer path to eventually deliver full KV cache to the decoding node. Aims to reduce time-to-second-token by selective transfer and overlap. (From title+abstract)",
+        "contributions_zh": [
+          "提出并实现SmartGen，一种允许无缝分离式LLM推理的选择性KV传输引擎。",
+          "设计三种互补的数据传输路径（剖面主动推送、并行按需拉取、投机完成传输）。",
+          "在实验中显示相比完整KV传输，time-to-second-token最多可以降低4.3×，且后续解码性能与准确性保持相当。"
+        ],
+        "contributions_en": [
+          "Propose and implement SmartGen, a selective KV cache transfer engine enabling seamless disaggregated LLM inference.",
+          "Design of three complementary transfer paths: profile-based proactive push, parallel on-demand fetch, and speculative completion transfer.",
+          "Empirical results showing up to 4.3× reduction in time-to-second-token versus full KV transfer while maintaining comparable downstream decoding performance and accuracy."
+        ],
+        "why_watch_zh": "基于标题与摘要：虽不属于安全计算核心，但SmartGen提出的预测驱动预取、并行按需拉取与投机补全策略，为需要在高延迟/低带宽下隐藏通信延迟的系统（包括分布式MPC runtimes、分离式安全推理）提供有价值的工程思路。",
+        "why_watch_en": "Based on title+abstract: While not in core secure computation, SmartGen’s profile-driven prefetch, parallel on-demand fetching and speculative completion strategies offer design patterns useful for systems that need to hide communication latency under high-latency/low-bandwidth links (including disaggregated MPC runtimes or separated secure inference).",
+        "direct_relation_zh": "与主要主题的直接关系：中等偏低（机制可迁移）。论文本身是分布式/系统层面对于LLM缓存传输的优化，和安全MPC的直接题目交集有限，但其延迟隐藏、选择性传输和并行拉取策略对网络感知MPC运行时、KV样式状态的安全传输规划有参考价值。",
+        "direct_relation_en": "Direct relation to primary topics: low–moderate (mechanism-transferable). The paper targets LLM cache transfer optimization; it does not address secure computation directly, but its latency-hiding, selective-transfer, and parallel-fetch mechanisms are applicable to network-aware MPC runtimes and secure state transfer problems.",
+        "transferable_mechanisms_zh": [
+          "Profile-based预测与主动预取以提前移动关键状态。",
+          "并行按需拉取（overlap fetch）以减少关键路径阻塞。",
+          "投机性补全以最终保证完整状态可用，兼顾低时延与一致性。",
+          "多路径组合策略：优先传输最关键条目并渐进补足全量数据。",
+          "衡量指标和实验方法（time-to-second-token、后续解码质量对比）。"
+        ],
+        "transferable_mechanisms_en": [
+          "Profile-based prediction and proactive prefetching of critical state.",
+          "Parallel on-demand fetching to overlap network fetches with local work and reduce critical-path stalls.",
+          "Speculative completion transfers to eventually deliver full state while optimizing early latency.",
+          "Multi-path combination strategy: prioritize critical entries first then progressively complete full state.",
+          "Evaluation metrics and methodology (time-to-second-token and downstream quality comparisons)."
+        ],
+        "potential_overlap_zh": "与延迟隐藏、预取/缓存一致性、管道式执行和网络感知运行时的研究存在重合；可与MPC运行时中KV样式中间状态搬迁研究交叉。",
+        "potential_overlap_en": "Overlaps with work on latency hiding, prefetch/caching consistency, pipeline execution and network-aware runtimes; can intersect with MPC runtimes that must move KV-like intermediate state between stages. ",
+        "potential_conflict_zh": "LLM KV缓存通常不涉及机密搬迁的信任/加密需求；若将这些机制直接用于机密/秘密分享状态，需要额外考虑加密、带宽代价和安全模型。论文的预测/投机策略在隐私敏感场景下可能需重新设计以满足安全约束。",
+        "potential_conflict_en": "LLM KV caches are typically not protected with the same confidentiality assumptions as secret-shared state; applying these techniques to confidential/secret-shared state requires additional cryptographic considerations and may change bandwidth/latency trade-offs. Prediction/speculation strategies may need redesign under strict security models.",
+        "full_text_questions_zh": [
+          "profile-based预测器如何构建？使用何种历史信息和特征？预测准确率如何随序列长度变化？",
+          "如何判定某个KV条目为“必要”？是否有误判成本度量？",
+          "并行按需路径的并发控制和限流策略怎样实现以避免网络拥塞？",
+          "投机路径在何时触发？对带宽与资源占用的终态开销如何量化？",
+          "系统在多客户端/多解码节点场景下的可伸缩性如何？",
+          "在恶劣网络（高丢包/高抖动）条件下效果如何？"
+        ],
+        "full_text_questions_en": [
+          "How is the profile-based predictor constructed? What history/features are used and how does accuracy vary with sequence length?",
+          "How is an entry classified as “essential”? What are costs for false positives/negatives?",
+          "How is concurrency control/flow control implemented for the parallel on-demand path to avoid network congestion?",
+          "When is the speculative path triggered and what is the final bandwidth/resource cost?",
+          "How does the system scale to multiple clients/decoding nodes?",
+          "How robust is performance under poor network conditions (loss/jitter)?"
+        ],
+        "experiment_checks_zh": [
+          "测量profile预测的命中率/误报率及其与time-to-second-token的相关性。",
+          "在不同网络带宽/延迟/抖动条件下对比SmartGen与全量迁移与纯按需策略的延迟与带宽使用。",
+          "评估并行按需拉取对CPU/内存占用与网络突发的影响。",
+          "复现实验以确保投机传输不会在大规模部署下导致不可接受的带宽浪涌。"
+        ],
+        "experiment_checks_en": [
+          "Measure profile predictor hit-rate/false positive rate and correlate with time-to-second-token improvements.",
+          "Compare SmartGen vs full-transfer and pure on-demand strategies under varying bandwidth/latency/jitter conditions for latency and bandwidth utilization.",
+          "Evaluate CPU/memory overhead and network burst behavior induced by parallel on-demand fetches.",
+          "Reproduce experiments to verify speculative transfers do not cause unacceptable bandwidth surges at scale."
+        ],
+        "tracking_targets": [
+          "profile-based proactive transfer hit-rate",
+          "time-to-second-token reduction numbers (up to 4.3×)",
+          "parallel on-demand fetch latency overlap statistics",
+          "speculative completion bandwidth cost",
+          "downstream decoding quality/accuracy metrics"
+        ],
+        "next_steps_zh": [
+          "获取论文全文并审查预测器设计与选择准则。",
+          "考虑将profile-driven预取与并行按需拉取思想移植到需要在WAN上移动机密中间状态（秘密分享、MPC KV）场景，评估加密/带宽影响。",
+          "在目标部署网络（跨区域云）复现基线实验以验证带宽/延迟收益。"
+        ],
+        "next_steps_en": [
+          "Obtain the full paper and inspect the predictor design and selection criteria.",
+          "Consider adapting profile-driven prefetch and parallel on-demand fetch ideas to scenarios that move confidential intermediate state (secret-shared MPC KV), and quantify encryption/bandwidth impacts.",
+          "Reproduce baseline experiments in target deployment networks (cross-region cloud) to validate bandwidth/latency benefits."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.28223",
+        "version": 1,
+        "title": "Queue-Theoretic Admission Control for Multi-Tenant GPU Clusters",
+        "authors": [
+          "Sohan Kunkerkar"
+        ],
+        "abstract": "GPU cluster operators cannot predict how long pending workloads will wait for admission. Existing systems use greedy heuristics with no formal wait time guarantees. We formalize GPU cluster admission as a multi-class, multi-resource queueing network and prove a structural decomposition: the pending queue partitions into quotable workloads (bounded wait time under stability) and unfeasible workloads (no finite bound without reconfiguration). For quotable workloads, we model each cluster queue as an M/G/k system where the effective server count k is determined by a vector packing reduction; under an explicit stochastic domination assumption, we establish O(1/(1-rho)) wait time scaling. We prove that optimal admission ordering is NP-hard under multi-dimensional resource demands via reduction from vector bin packing. We validate on Kueue, the standard Kubernetes workload queuing system, using CPU, memory, and GPU (via Dynamic Resource Allocation) resources. The vector k_eff correctly identifies bottleneck resource dimensions, Little's Law holds exactly, and the Erlang-C approximation consistently overestimates observed wait times in the conservative direction.",
+        "categories": [
+          "cs.DC"
+        ],
+        "published": "2026-07-30T13:57:45Z",
+        "updated": "2026-07-30T13:57:45Z",
+        "abstract_url": "https://arxiv.org/abs/2607.28223v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.28223v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.28223v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.81,
+        "priority": "deep_read",
+        "matched_topics": [
+          "distributed runtime scheduling",
+          "online optimization",
+          "vector packing",
+          "performance modeling",
+          "critical-path scheduling",
+          "queue-theoretic admission control"
+        ],
+        "short_summary_zh": "基于题目与摘要：将GPU集群的准入控制形式化为多类多资源排队网络，证明了结构性分解：待办队列分为可“报价”（在稳定条件下等待时间有界）的作业与不切实际（在不重构资源的情况下无有限界）作业。对可报价作业，将每个簇队列建模为M/G/k，k通过向量打包（vector packing）简化得到；在显式的随机支配假设下证明了等待时间的O(1/(1−ρ))标度。还证明在多维资源需求下，最优准入排序是NP‑hard（从向量装箱问题归约）。在Kubernetes Kueue上用CPU、内存与GPU（动态资源分配）验证，展示k_eff正确识别瓶颈维度，Little定律精确成立，Erlang‑C近似稳健地保守高估等待时长。",
+        "short_summary_en": "Title-and-abstract based: The paper formalizes GPU cluster admission as a multi-class, multi-resource queuing network and proves a structural decomposition: the pending queue splits into quotable (bounded wait under stability) and unfeasible workloads. Quotable workloads are modeled as M/G/k with an effective server count k determined by a vector-packing reduction; under a stochastic domination assumption they derive O(1/(1−ρ)) wait scaling. They show optimal admission ordering is NP-hard via vector bin packing reduction. Validated on Kubernetes Kueue with CPU, memory, and GPU resources, demonstrating k_eff identifies bottlenecks and Erlang‑C provides conservative overestimates.",
+        "why_interesting_zh": "论文把排队论、向量打包与实际Kubernetes排队系统结合，给出可检验的性能界与复杂性下界。这对需要在多维资源（通信/计算/内存/网络带宽）上控制等待时间与并发度的MPC/隐私推理作业调度非常有价值。",
+        "why_interesting_en": "Combining queueing theory with vector-packing reductions and practical validation on K8s provides provable bounds and pragmatic heuristics for admission control—directly relevant for scheduling multi-resource MPC workloads where communication and compute must be balanced.",
+        "relation_to_my_work_zh": "若研究方向涉及MPC作业在共享GPU/CPU集群上的调度、排队保证或等待时间估计，本工作提供理论框架（M/G/k with k_eff）、复杂性结果（最优排序NP‑hard）与可借鉴的验证方法。",
+        "relation_to_my_work_en": "If you study scheduling/admission for MPC workloads on shared clusters (compute+comm resources), this work offers a theoretical foundation (M/G/k with k_eff), complexity results (NP‑hard ordering), and practical K8s validation to inform algorithm design and evaluation.",
+        "possible_transfer_zh": "将k_eff向量打包思路用于含通信维度（带宽/延迟）与加密开销的资源向量；用Little定律或Erlang‑C近似来构建在线等待时间估计与sla报价；用NP‑hard性结果指导启发式排序设计与基准比较。",
+        "possible_transfer_en": "Apply the k_eff vector-packing reduction to resource vectors that include communication dimensions and crypto overhead; use Little’s Law/Erlang‑C as online wait-time estimators and SLA quotation; leverage NP‑hardness to justify heuristic admission/scheduling approaches.",
+        "possible_overlap_or_conflict_zh": "如果已有MPC调度器使用与此不同的多维打包或估计方法，需比较k_eff方法的保守性与开销；无明显安全冲突。",
+        "possible_overlap_or_conflict_en": "If existing MPC schedulers use different multi-dimensional packing/estimation, a comparative evaluation is needed to assess k_eff conservatism and overhead; no security conflicts indicated in abstract.",
+        "questions_to_verify_zh": [
+          "‘随机支配’假设的具体内容与现实工作负载下的可接受性如何？",
+          "k_eff的向量打包求解细节（是否近似、在线可计算性）是什么？",
+          "验证中的工作负载特征、规模与动态性如何，结果能否推广到含高延迟/高通信比的MPC任务？"
+        ],
+        "questions_to_verify_en": [
+          "What exactly is the stochastic domination assumption and how realistic is it for real workloads?",
+          "How is k_eff computed (exact/approximate), and is it feasible to compute online for admission decisions?",
+          "What are the characteristics of the validation workloads and can results generalize to high-latency, communication-heavy MPC jobs?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2607.28223v1",
+        "research_problem_zh": "GPU集群的排队与准入控制难以预测待处理作业的等待时间。现有启发式方法缺乏形式化等待时间保证。论文将GPU集群准入形式化为多类多资源排队网络，并研究等待时间标度与准入排序的复杂性。 （仅基于标题和摘要）",
+        "research_problem_en": "Operators of GPU clusters cannot predict admission wait times for pending workloads; current heuristics lack formal guarantees. The paper formalizes admission as a multi-class, multi-resource queuing network and studies wait-time scaling and admission-ordering complexity. (Analysis based only on title+abstract)",
+        "core_method_zh": "将准入问题建模为多类多资源排队网络，证明结构性分解：待办队列可划分为quotable（在稳定性下可界定等待）与unfeasible（若不重构则无界等待）。对quotable作业，将每个簇队列建模为M/G/k，其中有效服务器数k通过向量打包（vector packing）缩减确定；在显式的随机支配假设下，证明等待时间标度为O(1/(1-ρ))。另外通过从向量箱打包的多维性减少，证明最优准入排序在多维资源需求下为NP-hard。在Kueue（Kubernetes排队系统）上用CPU/内存/GPU验证模型与近似。",
+        "core_method_en": "Models admission as a multi-class, multi-resource queuing network and proves a structural decomposition: the pending queue partitions into quotable workloads (bounded wait under stability) and unfeasible workloads (no finite bound without reconfiguration). For quotable workloads, models each cluster queue as M/G/k where effective server count k is determined by a vector-packing reduction; under a stochastic domination assumption, proves O(1/(1-ρ)) wait-time scaling. Shows optimal admission ordering is NP-hard via reduction from vector bin packing. Validates on Kueue using CPU/memory/GPU resources. (From title+abstract)",
+        "contributions_zh": [
+          "将GPU集群准入问题形式化为多类多资源排队网络并给出结构性分解（quotable vs unfeasible）。",
+          "提出使用向量打包来计算有效服务器数k并将簇队列近似为M/G/k，从而推导O(1/(1-ρ))的等待时间标度（在随机支配假设下）。",
+          "证明在多维资源需求下最优准入排序为NP-hard（通过向量箱打包归约）。",
+          "在Kueue上用CPU/内存/GPU资源对模型与近似进行实证验证，报告Erlang-C近似的保守性与Little定律适用性。"
+        ],
+        "contributions_en": [
+          "Formalize GPU-cluster admission as a multi-class, multi-resource queuing network and give a structural decomposition (quotable vs unfeasible).",
+          "Introduce a vector-packing-based reduction to compute effective server count k and approximate cluster queues as M/G/k, deriving O(1/(1-ρ)) wait-time scaling under stochastic domination assumptions.",
+          "Prove optimal admission ordering is NP-hard under multi-dimensional resource demands via a reduction from vector bin packing.",
+          "Empirical validation on Kueue using CPU/memory/GPU resources, showing the vector k_eff identifies bottlenecks, Little’s Law holds and Erlang-C approximations are conservatively overestimating wait times."
+        ],
+        "why_watch_zh": "基于标题与摘要：为排队理论与集群准入提供了可证明的结构性洞见，对设计延迟可控的调度/准入策略、评估瓶颈资源和构建性能模型有较高价值。对MPC/安全推理运行时在多资源（CPU、内存、网络、加密加速器）环境下的调度策略具有借鉴意义。",
+        "why_watch_en": "Based on title+abstract: Provides provable structural insights for queueing and admission control useful for designing latency-bounded scheduling/admission policies and for identifying bottleneck resources. These ideas are relevant for MPC/secure inference runtimes facing multi-resource constraints (CPU, memory, network, crypto accelerators).",
+        "direct_relation_zh": "与主要主题的直接关系：中等偏低。论文关注集群准入与排队理论而非安全计算，但其多资源建模、向量打包k_eff概念、以及关于等待时间标度与NP-hard性结论对依赖于资源并行度与延迟的MPC任务分配、DAG调度和网络感知运行时具有可迁移意义。",
+        "direct_relation_en": "Direct relation to primary topics: low–moderate. The paper focuses on cluster admission and queueing theory rather than secure computation, but its multi-resource modeling, vector-packing k_eff concept, and wait-time scaling/NP-hardness results are transferable to resource-aware task allocation, DAG scheduling, and network-aware runtimes for MPC tasks. ",
+        "transferable_mechanisms_zh": [
+          "将多资源任务请求归约为向量打包问题以计算有效并行度k_eff的思路。",
+          "quotable vs unfeasible的结构性分解，用于判定哪些待办任务能在现有配置下被有界调度。",
+          "把复杂集群队列近似为M/G/k以给出可解释的等待时间刻画与上界。",
+          "NP-hard性的归约说明在多维资源下优排序不可快速求解，提示需要启发式或近似算法。",
+          "用实际调度系统（Kueue）验证理论模型的工作流程与指标采集方法。"
+        ],
+        "transferable_mechanisms_en": [
+          "Reducing multi-resource task requests to a vector-packing problem to compute effective parallelism k_eff.",
+          "Structural decomposition into quotable vs unfeasible workloads to decide which pending jobs can be bounded under current config.",
+          "Approximating cluster queues as M/G/k to derive interpretable wait-time characterizations and bounds.",
+          "The NP-hardness reduction motivating heuristics/approximation algorithms for admission ordering under multi-dimensional resources.",
+          "Validation methodology of mapping theoretical models onto real schedulers (e.g., Kueue) and associated metric collection."
+        ],
+        "potential_overlap_zh": "与调度、资源分配、管道并行以及延迟可控服务（如LLM推理平台或MPC推理运行时）的资源建模与准入策略有交叉。",
+        "potential_overlap_en": "Overlaps with scheduling, resource allocation, pipeline parallelism and latency-bounded services (e.g., LLM serving or MPC inference runtimes) in terms of resource modeling and admission strategies. ",
+        "potential_conflict_zh": "论文依赖的随机支配和模型近似（M/G/k）假设可能不符合典型MPC任务的非平稳、强依赖通信轮次或延迟敏感的工作负载；因此直接套用结论需要谨慎验证。",
+        "potential_conflict_en": "Assumptions like stochastic domination and M/G/k approximations may not hold for non-stationary or highly communication-round-dependent MPC workloads; direct application of results requires careful validation. ",
+        "full_text_questions_zh": [
+          "quotable与unfeasible这一定义的形式化条件是什么？是否可在运行时判定？",
+          "向量打包缩减如何具体构造k_eff？算法复杂度与近似误差如何？",
+          "随机支配假设具体指什么分布/序列条件？该假设在真实云/GPU集群负载下是否成立？",
+          "Erlang-C与M/G/k近似对非泊松到达或相关服务时间的鲁棒性如何？",
+          "论文是否提出可行的准入排序启发式，或仅证明NP-hard并实验比较若干启发式？",
+          "将该模型推广到含有网络带宽或加密加速器等资源时的复杂度与适用性如何？"
+        ],
+        "full_text_questions_en": [
+          "What are the formal conditions defining quotable vs unfeasible workloads, and can they be determined at runtime?",
+          "How is the vector-packing reduction constructed to compute k_eff? What is algorithmic complexity and approximation error?",
+          "What precisely is the stochastic domination assumption (which distributions/processes) and does it hold on real cloud/GPU cluster workloads?",
+          "How robust are Erlang-C and M/G/k approximations to non-Poisson arrivals or correlated service times?",
+          "Does the paper propose practical admission-ordering heuristics or only prove NP-hardness and compare heuristics empirically?",
+          "How does the model extend to include network bandwidth or crypto-accelerator resources and what are limitations?"
+        ],
+        "experiment_checks_zh": [
+          "在Kueue之外的真实GPU集群和典型非平稳工作负载上复现实验以验证k_eff与等待时间关系。",
+          "测试在到达过程非泊松、服务时间相关或高度突发负载下Erlang-C近似的误差。",
+          "评估在加入网络带宽/端到端通信延迟作为资源维度后的k_eff预测准确性。",
+          "复现NP-hard性归约时检查是否隐含强假设，并用基准负载评估启发式调度器的实际表现。"
+        ],
+        "experiment_checks_en": [
+          "Reproduce experiments on other real GPU clusters and under non-stationary workloads to validate k_eff vs wait time relationships.",
+          "Test errors of Erlang-C approximations under non-Poisson arrivals, correlated service times, or bursty loads.",
+          "Evaluate accuracy of k_eff predictions when adding network bandwidth / end-to-end communication latency as a resource dimension.",
+          "When reproducing the NP-hardness reduction, check for strong hidden assumptions and empirically evaluate heuristic schedulers under benchmark workloads."
+        ],
+        "tracking_targets": [
+          "vector-packing→k_eff construction and algorithm",
+          "quotable vs unfeasible partitioning criteria",
+          "O(1/(1-ρ)) wait-time scaling assumptions and empirical validation",
+          "NP-hardness reduction details and practical heuristics compared in experiments"
+        ],
+        "next_steps_zh": [
+          "获取并阅读论文全文，重点阅读k_eff构造、随机支配假设与实证方法。",
+          "考虑将k_eff与quotable/unfeasible判定逻辑应用到MPC/DAG任务调度模拟，评估在有通信轮次与带宽约束下的表现。",
+          "在目标集群环境（含网络和加密加速器）上复现关键实验，检验近似的鲁棒性并比较实际启发式调度器效果。"
+        ],
+        "next_steps_en": [
+          "Obtain and read the full paper, focusing on the construction of k_eff, stochastic domination assumptions, and empirical methodology.",
+          "Consider applying the k_eff and quotable/unfeasible partitioning logic to MPC/DAG task scheduling simulations to evaluate performance under communication-round and bandwidth constraints.",
+          "Reproduce key experiments in target cluster environments (including network and crypto accelerators) to test approximation robustness and compare practical heuristic schedulers."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.28290",
+        "version": 1,
+        "title": "FAIR-Compute: A Roadmap for Fair and Efficient Allocation of Federated Digital Research Infrastructure",
+        "authors": [
+          "Konstantinos",
+          "E. Zachariadis",
+          "Ahmed Sayed",
+          "Dimitris Fotakis",
+          "Angeliki Mathioudaki",
+          "Wan Shuen Siaw"
+        ],
+        "abstract": "As demand for high-performance computing (HPC), high-throughput computing and data storage grows, the way scarce compute is allocated -- not just how much exists -- has become a decisive factor in the productivity of UK research. FAIR-Compute studies allocation in a federated Digital Research Infrastructure (DRI) as a problem at the intersection of algorithmic game theory, transport economics and HPC scheduling. Our central observation is simple: once a shared system must decide who runs, when and under what evidence, its scheduler settings cease to be a purely technical matter and become policy. The project combined three strands of evidence: a landscape review of UK and international allocation practice (including EuroHPC, WLCG, ACCESS, JASMIN and DiRAC) supported by a stakeholder survey; a mechanism-design model of allocation under strategic and uncertain user reports; and a simulation study built on the public Fresco/Anvil workload trace and controlled synthetic stress tests. Three results recur across all three strands. First, allocation records measure occupancy (resources reserved) rather than utilisation (useful work done), so the system cannot currently answer the question UKRI and DSIT most want answered -- whether resources deliver productive value. Second, simple, transparent scheduling heuristics perform close to an offline full-information benchmark once tuned, so the near-term opportunity is to tune and instrument existing schedulers rather than replace them. Third, federation is genuinely valuable but behaves like uncoordinated routing when left unmanaged: it can minimise average delay while quietly concentrating load -- and potentially harm -- on the receiving system. This mirrors a classic effect from road-traffic economics (Braess's paradox), where letting everyone independently pick the fastest route can leave the whole network worse off.",
+        "categories": [
+          "cs.DC"
+        ],
+        "published": "2026-07-30T14:35:36Z",
+        "updated": "2026-07-30T14:35:36Z",
+        "abstract_url": "https://arxiv.org/abs/2607.28290v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.28290v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.28290v1",
+        "relevance_score": 8,
+        "novelty_score": 6,
+        "transferability_score": 8,
+        "systems_score": 7,
+        "confidence": 0.8,
+        "priority": "read",
+        "matched_topics": [
+          "distributed runtime scheduling",
+          "network-aware systems",
+          "performance modeling",
+          "federation",
+          "algorithmic game theory"
+        ],
+        "short_summary_zh": "题目与摘要所述：FAIR-Compute 将联邦数字科研基础设施的资源分配视为机制设计與调度问题，结合政策/实践调研、博弈论机制模型与基于真实 Fresco/Anvil 跟踪的模拟，得出三点结论：占用率(occupancy)与利用率(utilization)的测量差异、简单透明的调度启发式可接近离线最优、以及未协调的联邦会产生类路网悖论的负面集中效应。",
+        "short_summary_en": "Title/abstract-based summary: FAIR-Compute studies allocation in federated digital research infrastructure as a mix of algorithmic mechanism design, transport economics and HPC scheduling. Using landscape review, a mechanism-design model, and simulations on real traces, they argue occupancy != utilization, well-tuned simple heuristics perform near offline benchmarks, and uncoordinated federation can concentrate load (Braess-like paradox).",
+        "why_interesting_zh": "高度相关：直接触及联邦/分布式资源分配、调度启发式与性能/公平权衡，这些主题对 WAN 延迟敏感的安全多方或分布式运行时设计具有可迁移的见解。",
+        "why_interesting_en": "Highly relevant: it addresses federated/distributed allocation and scheduling, trade-offs between occupancy and utilization, and the systemic effects of uncoordinated federation—insights useful for WAN-sensitive MPC runtimes and scheduler policy design.",
+        "relation_to_my_work_zh": "与我的研究（网络感知运行时、调度、延迟/带宽敏感 MPC）直接相关，可为设计联邦调度策略、度量指标与仿真基准提供理论与实证参考。",
+        "relation_to_my_work_en": "Directly relevant to MPC/runtime work: informs scheduler policy tuning, measurement design (occupancy vs utilization), and federation management to avoid pathological load concentration in WANed deployments.",
+        "possible_transfer_zh": "（1）将“占用率 vs 利用率”区分纳入 MPC 集群/租户策略评估；（2）借鉴简单启发式 + 仿真调参而非复杂替换的工程实践；（3）分析联邦中路由/选择策略对延迟与负载集中度的系统级影响。",
+        "possible_transfer_en": "(1) Incorporate occupancy vs utilization metrics into MPC cluster/tenant evaluations; (2) adopt the paper's recommendation to tune/simple heuristics over wholesale scheduler replacement; (3) analyze federation policies that could create Braess-like load concentration in WAN-deployed MPC services.",
+        "possible_overlap_or_conflict_zh": "可能與已存在的分布式调度/资源分配研究重叠，但这种跨学科（机制设计+仿真+实证）组合可能提供新视角而非直接冲突。",
+        "possible_overlap_or_conflict_en": "May overlap existing distributed scheduling/resource allocation literature, but the combination of mechanism-design modeling + trace-driven simulation may offer new practical insights rather than conflict.",
+        "questions_to_verify_zh": [
+          "他们的机制设计模型如何建模用户的战略行为与不确定报告？有无可操作的策略建议？",
+          "用于仿真的启发式具体是什么？在不同工作负载下的鲁棒性如何？",
+          "他们如何测量并证明“占用率 ≠ 利用率”在实践中的影响？"
+        ],
+        "questions_to_verify_en": [
+          "How does their mechanism-design model capture strategic user reports and uncertainty, and does it yield actionable scheduling rules?",
+          "What precise heuristics are simulated, and how robust are they across different workload mixes?",
+          "How do they quantify the practical gap between occupancy and utilization, and what instrumentation do they recommend?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.28097",
+        "version": 1,
+        "title": "From Expert Reduction to Behavioral Divergence: Tracing Numerical State through Sparse MoE Inference",
+        "authors": [
+          "Tianyang Zhu"
+        ],
+        "abstract": "Mathematically equivalent expert-reduction orders can produce observably different sparse-MoE executions. We isolate this effect in native DeepSeek-V4-Flash by freezing local MoE state and varying only aggregation semantics. Four schemes separate operand representation from accumulator precision. At one layer-5 fork, 720 A-mode orders yield 10 continuation basins; 720 B-mode orders form 360 exact structural classes and 11 basins. Under one Chinese prompt, the B classes split into 202 layoffs, 113 hiring, and 45 other continuations. Maximum-L-infinity B-branch selection separates 12, 24, and 36 of 50 prompts by 8, 16, and 32 tokens. Across 192 persistent trajectories per scheme, P32, A, and B change every native-reference route trajectory, while C preserves routes, token sequences, and texts. A separate 192-trajectory C check matches native MoE, post-mHC, next-router, and LM states bitwise. For one controlled B branch, exact post-mHC endpoint reconstruction reproduces the measured downstream trajectory. At the next decode boundary, exact FP64 reconstruction of the branch's full persistent state yields agreement for 301 downstream post-mHC states, 301 persistent-state checkpoints, 301 routes, predictions, and text over seven steps, given the same naturally generated next input. These controls identify post-mHC as an intra-token boundary and full persistent state as a cross-token continuation boundary. Identical tokens need not imply identical autoregressive state: divergence can survive a token boundary and become visible later. These results make expert operand conversion, accumulator precision, and reduction order part of a numerical compatibility contract for sparse-MoE runtimes and hardware backends. They establish controlled causal possibility, not deployment incidence; C's order invariance is limited to evaluated six-term states and schedules.",
+        "categories": [
+          "cs.LG"
+        ],
+        "published": "2026-07-30T12:07:56Z",
+        "updated": "2026-07-30T12:07:56Z",
+        "abstract_url": "https://arxiv.org/abs/2607.28097v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.28097v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.28097v1",
+        "relevance_score": 7,
+        "novelty_score": 8,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.86,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "MPC runtime",
+          "numeric precision",
+          "round complexity"
+        ],
+        "short_summary_zh": "基于对稀疏Mixture-of-Experts (MoE) 推理中数值与调度语义的实验，论文展示了相同专家规约（reduction）顺序可以导致可观测的推理分歧。通过冻结本地MoE状态并改变聚合语义，作者比较了多种运算表示与累加精度方案，识别出post-mHC为token内部边界、持久状态为跨token的连续边界，并强调操作数转换、累加器精度和规约顺序应成为稀疏-MoE运行时/硬件的数值兼容合约。",
+        "short_summary_en": "Empirically studies numerical and aggregation-order effects in sparse Mixture-of-Experts (MoE) inference. By freezing local MoE state and varying aggregation semantics and operand/accumulator precisions, the authors show different reduction orders can cause observable divergences in downstream generations. They identify intra-token and cross-token boundary behaviors and argue operand conversion, accumulator precision and reduction order constitute a numerical compatibility contract for sparse-MoE runtimes/hardware.",
+        "why_interesting_zh": "对安全/私有化LLM推理（如MPC或加密推理）高度相关：这些 settings 经常改变数值表述或精度，论文揭示了因数值表示或规约策略不同而导致的不兼容性风险，对设计可移植的私有推理运行时和协议选择有直接启发。",
+        "why_interesting_en": "Highly relevant to private LLM inference (e.g., MPC, quantized/encrypted inference): those contexts often change numeric representations/precision. The paper highlights concrete runtime/hardware-induced incompatibilities and gives guidance that is directly applicable when designing portable, numerically-compatible private inference stacks.",
+        "relation_to_my_work_zh": "如果你的研究关注安全LLM推理、跨后端一致性、或运行时在不同精度/规约策略下的正确性，这篇论文应当认真阅读以理解数值兼容性风险与验证方法。",
+        "relation_to_my_work_en": "If your work concerns secure LLM inference, cross-backend consistency, or runtime correctness under varied precision/reduction strategies, this paper is directly relevant for understanding numeric-compatibility risks and verification controls.",
+        "possible_transfer_zh": "将论文中关于规约顺序、操作数转换与累加精度的检测/控制思路，纳入MPC/混合隐私推理运行时的兼容性测试套件；在协议切换或后端替换时增加数值一致性断言与回放检查。",
+        "possible_transfer_en": "Adapt their detection/control ideas for reduction order, operand conversion and accumulator precision into compatibility test suites for MPC/hybrid-private inference runtimes; add numeric-consistency assertions and replay checks when switching protocols or backends.",
+        "possible_overlap_or_conflict_zh": "与深度学习数值稳定性、量化与分布式聚合文献有关。作者声明是受控因果可能性而非普遍部署事件；需在全文核查实验设置、统计普遍性与对实际MPC后端的适用性。",
+        "possible_overlap_or_conflict_en": "Relates to literature on numerical stability, quantization and distributed aggregation. The claims emphasize controlled causal possibility rather than deployment incidence—verify experimental setups, prevalence statistics, and applicability to real MPC backends.",
+        "questions_to_verify_zh": [
+          "实验是否在真实或典型的加密/MPC后端上复现？",
+          "不同规约顺序造成分歧的发生概率与典型触发场景是什么？",
+          "有没有给出可操作的对策（例如运行时断言、精度协议或回放检测工具）？",
+          "作者如何确保所观察的不一致不是由实现bug引起？"
+        ],
+        "questions_to_verify_en": [
+          "Are experiments reproduced on real/typical encrypted or MPC backends?",
+          "What is the incidence/probability and typical triggers for divergence under different reduction orders?",
+          "Do they provide actionable mitigations (runtime assertions, precision protocols, replay-check tools)?",
+          "How do authors rule out implementation bugs vs intrinsic numerical causes?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.28311",
+        "version": 1,
+        "title": "Fully Inductive Cardinality Estimation",
+        "authors": [
+          "Tim Schwabe",
+          "Lukas Ketzer",
+          "Maribel Acosta"
+        ],
+        "abstract": "Query optimization of Basic Graph Patterns (BGP) SPARQL queries over Knowledge Graphs (KG) requires accurate cardinality estimation. Recently published learned estimators outperform statistics- and sampling-based approaches, but share a limitation preventing their adoption in real-world triplestores: they are transductive and require retraining when the underlying graph changes or when applied to new graphs. We present FICE (Fully Inductive Cardinality Estimation), the first learned cardinality estimator for BGP queries over KGs that generalizes to entirely unseen graphs (including unseen relations), without any retraining. FICE is a graph neural network (GNN) with two coupled components. First, an encoder GNN over a factor-graph view of the KG produces entity and relation embeddings. We prove that BGP cardinality is a local function of the 2-hop neighborhood around bound terms in this view, motivating the local message-passing encoder. A decoder GNN then composes these embeddings along the join topology of the query to predict log-cardinality. The encoder and decoder are trained jointly, making the embeddings specialized for cardinality estimation. FICE is trained using neighborhood sampling to scale to KGs with millions of triples, and decouples embedding generation from cardinality decoding to enable estimation latency below a millisecond. Compared to learned and non-learned baselines over 10 KGs, FICE reduces the overall median q-error from 13.54 (for the best competitor) to 5.34 and dominates all approaches in tail behavior.",
+        "categories": [
+          "cs.DB",
+          "cs.LG"
+        ],
+        "published": "2026-07-30T14:46:43Z",
+        "updated": "2026-07-30T14:46:43Z",
+        "abstract_url": "https://arxiv.org/abs/2607.28311v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.28311v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.28311v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 7,
+        "confidence": 0.79,
+        "priority": "read",
+        "matched_topics": [
+          "query optimization",
+          "learned cost models",
+          "performance modeling",
+          "critical-path scheduling"
+        ],
+        "short_summary_zh": "题目與摘要所述：FICE（Fully Inductive Cardinality Estimation）提出首个能对完全未见知识图（包括未见关系）进行泛化的 BGP 基本图模式基数估计器。方法为两个耦合的 GNN：基于因子图视角的局部编码器（证明基数为绑定项二跳邻域的局部函数），以及沿查询连接拓扑组合嵌入的解码器。通过邻域采样训练以扩展到百万级三元组并实现亚毫秒延迟估计。",
+        "short_summary_en": "Title/abstract-based summary: FICE is a learned cardinality estimator for SPARQL BGP queries that fully generalizes to unseen knowledge graphs (including unseen relations). It uses a factor-graph GNN encoder (local 2-hop neighborhood) and a decoder GNN along query join topology; trained with neighborhood sampling and claims sub-ms estimation latency and substantial q-error improvements over baselines.",
+        "why_interesting_zh": "高度可迁移：准确的、可归纳到未见数据的基数估计对查询优化器、分布式查询调度与资源分配（包括私有查询执行的代价估计）非常重要。",
+        "why_interesting_en": "Highly transferable: an inductive, low-latency learned cardinality estimator could significantly impact query optimization, join ordering, and runtime scheduling in distributed DBs or systems that need fast cost estimates.",
+        "relation_to_my_work_zh": "若你的方向涉及查询计划生成、依赖 DAG 调度或运行时成本建模（例如用于 MPC 查询分解或隐私查询调度），FICE 的 encoder/decoder 架构与局部性证明具有直接参考价值。",
+        "relation_to_my_work_en": "Directly relevant if you work on query planning, DAG scheduling, or runtime cost modeling (e.g., for MPC query decomposition). Their locality result (2-hop suffices) and factor-graph encoding are particularly relevant.",
+        "possible_transfer_zh": "将 FICE 的局部化 GNN 编码与快速解码器应用于：代价估计器、调度器的在线成本预测、critical-path 识别以及网络感知的分布式执行器决策中。",
+        "possible_transfer_en": "Apply FICE's local GNN encoder + join-topology decoder to build cost estimators for schedulers, online critical-path identification, and network-aware distributed execution planners.",
+        "possible_overlap_or_conflict_zh": "与其他学习型基数估计器在方法学上重叠，但其完全归纳性（无重训练）是区分点。需注意与现有 DBMS 优化器接口的集成问题。",
+        "possible_overlap_or_conflict_en": "Overlaps with learned cardinality estimators, but claims of full inductive generalization set it apart. Integration with existing optimizer APIs may be nontrivial.",
+        "questions_to_verify_zh": [
+          "作者如何证明或验证 2-hop 局部性在各种 KG 模式（稠密/稀疏、不同模式）下成立？",
+          "在实际数据库/三元组存储中，生成嵌入与解码的端到端延迟与内存开销是多少（尤其是“亚毫秒”估计的前提）？",
+          "对未见关系的泛化能力在跨域（领域转移）场景上有多稳健？"
+        ],
+        "questions_to_verify_en": [
+          "How do the authors validate the 2-hop locality claim across different KG regimes (dense/sparse, schema variations)?",
+          "What are the end-to-end latency and memory costs for embedding generation and decoding in real triplestores, supporting the sub-ms claim?",
+          "How robust is generalization to unseen relations across cross-domain transfers?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.28165",
+        "version": 1,
+        "title": "Piggybacking on Perception: Stealthy Concurrent Audio Prompt Injections against Multimodal LLM Agents",
+        "authors": [
+          "Mingxiao Liu",
+          "Yitong Li",
+          "Haoren Zhao",
+          "Yaoxiang Bian",
+          "Jianan Ma",
+          "Jian Zhang",
+          "Jialuo Chen",
+          "Xinhao Deng",
+          "Zhen Wang"
+        ],
+        "abstract": "Large Language Model (LLM)-driven multimodal agents are increasingly deployed to execute autonomous tasks via continuous audio interaction. While this paradigm enhances interaction naturalness, it introduces a critical yet under-explored attack surface, as audio inputs inevitably contain environmental noise beyond user control. In this paper, we investigate concurrent audio prompt injection attacks targeting multimodal agents. Distinct from traditional acoustic attacks on voice devices, we propose novel techniques for instruction augmentation and scenario concealment. These methods allow malicious audio instructions to imperceptibly \"piggyback\" onto user speech, thereby hijacking agents to execute malicious actions. To systematically quantify this threat, we construct AudioAgentSecurity, the first comprehensive benchmark for audio instruction injection attacks, encompassing 8 real-world task scenarios and 10 distinct attack patterns. We evaluate 11 state-of-the-art agents, including Gemini 3 Pro and GPT-4o-audio. Notably, our methods achieve an average Attack Success Rate (ASR) of 69.10\\% against the advanced Gemini 3 Pro. To counter this threat, we further introduce Cascaded Audio Decoupling and Verification (CADV), a defense mechanism based on source separation and consistency analysis. Compared with existing prompt-level defenses, CADV leverages acoustic source separation and cross-modal consistency analysis to detect audio instruction injections more robustly, achieving over 90\\% detection success across diverse attack vectors. Finally, real-world experiments with human volunteers on Doubao AI Smartphone in diverse dynamic real-world scenarios confirm the attacks' high stealth and efficacy, while demonstrating that our defense reliably mitigates these vulnerabilities.",
+        "categories": [
+          "cs.CR"
+        ],
+        "published": "2026-07-30T13:04:15Z",
+        "updated": "2026-07-30T13:04:15Z",
+        "abstract_url": "https://arxiv.org/abs/2607.28165v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.28165v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.28165v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 5,
+        "systems_score": 6,
+        "confidence": 0.72,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "privacy-preserving machine learning",
+          "secure computation"
+        ],
+        "short_summary_zh": "基于题目与摘要：本文研究针对多模态（含音频）大模型代理的并发音频提示注入攻击，提出“指令增强”和“情景掩盖”等新技术，使恶意音频能在用户语音上隐蔽地“搭载”指令。构建了AudioAgentSecurity基准（8场景、10种攻击模式），在11个先进代理上评测并报告高成功率；并提出基于声源分离与跨模态一致性分析的CADV防御，声称能在多种攻击下实现较高检测率；并在真实手机与志愿者上做了实验验证。注意：以上基于标题与摘要。",
+        "short_summary_en": "Title-and-abstract-based: The paper studies concurrent audio prompt-injection attacks against multimodal LLM agents, proposing novel instruction-augmentation and scenario-concealment techniques that let malicious audio 'piggyback' on user speech. They build AudioAgentSecurity (8 scenarios, 10 attack types), evaluate 11 agents (e.g., Gemini 3 Pro), report high attack success rates, and propose CADV — a defense using source separation and cross-modal consistency — with reported high detection. Real-world volunteer experiments on a smartphone are summarized in the abstract. Analysis limited to title/abstract.",
+        "why_interesting_zh": "对关注“安全的LLM推理/隐私保护ML”的研究者有价值：攻击模型与防御侧同时呈现，数据集与真实设备实验对实系统威胁建模有直接启发。摘要提到的声源分离＋一致性检测思路可能可借鉴到安全LLM推理的输入验证层。说明：基于题目/摘要分析。",
+        "why_interesting_en": "Relevant to secure LLM inference and privacy-preserving ML: the paper presents both novel attack patterns and a defense pipeline that operates at the audio/acoustic layer. The use of source separation plus cross-modal consistency checks could inform input-validation layers for secure LLM inference systems. Note: claims are title-and-abstract-based.",
+        "relation_to_my_work_zh": "若你在做安全的LLM推理或隐私保护推断（尤其含语音输入），此工作直接相关：攻击建模、benchmark设计与防御架构都可参考；若主攻MPC编译/运行时，则可借鉴输入验证与跨模态一致性作为外部监测层，与MPC协议的安全边界相互配合。基于摘要。",
+        "relation_to_my_work_en": "If your work targets secure LLM inference or privacy-preserving inference with audio, this is directly relevant: attack models, benchmark, and defense pipeline are applicable. For MPC compiler/runtime work, the proposed input-validation (source separation & consistency) could be integrated as an out-of-band monitor to complement MPC security boundaries. Analysis title-and-abstract-based.",
+        "possible_transfer_zh": "声源分离与跨模态一致性检测可迁移为MPC系统之外的输入过滤/审计模块（低开销在线检测），也可用于部署含秘密输入的模型推理前的可疑输入筛查。基于摘要。",
+        "possible_transfer_en": "Source separation and cross-modal consistency checks could be adapted as out-of-band input-filtering/auditing modules for MPC-based inference, enabling low-latency online detection of suspicious audio before invoking secure computation. (Title/abstract-based.)",
+        "possible_overlap_or_conflict_zh": "与MPC本身的加密协议无直接冲突，但在系统整合层可能存在重复功能（若你的部署已包含严格传感器信任链与验证流程）。需要评估CADV与现有信任/认证机制的重复或互补性。基于摘要。",
+        "possible_overlap_or_conflict_en": "No direct conflict with MPC protocols, but overlap may occur at the system integration layer if your deployment already uses sensor attestation or input verification. Evaluate whether CADV is complementary or redundant with existing mechanisms. (Title/abstract-based.)",
+        "questions_to_verify_zh": [
+          "CADV在真实部署上（移动设备、实时流）带来的时延和计算开销是多少？",
+          "声源分离模块是否需要模型/训练数据，白盒／黑盒适应性如何？",
+          "评估中各代理的测试条件（麦克风、SNR、环境噪声分布）是什么？",
+          "报告的90%检测率在不同攻击强度、掩盖率和语境下是否稳定？",
+          "攻击构造是否依赖于模型输出接口或需要可听但不被人察觉的频谱变化？"
+        ],
+        "questions_to_verify_en": [
+          "What are CADV’s latency and compute overheads in real-time/mobile deployments?",
+          "Does the source-separation module require training data or per-device calibration; how does it generalize?",
+          "What were the exact evaluation conditions for the 11 agents (microphone, SNR, environments)?",
+          "Is the claimed >90% detection stable across attack strengths, concealment levels, and scenarios?",
+          "Do the attacks rely on access to model outputs/interfaces or exploit only the acoustic channel; what are the perceptual/energy trade-offs?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2607.27987",
+        "version": 1,
+        "title": "It's All Just Vectorization: einx, a Universal Notation for Tensor Operations",
+        "authors": [
+          "Florian Fervers",
+          "Sebastian Bullinger",
+          "Christoph Bodensteiner",
+          "Michael Arens"
+        ],
+        "abstract": "Tensor operations represent a cornerstone of modern scientific computing. However, the Numpy-like notation adopted by predominant tensor frameworks is often difficult to read and write and prone to so-called shape errors, i.a., due to following inconsistent rules across a large, complex collection of operations. Alternatives like einsum and einops have gained popularity, but are inherently restricted to few operations and lack the generality required for a universal model of tensor programming. To derive a better paradigm, we revisit vectorization as a function for transforming tensor operations, and use it to both lift lower-order operations to higher-order operations, and conceptually decompose higher-order operations to lower-order operations and their vectorization. Building on the universal nature of vectorization, we introduce einx, a universal notation for tensor operations. It uses declarative, pointful expressions that are defined by analogy with loop notation and represent the vectorization of tensor operations. The notation reduces the large APIs of existing frameworks to a small set of elementary operations, applies consistent rules across all operations, and enables a clean, readable and writable representation in code. We provide an implementation of einx that is embedded in Python and integrates seamlessly with existing tensor frameworks: https://github.com/fferflo/einx",
+        "categories": [
+          "cs.LG"
+        ],
+        "published": "2026-07-30T10:33:04Z",
+        "updated": "2026-07-30T10:33:04Z",
+        "abstract_url": "https://arxiv.org/abs/2607.27987v1",
+        "pdf_url": "https://arxiv.org/pdf/2607.27987v1"
+      },
+      "screening": {
+        "arxiv_id": "2607.27987v1",
+        "relevance_score": 6,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 6,
+        "confidence": 0.73,
+        "priority": "read",
+        "matched_topics": [
+          "MPC compiler",
+          "batching",
+          "pipeline execution",
+          "compiler instruction scheduling",
+          "privacy-preserving machine learning"
+        ],
+        "short_summary_zh": "基于标题与摘要：作者将向量化（vectorization）视为统一的张量操作范式，提出 einx——一种基于点式（pointful）、类循环记法的通用张量操作表示。einx 用少数基本操作和一致规则替代大型 API，并宣称可嵌入 Python 与现有张量框架（摘要中给出源码链接）。目标是提高可读性并减少 shape 错误。",
+        "short_summary_en": "Based on title and abstract: the authors reinterpret vectorization as a universal tensor-operation paradigm and propose einx — a pointful, loop-analogy notation that represents vectorized tensor operations. einx aims to reduce large framework APIs to a small set of elementary ops, enforce consistent rules across operations, improve readability, and integrates with Python and existing tensor frameworks (repo link provided in abstract).",
+        "why_interesting_zh": "对 MPC/隐私计算中常见的张量密集型隐私推理（例如基于 MPC 的模型推理与加密张量代数），更简洁且可组合的张量表示与变换规则可能简化编译器前端、提高批处理/合并通信的可能性，从而影响协议选择与运行时调度。",
+        "why_interesting_en": "For MPC / privacy-preserving computation that runs tensor-heavy workloads, a concise, uniform tensor notation and systematic vectorization could simplify compiler frontends, enable more aggressive batching/round-coalescing, and make dependency-aware scheduling / protocol selection easier to reason about.",
+        "relation_to_my_work_zh": "标题与摘要层面来看，einx 可能为 MPC 编译器（例如将高阶算子拆为低阶算子并重写为批量化形式）提供语义与变换规则，利于生成更少轮次或更高效通信模式的中间表示。",
+        "relation_to_my_work_en": "At the title/abstract level, einx could provide semantics/transformation rules for MPC compilers (e.g., decomposing high-order ops into lower-order ops plus vectorization) that help produce IRs amenable to batching, round merging, or protocol-specific lowering.",
+        "possible_transfer_zh": "可借鉴的点包括：统一的向量化变换用于自动将逐样/逐轴运算合并为批量化操作、减少通信轮次的重写规则、以及为运行时生成依赖信息以启发批次/管道调度。",
+        "possible_transfer_en": "Potential transfers: using the universal vectorization transformations to automatically merge per-sample/axis ops into batched ops, rewrite rules that reduce communication rounds, and producing dependency-rich IRs that guide batching/pipeline scheduling in MPC runtimes.",
+        "possible_overlap_or_conflict_zh": "无直接冲突（基于摘要）。若已有 MPC 框架已有约定的 IR/优化通道，集成可能需要适配层或对等的变换语义映射。",
+        "possible_overlap_or_conflict_en": "No direct conflict (based on abstract). Integration with existing MPC IRs/optimizers may require an adaptation layer or semantic mapping between einx transformations and current lowering passes.",
+        "questions_to_verify_zh": [
+          "摘要中声明的实现细节（接口示例、落地到 JAX/NumPy/PyTorch 的具体流程）有哪些？能否查看代码和示例？",
+          "einx 的重写规则是否包含显式的通信/并行意识（例如为分布式/加密场景标记要合并的维度或批次）？",
+          "是否有性能/可读性的定量对比（例如与 einsum/einops、现有框架 IR 在编译与运行时的差异）？"
+        ],
+        "questions_to_verify_en": [
+          "What are the exact implementation details and examples for the claimed integration with JAX/NumPy/PyTorch? Is the repo runnable and documented?",
+          "Do einx rewrite/vectorization rules include explicit communication/parallelism annotations or guidance useful for distributed or encrypted execution (e.g., which axes to batch/merge)?",
+          "Are there quantitative comparisons (readability metrics aside) showing runtime or communication improvements versus einsum/einops or existing IRs when lowered for real workloads?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
