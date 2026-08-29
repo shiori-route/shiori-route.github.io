@@ -1,0 +1,179 @@
+{
+  "date": "2026-08-29",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 1,
+    "deep": 1,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2608.27129",
+        "version": 1,
+        "title": "SLIDE: Shuffle Shamir Secret Shares Uniformly with Linear Online Communication and Guaranteed Output Delivery",
+        "authors": [
+          "Jiacheng Gao",
+          "Moyang Xie",
+          "Yuan Zhang",
+          "Sheng Zhong"
+        ],
+        "abstract": "We revisit shuffle protocols for Shamir secret sharing. Existing constructions either produce non-uniform shuffles or incur high communication and round complexity, sometimes exponential in the number of parties. We propose two new shuffle protocols that achieve uniform shuffling with communication complexity $O((k+l)n^2m\\log m/\\log k)$ for an $m$-by-$l$ matrix shared among $n$ parties, where $k\\leq m$ is a tunable parameter. The first protocol is concretely efficient, while the second achieves the best-known $O(nml)$ online communication and $O(n)$ rounds. Experiments show significant improvements in online efficiency and total cost over prior work. Our key technical ingredient is a novel permutation sharing technique that represents permutations using smaller permutation matrices, making their application significantly more efficient. The first protocol applies independent secret permutations sequentially, while the second builds on shuffle correlation to achieve optimal online complexity. We further extend shuffle correlation to support guaranteed output delivery with linear online communication, yielding SLIDE, the first protocol to achieve both $O(nml)$ online communication and guaranteed output delivery. Our constructions rely only on basic Shamir secret sharing over any field of size greater than $n$. As shuffling is a fundamental primitive for MPC tasks such as sorting and oblivious data structures, our results enable more efficient and scalable secure computation in practice.",
+        "categories": [
+          "cs.CR"
+        ],
+        "published": "2026-08-27T13:44:17Z",
+        "updated": "2026-08-27T13:44:17Z",
+        "abstract_url": "https://arxiv.org/abs/2608.27129v1",
+        "pdf_url": "https://arxiv.org/pdf/2608.27129v1"
+      },
+      "screening": {
+        "arxiv_id": "2608.27129v1",
+        "relevance_score": 5,
+        "novelty_score": 5,
+        "transferability_score": 5,
+        "systems_score": 5,
+        "confidence": 0.89,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure multiparty computation",
+          "secure computation",
+          "MP-SPDZ",
+          "MPC runtime",
+          "communication rounds",
+          "round complexity",
+          "protocol selection",
+          "oblivious data structures"
+        ],
+        "short_summary_zh": "研究Shamir门限密钥下的洗牌（shuffle）协议，提出两种新协议实现均匀重排列：第一种在实践中高效，第二种达到已知最优的O(nml)在线通信与O(n)轮次。核心技术是用较小的置换矩阵表示置换并高效应用，进一步推广出支持保证输出交付且在线通信线性开销的SLIDE协议，是首个同时满足O(nml)在线通信和保证输出交付的构造。",
+        "short_summary_en": "They revisit shuffle protocols for Shamir secret sharing and propose two new protocols that produce uniform shuffles. One is concretely efficient; the other achieves best-known O(n m l) online communication and O(n) rounds. The key is a permutation-sharing technique using smaller permutation matrices. They extend shuffle correlation to guarantee output delivery with linear online communication, yielding SLIDE—the first protocol to achieve both O(n m l) online communication and guaranteed output delivery.",
+        "why_interesting_zh": "洗牌是MPC中排序、混洗和隐匿数据结构的核心原语。若论文的复杂度与实验主张成立，SLIDE能显著降低在线通信与轮数，对WAN部署、大规模MPC任务与运行时选择有直接、重要影响。",
+        "why_interesting_en": "Shuffling is a core MPC primitive for sorting and oblivious data structures. If their complexity bounds and empirical efficiency hold, SLIDE directly enables more scalable MPC in WAN/large-n settings by minimizing online communication and rounds—highly relevant to MPC runtimes and protocol selection.",
+        "relation_to_my_work_zh": "高度相关：可用于优化MPC运行时的关键路径（洗牌/排序），减少轮数与带宽，直接影响WAN部署、编译器或调度器对协议选择与批处理策略的决策。",
+        "relation_to_my_work_en": "Highly relevant: applicable to optimizing MPC runtimes/compilers by reducing shuffle cost (communication and rounds), impacting WAN deployments, protocol selection, batching and dependency-aware scheduling.",
+        "possible_transfer_zh": "置换共享与洗牌相关技巧可直接移植到MP-SPDZ等MPC框架，影响编译器选择洗牌实现、批处理/流水线策略及WAN延迟优化；也可能启发对保证输出交付的协议设计。",
+        "possible_transfer_en": "Permutation-sharing techniques and SLIDE could be implemented in MP-SPDZ and other MPC frameworks to reduce shuffle costs, informing compiler choices for shuffle/sort, batching, pipeline execution, and WAN-aware runtime optimizations.",
+        "possible_overlap_or_conflict_zh": "需要核实对场景的假设（字段大小>n、门限/容错模型、同步网络）以及安全证明和实现细节，才可安全替换现有洗牌模块。",
+        "possible_overlap_or_conflict_en": "Verify assumptions (field size > n, threshold model, synchrony), formal security proofs, and implementation constraints before replacing shuffle modules in existing frameworks.",
+        "questions_to_verify_zh": [
+          "两种协议的安全证明（隐私/随机性/输出交付）是否提供完整形式化论证？",
+          "O(nml)上线通信与O(n)轮次的常数因子是多少，尤其在实际n、m、l范围下的实际通信与延迟如何？",
+          "实现细节：对有限域大小、重整化、并行化、失败/重传机制有哪些要求？是否有开源实现与复现实验？"
+        ],
+        "questions_to_verify_en": [
+          "Are there full formal security proofs (privacy, uniformity, guaranteed output delivery) for both protocols?",
+          "What are the constant factors for the O(n m l) online communication and O(n) rounds in practical parameter ranges—actual bandwidth/latency numbers?",
+          "Implementation constraints: field size requirements, re-randomization, parallelization, failure/retransmission handling; is code or reproducible evaluation available?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2608.27129v1",
+        "research_problem_zh": "在基於 Shamir 秘密共享的多方安全計算（MPC）中，如何實現對共享矩陣的均勻（uniform）洗牌，同時在在線階段達到線性通信量並保證輸出交付；克服先前方案非均勻性、高通信/輪次開銷（有時隨參與方數指數增長）或缺乏保證交付的問題。",
+        "research_problem_en": "For Shamir-secret-share-based MPC, how to perform uniform shuffles of shared matrices with linear online communication and guaranteed output delivery, overcoming prior solutions that produce non-uniform shuffles, incur high communication/round complexity (sometimes exponential in number of parties), or lack guaranteed output delivery.",
+        "core_method_zh": "引入一種新的“排列共享”（permutation sharing）表徵，將置換表示為更小的置換矩陣以降低應用成本；基於此構造兩類洗牌協議：一個對實作具體高效，通過對共享的排列逐一獨立應用來實現；另一個利用“shuffle correlation”（洗牌相關性）實現最佳化的在線通信（O(n m l)）與 O(n) 輪次。進一步擴展 shuffle correlation 以支持帶有線性在線通信的保證輸出交付，形成 SLIDE 協議。所有構造均僅使用基於域大小>n 的基本 Shamir 秘密共享。",
+        "core_method_en": "They introduce a novel permutation-sharing representation that encodes permutations via smaller permutation matrices to make application efficient. Based on this, they design two shuffle protocols: a concretely efficient one that applies independent secret permutations sequentially, and another that leverages 'shuffle correlation' to achieve optimal online communication (O(n m l)) and O(n) rounds. They further extend shuffle correlation to guarantee output delivery (SLIDE). All constructions use basic Shamir secret sharing over fields with size > n.",
+        "contributions_zh": [
+          "提出新的排列共享技術，能用更小的置換矩陣表示置換，降低應用成本。",
+          "構造兩個新的洗牌協議：一個注重具體效率，另一個能在在線階段達到最優 O(n m l) 通信和 O(n) 輪次。",
+          "設計並實現 SLIDE：首個同時達到 O(n m l) 在線通信且具備保證輸出交付的洗牌協議。",
+          "提供了在線效率與總成本上相對先前工作的實驗性改進（抽象中聲稱有實驗）。",
+          "僅依賴基於域大小>n 的基本 Shamir 秘密共享，實用範圍廣。"
+        ],
+        "contributions_en": [
+          "A new permutation-sharing technique that represents permutations with smaller permutation matrices, reducing application cost.",
+          "Two new shuffle protocols: a concretely efficient sequential-permutation protocol and a protocol using shuffle correlation that achieves optimal online communication O(n m l) and O(n) rounds.",
+          "SLIDE: the first protocol that attains O(n m l) online communication while guaranteeing output delivery.",
+          "Experimental evidence (claimed in abstract) showing significant improvements in online efficiency and total cost versus prior work.",
+          "All constructions rely only on basic Shamir secret sharing over fields of size > n, improving practicality and portability."
+        ],
+        "why_watch_zh": "洗牌是 MPC 中排序、可隱匿資料結構等多個基礎原語的核心；若真如摘要所述在在線階段達到線性通信且能保證輸出，對低延遲/高延遲網絡（例如 WAN）下的 MPC 運行時、編譯器調度、回合合併（round coalescing）和對安全 LLM 推理等應用都有直接提升價值。其提出的排列共享與 shuffle correlation 機制可能直接轉移到 DAG 調度、批處理與通信-計算重疊的優化。摘要分析基於標題與摘要，未閱讀全文。",
+        "why_watch_en": "Shuffling is a core primitive for MPC tasks like sorting and oblivious data structures. If the abstract's claims hold, achieving linear online communication with guaranteed output delivery can substantially improve MPC runtimes in both low- and high-latency (WAN) settings, MPC compilers' scheduling/round-coalescing strategies, and privacy-preserving LLM inference. The permutation-sharing and shuffle-correlation mechanisms may transfer directly to DAG scheduling, batching, and communication-computation overlap optimizations. This assessment is based only on the title and abstract.",
+        "direct_relation_zh": "直接相關主題包括：secure multiparty computation（基於 Shamir 的 MPC）、Shamir 秘密共享、通信輪次與輪次複雜度（O(n) 輪）、在線通信量（O(n m l)）和保證輸出交付。對 MP-SPDZ/其他 MPC 運行時、MPC 編譯器的依賴關係感知調度、輪合併、流水線執行及安全 LLM 推理有高度關聯。",
+        "direct_relation_en": "Directly related topics: secure multiparty computation (Shamir-based MPC), Shamir secret sharing, communication rounds/round complexity (O(n) rounds), online communication (O(n m l)), and guaranteed output delivery. Highly relevant to MP-SPDZ or other MPC runtimes, dependency-aware scheduling in MPC compilers, round coalescing, pipeline execution, and secure LLM inference.",
+        "transferable_mechanisms_zh": [
+          "排列共享（將置換分解為較小置換矩陣）的表徵技巧，可用於降低其他需要秘密置換/重排的 MPC 原語成本（如排序、ORAM、可隱匿資料結構）。",
+          "shuffle correlation 概念：用相關結構減少在線通信，可能可轉用於批處理/批量 RPC、collective 通信合併與通信-計算重疊策略。",
+          "可調參數 k（在複雜度表達中出現）提供設計上的計算/通信權衡，可被運行時用作自適應調度參數。",
+          "保證輸出交付的擴展思路，對容錯、阻塞與惡意模型的工程化處理可能有借鑒意義。"
+        ],
+        "transferable_mechanisms_en": [
+          "The permutation-sharing representation (decomposing permutations into smaller permutation matrices) — useful to reduce cost of secret permutations/reorders in other MPC primitives (sorting, ORAM, oblivious data structures).",
+          "The idea of 'shuffle correlation' to reduce online communication — may be applicable to batching/RPC batching, collective communication merging, and communication-computation overlap strategies.",
+          "Tunable parameter k (appearing in complexity) gives a comput/comm tradeoff usable by runtime schedulers as an adaptive knob.",
+          "The techniques to guarantee output delivery could inform engineering of fault-tolerance, blocking/abort handling, or extensions to malicious settings."
+        ],
+        "potential_overlap_zh": "若你的研究是 MPC 運行時（如 MP-SPDZ）或 MPC 編譯器的依賴關係調度/輪次合併/批處理策略，本文提出的低在線通信洗牌可直接與你的優化目標重疊；在評估安全 LLM 推理或排序/ORAM 加速時也可能重疊。",
+        "potential_overlap_en": "If your work targets MPC runtimes (e.g., MP-SPDZ) or MPC compiler dependency-aware scheduling/round-coalescing/batching, this paper's low-online-communication shuffles likely overlap directly with your optimization targets; the results may also overlap with evaluation/acceleration of secure LLM inference or sorting/ORAM.",
+        "potential_conflict_zh": "可能的限制與衝突來源：摘要指出僅基於基本 Shamir 秘密共享與域大小>n 的假定，若你的系統採用不同秘密共享格式（例如被複製的秘密共享、基於格/同態加密的方案）或嚴格的惡意安全模型，方法適用性可能受限；此外 O(n) 輪次在高延遲 WAN 中仍可能成為瓶頸——需要結合輪次合併或預處理策略。摘要基於標題與摘要推斷。",
+        "potential_conflict_en": "Potential limitations/conflicts: the constructions assume basic Shamir secret sharing and field size > n; if your system uses different secret-sharing (e.g., replicated sharing, HE-based) or requires strictly malicious security, applicability may be limited. Also, O(n) rounds can remain a bottleneck under high WAN latency — requiring additional round-coalescing or preprocessing. This is inferred from title/abstract only.",
+        "full_text_questions_zh": [
+          "安全模型是被動（半誠實）還是主動（惡意）？保證輸出交付在何種攻擊/失敗模型下成立？",
+          "排列共享的具體表示法與尺寸縮減的數學細節是什麼？有無嚴格的均勻性證明？",
+          "兩個協議的離線（preprocessing）與在線通信/計算具體分解是多少？摘要中的 O((k+l) n^2 m log m / log k) 與 O(n m l) 在什麼情形下切換？k 如何選擇與調參開銷？",
+          "shuffle correlation 的構造原理與復用/壓縮隨機性的代價與安全性如何分析？",
+          "SLIDE 如何實現“保證輸出交付”？是否需要額外的同步/鎖或重試機制，對延遲有何影響？",
+          "實驗基線是哪些前人方案？實驗環境（網絡延遲、帶寬、參與方 n、矩陣維度 m、列數 l、k 值）具體配置如何？",
+          "是否提供代碼與可重現實驗數據？有無分析在 WAN（高延遲）與 LAN 的不同表現？",
+          "對惡意行為者、黨派掉線或輸入不一致之處理機制是什麼？是否支持不同字段大小或大域情況下的數值穩定性？"
+        ],
+        "full_text_questions_en": [
+          "What is the security model — passive (honest-but-curious) or active (malicious)? Under which attack/failure model does the guaranteed output delivery hold?",
+          "What is the exact permutation-sharing representation and the math of the size reduction? Is there a formal proof of uniformity of the output permutation?",
+          "How are offline (preprocessing) vs online communication/computation costs broken down for both protocols? Under what regime does O((k+l) n^2 m log m / log k) vs O(n m l) apply, and how is k chosen?",
+          "What is the construction of shuffle correlation, and what are the costs (randomness, communication) and security arguments for reusing/ correlating randomness?",
+          "How does SLIDE implement 'guaranteed output delivery'? Are extra synchronization, retries, or coordination needed, and what is their latency cost?",
+          "Which prior protocols are used as experimental baselines? What are experimental settings (network latency, bandwidth, n, m, l, chosen k)?",
+          "Is code and data released for reproducibility? Do experiments include WAN vs LAN comparisons?",
+          "How are malicious parties, party dropouts, or inconsistent inputs handled? Does the scheme rely on field size constraints or have numerical/stability issues for large fields?"
+        ],
+        "experiment_checks_zh": [
+          "重現主要評估：測量在線通信量與總通信量、實際運行時間、輪次數，隨 n、m、l、k 變化做尺度實驗。",
+          "比較基線：與先前聲稱更高效/非均勻/高輪次的洗牌方案直接比較（摘要應列出的具體基線）。",
+          "在多網絡環境下測試（LAN 低延遲與模擬/真實 WAN 高延遲），觀察 O(n) 輪次對延遲的影響以及線性在線通信實際收益。",
+          "驗證均勻性：對輸出分佈做統計檢測，確認產生的置換是均勻的。",
+          "測量資源使用：CPU、內存與隨機性（亂數消耗），以及預處理量（若有）。",
+          "測試保證輸出交付：模擬部分黨派延遲/失效，檢查協議是否按聲稱保證輸出。"
+        ],
+        "experiment_checks_en": [
+          "Reproduce main evaluations: measure online and total communication, wall-clock runtime, and number of rounds across varying n, m, l, k.",
+          "Compare to baselines asserted in the paper (prior shuffle constructions); ensure same measurement methodology.",
+          "Test across network conditions (LAN vs simulated/real WAN) to see impact of O(n) rounds on latency and the practical benefit of linear online communication.",
+          "Verify uniformity: perform statistical tests on output permutations to confirm uniform distribution.",
+          "Measure resource usage: CPU, memory, randomness consumption, and preprocessing cost (if any).",
+          "Test guaranteed output delivery by simulating delayed/failing parties and check claimed guarantees."
+        ],
+        "tracking_targets": [
+          "線上通信上界 O(n m l) 是否在實驗中達成（量級與係數）",
+          "協議輪次是否為 O(n) 且實際輪次常數係數",
+          "摘要中給出的更精確複雜度公式 O((k+l) n^2 m log m / log k) 的含義與常數係數",
+          "參數 k 如何影響性能/通訊-計算權衡",
+          "SLIDE 的“保證輸出交付”在不同失敗模型下的成立條件",
+          "實驗中相對先前工作的提升量（如吞吐/延遲/總通信）",
+          "是否提供代碼與可重現實驗數據庫",
+          "對不同秘密共享機制（非 Shamir）的可移植性說明"
+        ],
+        "next_steps_zh": [
+          "閱讀並精讀論文正文與證明（特別是安全模型、排列共享表示與 shuffle correlation 的細節）。",
+          "檢查是否開源實現，若有則拉取代碼並在本地/叢集上重現論文實驗（覆蓋 LAN 與 WAN 場景）。",
+          "如果你開發或使用 MP-SPDZ，嘗試將其排列共享與 SLIDE 的在線步驟整合到運行時，評估對依賴關係調度與輪次合併的影響。",
+          "針對安全 LLM 推理工作，設計試驗：替換現有洗牌/重排原語，測量端到端延遲與吞吐。",
+          "研究將排列共享與 DAG 調度/批處理策略結合的可能性，並建模 k 作為運行時可調參數進行自動調優。",
+          "關注安全模型限制，探索向惡意安全或其他秘密分享格式的擴展。"
+        ],
+        "next_steps_en": [
+          "Read the full paper carefully, focusing on the security model, the permutation-sharing representation, and the construction/analysis of shuffle correlation.",
+          "Check for released implementation; if available, clone and reproduce the experiments across LAN and WAN settings.",
+          "If you use or develop MP-SPDZ, prototype integration of their permutation-sharing/SLIDE online steps into the runtime and measure effects on dependency-aware scheduling and round-coalescing.",
+          "For secure LLM inference, design experiments replacing current shuffling primitives with SLIDE (or the efficient protocol) to measure end-to-end latency and throughput.",
+          "Investigate combining permutation-sharing with DAG scheduling/batching; treat k as a runtime tunable and build a cost model or autotuner.",
+          "Examine limitations in the security assumptions and explore extending the ideas to malicious security or to other secret-sharing schemes."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
