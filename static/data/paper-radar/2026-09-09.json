@@ -1,0 +1,635 @@
+{
+  "date": "2026-09-09",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 6,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2609.08476",
+        "version": 1,
+        "title": "When Topology Betrays Privacy: Lattice-Based Reconstruction Attacks on Secure Aggregation in Decentralized Federated Learning",
+        "authors": [
+          "Wenrui Yu",
+          "Changlong Ji",
+          "Johannes Bjerva",
+          "Qiongxiu Li"
+        ],
+        "abstract": "Secure Aggregation (SA) is widely regarded as a strong defense against model-update leakage in Federated Learning (FL), as it reveals only aggregate results while hiding individual updates. In Decentralized Federated Learning (DFL), SA is commonly instantiated as local neighborhood aggregation, where each node obtains a weighted aggregate over its neighbors. We show that this locality creates a structural leakage surface: sparse decentralized topologies provide colluding semi-honest nodes with asymmetric aggregate views, exposing multiple hidden linear combinations of honest participants' private states. Reconstructing private states from these aggregate views is fundamentally challenging, as both the private states and the aggregation coefficients are hidden. We tackle this challenge by establishing a formal connection to the Hidden Subset Sum Problem, a long-studied problem in cryptography. Building on this formulation, we design a lattice-based reconstruction approach that combines lattice reduction with structural filtering to reconstruct protected model states. We evaluate our attack on image, tabular, and text tasks under sparse DFL topologies. Our results show that colluding semi-honest nodes can recover the original local updates of honest nodes, enabling downstream reconstruction of private training data. These findings demonstrate that SA alone does not guarantee privacy in DFL when local aggregation induces asymmetric observations.",
+        "categories": [
+          "cs.CR",
+          "cs.LG"
+        ],
+        "published": "2026-09-08T09:20:27Z",
+        "updated": "2026-09-08T09:20:27Z",
+        "abstract_url": "https://arxiv.org/abs/2609.08476v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.08476v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.08476v1",
+        "relevance_score": 10,
+        "novelty_score": 8,
+        "transferability_score": 9,
+        "systems_score": 8,
+        "confidence": 0.87,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure computation",
+          "privacy-preserving machine learning",
+          "protocol selection",
+          "distributed runtime scheduling"
+        ],
+        "short_summary_zh": "仅基于标题与摘要：研究去中心化联邦学习（DFL）中以局部邻居聚合实现的安全聚合（SA）泄露问题。指出稀疏去中心化拓扑使协同的半诚实节点能基于非对称的聚合观测重建诚实节点的多个线性组合，作者把问题形式化为隐藏子集和问题并提出基于格的重构攻击（格约简+结构过滤）。在图像、表格、文本任务与稀疏DFL拓扑上评估，声称能重构本地更新并进一步重建私人训练数据，强调单纯使用SA在这些拓扑下并不能保证隐私。 (基于标题和摘要)",
+        "short_summary_en": "Title-and-abstract only: Analyzes Secure Aggregation (SA) in Decentralized Federated Learning (DFL) and shows that local neighborhood aggregation on sparse topologies creates asymmetric aggregate views enabling colluding semi-honest nodes to reconstruct honest parties' updates. They formalize the task via a Hidden Subset Sum formulation and propose a lattice-based reconstruction attack combining lattice reduction and structural filtering; evaluations on image/tabular/text tasks claim recovery of local updates and downstream private data reconstruction. Concludes SA alone is insufficient under such topologies. (Based on title and abstract)",
+        "why_interesting_zh": "与本人的主要研究领域直接相关：讨论SA在稀疏去中心化拓扑下的结构性泄露、把问题映射到加密/格问题，并提出实证化攻击。对研究安全聚合、协议选择、MPC替代/补强策略和网络拓扑敏感性的研究非常重要。",
+        "why_interesting_en": "Directly relevant: identifies a structural leakage in SA under sparse decentralized topologies, connects it to a well-studied cryptographic problem (Hidden Subset Sum), and proposes a lattice-based reconstruction. Important for work on secure aggregation, protocol selection, and topology-aware defenses in privacy-preserving ML.",
+        "relation_to_my_work_zh": "如果你的研究是MPC/SA协议、MPC运行时、或网络感知协议选择，这篇可能直接影响 threat model 与设计：需要考虑拓扑引入的不对称视图、是否采用补充加密/随机化或改用 different aggregation primitives、以及运行时如何安排邻居/拓扑以减少泄露面。",
+        "relation_to_my_work_en": "If you work on MPC/SA protocols, runtimes, or topology-aware protocol selection, this paper could change threat models and defense design. It suggests examining asymmetric aggregate views, adding cryptographic hardening, altering aggregation patterns, or changing runtime scheduling/topology to mitigate lattice-based reconstructions.",
+        "possible_transfer_zh": "可迁移点包括： (1) 将拓扑/通信结构纳入隐私攻击建模并在编译/调度阶段进行拓扑敏感的协议选择； (2) 在运行时采用随机化或加密增强（例如掩码策略、稠密连接、分层聚合）以减少可被用于格攻击的线性组合； (3) 开发检测/度量工具来识别易受攻击的拓扑与聚合矩阵条件数。",
+        "possible_transfer_en": "Transferable ideas: (1) incorporate topology into threat models and into compiler/runtime protocol-selection; (2) modify runtime scheduling/aggregation (randomization, denser connectivity, hierarchical aggregation) to reduce exploitable linear-combination views; (3) develop diagnostics that flag topologies/aggregation matrices vulnerable to lattice reduction.",
+        "possible_overlap_or_conflict_zh": "可能与已有针对安全聚合、掩码方案、差分隐私或拓扑鲁棒性的防御工作发生重叠或冲突；需要检查是否已有理论下界或已知格攻击案例覆盖相同场景。摘要未能证明对所有稀疏拓扑都有效，细节需核实。",
+        "possible_overlap_or_conflict_en": "May overlap or conflict with prior defenses (masking, DP, hierarchical/dense aggregation) and prior cryptanalysis of aggregation schemes. Abstract doesn't prove coverage for all sparse topologies; details should be checked against existing known attacks/defenses.",
+        "questions_to_verify_zh": [
+          "攻击在何种稀疏拓扑/邻居矩阵条件下成功率高？是否有对拓扑参数（度、连通性、谱特性）的定量阈值？",
+          "格约简重构需要多少位数精度或数值条件？在浮点/有限域实现的实际FL系统中成本与成功率如何？",
+          "有哪些具体防御（掩码、DP、拓扑重连、协议变更）在摘要或论文中被评估？它们的开销如何影响通信/轮次？"
+        ],
+        "questions_to_verify_en": [
+          "For which sparse topologies / neighbor-matrix conditions does the attack succeed at high rates? Are there quantitative thresholds on degree, connectivity, or spectral properties?",
+          "What are the numeric/precision requirements of the lattice-reduction reconstruction and how do they translate to practical FL systems (floating point vs finite field)?",
+          "Which defenses (masking, DP, topology rewiring, protocol changes) are evaluated, and what are their communication/round complexity costs?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.08476v1",
+        "research_problem_zh": "在稀疏去中心化联邦学习(DFL)中，当采用本地邻居安全聚合(SA)时，会生成不对称的聚合观测，导致半诚实的共谋节点能够从不同线性组合中恢复单个参与者的本地模型更新，从而破坏隐私。论文聚焦于如何在既不知私有状态也不知聚合系数的情况下重构私人更新。 (仅基于题目与摘要)",
+        "research_problem_en": "In sparse decentralized federated learning (DFL), local-neighborhood secure aggregation (SA) can produce asymmetric aggregate views that allow colluding semi-honest nodes to recover individual participants' model updates. The paper studies reconstructing private updates when both private states and aggregation coefficients are hidden. (Title-and-abstract-based)",
+        "core_method_zh": "将问题形式化为一个与“Hidden Subset Sum Problem”相关的问题，并设计基于格的重构方法：结合格约简（lattice reduction）与结构过滤（structural filtering）来从不对称聚合观测中恢复本地更新。",
+        "core_method_en": "Formulate the reconstruction as related to the Hidden Subset Sum Problem and build a lattice-based reconstruction approach that combines lattice reduction with structural filtering to recover local updates from asymmetric aggregate observations.",
+        "contributions_zh": [
+          "指出稀疏去中心化拓扑下本地安全聚合会产生结构性泄漏面（asymmetric aggregate views）。",
+          "把受保护聚合的重构任务形式化为与 Hidden Subset Sum Problem 的联系（摘要声称）。",
+          "提出一种结合格约简和结构过滤的 lattice-based 重构攻击方法，并在图像/表格/文本任务及稀疏 DFL 拓扑上进行评估，展示在摘要所述设定下可从聚合中恢复原始局部更新。"
+        ],
+        "contributions_en": [
+          "Identifies a structural leakage surface: sparse decentralized topologies create asymmetric aggregate views under local secure aggregation.",
+          "Formulates the reconstruction challenge via a connection to the Hidden Subset Sum Problem (as claimed in the abstract).",
+          "Proposes a lattice-based reconstruction attack combining lattice reduction and structural filtering, and evaluates it on image, tabular, and text tasks under sparse DFL topologies (per abstract)."
+        ],
+        "why_watch_zh": "对研究隐私保护机器学习、聚合协议和去中心化系统的人非常重要：若题目与摘要的主张成立，常用的本地安全聚合在稀疏拓扑下可能无法提供预期隐私。关注该工作可以提示在协议设计、拓扑选择、运行时调度和防御策略（如拓扑/权重设计、掩码策略）上的必要变更。注意：以下结论基于题目与摘要。",
+        "why_watch_en": "Important for privacy-preserving ML, aggregation protocol design, and decentralized systems: if the abstract's claims hold, local secure aggregation in sparse topologies may fail to protect individual updates. The work signals potential changes needed in protocol design, topology choices, runtime scheduling, and mitigations (e.g., topology/weight design, masking). Note: analysis based solely on title and abstract.",
+        "direct_relation_zh": "直接相关性高——主题涉及“安全聚合 (SA)”与“去中心化联邦学习”的隐私破坏，这与隐私保护机器学习、MPC/secure computation 的威胁分析密切相关。对 MPC 编译器/运行时而言，结果表明拓扑与调度策略（导致不对称观测）会影响隐私边界，应在设计时考虑。",
+        "direct_relation_en": "High direct relevance — the paper addresses breaches of secure aggregation in decentralized federated learning, which is closely related to privacy-preserving ML and secure computation. For MPC compilers/runtimes, it highlights that topology and scheduling (creating asymmetric observations) can alter privacy guarantees and should be considered in design.",
+        "transferable_mechanisms_zh": [
+          "把聚合泄漏问题还原到已知的困难数论/组合问题（Hidden Subset Sum）的形式化思路。",
+          "利用格约简（lattice reduction）对隐藏线性组合/子集和问题进行重构的技术与参数经验。",
+          "结构过滤（structural filtering）用于利用拓扑稀疏性与观测之间的约束来缩小解空间的思路。",
+          "以攻击为中心的威胁建模方法：明确共谋者能力、拓扑知识与可观测量。"
+        ],
+        "transferable_mechanisms_en": [
+          "Formalizing aggregation leakage as a known hard combinatorial/number-theoretic problem (Hidden Subset Sum).",
+          "Using lattice-reduction techniques to attack hidden linear-combination/subset-sum reconstruction problems and associated parameter handling.",
+          "Structural filtering that leverages topology sparsity and observation constraints to reduce solution space.",
+          "Threat-model-centric methodology specifying colluders' capabilities, topology knowledge, and observables."
+        ],
+        "potential_overlap_zh": "与以下研究点重叠：隐私保护机器学习（PML）风控、MPC/安全聚合协议设计、运行时/调度策略对隐私的影响、拓扑选择/重连策略以及联邦/分布式系统的威胁建模。",
+        "potential_overlap_en": "Overlaps with privacy-preserving ML, MPC/secure aggregation protocol design, how runtime/scheduling affects privacy, topology selection/reconfiguration, and threat modeling for federated/distributed systems.",
+        "potential_conflict_zh": "若攻击可行，则在追求通信/计算效率（如稀疏拓扑、局部聚合以降低通信量）与确保隐私之间存在权衡；一些以降低轮次或带宽为目标的优化可能无意中降低隐私。攻击手段（格攻击）带来的可行性也可能与现有安全证明的假设冲突。",
+        "potential_conflict_en": "If the attack works as claimed, there is a trade-off between communication/computation efficiency (e.g., sparse topologies, local aggregation to cut communication) and privacy. The feasibility of lattice attacks may conflict with security proofs that rely on different assumptions.",
+        "full_text_questions_zh": [
+          "共谋节点的能力假设是什么？是否知道完整拓扑、聚合权重分布或节点标识？",
+          "聚合系数是如何被抽样/固定的？攻击是否依赖于特定权重分布或稀疏结构？",
+          "成功率随模型维度、节点数、共谋节点数如何变化？最小共谋规模是多少？",
+          "格攻击的参数、运行时、失败条件和鲁棒性（噪声、量化、掩码）如何？",
+          "是否考虑防御或缓解手段（拓扑改造、掩码、混合、随机化）？这些防御的开销怎样？",
+          "实验使用的具体数据集、模型尺寸和拓扑实例有哪些？结果的泛化性与局限是什么？"
+        ],
+        "full_text_questions_en": [
+          "What are the adversary capabilities assumptions? Do colluders know full topology, aggregation-weight distributions, or node identifiers?",
+          "How are aggregation coefficients drawn/fixed? Does the attack rely on particular weight distributions or sparsity patterns?",
+          "How do success rates scale with model dimensionality, node count, and number of colluders? What is the minimal colluding set size?",
+          "What are the lattice-attack parameters, runtime costs, failure modes, and robustness to noise/quantization/masking?",
+          "Are mitigations considered (topology redesign, masking, mixing, randomization)? What are their overheads?",
+          "Which datasets, model sizes and topology instances were used? What are generalization limits and assumptions?"
+        ],
+        "experiment_checks_zh": [
+          "复现攻击需要：公开拓扑实例、聚合权重生成规则、共谋策略、攻击实现及参数（格维度、约简阈值等）。",
+          "在不同稀疏度、不同掩码/噪声级别、以及随机重连/拓扑扰动下重复评估成功率和成本。",
+          "检查攻击对常见联邦学习实践（如差分隐私噪声、量化、掩码、随机延迟）的鲁棒性。",
+          "对比防御方案（增加邻居数、重采样权重、混合聚合）对攻击成功率与系统性能的影响。"
+        ],
+        "experiment_checks_en": [
+          "To reproduce the attack one needs published topology instances, aggregation-weight generation rule, collusion strategy, and attack implementation/parameters (lattice dimension, reduction thresholds).",
+          "Re-evaluate success rate and cost under varying sparsity, masking/noise levels, and topology perturbations (random reconnection).",
+          "Test robustness of the attack against common FL practices (differential-privacy noise, quantization, masking, randomized delays).",
+          "Compare defenses (increasing neighbor counts, re-sampling weights, mixed aggregation) on attack success and system performance trade-offs."
+        ],
+        "tracking_targets": [
+          "paper code / attack implementation release",
+          "topology instances and aggregation-weight generator",
+          "datasets and model/configuration scripts used in experiments",
+          "defense/mitigation proposals and follow-up work"
+        ],
+        "next_steps_zh": [
+          "阅读完整论文以验证假设与实验细节（威胁模型、参数与复现代码）。",
+          "若攻击成立，评估现有 MPC/MPC-SPDZ 和安全聚合实现中是否存在相同暴露（拓扑/调度引入的非对称观测）。",
+          "设计/评估缓解策略：强制化拓扑密度、引入额外掩码/混淆层、或在编译/运行时避免不对称批次/调度。",
+          "将论文中的分析方法（问题归约、格攻击）作为评估隐私风险的工具集成到隐私评估流水线中。"
+        ],
+        "next_steps_en": [
+          "Read full paper to verify assumptions and experimental details (threat model, parameters, reproducibility code).",
+          "If attack holds, assess whether existing MPC/MP-SPDZ and secure-aggregation implementations exhibit similar exposures due to topology/scheduling asymmetries.",
+          "Design/evaluate mitigations: enforce minimum topology density, add masking/obfuscation layers, or avoid asymmetric batching/scheduling at compile/runtime.",
+          "Integrate the paper's formalization (problem reduction, lattice-attack techniques) into privacy-risk assessment toolchains."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.08739",
+        "version": 1,
+        "title": "Tools-CC-Bench: a Benchmark Suite for Collective Communication with Compression in HPC and AI Workloads",
+        "authors": [
+          "Haozhe Fan",
+          "Wei Wang",
+          "Xingchen Liu",
+          "Man Liu",
+          "Xingjian Tian",
+          "Haoquan Long",
+          "Zedong Liu",
+          "Daran Sun",
+          "Jinwu Yang",
+          "Bo Yang",
+          "Jie Liu",
+          "Yonggang Che",
+          "Hairui Zhao",
+          "Guangming Tan",
+          "Dingwen Tao"
+        ],
+        "abstract": "Distributed HPC and LLM workloads increasingly require efficient communication for scalability, yet growing data movement has become a major performance bottleneck. Communication compression can reduce this overhead and complement execution-level optimizations, but its benefits remain difficult to assess because existing benchmarks lack support for diverse backends, realistic datasets, application-specific accuracy metrics, and overlap-induced resource contention. We present CC-Bench, a lightweight, extensible, and application-oriented benchmark suite for evaluating communication compression under realistic execution conditions. CC-Bench uses declarative application-environment modeling to decouple profiling logic from communication libraries, datasets, and fidelity metrics, enabling portable cross-library evaluation. It further combines function-level interception and hardware counter monitoring to characterize per-phase latency, hardware utilization, numerical fidelity, and computation interference. With representative datasets from HPC and LLM workloads, CC-Bench evaluates three compression-enabled communication libraries on CPU and GPU clusters, revealing accuracy-performance trade-offs and bottlenecks to guide practical deployment and optimization.",
+        "categories": [
+          "cs.DC"
+        ],
+        "published": "2026-09-08T13:31:47Z",
+        "updated": "2026-09-08T13:31:47Z",
+        "abstract_url": "https://arxiv.org/abs/2609.08739v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.08739v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.08739v1",
+        "relevance_score": 9,
+        "novelty_score": 7,
+        "transferability_score": 9,
+        "systems_score": 8,
+        "confidence": 0.81,
+        "priority": "deep_read",
+        "matched_topics": [
+          "collective communication",
+          "communication and computation overlap",
+          "performance modeling",
+          "latency hiding",
+          "pipeline execution"
+        ],
+        "short_summary_zh": "基于仅标题与摘要：CC-Bench 是一个轻量且可扩展的基准套件，用于在现实执行条件下评估通信压缩（collective communication with compression）对 HPC 与 AI 工作负载的影响。它通过声明式的应用-环境建模解耦了剖面逻辑与通信库/数据集/保真度度量，并结合函数拦截与硬件计数器来表征延迟、硬件利用率、数值保真度与计算干扰。作者演示了在 CPU/GPU 集群与多种压缩通信库上的跨库可比评估，揭示了性能-准确性权衡与实际瓶颈。",
+        "short_summary_en": "Based on title and abstract only: CC-Bench is a lightweight, extensible, application-oriented benchmark suite for evaluating collective communication with compression in realistic HPC and AI workloads. It uses declarative application-environment modeling, function-level interception, and hardware counters to measure per-phase latency, utilization, numerical fidelity, and interference; evaluates multiple compression-enabled libraries on CPU/GPU clusters and highlights accuracy-performance trade-offs and deployment bottlenecks.",
+        "why_interesting_zh": "直接针对通信压缩的可测评框架与跨库、跨数据集的实验对评估在高延迟/WAN场景下对通信敏感的系统（例如多方安全计算、分布式私有模型推理）非常有价值。",
+        "why_interesting_en": "A practical, cross-library benchmark for compressed collective communication is highly relevant for systems where communication dominates (e.g., MPC, distributed secure inference). Its emphasis on per-phase metrics, fidelity, and interference is useful for realistic trade-off analysis. ",
+        "relation_to_my_work_zh": "若你的研究涉及 MPC 运行时、跨机通信的协议选择、压缩/量化以减少带宽与往返，CC-Bench 提供可借鉴的衡量方法、实验基线与洞察，可用于比较多方协议或压缩方案的端到端影响。",
+        "relation_to_my_work_en": "If you study MPC runtimes, protocol selection, or compression/quantization to reduce bandwidth/rounds, CC-Bench's measurement abstractions and instrumentation could be adopted to benchmark and diagnose real deployments and guide protocol/scheduler choices. ",
+        "possible_transfer_zh": "可直接移植的内容包括：声明式应用-环境建模用于描述 MPC 场景、函数级拦截用于协议剖面、保真度度量适配为安全/精度约束、以及对压缩库在高延迟链路（WAN）下的压力测试。",
+        "possible_transfer_en": "Transferable elements: declarative application-environment modeling to describe MPC deployments; function-level interception for protocol profiling; fidelity metrics adapted to cryptographic/ML loss budgets; and methodology to test compression under WAN-like latency/packet-loss and interaction interference. ",
+        "possible_overlap_or_conflict_zh": "可能与现有的通信基准或专用 MPC 基准在目标上重叠；在安全语义（加密正确性）方面，CC-Bench 的数值保真度度量需要扩展以覆盖加密安全约束。",
+        "possible_overlap_or_conflict_en": "Overlaps existing communication benchmarks and potentially MPC-specific benchmarks; CC-Bench's fidelity measures focus on numerical error and would need adaptation to capture cryptographic correctness or leakage concerns. ",
+        "questions_to_verify_zh": [
+          "工具是否支持将网络延迟/丢包模拟为 WAN 条件？",
+          "目前支持哪些具体压缩通信库及其接口（MPI、NCCL、Gloo 等）？",
+          "如何将数值保真度指标映射到隐私/安全或 MPC 的正确性约束？",
+          "基准是否包含可公开复现的数据集与配置样本以便在私有集群上复现？"
+        ],
+        "questions_to_verify_en": [
+          "Does the tool support simulating WAN conditions (latency, packet loss, asymmetry)?",
+          "Which compression-enabled communication libraries are supported (MPI/NCCL/Gloo/others) and at what integration level?",
+          "How are numerical-fidelity metrics mapped to privacy/security or MPC correctness requirements?",
+          "Are datasets and configuration artifacts provided for reproducible runs on private clusters?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.08739v1",
+        "research_problem_zh": "在 H P C 与大型语言模型(LLM) 工作负载下，通信变得更加关键且昂贵。虽然通信压缩能减少数据移动，但现有基准缺乏对不同通信库、真实数据集、应用级保真度指标以及因重叠带来的资源争用的统一评估能力。论文提出一个用于评估带压缩的集合通信在真实执行条件下表现的基准套件 CC-Bench。 (仅基于题目与摘要)",
+        "research_problem_en": "Communication is a growing bottleneck for distributed HPC and LLM workloads. Although communication compression can help, existing benchmarks lack cross-backend support, realistic datasets, application-specific fidelity metrics, and modeling of overlap-induced resource contention. The paper presents CC-Bench, a benchmark suite for evaluating compressed collective communication under realistic conditions. (Title-and-abstract-based)",
+        "core_method_zh": "以声明式的应用-环境建模(dec declarative application-environment modeling)将分析逻辑与通信库、数据集与保真度指标解耦；结合函数级拦截与硬件计数器监控来表征每个阶段的延迟、硬件利用率、数值保真度与计算干扰，从而可跨库移植评估。",
+        "core_method_en": "Use declarative application-environment modeling to decouple profiling logic from communication libraries, datasets, and fidelity metrics; combine function-level interception and hardware counter monitoring to characterize per-phase latency, hardware utilization, numerical fidelity, and computation interference—enabling portable cross-library evaluation of compression-enabled communication libraries.",
+        "contributions_zh": [
+          "提出 CC-Bench：一个轻量、可扩展且面向应用的基准套件，用于在真实执行条件下评估带压缩的集合通信。",
+          "提出声明式建模和函数级拦截+硬件计数器相结合的测量方法，能捕获阶段性延迟、硬件利用率、数值保真度与计算干扰。",
+          "在代表性的 HPC 与 LLM 数据集上对三种支持压缩的通信库在 CPU/GPU 集群上进行评估，曝光准确性-性能折中与瓶颈（摘要所述）。"
+        ],
+        "contributions_en": [
+          "Introduce CC-Bench: a lightweight, extensible, application-oriented benchmark suite to evaluate compression-enabled collective communication under realistic execution conditions.",
+          "Propose declarative modeling plus function-level interception and hardware-counter monitoring to capture per-phase latency, hardware utilization, numerical fidelity, and computation interference.",
+          "Evaluate three compression-enabled communication libraries on representative HPC and LLM datasets across CPU/GPU clusters to reveal accuracy-performance trade-offs and bottlenecks (per abstract)."
+        ],
+        "why_watch_zh": "与优化分布式安全计算（包括 MPC/MP-SPDZ）通信路径密切相关：CC-Bench 若可用于模拟真实通信/压缩/重叠情形，可成为评估 MPC 运行时在 WAN/高延迟网络、压缩策略、分批和通信-计算重叠影响下的工具。它可能帮助量化通信压缩对数值保真度与最终应用精度（例如隐私保护 ML 推理/训练）的影响。 (基于摘要)",
+        "why_watch_en": "Relevant to optimizing distributed secure computation (including MPC/MP-SPDZ) communication: if CC-Bench can model realistic compression and overlap scenarios, it could be used to evaluate MPC runtimes under WAN/high-latency, compression strategies, batching, and communication-computation overlap. It may help quantify how communication compression affects numerical fidelity and downstream application accuracy (e.g., privacy-preserving ML). (Abstract-based)",
+        "direct_relation_zh": "中等到高——主要是系统/性能工具，但能直接支持研究通信优化和评估：对关注 WAN 延迟、通信轮次、批处理、管道并行与网络感知运行时的研究人员有实用价值。对 MPC 编译器/运行时开发者可用于基准测评与调优。",
+        "direct_relation_en": "Medium to high — primarily a systems/performance tooling contribution, but directly useful for research on communication optimization and evaluation: it can support studies on WAN latency, communication rounds, batching, pipelining, and network-aware runtimes. MPC compiler/runtime developers can use it for benchmarking and tuning.",
+        "transferable_mechanisms_zh": [
+          "声明式应用-环境建模使得在不同通信库/后端间可复用的配置与场景描述成为可能。",
+          "函数级拦截（library interposition）与硬件计数器联合测量方法适合捕获通信/计算重叠引发的资源争用和阶段性延迟。",
+          "跨库、跨后端的准确性-性能度量框架（包括面向应用的保真度指标）可迁移到评估 MPC/隐私计算的通信策略。"
+        ],
+        "transferable_mechanisms_en": [
+          "Declarative application-environment modeling for reusable scenario descriptions across communication libraries/backends.",
+          "Function-level interception (library interposition) combined with hardware-counter monitoring to capture resource contention and per-phase latency of communication-computation overlap.",
+          "Cross-library, cross-backend accuracy-performance measurement framework including application-level fidelity metrics, adaptable to evaluating MPC/privacy-computation communication strategies."
+        ],
+        "potential_overlap_zh": "与以下方向重叠：MPC 与隐私计算的通信基准、评估通信压缩/量化在隐私任务中对精度/安全影响、网络感知运行时设计与延迟隐藏(communication-computation overlap)策略。",
+        "potential_overlap_en": "Overlaps with MPC/privacy-computation communication benchmarking, evaluating compression/quantization effects on accuracy/security in privacy tasks, and network-aware runtime design and latency-hiding (communication-computation overlap) strategies.",
+        "potential_conflict_zh": "基准关注通信压缩与数值保真度，但压缩在某些隐私或加密协议中可能影响安全（例如，量化可能影响秘密分享的正确性或掩码解除），因此直接用该基准评估 MPC 时需谨慎，确保压缩策略不破坏协议语义或安全假设。",
+        "potential_conflict_en": "The benchmark focuses on compression and numerical fidelity; compression can affect security in some cryptographic protocols (e.g., quantization may break secret-sharing correctness or masking). Using this benchmark for MPC requires caution to ensure compression does not violate protocol semantics or security assumptions.",
+        "full_text_questions_zh": [
+          "CC-Bench 支持哪些通信库和压缩方案？是否支持 RPC/点对点及集体通信常见的实现（如 MPI、NCCL、Gloo、自定义 RPC）？",
+          "保真度/准确性指标如何定义并与下游 ML/HPC 应用关联？是否支持可插入的应用级指标（例如模型精度、LLM 推理质量）？",
+          "是否包含 WAN/高延迟拓扑的建模？如何模拟不同延迟/带宽/丢包的环境？",
+          "能否直接测量并表征 MPC/秘密分享通信模式（小消息高频、批量化）？",
+          "是否开源，是否易于将 MP-SPDZ、EMP 或其他 MPC 框架接入？"
+        ],
+        "full_text_questions_en": [
+          "Which communication libraries and compression schemes does CC-Bench support? Does it cover common RPC/point-to-point and collective implementations (MPI, NCCL, Gloo, custom RPCs)?",
+          "How are fidelity/accuracy metrics defined and related to downstream ML/HPC applications? Are application-level metrics (model accuracy, LLM inference quality) pluggable?",
+          "Does it model WAN/high-latency topologies? How are latency/bandwidth/packet-loss environments simulated?",
+          "Can it measure and characterize MPC/secret-sharing communication patterns (small messages at high frequency, batching)?",
+          "Is CC-Bench open-source, and how easily can MP-SPDZ, EMP or other MPC frameworks be integrated?"
+        ],
+        "experiment_checks_zh": [
+          "复现基准结果：在相同硬件/拓扑上运行并确认每相位延迟、硬件利用率和保真度指标的采样与归因方法。",
+          "将真实 MPC 案例（MP-SPDZ）接入基准，检查度量能否反映 MPC 的通信密集与延迟敏感特征。",
+          "测试压缩方案对最终模型精度及协议正确性的影响，确认压缩不会违反安全/语义前提。",
+          "评估基准在不同负载干扰（多作业并发）下的判别能力，确保能量化重叠引起的资源争用。"
+        ],
+        "experiment_checks_en": [
+          "Reproduce benchmark results on similar hardware/topologies and validate per-phase latency, hardware-utilization, and fidelity measurement and attribution methods.",
+          "Integrate a real MPC workload (e.g., MP-SPDZ) into the benchmark and verify metrics capture MPC's communication-intense and latency-sensitive characteristics.",
+          "Test compression schemes' impacts on final model accuracy and on protocol correctness, ensuring compression does not break security/semantics.",
+          "Assess benchmark's sensitivity under concurrent workloads to quantify interference from overlap."
+        ],
+        "tracking_targets": [
+          "CC-Bench code repository / integration docs",
+          "supported compression-enabled communication libraries list",
+          "representative datasets and fidelity metric implementations",
+          "examples integrating ML frameworks or MPC frameworks (e.g., MP-SPDZ)"
+        ],
+        "next_steps_zh": [
+          "查看并试用 CC-Bench 代码库，尝试将 MP-SPDZ 或目标 MPC 实现接入并运行典型通信场景。",
+          "用 CC-Bench 构造针对 WAN/高延迟场景的基准测试，评估分批/压缩/流水线对 MPC 轮次和总体延迟的影响。",
+          "如适用，将基准中保真度指标调整为隐私计算的应用级指标（如下游模型精度或恢复攻击成功率）。"
+        ],
+        "next_steps_en": [
+          "Inspect and try CC-Bench repo; attempt to integrate MP-SPDZ or a target MPC implementation and run representative communication scenarios.",
+          "Use CC-Bench to create WAN/high-latency benchmarks and evaluate how batching/compression/pipelining affect MPC round counts and end-to-end latency.",
+          "Adapt benchmark fidelity metrics to privacy-computation application metrics (downstream model accuracy or reconstruction-attack success rates) if appropriate."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.08441",
+        "version": 1,
+        "title": "AI-Native Orchestration in the 6G Continuum: Evolving Operator Platforms with Agentic AI",
+        "authors": [
+          "Claudia Carballo González",
+          "Hatim Chergui",
+          "Sergio Giménez-Antón",
+          "Mohammadreza Mosahebfard",
+          "Juan Sebastián Camargo",
+          "Pouria Sayyad Khodashenas",
+          "Vasileios Theodorou",
+          "Christos Verikoukis"
+        ],
+        "abstract": "As Sixth-Generation (6G) networks evolve towards a seamless Cloud-Edge-Internet of Things (IoT) continuum, autonomous orchestration across distributed compute and network domains becomes critical. Future 6G services will span multiple administrative and operator domains, making federation essential for ubiquitous, ultra-low-latency service continuity beyond individual footprints. This complexity demands AI-native mechanisms supporting intent-driven automation and closed-loop management. While the GSMA Operator Platform (OP) provides the architectural blueprint for multi-operator federation and network capability exposure, and the ETSI Software Development Group OpenOP (SDG OOP) offers a primary open-source reference implementation, current frameworks are limited by stateless API interactions and lack native intelligence. This paper proposes an Agentic-driven Intelligence extension for the GSMA OP architecture, using the OOP as the reference framework. We introduce an AI-native orchestration layer where autonomous agents manage persistent service contexts and enable closed-loop control via CAMARA APIs. By integrating a Declarative Monitoring and Alerting System (DeMAS) into the OOP stack and establishing a decentralised agent negotiation protocol, the proposed architecture enables real-time, intent-driven resource optimisation and autonomous cross-domain conflict resolution across federated domains. We validate our approach through a representative 6G use case involving Ultra-Reliable Low-Latency Communication (URLLC) and enhanced Mobile Broadband (eMBB) coexistence, demonstrating that an agentic OP framework autonomously reconciles stringent Service Level Agreements (SLAs) while enhancing infrastructure energy efficiency. Our findings establish a scalable blueprint for cross-domain Network-as-a-Service (NaaS) models that align standardised exposure with 6G autonomous requirements.",
+        "categories": [
+          "cs.NI"
+        ],
+        "published": "2026-09-08T08:46:03Z",
+        "updated": "2026-09-08T08:46:03Z",
+        "abstract_url": "https://arxiv.org/abs/2609.08441v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.08441v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.08441v1",
+        "relevance_score": 9,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.72,
+        "priority": "deep_read",
+        "matched_topics": [
+          "network-aware runtime",
+          "decentralized negotiation",
+          "closed-loop control",
+          "adaptive systems",
+          "performance modeling"
+        ],
+        "short_summary_zh": "基于题目与摘要：在 GSMA Operator Platform 架构与 OpenOP 参考实现基础上，提出一个 AI 原生（agentic）扩展，包含长期上下文保持、去中心化代理协商协议和声明式监控告警（DeMAS），以实现跨域资源的意图驱动自治编排和冲突解决，并在 URLLC/eMBB 共存用例上做示例验证。",
+        "short_summary_en": "Based on title/abstract: the paper proposes an agentic, AI-native extension to the GSMA Operator Platform/OpenOP that adds persistent service contexts, decentralized agent negotiation, and a Declarative Monitoring and Alerting System (DeMAS) to enable intent-driven, closed-loop cross-domain orchestration and conflict resolution. A URLLC/eMBB co-existence use case is used for validation.",
+        "why_interesting_zh": "架构级、系统级细节（持久上下文、去中心化协商、声明式监控）直接对网络感知的分布式运行时与调度器设计有启发，尤其是要在多运营商/WAN 环境下协调低延迟安全服务（如跨域 MPC）。",
+        "why_interesting_en": "Architectural elements—persistent contexts, decentralized negotiation, and declarative monitoring—are directly relevant to designing network-aware distributed runtimes and schedulers, especially for coordinating low-latency secure services across administrative domains.",
+        "relation_to_my_work_zh": "可为跨域 MPC 服务编排、SLA 驱动的协议选择和冲突解决提供可借鉴的架构和接口设计思路；需要阅读全文确认代理实现、消息语义、以及可扩展性与安全性考量。",
+        "relation_to_my_work_en": "Potential blueprint for cross-domain MPC orchestration, SLA-aware protocol selection, and conflict resolution. Full paper needed to assess agent semantics, messaging protocols, scalability, and security/privacy implications.",
+        "possible_transfer_zh": "把去中心化代理与声明式监控用于 MPC：实现跨运营商/跨域会话管理、延迟/带宽感知的流水线与批处理决策、以及基于 SLA 的自动化切换与冲突仲裁；DeMAS 可用于检测并触发重新调度。",
+        "possible_transfer_en": "Use decentralized agents and declarative monitoring for MPC: cross-operator session management, latency/bandwidth-aware batching/pipelining decisions, SLA-driven automated switching/conflict arbitration; DeMAS could detect SLA violations and trigger rescheduling.",
+        "possible_overlap_or_conflict_zh": "可能与已有 OP/GSMA/ETSI 规范以及其他自治网络框架功能重合；必须核查提出的协商协议与监控语义是否与标准兼容并评估额外的安全/隐私风险。",
+        "possible_overlap_or_conflict_en": "May overlap with GSMA/ETSI operator platform specs and other autonomous-network frameworks; check whether negotiation protocols and monitoring semantics are standards-compatible and evaluate added security/privacy risks.",
+        "questions_to_verify_zh": [
+          "去中心化代理協商协议的详细规范、消息语义与证明其收敛/健壮性的论证在哪里？",
+          "DeMAS 的声明式语言与报警策略是什么样的，如何保证低延迟触发与可扩展性？",
+          "在跨域场景的安全性和信任模型如何设计（认证/授权/隐私）？",
+          "实验证明（URRLC/eMBB 用例）中的基线、规模、度量与定量收益是多少？"
+        ],
+        "questions_to_verify_en": [
+          "What are the detailed specs of the decentralized agent negotiation protocol, message semantics, and arguments/evidence for convergence/robustness?",
+          "What is DeMAS's declarative language and alert policy model, and how does it ensure low-latency triggers and scalability?",
+          "How are security and trust modeled in cross-domain scenarios (authentication/authorization/privacy safeguards)?",
+          "What are the baselines, scale, metrics, and quantitative gains in the URLLC/eMBB evaluation?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.08441v1",
+        "research_problem_zh": "随着 6G 向云-边缘-IoT 连续体演进，跨域自治编排和多运营商联邦变得必要，但现有运营商平台（GSMA OP、ETSI OOP）以无状态 API 为主，缺乏内生智能和闭环管理。论文提出将 agentic AI 扩展到 GSMA OP 架构，通过持久化服务上下文、声明式监控與去中心化代理协商实现意图驱动的自动化与跨域资源优化。 (仅基于题目与摘要)",
+        "research_problem_en": "As 6G evolves into a Cloud-Edge-IoT continuum, cross-domain autonomous orchestration and multi-operator federation become essential. Existing operator platforms (GSMA OP, ETSI OOP) are stateless and lack native intelligence. The paper proposes an agentic AI extension to GSMA OP that provides persistent service contexts, declarative monitoring, and decentralized agent negotiation to enable intent-driven automation and cross-domain resource optimization. (Title-and-abstract-based)",
+        "core_method_zh": "在 OOP 参考实现上引入 AI 原生的编排层：持久化服务上下文、集成 Declarative Monitoring and Alerting System (DeMAS)、以及去中心化代理协商协议，实现闭环控制与跨域冲突自动调和。通过一个 URLLC 与 eMBB 共存的 6G 用例对方法进行验证并声称提升 SLA 满足率与能效。",
+        "core_method_en": "Introduce an AI-native orchestration layer on top of OOP: persistent service contexts, integration of a Declarative Monitoring and Alerting System (DeMAS), and a decentralized agent negotiation protocol to enable closed-loop control and cross-domain conflict resolution. Validated via a 6G URLLC/eMBB coexistence use case that reportedly improves SLA reconciliation and infrastructure energy efficiency (per abstract).",
+        "contributions_zh": [
+          "提出将 agentic AI 引入 GSMA OP 架构的扩展方案，在 OOP 实现上构建一个 AI 原生编排层。",
+          "引入持久化服务上下文、DeMAS 声明式监控/报警与去中心化代理协商协议以实现闭环/意图驱动自动化。",
+          "通过 URLLC 与 eMBB 共存的代表性 6G 用例做示例验证，展示自动调和 SLA 与提高能效的潜力（摘要所述）。"
+        ],
+        "contributions_en": [
+          "Propose an agentic-AI extension to GSMA OP architecture, building an AI-native orchestration layer atop the OOP reference implementation.",
+          "Introduce persistent service contexts, DeMAS (declarative monitoring/alerting), and a decentralized agent negotiation protocol for closed-loop, intent-driven automation.",
+          "Validate approach with a representative 6G URLLC/eMBB coexistence use case, claiming improved SLA reconciliation and energy efficiency (per abstract)."
+        ],
+        "why_watch_zh": "对网络感知运行时、跨域资源调度与自治系统有启发价值：其去中心化代理协商与声明式监控思路可能适用于需要跨网络/行政域调度安全计算或分布式推理任务的场景（例如隐私敏感的分布式推理，或需要在不同运营商网络间部署 MPC 服务时的路径选择与资源协调）。(基于摘要)",
+        "why_watch_en": "Potentially useful for network-aware runtimes, cross-domain resource scheduling, and autonomous systems: decentralized agent negotiation and declarative monitoring may apply to scheduling privacy-sensitive distributed inference or coordinating MPC services across operator domains (path selection, resource negotiation). (Abstract-based)",
+        "direct_relation_zh": "相关性中等偏低——论文主要面向电信/6G 运维与编排，但其中的自治代理、持续上下文与网络感知优化模式可以迁移到实现跨域 MPC 服务、网络感知的 MPC 运行时与协议选择层面。不是直接关于 MPC 或隐私算法，但对运行时/系统层面的网络优化有参考价值。",
+        "direct_relation_en": "Moderate-to-low direct relevance — the paper focuses on telecom/6G orchestration. However, its agentic persistence/context, decentralized negotiation, and network-aware optimization ideas could be transferred to cross-domain MPC service deployment and network-aware MPC runtimes/protocol selection. It is not directly about MPC or privacy algorithms but may inform runtime/system design.",
+        "transferable_mechanisms_zh": [
+          "持久化服务上下文用于跨会话/跨域维护作业状态，有助于长期协作的分布式计算任务调度。",
+          "声明式监控與告警（DeMAS）将意图与可观测指标连接，可用于自动调整网络参数或迁移安全计算任务以满足延迟/SLA。",
+          "去中心化代理协商协议提供跨行政域的分布式决策机制，可迁移到多方隐私计算部署时的资源/策略协商。"
+        ],
+        "transferable_mechanisms_en": [
+          "Persistent service contexts to maintain job state across sessions/domains, useful for long-running distributed computation scheduling.",
+          "Declarative monitoring and alerting (DeMAS) that links intents to observables; useful for auto-adjusting network parameters or migrating secure-compute tasks to meet latency/SLA constraints.",
+          "Decentralized agent negotiation protocols for cross-administrative-domain decision making, applicable to resource/policy negotiation for multi-party privacy computation deployments."
+        ],
+        "potential_overlap_zh": "与网络感知运行时、跨域调度、协议选择和延迟敏感服务部署有重叠，尤其是需要在多运营商环境下部署低延迟安全推理或隐私服务时。",
+        "potential_overlap_en": "Overlaps with network-aware runtimes, cross-domain scheduling, protocol selection, and latency-sensitive service deployment—especially relevant for deploying low-latency secure inference or privacy services across multiple operators.",
+        "potential_conflict_zh": "自治代理与跨域协商引入信任与安全问题：在多方隐私计算或敏感数据处理场景下，需要额外考虑代理本身的可信度、跨域信息暴露与认证机制，自动化决策可能与隐私/安全需求发生冲突。",
+        "potential_conflict_en": "Agentic orchestration and cross-domain negotiation raise trust and security concerns: for multi-party privacy computation or sensitive-data tasks, agent trustworthiness, cross-domain information disclosure, and authentication need attention; automated decisions may conflict with privacy/security requirements.",
+        "full_text_questions_zh": [
+          "去中心化代理间的协商协议如何设计？是否有安全/认证机制来避免代理被劫持或误导？",
+          "持久化服务上下文包含哪些可观测信息？这些上下文如何保护隐私（在多运营商或多租户场景）？",
+          "DeMAS 的表达能力与可插拔性如何？能否接入自定义 SLA、延迟/带宽指标或 MPC 特定指标？",
+          "验证用例（URLLC/eMBB）中的度量与实验细节是什么？能源与 SLA 改善的定量证据如何获得？"
+        ],
+        "full_text_questions_en": [
+          "How is the decentralized agent negotiation protocol designed? Are there security/authentication measures to prevent agent compromise or manipulation?",
+          "What observable information is contained in persistent service contexts, and how is privacy protected across operators/multi-tenant settings?",
+          "What is the expressiveness and extensibility of DeMAS? Can it accept custom SLAs, latency/bandwidth metrics, or MPC-specific metrics?",
+          "What are the metrics and experimental details of the URLLC/eMBB validation? How are energy and SLA improvements quantified?"
+        ],
+        "experiment_checks_zh": [
+          "验证代理协商在跨域情形下的稳健性、安全性与收敛性：在受限信任与部分信息泄露场景下评估行为。",
+          "评估持久上下文与监控系统是否会暴露敏感信息（元数据泄露），并测量其保护开销。",
+          "在真实或仿真多运营商拓扑下复现验证用例，按相同 SLA/负载场景对比有无 agent 层的性能与能效差异。"
+        ],
+        "experiment_checks_en": [
+          "Verify robustness, security, and convergence of agent negotiation across domains under limited trust and partial-information conditions.",
+          "Evaluate whether persistent contexts and monitoring leak sensitive metadata and measure protection overheads.",
+          "Reproduce validation use case on real or simulated multi-operator topologies and compare performance and energy with and without the agent layer under the same SLA/load scenarios."
+        ],
+        "tracking_targets": [
+          "OOP / GSMA OP extension code or reference implementation",
+          "DeMAS specification and rule/intent language",
+          "agent negotiation protocol spec and threat model",
+          "validation scripts / traces for URLLC/eMBB use case"
+        ],
+        "next_steps_zh": [
+          "阅读完整论文以评估协议安全性与隐私保护措施。",
+          "如感兴趣，将其代理/监控思想抽取并试验于网络感知的 MPC 运行时：例如用于跨域部署的路径选择、资源协商与延迟 SLA 管理。",
+          "关注后续工作中关于代理信任、认证与跨域隐私保护的详细方案。"
+        ],
+        "next_steps_en": [
+          "Read full paper to assess protocol security and privacy protections.",
+          "If relevant, extract agent/monitoring ideas and experiment with them in network-aware MPC runtimes—for cross-domain path selection, resource negotiation, and latency SLA management.",
+          "Follow subsequent work on agent trust, authentication, and cross-domain privacy protections."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.08426",
+        "version": 1,
+        "title": "Toward Fully Autonomous 6G Networks: AI-driven Operational Efficiency and Optimization",
+        "authors": [
+          "David Reiss",
+          "Oriol Sallent",
+          "Miguel Catalan-Cid",
+          "Daniel Camps-Mur"
+        ],
+        "abstract": "Mobile networks evolution is characterized by a substantial increase in system complexity, driven by the need to accommodate a growing number of heterogeneous services on top of the digital infrastructure. This growth in service accommodation is expected to accelerate with the adoption of the Network as a Service (NaaS) paradigm, which has emerged as a promising approach to accelerate network innovation while enabling new revenue streams for operators. Although it is fundamental to abstract network capabilities for third-party developers, it poses significant challenges in terms of efficient network operation. To address this increased complexity, future mobile networks are envisioned to be inherently Artificial Intelligence (AI)-native. In particular, the integration of AI within the Radio Access Network (RAN) becomes a key enabler for optimizing operation, energy consumption, and autonomous network control. In this context, this research explores the convergence of AI-native RAN and NaaS ecosystems to enable autonomous 6G RAN management. We propose an Agentic-based orchestration framework capable of interpreting intent-based policies. The proposed framework becomes key to integrate external NaaS requests with internal network management policies.",
+        "categories": [
+          "cs.NI"
+        ],
+        "published": "2026-09-08T08:33:29Z",
+        "updated": "2026-09-08T08:33:29Z",
+        "abstract_url": "https://arxiv.org/abs/2609.08426v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.08426v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.08426v1",
+        "relevance_score": 8,
+        "novelty_score": 6,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.7,
+        "priority": "read",
+        "matched_topics": [
+          "network-aware runtime",
+          "adaptive systems",
+          "decentralized negotiation",
+          "NaaS"
+        ],
+        "short_summary_zh": "基于题目与摘要：讨论将 AI 原生能力集成进 RAN 与 NaaS，以实现面向 6G 的自主运行。提出一个基于 agent 的编排框架，用于解释意图驱动的策略，并将外部 NaaS 请求与内网管理策略整合以实现自治网络控制和能效优化（摘要表述）。",
+        "short_summary_en": "Based on title/abstract: the paper studies integrating AI-native capabilities into RAN and Network-as-a-Service (NaaS) for autonomous 6G operation. It proposes an agent-based orchestration framework that interprets intent-based policies and integrates external NaaS requests with internal network management for autonomous control and energy optimization.",
+        "why_interesting_zh": "与网络感知运行时、跨域延迟/带宽优化、以及意图驱动资源分配密切相关；这些主题直接迁移到需要多站点/多域协作的 MPC 部署（WAN 延迟敏感的协议调度与跨域服务协调）。",
+        "why_interesting_en": "Closely related to network-aware runtimes, cross-domain latency/bandwidth optimization, and intent-driven resource allocation—directly applicable to multi-site MPC deployments that require WAN-aware scheduling and cross-domain negotiation.",
+        "relation_to_my_work_zh": "该框架可能提供设计 MPC 运行时（特别是跨运营商/跨域场景下的协议选择与资源协调）的参考，例如如何以意图为中心进行策略翻译、代理协商与闭环控制。",
+        "relation_to_my_work_en": "The agentic orchestration model could inform MPC runtime design for cross-operator deployments—e.g., intent-to-policy translation, agent negotiation, and closed-loop SLA-aware scheduling under WAN constraints.",
+        "possible_transfer_zh": "将 agentic 编排与意图驱动控制思想迁移到 MPC：用于跨域会话管理、延迟敏感的协议选择、自动化 SLA 驱动的资源分配与冲突解决；引入监控/告警模块（如摘要所述）以实现闭环调度。",
+        "possible_transfer_en": "Transfer agentic orchestration to MPC: use intent-driven control and agent negotiation for cross-domain session management, latency-aware protocol selection, SLA-driven resource allocation and conflict resolution; integrate monitoring/alerting for closed-loop scheduling.",
+        "possible_overlap_or_conflict_zh": "可能与已有的网络切片、意图驱动管理与自治网络研究重叠。需要检查具体的 agent 协商协议、开销、可扩展性与实测结果。",
+        "possible_overlap_or_conflict_en": "May overlap with network-slicing, intent-driven management, and autonomous network literature. Verify specifics of agent negotiation protocol, overheads, scalability, and empirical validation.",
+        "questions_to_verify_zh": [
+          "代理如何表示意图并將其映射为具体资源/策略？",
+          "跨域代理的协商协议细节、收敛性与通信开销是多少？",
+          "闭环监控（DeMAS 或类似模块）如何实现？对延迟/可扩展性的影响如何？",
+          "在真实或仿真用例（例如 URLLC 与 eMBB 共存）的评估指标与基线是什么？"
+        ],
+        "questions_to_verify_en": [
+          "How do agents represent intents and translate them into concrete resources/policies?",
+          "What are the agent negotiation protocol details, convergence properties, and communication overhead for cross-domain coordination?",
+          "How is closed-loop monitoring (DeMAS or equivalent) implemented and what is its impact on latency/scalability?",
+          "What baselines and metrics are used in the URLLC/eMBB co-existence validation and what are the quantitative gains?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.08450",
+        "version": 1,
+        "title": "Sample-Guided Exact Top-K Selection for Long-Context Sparse Attention",
+        "authors": [
+          "Siran Liu",
+          "Yang Xue",
+          "Theo Tang",
+          "Changxu Shao",
+          "Qian Cheng",
+          "Haimeng Ren",
+          "Donghua Jiang",
+          "Haipeng Ming",
+          "Lehua Ding",
+          "Zhonghan Lin",
+          "Shengying Wei",
+          "Wei Liu",
+          "Kai Liu",
+          "Jianchen Zhu"
+        ],
+        "abstract": "Sparse attention bounds downstream attention work by retaining a fixed-size subset of indexed tokens, but its standalone exact Top-$K$ stage must still process materialized score rows whose length grows with context. Production radix selectors discover their first actionable boundary only after a complete-row pass, forcing another row-scale traversal before exact refinement. We observe that locating a compact upper tail requires substantially less resolution than identifying the exact rank boundary, and that fixed-stride partial views of the current row remain calibrated to the corresponding complete-row rank across ragged lengths. We present HPC-Ops Top-K, a sample-guided exact selector for ragged sparse-attention score rows. A fixed-stride view proposes a row-local coarse boundary; the mandatory complete-row pass certifies its sufficiency, forms the admitted candidate set, and initializes exact FP32 refinement over the unresolved frontier. A nested secondary boundary and exact recovery handle underfilled proposals before any output is committed, so sampling controls common-path work but never correctness. The GPU implementation fuses complete-row certification and candidate formation, and combines persistent, KV-split, and direct-exact execution behind graph-capturable ragged-row dispatch. We evaluate HPC-Ops Top-K on indexer scores from Hy4-Preview. It outperforms the fastest verified external exact baseline by $1.29$--$1.75\\times$ across 20 operator configurations, with a $1.55\\times$ geometric-mean speedup. It further achieves $1.36\\times$ and $1.48\\times$ speedups on two framework-derived sparse-attention traces. The implementation is available in HPC-Ops, Tencent's open-source high-performance operator library for LLM inference, at https://github.com/Tencent/hpc-ops.",
+        "categories": [
+          "cs.DC"
+        ],
+        "published": "2026-09-08T08:51:19Z",
+        "updated": "2026-09-08T08:51:19Z",
+        "abstract_url": "https://arxiv.org/abs/2609.08450v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.08450v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.08450v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.82,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "batching",
+          "latency hiding",
+          "communication and computation overlap"
+        ],
+        "short_summary_zh": "仅基于标题与摘要：提出HPC-Ops Top-K，一种用于变长（ragged）稀疏注意力得分行的“采样引导的精确Top-K”选择器。方法用固定步长的部分视图提出候选边界，再在完整行上传统验证与精确恢复，确保采样加速不影响正确性。GPU实现融合了多种执行模式，并在多个稀疏注意力轨迹上比最快的已验证外部基线快约1.29–1.75×。实现已开源。 (基于标题和摘要)",
+        "short_summary_en": "Title-and-abstract only: Introduces HPC-Ops Top-K, a sample-guided exact Top-K selector for ragged sparse-attention score rows. Uses fixed-stride partial views to propose coarse boundaries, certifies on a full-row pass, and refines exactly; GPU implementation fuses certification and candidate formation and reports 1.29–1.75× speedups vs fastest verified external exact baselines. Implementation open-sourced. (Based on title and abstract)",
+        "why_interesting_zh": "与安全/私有LLM推理密切相关：Top-K/稀疏注意力选取是长上下文推理瓶颈。抽样引导的精确选择可减少关键路径工作量，有利于降低延迟并提高吞吐——这些是安全推理（MPC或HE）中极重要的资源节约点。",
+        "why_interesting_en": "Relevant to secure LLM inference: efficient exact Top-K over ragged rows reduces computational work on the critical path for long-context sparse attention, which can translate to lower latency and fewer expensive secure-computation steps.",
+        "relation_to_my_work_zh": "如果你在隐私/安全LLM推理或将大型注意力算子放入受限通信/轮次环境（MPC/HE）中，这种样本引导的选择器可能直接减少需要在安全域中处理的元素数量，从而降低通信/轮次与延迟。",
+        "relation_to_my_work_en": "If you work on private LLM inference or executing attention operators inside MPC/HE runtimes, this selector could reduce the number of elements that must be processed under costly secure protocols, lowering communication and round complexity.",
+        "possible_transfer_zh": "方法可移植为：在安全推理前端本地或安全聚合阶段做采样式候选生成，减少需进入MPC/HE的精确Top-K工作；GPU实现思路也能启发网络/批处理调度与流水线融合。",
+        "possible_transfer_en": "Could be adapted as a prefiltering/selection stage that reduces the set of tokens requiring exact secure processing, or its GPU/dispatch fusion ideas could inform batching, coalescing, and pipeline execution in secure inference runtimes.",
+        "possible_overlap_or_conflict_zh": "与其他高性能Top-K/稀疏注意力选择器存在竞争重叠；在安全推理场景应用时需验证抽样与完整行认证在加密或分布式视图下的可行性与成本。",
+        "possible_overlap_or_conflict_en": "Overlaps HPO/P-sparse-ops and other Top-K selector work. Applying it inside encrypted/distributed setups requires checking the cost of the mandatory full-row certification under those security models.",
+        "questions_to_verify_zh": [
+          "完整行的“强制证书”在加密或分布式视图（例如在MPC/分片场景）下如何实现，是否会抵消采样带来的收益？",
+          "作者在不同稀疏性/上下文长度下的吞吐-延迟折衷细节如何？",
+          "开源实现的接口是否易于集成到安全推理库（例如支持已捕获的ragged-row调度与GPU fusion）？"
+        ],
+        "questions_to_verify_en": [
+          "How expensive is the mandatory full-row certification when implemented in encrypted or distributed settings (e.g., MPC/sharded views), and does it negate sampling gains?",
+          "What are the throughput-vs-latency tradeoffs across sparsity levels and context lengths?",
+          "Is the open-source implementation modular enough to integrate into secure-inference stacks (ragged-row dispatch, fusion points)?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.08682",
+        "version": 1,
+        "title": "HDA-MoE: Hybrid Parallelism and Dynamic, Adaptive Scheduling for Mixture-of-Experts with 3D Near-Memory Processing",
+        "authors": [
+          "Haochen Huang",
+          "Shuzhang Zhong",
+          "Shengxuan Qiu",
+          "Zhe Zhang",
+          "Shuangchen Li",
+          "Cong Li",
+          "Dimin Niu",
+          "Hongzhong Zheng",
+          "Guangyu Sun",
+          "Runsheng Wang",
+          "Meng Li"
+        ],
+        "abstract": "Mixture-of-Experts (MoE) architectures have become a key technique for scaling Large Language Models (LLMs), enabling high model capacity with reduced computational cost. However, this efficiency comes at the expense of increased memory capacity and bandwidth demands. Recent 3D Near-Memory Processing (NMP) architectures, which vertically integrate memory and compute through hybrid bonding, provide high internal bandwidth and energy efficiency, making them attractive for accelerating MoE inference. Nevertheless, the distributed memory and compute organization of NMP systems introduces new challenges for mapping MoE workloads. Existing parallelization strategies, such as Tensor Parallelism (TP) and Expert Parallelism (EP), suffer from either high communication costs or unbalanced computation utilization, leading to inferior efficiency. In addition, the dynamic routing behavior of MoE models further complicates efficient deployment. To address these challenges, we present HDA-MoE, a framework that optimizes MoE execution on NMP architectures through hybrid parallel deployment and runtime scheduling. HDA-MoE integrates an offline hybrid parallel mapping algorithm with an online dynamic and adaptive scheduling mechanism to reduce communication overhead while improving computation utilization. Experimental results show that HDA-MoE achieves a speedup of 1.1x--3.4x over TP, 1.1x--1.5x over EP, 1.1x--3.7x over the Hybrid TP-EP compute-balanced baseline, and 1.1x--1.3x over HD-MoE. Source code is available at https://github.com/PKU-SEC-Lab/HDA-MoE-TCAD26.",
+        "categories": [
+          "cs.AR"
+        ],
+        "published": "2026-09-08T12:51:23Z",
+        "updated": "2026-09-08T12:51:23Z",
+        "abstract_url": "https://arxiv.org/abs/2609.08682v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.08682v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.08682v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.81,
+        "priority": "read",
+        "matched_topics": [
+          "network-aware runtime",
+          "dynamic scheduling",
+          "hybrid parallelism",
+          "pipeline execution",
+          "protocol selection"
+        ],
+        "short_summary_zh": "HDA-MoE在3D近内存处理（NMP）架构上为Mixture-of-Experts工作负载提出混合并行映射和在线自适应调度框架。结合离线混合并行映射算法与在线动态调度以降低通信并提高计算利用率，摘要给出对比TP/EP等基线的显著加速比并开源代码（按摘要）。",
+        "short_summary_en": "HDA-MoE: a hybrid-parallel mapping and dynamic adaptive runtime scheduler for Mixture-of-Experts on 3D near-memory processing (NMP) architectures. Integrates offline hybrid mapping with online adaptive scheduling to reduce communication and improve compute utilization; claims significant speedups vs. TP/EP baselines and provides code (per abstract).",
+        "why_interesting_zh": "直接触及混合并行映射、路由开销和在线调度——这些问题与MPC和隐私推理系统里的通信-计算折衷、路由与负载均衡高度相关。NMP上下文提供新的硬件感知挑战与映射机会。",
+        "why_interesting_en": "Directly tackles hybrid parallel mapping and online adaptive scheduling for routing-heavy MoE workloads—issues closely related to communication/computation trade-offs and dynamic scheduling in MPC/secure-serving systems. The NMP hardware context yields interesting mapping constraints.",
+        "relation_to_my_work_zh": "摘要表明方法能减少通信并提升利用率，这对WAN延迟敏感或多机MPC运行时的专家/协议调度具有潜在借鉴意义。可关注其映射模型、代价函数与在线决策逻辑，以评估可移植性到MPC运行时。",
+        "relation_to_my_work_en": "Because it models hybrid mapping and adaptive scheduling to reduce communication overhead, HDA-MoE could inform mapping/scheduling strategies for WAN-sensitive MPC runtimes. Examine their cost model, mapping heuristics, and online decision rules for transfer potential.",
+        "possible_transfer_zh": "离线混合映射算法、代价建模以及在线自适应调度策略可直接迁移为网络感知的MPC任务放置、专家/协议选择与批次路由策略。代码公开便于复现和适配。",
+        "possible_transfer_en": "Their offline hybrid mapping, cost modeling, and online adaptive scheduling mechanisms can be adapted to network-aware MPC task placement, protocol selection, and batched routing. Open-source code aids reproduction and adaptation.",
+        "possible_overlap_or_conflict_zh": "NMP具体的带宽/拓扑假设可能与通用网络（WAN）场景不同，直接移植需重新校准成本模型与通信原语。",
+        "possible_overlap_or_conflict_en": "NMP-specific bandwidth/topology assumptions may not hold for WAN-distributed MPC. Direct transfer requires recalibrating cost models and communication primitives.",
+        "questions_to_verify_zh": [
+          "离线映射与在线调度使用的成本模型（带宽/延迟/活跃参数）如何定量化？",
+          "路由的动态重配代价与收敛行为如何（是否会产生抖动）？",
+          "NMP假设下的结果在典型多机/WAN环境下的迁移性如何？"
+        ],
+        "questions_to_verify_en": [
+          "What cost model (bandwidth/latency/activation cost) do the offline mapping and online scheduler use?",
+          "What is the overhead and stability of dynamic rescheduling—does it induce oscillations?",
+          "How transferable are NMP-based gains to typical multi-node/WAN deployments?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
