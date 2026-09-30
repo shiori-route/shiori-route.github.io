@@ -6672,6 +6672,966 @@
           "content_hash": "2d23b459c511b264a3661b947d9a3f1f02f8280b049716b1d6bca17667f8826d"
         }
       ]
+    },
+    "2609.35392": {
+      "base_id": "2609.35392",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:21:30+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "7f54e63528045caba195501f9aa7e84c0b4fc697bb0c16b4c9543f9e47262994"
+        }
+      ]
+    },
+    "2609.35402": {
+      "base_id": "2609.35402",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:24:23+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "a6b94f374ac612364ca74db9fec4f6522d40b57ca297eb6cffed04cddea092d3"
+        }
+      ]
+    },
+    "2609.35408": {
+      "base_id": "2609.35408",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:28:03+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "3308da408f667e95fbb1f642a723c73a5afa33deffe93cb3dc54b4876b8556b7"
+        }
+      ]
+    },
+    "2609.35414": {
+      "base_id": "2609.35414",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:29:22+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "60e36f6aa2c2007bf3fc403765d9f9daed71666d9bb223642be1d8e799a3de3d"
+        }
+      ]
+    },
+    "2609.35418": {
+      "base_id": "2609.35418",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:30:18+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "6c97e8f7a5e1b2f449a1225ffe132c95672c63544f5ed31510b13b1b44587db0"
+        }
+      ]
+    },
+    "2609.35421": {
+      "base_id": "2609.35421",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:30:40+00:00",
+          "result_status": "analyzed",
+          "score": 3,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "e08dafab3bff13e87e15d681bb98006cd6ad4963ac71aab57fc6aef833de8df7"
+        }
+      ]
+    },
+    "2609.35425": {
+      "base_id": "2609.35425",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:34:59+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "8906f9a3ae98541b8b1dba461b667f0863a11785e8b6f2dab68fc1a571ebdfa7"
+        }
+      ]
+    },
+    "2609.35426": {
+      "base_id": "2609.35426",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:35:20+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "df16c8bd67eb6bae35773c38f9f18210c2eb236800b4925c1d464c9f6d571d53"
+        }
+      ]
+    },
+    "2609.35427": {
+      "base_id": "2609.35427",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:35:26+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "38abeeef04367ebeb92144223002ace1f964bb67c2209b675b313862f53e4c40"
+        }
+      ]
+    },
+    "2609.35429": {
+      "base_id": "2609.35429",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:35:49+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "8bf7fac7f7a91599a4d001fcb5cb36a598b2e8141a400bb6dc28695adf4cf6bd"
+        }
+      ]
+    },
+    "2609.35433": {
+      "base_id": "2609.35433",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:38:29+00:00",
+          "result_status": "analyzed",
+          "score": 3,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "111fa94de77bf11604ca6a802f64f40cce0f04e2e9e1812fbc20b92dc5bc9e4f"
+        }
+      ]
+    },
+    "2609.35434": {
+      "base_id": "2609.35434",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:38:52+00:00",
+          "result_status": "analyzed",
+          "score": 6,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "f2a323c35af868672245b80b5e8299362aa440556e2dd9642f952dfe32d6eb8d"
+        }
+      ]
+    },
+    "2609.35436": {
+      "base_id": "2609.35436",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:39:37+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "4cf4d161aba8860606d39c3c595c566e35c489e92cd250b2a13a51ed0e684c3d"
+        }
+      ]
+    },
+    "2609.35440": {
+      "base_id": "2609.35440",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:40:36+00:00",
+          "result_status": "analyzed",
+          "score": 7,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "875fb438ab4da35b11822555675ecba191fadb53c93382f755fc0447436c7954"
+        }
+      ]
+    },
+    "2609.35441": {
+      "base_id": "2609.35441",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:40:55+00:00",
+          "result_status": "analyzed",
+          "score": 8,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "da898d3a423ad50a11bfdad57878fb7df6fe2f3832defcd26c4a379804818773"
+        }
+      ]
+    },
+    "2609.35445": {
+      "base_id": "2609.35445",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:41:54+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "18b975496f07bf750b06e75d0f099ed65e0a6ff16455a70915b55a5eafad6405"
+        }
+      ]
+    },
+    "2609.35449": {
+      "base_id": "2609.35449",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:43:19+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "347a00bab9cd83f6c2c51fc74fd813486d6deae0107c3f24cb67be8a75430330"
+        }
+      ]
+    },
+    "2609.35454": {
+      "base_id": "2609.35454",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:45:58+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "69a21586594aadcc125ac9d1ddeba4fc38cc3f20ee0640bfab83bd95d70b7751"
+        }
+      ]
+    },
+    "2609.35462": {
+      "base_id": "2609.35462",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:50:26+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "4cc3c97ee6638a69b925ee83a8450edda086379c5841b8eda49e5a4403e5844a"
+        }
+      ]
+    },
+    "2609.35465": {
+      "base_id": "2609.35465",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:51:56+00:00",
+          "result_status": "analyzed",
+          "score": 5,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "896c5112a6c2b5d99a734df3cff2af336d7725985b01d352a2fc470be3ab761c"
+        }
+      ]
+    },
+    "2609.35466": {
+      "base_id": "2609.35466",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:52:07+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "3234b34e92cb22a41f53b5aa9cddd0fbb63f5aebfdd3c6c3a64a35714db1d507"
+        }
+      ]
+    },
+    "2609.35469": {
+      "base_id": "2609.35469",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:52:55+00:00",
+          "result_status": "analyzed",
+          "score": 3,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "8d9d509f46c6d80299e60888718322f83a6bb67cf55aacbbfa5a45fd6b4be3c5"
+        }
+      ]
+    },
+    "2609.35473": {
+      "base_id": "2609.35473",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:54:35+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "1810556d4f38d10bca00e037ab97ac67230b5f5b6e2ab2b7a7e3a0f0443cf488"
+        }
+      ]
+    },
+    "2609.35478": {
+      "base_id": "2609.35478",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:56:01+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "dd52ff1c3ab090f7374c91db644b062324cdb5f4ad8b2a783ece5c687f7072a7"
+        }
+      ]
+    },
+    "2609.35481": {
+      "base_id": "2609.35481",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:57:31+00:00",
+          "result_status": "analyzed",
+          "score": 8,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "57bce3911bb1439e89a8ebcdbbd385b2260c7fb3ef82414f20e51a2205125ac3"
+        }
+      ]
+    },
+    "2609.35483": {
+      "base_id": "2609.35483",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:58:06+00:00",
+          "result_status": "analyzed",
+          "score": 3,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "55b8bef347fcf2ca5c9b4c242e07cb8859ec47802ab5484c6f49f7603c965b27"
+        }
+      ]
+    },
+    "2609.35487": {
+      "base_id": "2609.35487",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T15:59:55+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "80b7bfff433713bf2b12bdc2b1ccf65086050b80a37c5abffe6cd77d52b80519"
+        }
+      ]
+    },
+    "2609.35499": {
+      "base_id": "2609.35499",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:03:00+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "3a3615d80fd6d684018720924aa73b94f4470e45ea5a8e4b86a7da883a0f0e4e"
+        }
+      ]
+    },
+    "2609.35501": {
+      "base_id": "2609.35501",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:03:24+00:00",
+          "result_status": "analyzed",
+          "score": 7,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "1ecaaf304aa89517b0a2d83134ae61eba3d8c1bd37ea07bb506c38db5aeb4a5c"
+        }
+      ]
+    },
+    "2609.35502": {
+      "base_id": "2609.35502",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:04:24+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "192345043031b4c4520dedecb504947c42be778308ca309da3d34519e75a9a74"
+        }
+      ]
+    },
+    "2609.35505": {
+      "base_id": "2609.35505",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:05:41+00:00",
+          "result_status": "analyzed",
+          "score": 5,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "e7331c2f865f7179f50c67b19d3c978b53148b2ac506ce38b47734795a25afd9"
+        }
+      ]
+    },
+    "2609.35506": {
+      "base_id": "2609.35506",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:05:42+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "f0ea131c840874f45a4d1db309b7a388501b60322a3fd5ad67598af767daace6"
+        }
+      ]
+    },
+    "2609.35508": {
+      "base_id": "2609.35508",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:05:47+00:00",
+          "result_status": "analyzed",
+          "score": 7,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "91e9e4b8018c5cfbb3d58d4688230b762d36e510c0b2c12fb8bb8463832854b6"
+        }
+      ]
+    },
+    "2609.35512": {
+      "base_id": "2609.35512",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:07:16+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "8bfd1b4823ff6a887d685608756798681b223912ac59776f30c9ac0d09d94702"
+        }
+      ]
+    },
+    "2609.35514": {
+      "base_id": "2609.35514",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:07:44+00:00",
+          "result_status": "analyzed",
+          "score": 6,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "ce95765aa4263e56d0974a05ad2123422431b7e43a4e2cae444f562dafe1fe61"
+        }
+      ]
+    },
+    "2609.35515": {
+      "base_id": "2609.35515",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:08:19+00:00",
+          "result_status": "analyzed",
+          "score": 3,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "25e0d589e41c3967a2acbb48db265233c4181445582089eeaaf2ddd893ed1619"
+        }
+      ]
+    },
+    "2609.35517": {
+      "base_id": "2609.35517",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:09:06+00:00",
+          "result_status": "analyzed",
+          "score": 5,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "5fd1db64ffacdf7668c1c9cd78823a29200c5742de0540befc8273d13aa70af2"
+        }
+      ]
+    },
+    "2609.35521": {
+      "base_id": "2609.35521",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:11:30+00:00",
+          "result_status": "analyzed",
+          "score": 3,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "12e11f83592a8ecbbe23ea1a758144540f3fc586e196ef8e47ce0cf0d882dbca"
+        }
+      ]
+    },
+    "2609.35525": {
+      "base_id": "2609.35525",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:12:48+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "5285aa1e2dcc637bebc3ddc63ac889dbcf4934feca31eedad0576b5e470371cb"
+        }
+      ]
+    },
+    "2609.35527": {
+      "base_id": "2609.35527",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:13:12+00:00",
+          "result_status": "analyzed",
+          "score": 3,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "04cb43ca166cb5295dff95c1c7b86bd277afdc21c67b4885d29aa1d6ec57e702"
+        }
+      ]
+    },
+    "2609.35528": {
+      "base_id": "2609.35528",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:13:12+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "0d8c03bb48fac385023b99c49d2d6de3587e687259612457943f81d11ed057eb"
+        }
+      ]
+    },
+    "2609.35537": {
+      "base_id": "2609.35537",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:19:38+00:00",
+          "result_status": "analyzed",
+          "score": 3,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "4b5ac85ef3a5a2ee03a72fce451c2aa000eee0dbf3098a6bdc55b2fd4e0c1317"
+        }
+      ]
+    },
+    "2609.35541": {
+      "base_id": "2609.35541",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:20:09+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "37beba0159116cfd5e24b4abf5f115203f288918aa9864925636100be3147ab3"
+        }
+      ]
+    },
+    "2609.35544": {
+      "base_id": "2609.35544",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:22:31+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "68fa8d7037e0017ea755dbb154c126272fee74c4575d63d13313ee7397ce828f"
+        }
+      ]
+    },
+    "2609.35545": {
+      "base_id": "2609.35545",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:22:49+00:00",
+          "result_status": "analyzed",
+          "score": 5,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "2441ed94531f36446e08e96b613376f3fafeddc81312b1cd2e4e255102f0f5a0"
+        }
+      ]
+    },
+    "2609.35552": {
+      "base_id": "2609.35552",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:25:38+00:00",
+          "result_status": "analyzed",
+          "score": 8,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "71bab12800d70a6ad45bdae14e2107ad21adc20af3ed5364d2e7b45efc66c32e"
+        }
+      ]
+    },
+    "2609.35553": {
+      "base_id": "2609.35553",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:26:29+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "a68fdc4838e898e1ab087d9b67d4e661e999c6a198812401ec1221016f1efe62"
+        }
+      ]
+    },
+    "2609.35557": {
+      "base_id": "2609.35557",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:27:41+00:00",
+          "result_status": "analyzed",
+          "score": 4,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "e031bd62517f6b9d0bfee8d38aa86a003a798a2ea9185fb543d8d501b2505341"
+        }
+      ]
+    },
+    "2609.35568": {
+      "base_id": "2609.35568",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:30:42+00:00",
+          "result_status": "analyzed",
+          "score": 2,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "92c569ea8f52697d358477d3e082d7e1933c8a26393a52ea19d8ec13484295b9"
+        }
+      ]
+    },
+    "2609.35569": {
+      "base_id": "2609.35569",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:31:50+00:00",
+          "result_status": "analyzed",
+          "score": 5,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "2048795c9030b2ef41d73091fe2cdd6427a4dd91a2ff56eb75996005ab5ad304"
+        }
+      ]
+    },
+    "2609.35576": {
+      "base_id": "2609.35576",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:34:52+00:00",
+          "result_status": "analyzed",
+          "score": 5,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "042ed6d9ca50e523cc4dc81543da9b0ca2ba5cccb06f9afc623e0c0898564b6d"
+        }
+      ]
+    },
+    "2609.35579": {
+      "base_id": "2609.35579",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:35:45+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "6d88dfd4bcd1e690ffaf5db3da29f77c16a9e1eacc88b1fa931c19995965221e"
+        }
+      ]
+    },
+    "2609.35581": {
+      "base_id": "2609.35581",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:36:12+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "ac0969ba62c100511c61f67d352964f511d7ab8694a93d01554e102e967e53a3"
+        }
+      ]
+    },
+    "2609.35585": {
+      "base_id": "2609.35585",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:38:30+00:00",
+          "result_status": "analyzed",
+          "score": 6,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "3454f944bbb4668144016b71a9240474c05a747a1562a98cdbba085107268be5"
+        }
+      ]
+    },
+    "2609.35587": {
+      "base_id": "2609.35587",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:39:31+00:00",
+          "result_status": "analyzed",
+          "score": 6,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "5d6cd4746a5de090ba99858c538d087135f65e415ecef5338c92dd4390eebdcb"
+        }
+      ]
+    },
+    "2609.35596": {
+      "base_id": "2609.35596",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:46:25+00:00",
+          "result_status": "analyzed",
+          "score": 3,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "f1e3717065b8eef5142d69144129e0eb680511ea344c7c7217ddde61c11dfe55"
+        }
+      ]
+    },
+    "2609.35598": {
+      "base_id": "2609.35598",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:48:05+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "529f8982ff7a96efe133df931c980504c951616bd4d270b4560a9a1dcee90db3"
+        }
+      ]
+    },
+    "2609.35603": {
+      "base_id": "2609.35603",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:51:33+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "27b1c054f478f8d6a0cfd8493f335b2a160fd658f273fb7aa607b17a1bca2a5d"
+        }
+      ]
+    },
+    "2609.35609": {
+      "base_id": "2609.35609",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:54:51+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "7db74ed96bba9dbd6da433da3704270e0014b649a84b1ac1b7537c79282b2845"
+        }
+      ]
+    },
+    "2609.35611": {
+      "base_id": "2609.35611",
+      "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+      "versions": [
+        {
+          "version": 1,
+          "first_seen_at": "2026-09-30T00:26:45.095620+00:00",
+          "processed_at": "2026-09-30T00:26:45.095620+00:00",
+          "published_at": "2026-09-28T16:55:24+00:00",
+          "result_status": "analyzed",
+          "score": 1,
+          "generated_page_path": "content/papers/2026-09-30.en.md",
+          "content_hash": "47dfafb1516f3a967a7d657c922cdb8e3af4fb4cf95e2223ef87bfa7a7712019"
+        }
+      ]
     }
   }
 }

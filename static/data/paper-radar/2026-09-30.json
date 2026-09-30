@@ -1,0 +1,690 @@
+{
+  "date": "2026-09-30",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 7,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2609.35481",
+        "version": 1,
+        "title": "TopoEP: Topology-Aware Load Balancing for Expert-Parallel MoE Training",
+        "authors": [
+          "Jiacheng Zhu",
+          "Xie Zhao",
+          "Gongming Zhao",
+          "Hongli Xu",
+          "Yao Fei",
+          "Jin Fang"
+        ],
+        "abstract": "Dynamic routing creates severe load imbalance in large-scale expert-parallel Mixture-of-Experts (MoE) training, turning GPUs that host hot experts into stragglers. As each MoE layer waits for its slowest rank, these stragglers prolong the expert-parallel stage and reduce overall training efficiency. Existing expert-parallelism load-balancing (EPLB) systems commonly compute load-balancing plans on the CPU, incurring device--host data transfers and cross-rank synchronization that make scheduling at every layer and microbatch expensive. Their planning formulations also overlook the hierarchical communication costs of modern scale-up and scale-out GPU clusters. We present \\textit{TopoEP}, a GPU-native, topology-aware load-balancing system for large-scale MoE training. At each MoE layer and training microbatch, \\textit{TopoEP} converts the current routing result into hot-expert replication and token-rerouting decisions and executes the resulting plan without data-dependent host synchronization, reducing critical-path overhead. To generate these decisions, \\textit{TopoEP} uses a deterministic GPU solver that performs inter-node placement followed by intra-node refinement, allowing all ranks to independently produce bitwise-identical plans. On a 32-GPU NVIDIA H800 cluster, integrating \\textit{TopoEP} with Megatron-LM improves end-to-end training throughput by 6.2\\%--11.4\\% across three representative MoE models.",
+        "categories": [
+          "cs.DC",
+          "cs.LG"
+        ],
+        "published": "2026-09-28T15:57:31Z",
+        "updated": "2026-09-28T15:57:31Z",
+        "abstract_url": "https://arxiv.org/abs/2609.35481v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.35481v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.35481v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 9,
+        "systems_score": 8,
+        "confidence": 0.72,
+        "priority": "deep_read",
+        "matched_topics": [
+          "dependency-aware scheduling",
+          "network-aware runtime",
+          "distributed runtime scheduling",
+          "pipeline execution",
+          "collective communication",
+          "adjacent transferable topics"
+        ],
+        "short_summary_zh": "基于摘要：TopoEP 是一个 GPU 原生、拓扑感知的专家并行（MoE）负载均衡系统。其在每个 MoE 层和微批次上将路由结果转换为热点专家复制与 token 重路由决策，并在不依赖主机-设备数据同步的情况下执行计划。TopoEP 使用确定性 GPU 求解器先做跨节点放置再做节点内细化，使各个节点能独立生成位一致的计划。作者在 32-GPU NVIDIA H800 集群上与 Megatron-LM 集成，报告了 6.2%—11.4% 的端到端训练吞吐量提升。",
+        "short_summary_en": "Based on the abstract: TopoEP is a GPU-native, topology-aware load-balancing system for large-scale Mixture-of-Experts training. At each MoE layer and microbatch it converts routing outcomes into hot-expert replication and token-rerouting plans, executing them without host synchronization. A deterministic GPU solver performs inter-node placement followed by intra-node refinement so all ranks independently produce bitwise-identical plans. On a 32-GPU cluster integrated with Megatron-LM, TopoEP yields 6.2%–11.4% end-to-end throughput gains.",
+        "why_interesting_zh": "高度相关：工作直接针对专家并行训练中的负载不均问题，提出 GPU 本地、拓扑感知且无需主机同步的调度/规划机制，显著减少关键路径开销。这与 MPC/分布式运行时、WAN/拓扑感知调度以及延迟敏感的通信/计算重叠问题密切相关。",
+        "why_interesting_en": "Highly relevant: it addresses load imbalance in MoE training via GPU-native, topology-aware planning executed without host synchronization, reducing critical-path overhead. This directly connects to distributed runtimes, topology-aware scheduling, and communication-computation overlap issues in latency-sensitive systems.",
+        "relation_to_my_work_zh": "如果你的研究涉及 MPC/安全推理在多 GPU/多机环境下的高效调度、或希望将大模型安全推理放到分布式集群上，TopoEP 提供可参考的 GPU 本地规划、位一致（deterministic plan）生成、以及分层放置策略。",
+        "relation_to_my_work_en": "If you work on scheduling secure inference or MPC across multi-GPU/multi-node clusters, TopoEP's GPU-native planning, deterministic per-rank plan generation, and hierarchical placement could be directly informative for reducing synchronization and communication overheads.",
+        "possible_transfer_zh": "可迁移点包括：GPU 本地确定性求解器（避免主机同步）、分层（跨节点/节点内）放置策略、热专家复制与 token 重路由作为负载均衡操作。这些机制可被改造用于 MPC/安全推理的任务分配与通信优化，特别是在存在拓扑差异和分层通信成本的集群中。需要验证点：求解器复杂度、内存与额外复制开销、与不同通信库（NCCL/RDMA）集成的细节。",
+        "possible_transfer_en": "Transferable ideas: GPU-local deterministic solver (avoiding host sync), hierarchical inter-node/intra-node placement, and hot-expert replication/token-rerouting as load-balance primitives. These could be adapted for MPC/secure-inference task placement and communication optimization in topology-heterogeneous clusters. Points to verify: solver complexity, memory/replication overhead, and integration with different comms stacks (NCCL/RDMA).",
+        "possible_overlap_or_conflict_zh": "可能与已有基于主机的负载平衡系统重叠；需要比较在不同集群拓扑、不同路由稀疏性和模型规模下的优劣。与安全协议本身无冲突，但在将复制/重路由用于加密域时需考虑隐私/同步约束。",
+        "possible_overlap_or_conflict_en": "May overlap with host-based load-balancing systems; must compare advantages across cluster topologies, routing sparsity, and model scales. No inherent conflict with cryptographic protocols, but replication/rerouting mechanisms may need adaptation for encrypted-domain execution or privacy constraints.",
+        "questions_to_verify_zh": [
+          "GPU 原生确定性求解器的算法复杂度、时间开销及其对关键路径的实际影响是什么？",
+          "热专家复制与 token 重路由带来的额外内存/通信开销如何计量，在哪些负载或拓扑下会变成劣势？",
+          "系统如何在异构带宽/延迟（跨机、跨机架）环境下选择跨节点 vs 节点内策略？是否公开代码/补丁以便复现？"
+        ],
+        "questions_to_verify_en": [
+          "What is the algorithmic complexity and runtime overhead of the GPU-native deterministic solver, and how does it affect the critical path in practice?",
+          "How are extra memory and communication costs from hot-expert replication and token rerouting measured, and under which workloads/topologies do they become detrimental?",
+          "How does the system choose inter-node vs intra-node strategies in heterogeneous bandwidth/latency environments (across racks/nodes), and is code/patches available for reproduction?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.35481v1",
+        "research_problem_zh": "如何在大规模Mixture-of-Experts (MoE) 训练中解决动态路由导致的设备负载不均衡与慢点（straggler），并在考虑GPU集群拓扑层次通信成本的情形下，以低开销在每层与微批级别进行调度决策。",
+        "research_problem_en": "How to mitigate load imbalance and stragglers caused by dynamic routing in large-scale Mixture-of-Experts (MoE) training, producing low-overhead per-layer and per-microbatch scheduling decisions while accounting for hierarchical communication costs in modern GPU cluster topologies. (Assessment based only on title and abstract.)",
+        "core_method_zh": "在GPU上本地运行的、确定性的求解器：先做跨节点（inter-node）放置，再做节点内（intra-node）细化，生成热专家复制与token重路由（hot-expert replication & token-rerouting）决策；所有rank独立生成位相同（bitwise-identical）的调度计划以避免主机—设备数据传输与数据相关的主机同步。",
+        "core_method_en": "A GPU-native deterministic solver that first performs inter-node placement followed by intra-node refinement to produce hot-expert replication and token-rerouting decisions; plans are executed on-GPU and produced independently by each rank (bitwise-identical) to eliminate device–host transfers and data-dependent host synchronization. (Based only on title+abstract.)",
+        "contributions_zh": [
+          "提出Top oEP，一种GPU原生、拓扑感知的MoE负载均衡系统；",
+          "在微批与每层级别将路由结果转换为热专家复制和token重路由并在设备上执行以减少关键路径开销；",
+          "设计确定性GPU求解器（先跨节点再节点内细化），使所有rank可独立产生位相同计划；",
+          "在32-GPU H800集群与Megatron-LM集成，报告端到端训练吞吐量提升6.2%—11.4%。"
+        ],
+        "contributions_en": [
+          "Introduces TopoEP, a GPU-native topology-aware load-balancing system for MoE training;",
+          "Converts per-layer/per-microbatch routing results into hot-expert replication and token-rerouting plans executed on-device to reduce critical-path overhead;",
+          "Presents a deterministic GPU solver performing inter-node placement then intra-node refinement so all ranks can independently produce bitwise-identical plans;",
+          "Reports 6.2%–11.4% end-to-end training throughput improvement on a 32-GPU H800 cluster with Megatron-LM (per abstract)."
+        ],
+        "why_watch_zh": "对关心分布式深度学习与网络/拓扑感知调度的研究者重要：提出在GPU上本地生成位一致的调度计划以避免昂贵的CPU同步与数据传输，具有直接的工程可迁移性。仅基于题目与摘要信息。",
+        "why_watch_en": "Relevant for researchers in distributed deep learning and topology-aware scheduling: it proposes generating bitwise-identical scheduling plans on-GPU to avoid costly CPU synchronization and transfers, a practically transferable engineering idea. Based only on title+abstract.",
+        "direct_relation_zh": "与本人的研究主题高度相关：网络/拓扑感知运行时、依赖感知调度、批处理与流水线执行、延迟隐藏与关键路径优化都在该工作范畴内；其“GPU原生且确定性”的设计对MPC运行时（需要确定性与低开销跨节点协调）有潜在启发。",
+        "direct_relation_en": "Highly relevant to the user's topics: network/topology-aware runtimes, dependency-aware scheduling, batching and pipeline execution, latency hiding and critical-path optimization fall within this work; the GPU-native deterministic design may inspire MPC runtimes that require determinism and low-overhead cross-node coordination. (Based on title+abstract.)",
+        "transferable_mechanisms_zh": [
+          "GPU原生、设备端求解器：将计划生成迁移到设备以减少主机—设备同步开销；",
+          "拓扑感知的两阶段放置（inter-node 放置 + intra-node 细化）：可以用来减少跨机通信并匹配分层网络成本；",
+          "生成位相同(plan determinism)：对需要多方独立达成一致计划的系统（如某些MPC协调/去中心化服务）很有用；",
+          "热专家复制与token重路由策略：与任务复制、负载迁移与分片重映射思想相通。"
+        ],
+        "transferable_mechanisms_en": [
+          "GPU-native on-device solver: moving plan generation to device to reduce host–device synchronization costs;",
+          "Topology-aware two-stage placement (inter-node then intra-node refinement): useful to minimize cross-machine communication and respect hierarchical network costs;",
+          "Bitwise-identical plan generation (determinism): beneficial where independent parties must reach identical plans (e.g., MPC coordination or decentralized scheduling);",
+          "Hot-expert replication and token-rerouting strategies: analogous to task replication, load migration, and shard remapping schemes."
+        ],
+        "potential_overlap_zh": "与网络感知运行时、依赖图调度、DAG分区与流水线并行等已有领域高度重叠；同类目标的论文可能关注不同的代价模型（例如WAN延迟 vs. 内部机架带宽）或不同的实现平台。",
+        "potential_overlap_en": "High overlap with network-aware runtimes, dependency-graph scheduling, DAG partitioning and pipeline parallelism literature; related works may differ in cost models (e.g., WAN latency vs. intra-rack bandwidth) or implementation targets.",
+        "potential_conflict_zh": "若考虑安全或机密性边界（如MPC或受限环境），本工作的“在GPU上共享决策但不跨主机同步”的假设可能需重新审视一致性与信任边界。",
+        "potential_conflict_en": "If security/trust boundaries matter (e.g., in MPC or constrained/confidential settings), the approach of producing shared plans on-GPU without host synchronization may need re-evaluation regarding consistency and trust assumptions.",
+        "full_text_questions_zh": [
+          "确定性GPU求解器的具体算法与复杂度如何？是否是近似启发式还是有最优性保证？",
+          "如何建模并实际利用层次化通信成本（节点内、机架、跨机房）？成本模型可配置吗？",
+          "位相同计划如何保证在異步或部分失败场景下仍然一致？有什么容错机制？",
+          "热专家复制的代价（内存/通信）如何权衡？是否有约束或自动阈值？",
+          "与已有EPLB系统（CPU端计划或异步贪心方法）在延迟分布和尾延迟上的比较详细结果？"
+        ],
+        "full_text_questions_en": [
+          "What is the exact algorithm and complexity of the deterministic GPU solver? Is it heuristic or does it have optimality guarantees?",
+          "How are hierarchical communication costs modeled and exploited (intra-node, rack-level, cross-rack)? Is the cost model configurable?",
+          "How is bitwise-identical plan agreement maintained under asynchronous execution or partial failures? Any fault-tolerance mechanisms?",
+          "How are costs of hot-expert replication (memory, extra communication) balanced—are there constraints or thresholds?",
+          "Detailed comparisons to existing EPLB systems (CPU-based planners or asynchronous greedy methods) on latency distributions and tail latency?"
+        ],
+        "experiment_checks_zh": [
+          "验证端到端吞吐提升是否同时伴随尾延迟降低或是否仅为均值提升；",
+          "展示不同拓扑（例如跨机房或异构链路）下的敏感性分析；",
+          "对比包含方案生成占用的完整时延剖面：求解器运行时间、计划执行时间、数据移动时间；",
+          "在部分失败、GPU重启或异步网络抖动下的正确性与一致性测试；",
+          "报告内存占用与额外通信（因复制与reroute产生）的开销。"
+        ],
+        "experiment_checks_en": [
+          "Check whether reported throughput gains also reduce tail latency or only mean throughput;",
+          "Sensitivity analysis across different topologies (e.g., cross-rack, WAN-like links, heterogeneous links);",
+          "Full latency breakdown including solver runtime, plan execution, and any data movement induced by the plan;",
+          "Correctness and consistency under partial failures, GPU restarts, or asynchronous network jitter;",
+          "Report memory footprint and extra communication overhead caused by replication and rerouting."
+        ],
+        "tracking_targets": [
+          "deterministic GPU solver",
+          "topology-aware inter-node + intra-node placement",
+          "hot-expert replication",
+          "token-rerouting",
+          "bitwise-identical plan generation",
+          "GPU-native scheduling to avoid host sync"
+        ],
+        "next_steps_zh": [
+          "阅读全文以获取求解器伪代码、复杂度与证明；",
+          "若考虑将思想用于MPC运行时，评估位一致计划生成在多方非信任环境下的可行性与安全假设；",
+          "复现实验：在异构拓扑（含高延迟链路）上测量尾延迟与通信量。"
+        ],
+        "next_steps_en": [
+          "Read the full paper for solver pseudocode, complexity and any guarantees;",
+          "If adapting ideas to MPC runtimes, evaluate feasibility and trust assumptions for bit-identical plan generation across distrustful parties;",
+          "Reproduce experiments on heterogeneous topologies (including high-latency links) to measure tail latency and communication volume."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.35552",
+        "version": 1,
+        "title": "INTCC: A Framework for Interactive Confidential Computing",
+        "authors": [
+          "Qingzhe Bing",
+          "Kaiyuan Zhang",
+          "Yinqian Zhang"
+        ],
+        "abstract": "Confidential computing leverages Trusted Execution Environments (TEEs) to ensure the confidentiality and integrity of data in use. However, TEEs rely on remote attestation to guarantee the integrity of their initial memory state. This model is fundamentally at odds with interactive development workflows. In scenarios like LLM fine-tuning and exploratory data analysis, data processors need human-in-the-loop capabilities, including dynamic code injection, intermediate state inspection, and hyperparameter tuning, all of which inherently violate the static, one-time integrity guarantees of traditional remote attestation. To reconcile this tension, we propose the interactive confidential computing paradigm, a system architecture enabling untrusted data processors to execute dynamic, non-deterministic operations within TEEs without compromising data confidentiality. Driven by the insight that inherently unmeasurable human interaction must be excluded from the Trusted Computing Base (TCB), we logically partition the TEE into an interactive controller and a verifiable runtime. To realize this paradigm, we present INTCC, a framework featuring three key mechanisms: (1) a proxy-based dispatch system to preserve the native development experience; (2) a fine-grained information flow control mechanism based on a security lattice to prevent data leakage; and (3) a privacy-preserving verifiable execution mechanism to guarantee the runtime compliance of dynamic workflows. We implement INTCC on AMD SEV-SNP using Confidential Containers and evaluate it across diverse real-world workloads. Our experiments demonstrate that INTCC effectively balances security and interactivity, incurring a practical overhead of less than 5% for LLM fine-tuning and under 17% for data analysis relative to baseline execution.",
+        "categories": [
+          "cs.CR"
+        ],
+        "published": "2026-09-28T16:25:38Z",
+        "updated": "2026-09-28T16:25:38Z",
+        "abstract_url": "https://arxiv.org/abs/2609.35552v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.35552v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.35552v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 7,
+        "systems_score": 8,
+        "confidence": 0.88,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure computation",
+          "secure LLM inference",
+          "privacy-preserving machine learning",
+          "MPC runtime"
+        ],
+        "short_summary_zh": "基于论文标题与摘要：作者提出“交互式保密计算”（interactive confidential computing）范式，将TEE逻辑上划分为“交互控制器”和“可验证运行时”，并实现INTCC框架（代理调度、基于格的细粒度信息流控制、隐私-preserving 可验证执行）。在AMD SEV‑SNP上实现并在LLM微调与数据分析任务上评估，报告相对基线的实用开销（LLM微调<5%，数据分析<17%）。",
+        "short_summary_en": "Based on title and abstract: the paper proposes an 'interactive confidential computing' paradigm that partitions a TEE into an interactive controller and a verifiable runtime. They present INTCC with proxy dispatch, a lattice-based fine-grained information-flow control, and a privacy-preserving verifiable execution mechanism. Implemented on AMD SEV‑SNP and evaluated on LLM fine-tuning and data-analysis workloads with reported modest overheads.",
+        "why_interesting_zh": "与安全多方/保密推理相关：它尝试在可信执行环境中支持人机交互式工作流（例如LLM微调），這對希望把敏感模型或数据在受保护环境中做交互式推理/训练的研究很有吸引力。提出的TCB划分、信息流策略与可验证执行可能为MPC/保密推理运行时提供可迁移思路。",
+        "why_interesting_en": "Relevant to secure inference/LLM serving: enabling interactive, non-deterministic workflows inside TEEs addresses a practical gap for protected LLM fine-tuning and exploratory analysis. The TCB partitioning, lattice-based IFC and verifiable execution mechanisms may transfer to secure runtime design and protocol composition for privacy-preserving ML.",
+        "relation_to_my_work_zh": "如果你的硕士方向涉及MPC运行时、受保护LLM推理或网络/延迟敏感的保密训练，本文的TEE划分、信息流控制和可验证执行实现细节值得深入分析和借鉴。",
+        "relation_to_my_work_en": "If your work targets MPC runtimes, protected LLM inference, or deployable confidential training, the paper's TEE partitioning, IFC approach, and verifiable-execution mechanisms are potentially relevant design patterns to study and adapt.",
+        "possible_transfer_zh": "将TCB划分思想用于混合TEE+MPC部署（把不可测的交互留在外部控制器），把格模型信息流策略移植到保密推理管道以减少泄漏面；可验证执行构件可用于证明运行时遵从性或审计MPC端点行为。",
+        "possible_transfer_en": "Transferable ideas include TCB partitioning for hybrid TEE+MPC deployments (keeping human-driven interaction out of TCB), lattice-based IFC for fine-grained leakage control in private inference pipelines, and verifiable-execution primitives for runtime compliance auditing in privacy-preserving systems.",
+        "possible_overlap_or_conflict_zh": "若你已有基于MPC的保密推理设计，需注意TEE边界/attestation模型与MPC威胁模型的不同；该文声称可在SEV‑SNP上实现，实际兼容性与安全证明可能与MPC假设冲突或需要额外确认。",
+        "possible_overlap_or_conflict_en": "If you use MPC-based designs, note differences between TEE attestation models and MPC threat models; claims about SEV‑SNP implementation may not map directly to MPC assumptions and could conflict with protocol-level security expectations without careful reconciliation.",
+        "questions_to_verify_zh": [
+          "作者如何形式化并限界交互控制器与可验证运行时之间的信任边界与攻击面？",
+          "可验证执行机制的安全保证是什么（证明、可信初始化、可重放性）？",
+          "性能基线如何设置，评估是否包含联网/分布式延迟场景？",
+          "信息流格的标签体系与策略如何防止隐私/模型泄露的具体示例？",
+          "与传统远程证明/attestation流程如何组合，是否仍能支持现有部署？"
+        ],
+        "questions_to_verify_en": [
+          "How do the authors formally define and bound the trust boundary between the interactive controller and the verifiable runtime?",
+          "What are the exact guarantees of the verifiable-execution mechanism (proof artifacts, initialization assumptions, replay protection)?",
+          "How are performance baselines chosen and do evaluations cover WAN/latency-sensitive distributed scenarios?",
+          "How is the lattice-based information-flow policy instantiated to prevent concrete leakage or model-extraction attacks?",
+          "How does this approach compose with standard remote attestation flows and existing deployment tooling?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.35552v1",
+        "research_problem_zh": "如何在依赖远程证明（remote attestation）的受信执行环境（TEE）与需要人类交互/动态代码注入的开发式工作流之间取得平衡，使得在TEE内可执行动态、交互式、不确定的操作同时仍保护数据机密性与运行时合规性？",
+        "research_problem_en": "How to reconcile TEE remote attestation (which assumes static initial integrity) with interactive human-in-the-loop development workflows (dynamic code injection, state inspection, tuning) so that dynamic, non-deterministic operations execute within TEEs without compromising data confidentiality or runtime verifiability? (Based only on title+abstract.)",
+        "core_method_zh": "提出将TEE逻辑划分为交互控制器（interactive controller）与可验证运行时（verifiable runtime）；实现三大机制：代理式调度以保留原生开发体验、基于安全格（security lattice）的细粒度信息流控制以防泄露、以及隐私保护的可验证执行机制以保证运行时合规性。基于AMD SEV-SNP与Confidential Containers实现原型。",
+        "core_method_en": "Proposes logically partitioning the TEE into an interactive controller and a verifiable runtime; implements three mechanisms: proxy-based dispatch to preserve native development experience, fine-grained information-flow control based on a security lattice to prevent leakage, and a privacy-preserving verifiable execution mechanism to guarantee runtime compliance. Implemented on AMD SEV-SNP with Confidential Containers (per abstract).",
+        "contributions_zh": [
+          "提出‘交互式保密计算’范式以支持可交互的开发工作流在TEE中执行；",
+          "设计并实现INTCC框架：包括代理调度、基于安全格的信息流控制和可验证执行机制；",
+          "在AMD SEV-SNP上实现并实测，对LLM微调与数据分析工作负载展示了较低的性能开销（摘要中提到<5%与<17%）。"
+        ],
+        "contributions_en": [
+          "Proposes the 'interactive confidential computing' paradigm to support interactive development workflows inside TEEs;",
+          "Designs and implements INTCC with proxy dispatch, security-lattice-based fine-grained information-flow control, and privacy-preserving verifiable execution;",
+          "Implements on AMD SEV-SNP and reports low overheads for LLM fine-tuning (<5%) and data analysis (<17%) (per abstract)."
+        ],
+        "why_watch_zh": "对研究隐私保护机器学习、受保护推理/微调、以及对比TEE与MPC解决方案的人员很有价值：它在动态交互性与可验证性之间提供了工程化折衷，可能启发混合TEE+MPC架构或信息流控制在安全推理中的应用。基于题目与摘要。",
+        "why_watch_en": "Valuable for researchers in privacy-preserving ML, protected inference/fine-tuning, and comparisons between TEEs and MPC: the work offers an engineered tradeoff between interactivity and verifiability and may inspire hybrid TEE+MPC architectures or info-flow controls in secure inference. Based on title+abstract.",
+        "direct_relation_zh": "与本人的主题（隐私保护ML、secure LLM推理、运行时与协议选择）直接相关：解决动态工作流在受保护执行环境中的支持问题，并提供信息流与可验证执行机制，这些机制可与MPC或安全推理系统比较或组合。",
+        "direct_relation_en": "Directly related to user's topics (privacy-preserving ML, secure LLM inference, runtimes and protocol selection): addresses support for dynamic workflows in protected execution and provides information-flow and verifiable-execution mechanisms that could be compared or combined with MPC or secure inference systems. (Based on title+abstract.)",
+        "transferable_mechanisms_zh": [
+          "将不可测的交互成分移出TCB（逻辑分区）以缩小可信基底（TCB）的做法，可用于设计混合信任模型（TEE+MPC）；",
+          "基于安全格的信息流控制：可用于对MPC或混合系统中不同数据敏感度进行形式化约束；",
+          "代理式调度与可验证执行：可迁移到需要在不完全信任环境中保持开发体验且要证明合规性的系统。"
+        ],
+        "transferable_mechanisms_en": [
+          "Logical partitioning that excludes inherently unmeasurable human interaction from the TCB, useful for hybrid trust models (TEE+MPC);",
+          "Security-lattice-based information-flow control, applicable to formal constraints on data sensitivity in MPC or hybrid systems;",
+          "Proxy-based dispatch and privacy-preserving verifiable execution, transferable to systems that need developer interactivity while ensuring runtime compliance in untrusted environments."
+        ],
+        "potential_overlap_zh": "与受信执行环境（TEE）研究、信息流安全、可验证计算与隐私保护机器学习文献有较强重叠；可能与已存在的Confidential Containers或SEV相关工作在实现细节和威胁模型上有直接对比。",
+        "potential_overlap_en": "Strong overlap with TEE research, information-flow security, verifiable computation, and privacy-preserving ML; likely directly comparable to existing Confidential Containers and SEV-related works in implementation details and threat models.",
+        "potential_conflict_zh": "与纯密码学解决方案（如完全由MPC实现的保密训练/推理）在信任假设上冲突：TEE依赖硬件根信任与芯片厂商，MPC依赖分布式互不信任的安全性证明。两者更可能互补而非直接替代。",
+        "potential_conflict_en": "Conflicts in trust assumptions with pure cryptographic solutions (e.g., MPC): TEEs rely on hardware roots of trust and vendor trust, whereas MPC relies on distributed non-collusion assumptions. They are more complementary than directly interchangeable. (Based on abstract.)",
+        "full_text_questions_zh": [
+          "‘交互控制器’与‘可验证运行时’的精确边界与交互协议是什么？哪些操作被排除在TCB之外？",
+          "安全格的信息流控制如何在实现上表达与强制？是否支持动态策略与去中心化策略协商？",
+          "可验证执行使用了哪些密码学或验证技术（证明、远程证明、日志证明等）？如何同时做到隐私保护？",
+          "威胁模型是否考虑侧信道（内存访问、时间）与SEV已知攻击？",
+          "与原生MPC或混合方案的性能/安全权衡对比如何？"
+        ],
+        "full_text_questions_en": [
+          "What are the precise boundaries and interaction protocol between the 'interactive controller' and the 'verifiable runtime'? Which operations are excluded from the TCB?",
+          "How is security-lattice-based information-flow control implemented and enforced? Does it support dynamic policies or decentralized policy negotiation?",
+          "Which cryptographic/verifiability mechanisms are used for privacy-preserving verifiable execution (proofs, attestations, log-based proofs)? How is privacy preserved while enabling verification?",
+          "Does the threat model address side channels (memory access patterns, timing) and known SEV attacks?",
+          "How does performance and security trade-off compare to native MPC or hybrid TEE+MPC schemes?"
+        ],
+        "experiment_checks_zh": [
+          "验证所报开销（<5% 与 <17%）在可变模型尺寸、不同工作负载与交互强度下的一致性；",
+          "测量代理调度与可验证执行带来的额外通信与延迟；",
+          "评估信息流控制策略在实际动态调试场景下的可用性与误报/拒绝率；",
+          "检查实现对SEV-SNP已知缺陷与侧信道风险的缓解措施与假设；",
+          "如果声称‘保密’，需展示泄露防护的攻防基线测试（例如尝试跨控制器导出中间状态）。"
+        ],
+        "experiment_checks_en": [
+          "Confirm reported overheads (<5% and <17%) across varying model sizes, workloads and degrees of interactivity;",
+          "Measure additional communication and latency caused by proxy dispatch and verifiable execution;",
+          "Evaluate usability of information-flow control policies in real interactive debugging scenarios, including false positive/negative blocking rates;",
+          "Check mitigations and assumptions for SEV-SNP known issues and side-channel risks;",
+          "If confidentiality claims are made, include attack/defense baseline tests (e.g., attempts to exfiltrate intermediate state across controller/runtime boundary)."
+        ],
+        "tracking_targets": [
+          "interactive confidential computing paradigm",
+          "TEE logical partitioning: interactive controller vs verifiable runtime",
+          "proxy-based dispatch",
+          "security-lattice information-flow control",
+          "privacy-preserving verifiable execution",
+          "AMD SEV-SNP + Confidential Containers prototype"
+        ],
+        "next_steps_zh": [
+          "阅读全文以明确威胁模型、可验证执行的技术细节与信息流策略实现；",
+          "若考虑替代或结合MPC，评估将哪些交互式组件移出TCB可减少信任假设；",
+          "复现实验并对比纯MPC与混合TEE+MPC方案的安全-性能折衷。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to clarify threat model, verifiable execution technical details, and implementation of information-flow policies;",
+          "If considering combining with MPC, evaluate which interactive components can be excluded from the TCB to reduce trust assumptions;",
+          "Reproduce experiments and compare security–performance trade-offs between pure MPC and hybrid TEE+MPC schemes."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.35441",
+        "version": 1,
+        "title": "Riccati State Space Models: Non-iterative Parallelization for Nonlinear Sequence Modeling",
+        "authors": [
+          "Mónika Farsang",
+          "Ramin Hasani",
+          "Daniela Rus",
+          "Radu Grosu"
+        ],
+        "abstract": "State space models (SSMs) achieve efficient sequence processing because their affine state updates are closed under composition and can therefore be evaluated with an associative parallel scan. Nonlinear recurrent models can provide richer, state-dependent dynamics, but generally lose this compositional structure: parallel evaluation then requires iterative methods that repeatedly linearize and scan the recurrence. We ask, what state-dependent nonlinear dynamics can be designed to remain exactly composable? We answer by introducing RiccatiSSM, a nonlinear SSM, in which each state dimension follows an input-conditioned Riccati differential equation. Its quadratic state dependence makes the local Jacobian explicitly state-dependent, while its exact per-step flow under piecewise-constant inputs is a Möbius transformation. Since Möbius maps are closed under composition and compose through $2\\times 2$ matrix multiplication, the complete nonlinear state trajectory can be evaluated exactly with a single associative parallel scan, without iterative linearization. We further derive a constrained parameterization that ensures bounded, contractive dynamics, and avoids poles in the fractional-linear state update. Across long-sequence classification, regression, and forecasting tasks, RiccatiSSM achieves competitive predictive performance while reducing runtime by $22{-}33\\%$ compared to the nonlinear LrcSSM under matched architectures. These results demonstrate that state-dependent nonlinear dynamics can retain exact composability and be evaluated efficiently within a single parallel scan.",
+        "categories": [
+          "cs.AI",
+          "cs.LG"
+        ],
+        "published": "2026-09-28T15:40:55Z",
+        "updated": "2026-09-28T15:40:55Z",
+        "abstract_url": "https://arxiv.org/abs/2609.35441v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.35441v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.35441v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.8,
+        "priority": "read",
+        "matched_topics": [
+          "parallel scan",
+          "nonlinear composability",
+          "dependency-aware scheduling",
+          "communication and computation overlap",
+          "pipeline parallelism"
+        ],
+        "short_summary_zh": "基于摘要：提出RiccatiSSM，一种非线性状态空间模型（每个状态维度遵循基于输入的Riccati微分方程），其每步解析流在分段常值输入下为莫比乌斯（Möbius）变换。由于莫比乌斯变换在复合下封闭且可通过2×2矩阵乘法组合，全轨迹可以通过一次关联性的并行scan（associative parallel scan）精确评估，从而避免迭代线性化。",
+        "short_summary_en": "From the abstract: the paper introduces RiccatiSSM, a nonlinear state-space model whose per-dimension dynamics follow input-conditioned Riccati ODEs. Each step’s flow is a Möbius transformation, closed under composition via 2×2 matrix multiplication, enabling exact evaluation of the full nonlinear trajectory with a single associative parallel scan—avoiding iterative linearization.",
+        "why_interesting_zh": "抽象表明通过代数结构（Möbius变换的闭包性）把带状态依赖的非线性动力学变为可用并行扫描一次性组合的操作，这对希望在分布式执行中把依赖图压缩为可并行化的原子组合操作（以减少通信轮次、降低延迟）非常有吸引力。",
+        "why_interesting_en": "The abstract shows that algebraic structure (closure of Möbius transforms) lets state-dependent nonlinear dynamics be composed via a single associative scan. This is appealing for distributed execution: compress dependency chains into associative combine operations to reduce synchronization rounds and communication latency.",
+        "relation_to_my_work_zh": "与MPC/分布式运行时高度相关：若复杂依赖的状态更新可以重写为可组合的矩阵乘法，便可用关联性并行算法在多方/分区上并行化，从而减少通信轮数与关键路径长度，这与批量合并、依赖感知调度与网络感知运行时目标一致。",
+        "relation_to_my_work_en": "Highly relevant to MPC/distributed runtimes: if dependent state updates can be expressed as composable matrix operations, one can use associative parallel algorithms across parties/partitions to parallelize and reduce communication rounds and critical-path length—aligns with batching, coalescing rounds and network-aware scheduling.",
+        "possible_transfer_zh": "潜在迁移：将设计为可组合的更新（例如把复杂协议步骤改写为封闭代数操作）用于MPC协议或运行时的批量合并与并行扫描，从而减少交互轮次并隐藏网络延迟。需要核实模型到MPC协议步骤的可映射性、数值稳定性与加密下的可实现性。",
+        "possible_transfer_en": "Potential transfer: redesign updates to be composable algebraic operations (e.g., matrix combines) so MPC protocols or runtime execution can batch/coalesce and evaluate with associative scans, reducing interaction rounds and hiding network latency. Verify mapping from model dynamics to MPC protocol steps, numerical stability, and implementability under encryption.",
+        "possible_overlap_or_conflict_zh": "挑战包括把论文中连续数学/解析流的形式化结果映射到离散协议步骤，及在秘密共享或同态加密情境下是否能保持代数封闭与效率。",
+        "possible_overlap_or_conflict_en": "Challenges include mapping continuous/analytical flow results to discrete protocol steps and whether algebraic closure and efficiency hold under secret-sharing or homomorphic encryption.",
+        "questions_to_verify_zh": [
+          "如何从理论到实现将莫比乌斯变换的复合映射到并行scan操作的离散实现？",
+          "并行scan实现的通信与计算复杂度是多少（规模与深度依赖）？",
+          "有无数值不稳定或极点问题的实证分析（摘要提到避免极点的参数化）？",
+          "是否有开源实现与在分布式环境下的基准（含网络延迟/轮次度量）？"
+        ],
+        "questions_to_verify_en": [
+          "How is the composition of Möbius transforms concretely mapped to a discrete parallel-scan implementation?",
+          "What are the communication and computation complexities for the parallel-scan (dependence on sequence length and model size)?",
+          "Is there empirical analysis of numerical stability or pole-avoidance (the abstract mentions a constrained parameterization)?",
+          "Is there an open implementation and distributed benchmarks including network-latency/round measurements?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.35441v1",
+        "research_problem_zh": "如何设计具有状态相关非线性动力学但仍保持精确可组合性的状态空间模型（SSM），以便在非线性情况下通过一次并行扫描而非迭代线性化步骤来高效评估长序列？",
+        "research_problem_en": "How to design state-dependent nonlinear dynamics for state-space models (SSMs) that remain exactly composable, allowing the full nonlinear trajectory to be evaluated with a single associative parallel scan rather than iterative linearization for efficient long-sequence processing? (Based only on title+abstract.)",
+        "core_method_zh": "引入RiccatiSSM：每个状态维度遵循带输入条件的Riccati微分方程，其二次状态依赖使得每步流（在分段常数输入下）为Möbius变换；利用Möbius映射在复合下封闭并可通过2x2矩阵乘法合成，从而将整个非线性状态轨迹的评估归约为一次可结合的并行扫描。还提出约束参数化以保证有界、收缩动力学并避免极点。",
+        "core_method_en": "Introduces RiccatiSSM: each state dimension follows an input-conditioned Riccati differential equation whose per-step flow under piecewise-constant inputs is a Möbius transformation; because Möbius maps compose via 2x2 matrix multiplication, the entire nonlinear trajectory can be evaluated exactly with a single associative parallel scan. A constrained parameterization ensures bounded, contractive dynamics avoiding poles. (Based on title+abstract.)",
+        "contributions_zh": [
+          "提出RiccatiSSM—一种具有二次状态依赖且可精确组合的非线性SSM；",
+          "证明其每步流为Möbius变换，进而可用2x2矩阵乘法在一次并行扫描中求值；",
+          "给出受限参数化以确保收缩性和避免极点；",
+          "在若干长序列任务上取得与竞争方法相当的准确性并相比某非线性LrcSSM实现将运行时减少22%—33%。"
+        ],
+        "contributions_en": [
+          "Proposes RiccatiSSM, a nonlinear SSM with quadratic state dependence that remains exactly composable;",
+          "Shows per-step flow is a Möbius transform and that trajectories can be composed via 2x2 matrix multiplication allowing a single associative parallel scan evaluation;",
+          "Provides constrained parameterization to ensure bounded, contractive dynamics and avoid poles;",
+          "Reports competitive predictive performance on long-sequence tasks and runtime reductions of 22%–33% versus a nonlinear LrcSSM under matched architectures (per abstract)."
+        ],
+        "why_watch_zh": "对关注序列模型并行化、减少迭代线性化开销或希望将可结合性原则用于运行时调度的人有吸引力：提出通过构造可组合算子来实现并行化的范式，可能为减少通信回合数或合并操作提供新思路。仅基于题目与摘要。",
+        "why_watch_en": "Interesting for researchers working on sequence model parallelization, reducing iterative linearization overhead, or applying composability principles to runtime scheduling: it shows how designing composable operators enables exact parallel evaluation, potentially inspiring ways to reduce communication rounds or coalesce operations. Based only on title+abstract.",
+        "direct_relation_zh": "与本人的主题的直接联系较弱但机制性启发明显：‘通过构造能结合的算子以用一次并行扫描替代多次迭代’的思想可迁移到依赖图调度、批处理合并和减少通信轮数的编译/运行时优化策略中。",
+        "direct_relation_en": "Direct relation is weaker, but the mechanism offers clear inspiration: the idea of designing composable operators to replace iterative computations with a single associative parallel scan could transfer to dependency-graph scheduling, batching/coalescing, and reducing communication rounds in compilers/runtimes. (Based on abstract.)",
+        "transferable_mechanisms_zh": [
+          "构造可结合操作（associative operator）以实现一次性并行扫描：可用于设计能合并多轮通信/计算的算子，从而降低回合复杂度；",
+          "受限参数化以确保数值稳定与收敛性：在分布式执行或编译时转换中用于约束变换以保证稳定性；",
+          "将数学结构（如Möbius变换与2x2矩阵合成）映射为可并行的低维组合规则，这一方法论可用于发现其它可组合的算子族。"
+        ],
+        "transferable_mechanisms_en": [
+          "Design of associative operators to enable a single parallel scan: applicable to creating operators that merge multiple communication/computation rounds to reduce round complexity;",
+          "Constrained parameterizations to ensure numerical stability and contraction: useful in distributed execution or compiler transforms to guarantee stability;",
+          "Mapping mathematical structure (e.g., Möbius transforms and 2x2 composition) to parallel low-dimensional composition rules as a methodology to discover other composable operator families."
+        ],
+        "potential_overlap_zh": "与序列建模和并行扫描（prefix-sum / associative scan）文献重叠；若关注编译器或运行时优化方面，可能与将算子代数化以便于分布式执行的工作交叉。",
+        "potential_overlap_en": "Overlaps with sequence modeling and associative/parallel scan literature; for compiler/runtime optimization interests, it intersects with work that algebraicizes operators to facilitate distributed execution.",
+        "potential_conflict_zh": "若把此类可组合算子直接映射到安全/保密执行（MPC/TEE），需注意数值稳定性与额外的数据依赖可能影响秘密共享的通信模式。",
+        "potential_conflict_en": "If mapping these composable operators directly into secure/confidential execution (MPC/TEE), numerical stability and extra data dependencies could affect secret-sharing communication patterns and cost models. (Based on abstract.)",
+        "full_text_questions_zh": [
+          "Riccati微分方程在离散化与数值上如何实现以保证精确的Möbius步映射？",
+          "受限参数化的具体形式是什么？如何保证训练过程中的收敛性与避免极点？",
+          "并行扫描实现细节：所需的2x2矩阵是否在数值精度上稳定，是否有剪枝或稀疏优化？",
+          "训练与推理时的内存/计算开销对比（尤其与线性可组合SSM与LSTM/Transformer）如何？",
+          "在分布式或高延迟网络场景下，‘一次扫描’思路在减少通信轮数方面的实际收益评估如何？"
+        ],
+        "full_text_questions_en": [
+          "How is the Riccati differential equation discretized and implemented to ensure the exact per-step Möbius map?",
+          "What is the precise form of the constrained parameterization and how does it guarantee contraction and avoid poles during training?",
+          "Parallel-scan implementation details: are the 2x2 matrices numerically stable and are there pruning/sparsity optimizations?",
+          "What are training and inference memory/computation costs compared to linear-composable SSMs and LSTM/Transformer baselines?",
+          "In distributed or high-latency settings, how much does the ‘single scan’ idea reduce communication rounds and what is the measured end-to-end benefit?"
+        ],
+        "experiment_checks_zh": [
+          "验证所报的22%—33%运行时降低在不同序列长度、批大小与硬件（GPU/TPU）上的一致性；",
+          "检查数值稳定性（尤其长序列下）与是否出现极点或溢出；",
+          "对比通信/同步开销：若在分布式环境运行，评估单次并行扫描对减少跨节点通信轮数的贡献；",
+          "复现训练曲线与泛化能力，确保精度与速度的权衡是公平的（相同参数量/架构配置）。"
+        ],
+        "experiment_checks_en": [
+          "Confirm the reported 22%–33% runtime reduction across varying sequence lengths, batch sizes and hardware (GPU/TPU);",
+          "Check numerical stability (especially for long sequences) and verify absence of poles or blow-up;",
+          "Compare communication/synchronization overheads: in distributed runs, measure the reduction in cross-node communication rounds afforded by the single-scan approach;",
+          "Reproduce training curves and generalization to ensure the accuracy–speed trade-off comparisons use matched parameter counts and architectures."
+        ],
+        "tracking_targets": [
+          "RiccatiSSM model family",
+          "Möbius-transform per-step flow",
+          "2x2 matrix composition for associative scan",
+          "constrained parameterization for contraction",
+          "single associative parallel scan for nonlinear SSMs"
+        ],
+        "next_steps_zh": [
+          "阅读全文以获取离散化、参数化与并行实现细节；",
+          "若目标是减少MPC/分布式系统中的通信轮数，探索将可组合算子抽象化并映射到通信合并/批处理策略；",
+          "在感兴趣的序列任务上复现并评估在分布式环境下的通信与同步收益。"
+        ],
+        "next_steps_en": [
+          "Read the full paper for discretization, parameterization, and parallel implementation details;",
+          "If aiming to reduce communication rounds in MPC/distributed systems, explore abstracting composable operators and mapping them to communication-coalescing/batching strategies;",
+          "Reproduce on target sequence tasks and evaluate communication and synchronization benefits in distributed settings."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.35440",
+        "version": 1,
+        "title": "SOLO: Pretraining Billion-Parameter Language Models with Shared-Output Local Learning",
+        "authors": [
+          "Bojian Yin",
+          "Shurong Wang",
+          "Yuqi Pan",
+          "Guoqi Li"
+        ],
+        "abstract": "Large language models are trained with backpropagation, whose global gradient coordinates all layers but forces each to hold its activations and wait for the gradient to pass back through every deeper layer. Conventional local learning removes this update locking by training each module to predict the target through its own readout, but has not scaled to billion-parameter pretraining. We identify these private readouts as a key weakness, since they leave each module without information from deeper modules. We propose Shared-Output LOcal learning (SOLO), which replaces them with a shared, read-only copy of the final module's readout, the only one trained on the output of the whole network. Taken from the previous step, the copy transmits information from the final module without passing gradients between modules or reintroducing update locking. SOLO approaches backpropagation on Transformers of 340M to 2B parameters pretrained on 15B tokens, staying within one point in average zero-shot accuracy with a perplexity gap that narrows with scale. Readout ablations attribute SOLO's improvement over private readouts to sharing. Without update locking, each of p pipeline stages holds activations for O(1) micro-batches instead of O(p). The freed memory permits larger micro-batches, which reach up to 1.44x the best measured throughput of pipeline backpropagation on the same partition. To our knowledge, SOLO is the first local learning method to show such memory and throughput gains in billion-parameter language-model pretraining. Local learning thus becomes a practical alternative to backpropagation for large-scale pretraining.",
+        "categories": [
+          "cs.DC",
+          "cs.LG"
+        ],
+        "published": "2026-09-28T15:40:36Z",
+        "updated": "2026-09-28T15:40:36Z",
+        "abstract_url": "https://arxiv.org/abs/2609.35440v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.35440v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.35440v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.8,
+        "priority": "read",
+        "matched_topics": [
+          "pipeline execution",
+          "update locking",
+          "latency hiding",
+          "communication and computation overlap",
+          "pipeline parallelism"
+        ],
+        "short_summary_zh": "基于摘要：提出SOLO（Shared-Output LOcal learning），一种局部学习方法，用共享只读的最终模块readout代替每个模块的私有readout，从而保留来自最终模块的信息而不用跨模块传递梯度，避免update locking。作者在340M–2B参数Transformer与15B tokens预训练中展示了接近反向传播的性能，同时在流水线并行中显著释放激活内存、增大micro-batch并提高吞吐。",
+        "short_summary_en": "From the abstract: the paper proposes SOLO (Shared-Output LOcal learning), replacing private module readouts with a shared read-only copy of the final module's readout (from prior step) so modules receive information from the whole model without gradient passing—removing update locking. On 340M–2B Transformers pretrained on 15B tokens, SOLO approaches backprop performance and improves pipeline throughput and memory use.",
+        "why_interesting_zh": "直接切中流水线并行与更新锁的问题：无梯度跨模块通信而仍保有全局信息的设计能显著降低激活驻留（O(1) vs O(p)），从而在分布式或分段计算场景中提高吞吐与减小峰值内存，这与MPC运行时中尝试重叠通信与计算、减少内存足迹、及批量大小调度高度相关。",
+        "why_interesting_en": "Directly relevant to pipeline parallelism and update-locking: providing global information without inter-module gradients to reduce activation residency (O(1) vs O(p)) can lower memory footprint and increase throughput. This aligns strongly with MPC runtime goals of overlapping communication/computation and scheduling to hide latency and improve batching.",
+        "relation_to_my_work_zh": "与安全多方计算运行时、分段执行或依赖感知调度高度相关。SOLO的策略可能被借用来设计在多方分布下减小激活/状态驻留、扩大micro-batch、或在等待网络同步时继续本地进展的机制。",
+        "relation_to_my_work_en": "Highly relevant to secure MPC runtimes, segmented execution, and dependency-aware scheduling. SOLO's idea could be adapted to reduce activation/state residency across pipeline stages in multi-party settings, allow larger micro-batches, or let parties progress locally while awaiting network synchronization.",
+        "possible_transfer_zh": "可迁移点：用只读共享汇总/近似输出替代跨阶段同步以减少等待和内存驻留；在MPC流水线中采用类似共享输出检查点可允许阶段解耦、增加并行度与批处理。但需验证安全边界（信息共享是否泄露）与在有加密/秘密共享的上下文中的可行性。",
+        "possible_transfer_en": "Transfers: replacing cross-stage synchronization with a read-only shared summary/approximate final output to reduce waiting and activation residency; in MPC pipelines, analogous shared-output checkpoints might decouple stages, increase parallelism and batch sizes. Must verify security/privacy implications (does sharing leak information) and feasibility under secret-sharing/encryption.",
+        "possible_overlap_or_conflict_zh": "核心冲突在于摘要描述的共享只读输出在明文训练中可行，但在MPC/秘密共享情境下需要评估是否违反安全模型或带来信息泄露风险；还需检查是否可在加密形式下高效实现。",
+        "possible_overlap_or_conflict_en": "Main conflict: the shared read-only output is plausible in plaintext, but in MPC/secret-sharing contexts one must evaluate if it violates security assumptions or leaks information; also check practicality of implementing shared outputs under encryption.",
+        "questions_to_verify_zh": [
+          "共享只读readout的具体格式与更新时序（来自上一步）如何保证一致性？",
+          "在流水线并行实验里的精确内存与吞吐对比数据（与pipeline BP基线）有哪些？",
+          "是否有对隐私/信息泄露的讨论或在加密/秘密共享环境中的可行性分析？",
+          "实现复杂度与适配到现有分布式训练框架（如GPipe、Megatron-LM等）的难度如何？"
+        ],
+        "questions_to_verify_en": [
+          "What is the exact format and timing for the shared readout (taken from previous step) and how is consistency ensured?",
+          "What are the precise memory and throughput comparison numbers versus pipeline backprop baselines?",
+          "Is there any discussion of privacy/information leakage or feasibility under encryption/secret-sharing?",
+          "What is implementation complexity and effort to adapt to existing distributed training frameworks (GPipe, Megatron-LM, etc.)?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.35508",
+        "version": 1,
+        "title": "Argus: Agentic, Reference-Calibrated, Tree-Guided, System-Software-Level Bottleneck Localization",
+        "authors": [
+          "Vlad-Petru Nitu",
+          "Harsh Songara",
+          "Konstantinos Sgouras",
+          "Spiros Galanopoulos",
+          "Konstantinos Kanellopoulos",
+          "Onur Mutlu"
+        ],
+        "abstract": "Operating system (OS) code can account for a substantial share of CPU execution time. First, as application logic is offloaded to heterogeneous accelerators (e.g., GPUs), the CPU increasingly acts as an orchestrator, spending cycles in driver calls, data movement, and synchronization rather than in application code. Second, workloads such as serverless functions frequently invoke OS services. At the same time, the OS is a complex codebase spanning many subsystems (e.g., memory management, networking), making it hard to localize the specific code path responsible for a slowdown. Existing profilers expose measurements that require interpretation(e.g., perf and Intel VTune) or can perturb short operations when extensively instrumented (e.g., ftrace). Diagnosing OS bottlenecks can therefore require repeated kernel instrumentation and manual interpretation. We introduce Argus, an agentic LLM-based profiler that produces instrumentation code and autonomously reasons over potential OS-level bottlenecks. Argus integrates two key mechanisms: (i) a calibration methodology that involves collecting a measurement from an idle system and using it as a reference point to discover potential bottlenecks, and (ii) a tree-based data structure that represents the different OS execution paths, improving the agent's bottleneck localization accuracy. Argus aims to identify a specific kernel code path rather than stop at a subsystem-level diagnosis. In two case studies, we employ Argus to autonomously discover bottlenecks present in the memory management subsystem caused by (i) a THP aggressor co-running with other applications, and (ii) applications that incur different types of page faults. Argus produces 19 times fewer incorrect deep-path diagnoses than the strongest evaluated LLM-based baseline, which lacks reference calibration, while preserving low time-to-diagnosis (approximately 31 s)",
+        "categories": [
+          "cs.AR",
+          "cs.OS"
+        ],
+        "published": "2026-09-28T16:05:47Z",
+        "updated": "2026-09-28T16:05:47Z",
+        "abstract_url": "https://arxiv.org/abs/2609.35508v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.35508v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.35508v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.78,
+        "priority": "read",
+        "matched_topics": [
+          "MPC runtime",
+          "network-aware runtime",
+          "dependency-aware scheduling",
+          "DAG scheduling",
+          "latency hiding"
+        ],
+        "short_summary_zh": "Argus 是一個基於代理的 LLM 驅動系統檔案工具，自動生成內核（kernel）儀器化代碼並推理可能的 OS 級瓶頸位置。核心機制包括（i）空閒系統校準量測作為參考以揭示瓶頸，以及（ii）用於表示不同 OS 執行路徑的樹狀結構以提高定位精度。作者在兩個案例研究中展示了對內存管理深路徑瓶頸的自動定位與比對基線的顯著改進，且診斷時間低。摘要基於系統行為分析與自動化診斷，強調實際可用性。",
+        "short_summary_en": "Argus is an agentic LLM-based profiler that autonomously produces instrumentation code and reasons about OS-level bottlenecks. It uses (i) a calibration step collecting idle-system measurements as references to detect anomalies and (ii) a tree data structure representing OS execution paths to improve deep-path localization. In case studies on memory-management issues, Argus reported far fewer incorrect deep-path diagnoses than an LLM baseline while keeping low time-to-diagnosis (~31s).",
+        "why_interesting_zh": "對於 MPC 或安全計算的運行時優化高度相關：定位內核/用戶空間瓶頸、減少診斷迭代與自動生成儀器化代碼可直接幫助優化高延遲、多進程的安全協議實施（例如 MP-SPDZ），特別是在想找到通信-計算交互的局部瓶頸時。",
+        "why_interesting_en": "Highly relevant to MPC runtimes: automated bottleneck localization, reference calibration, and tree-structured path modeling can inform optimization of secure computation stacks (e.g., reducing OS-level stalls, identifying network/IO-induced latency), and suggest ways to automate instrumentation in distributed secure systems.",
+        "relation_to_my_work_zh": "Argus 的方法可能直接被用來診斷 MPC 執行環境中的系統瓶頸（驅動調用、同步、資料搬移），幫助設計更精準的調度與通信重組策略。",
+        "relation_to_my_work_en": "Argus could be applied to profiling MPC runtimes to find OS-level hotspots (drivers, data movement, sync), enabling dependency-aware scheduling and communication-computation overlap strategies.",
+        "possible_transfer_zh": "校準（idle 參考）思想與樹狀執行路徑表徵可被移植到分布式 MPC 監控：自動產生輕量儀器、快速定位 WAN/網卡/系統調度引起的延遲，從而指導 DAG 調度與批處理合併。",
+        "possible_transfer_en": "Idle-reference calibration and tree-path representation could be ported to distributed MPC monitoring: auto-generating lightweight instrumentation, localizing WAN/driver/system-induced latency, and informing DAG scheduling, batching, or coalescing decisions.",
+        "possible_overlap_or_conflict_zh": "摘要中未說明對敏感數據或私有協議狀態的處理；在受保護環境中自動儀器化需要注意不破壞安全邊界或引入攻擊面。",
+        "possible_overlap_or_conflict_en": "The abstract does not address handling of sensitive data or protected protocol state; automatic instrumentation in secure contexts must avoid breaking confidentiality or expanding attack surface.",
+        "questions_to_verify_zh": [
+          "Argus 在分散式/跨節點環境（如 MPI 或多機 MPC）上的適用性如何？",
+          "校準參考如何隨硬體/驅動/負載變化而更新？",
+          "自動生成的儀器化是否需要內核符號或特權，對生產環境的安全影響如何評估？"
+        ],
+        "questions_to_verify_en": [
+          "How applicable is Argus to distributed/multi-node environments (e.g., MPI, multi-machine MPC)?",
+          "How robust is the idle calibration reference to hardware/driver/load variation over time?",
+          "Does the generated instrumentation require kernel symbols/privileges and what are the security implications for production deployment?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.35501",
+        "version": 1,
+        "title": "SRHarness: A Harness for Agentic Symbolic Regression",
+        "authors": [
+          "Zihan Yu",
+          "Shixuan Zhou",
+          "Hao Huang",
+          "Jingtao Ding",
+          "Yong Li"
+        ],
+        "abstract": "Recent agentic symbolic regression approaches increasingly rely on large language models to analyze data, select scientific operations, and refine hypotheses over long search trajectories. In such systems, performance depends not only on the underlying model and search strategy, but also on the runtime infrastructure that supports scientific search. We introduce SRHarness, a domain-specific harness for agentic symbolic regression built around three mechanisms: composable scientific actions that provide a common interface over raw, transformed, and candidate-derived quantities; persistent scientific state that retains evaluated hypotheses and exposes compact model-facing views; and trajectory lifecycle management that coordinates continuation, branching, restart, and termination. On LLM-SRBench, SRHarness consistently improves both numerical generalization and symbolic recovery under matched LLM backbones. With DeepSeek-v4-flash-0731, it achieves 93.69% symbolic accuracy on LSR-Transform, compared with 62.16% for SR-Scientist, and retains 72.97% accuracy on an anonymized variant that removes scientific descriptions and variable semantics, versus 39.64% for SR-Scientist. Under the same DeepSeek-v4-flash-0731 backbone, SRHarness also substantially outperforms Codex (72.97% vs. 20.72%) and reaches performance comparable to Codex with GPT-5.5, while simply providing Codex with the same scientific tools does not reproduce this advantage. These results show that effective agentic symbolic regression depends not only on models or tools, but also on structured runtime support for organizing scientific actions, accumulated hypotheses, and long-horizon search.",
+        "categories": [
+          "cs.AI",
+          "cs.LG",
+          "cs.SC"
+        ],
+        "published": "2026-09-28T16:03:24Z",
+        "updated": "2026-09-28T16:03:24Z",
+        "abstract_url": "https://arxiv.org/abs/2609.35501v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.35501v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.35501v1",
+        "relevance_score": 7,
+        "novelty_score": 6,
+        "transferability_score": 7,
+        "systems_score": 7,
+        "confidence": 0.64,
+        "priority": "read",
+        "matched_topics": [
+          "pipeline execution",
+          "distributed runtime scheduling",
+          "adjacent transferable topics"
+        ],
+        "short_summary_zh": "基于摘要：SRHarness 是一个面向 agentic symbolic regression 的运行时 harness，包含可组合的科学动作接口、持久化的科学状态（保存已评估假设并提供紧凑视图）和轨迹生命周期管理（续做、分支、重启、终止）。在 LLM-SRBench 上，SRHarness 在数值泛化和符号恢复上稳健提升并在多项基准上显著优于若干对照方法与工具集成。",
+        "short_summary_en": "Based on the abstract: SRHarness is a domain-specific runtime harness for agentic symbolic regression providing composable scientific actions, persistent scientific state, and trajectory lifecycle management (continuation, branching, restart, termination). On LLM-SRBench it improves numerical generalization and symbolic recovery across LLM backbones and datasets.",
+        "why_interesting_zh": "直接相关于运行时支持：运行时的组织（动作接口、持久态、轨迹管理）明显提升长期搜索与可复用性，说明结构化运行时对复杂长时程搜索/代理任务效果显著。对设计高效、可管理的分布式搜索/推理运行时有借鉴意义。",
+        "why_interesting_en": "Directly relevant to runtime support: structuring runtime with composable actions, persistent state, and trajectory lifecycle management markedly improves long-horizon search. This is informative for designing scalable, manageable distributed search or inference runtimes.",
+        "relation_to_my_work_zh": "如果你关注将 LLM 驱动的科学搜索或长时程代理部署到分布式/受限资源环境，SRHarness 的设计（轨迹生命周期管理与持久态视图）可为任务调度、检查点与分支策略提供参考。",
+        "relation_to_my_work_en": "If you work on deploying LLM-driven search/agent systems in distributed or resource-constrained environments, SRHarness's trajectory lifecycle and persistent-state abstractions may inform scheduling, checkpointing, and branching strategies in runtimes.",
+        "possible_transfer_zh": "核心机制（可组合动作接口、轻量持久化状态、轨迹生命周期管理）可迁移到其他长时程搜索/优化系统、分布式超参数或编译器搜索平台，用以支持延续、分支与恢复策略。需要评估的工程问题包括一致性管理、并发访问、以及状态大小与同步频率。",
+        "possible_transfer_en": "Core mechanisms (composable action APIs, compact persistent state, trajectory lifecycle management) could transfer to other long-horizon search/optimization runtimes and distributed tuning platforms to support continuation/branching/restart. Engineering concerns: consistency management, concurrent access, state size and synchronization frequency.",
+        "possible_overlap_or_conflict_zh": "与现有 agent harness 或调度系统可能功能重叠；需比较接口简洁性、可扩展性与分布式一致性方案。",
+        "possible_overlap_or_conflict_en": "May overlap functionally with existing agent harnesses or schedulers; compare on API simplicity, scalability, and distributed consistency mechanisms.",
+        "questions_to_verify_zh": [
+          "持久化科学状态的表示是什么样的（大小、序列化频率），如何保证在分布式或预emption 情况下的一致性？",
+          "轨迹生命周期管理在并发/分布式部署下如何做分支与合并的冲突解析？",
+          "与 SR-Scientist/Codex 的比较是否在相同计算/工具可用性约束下进行？"
+        ],
+        "questions_to_verify_en": [
+          "What is the representation of the persistent scientific state (size, serialization frequency) and how is consistency ensured under distribution or preemption?",
+          "How does trajectory lifecycle management handle branching/merging conflict resolution under concurrent/distributed deployments?",
+          "Were comparisons to SR-Scientist/Codex performed under matched compute/tool-availability constraints?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.35587",
+        "version": 1,
+        "title": "Hardware-Aware Features for CUTLASS Kernel Selection",
+        "authors": [
+          "Shriram Chandran",
+          "Dominic Rinderer",
+          "Yakup Budanaz",
+          "Alexandru Calotoiu",
+          "Marcin Copik",
+          "Torsten Hoefler"
+        ],
+        "abstract": "GPU libraries such as CUTLASS expose tens of thousands of semantically equivalent kernels for a single operation, making exhaustive autotuning expensive and execution-free selection difficult. Existing analytical selectors require hand-designed performance rules, while learned selectors operate on raw configuration parameters and must infer hardware consequences from data. We introduce a hardware-aware representation for CUTLASS kernel selection that augments candidate configurations with statically computable estimates of induced hardware behavior. We construct a dataset of 4.9 million CUTLASS kernels and train gradient-boosted and neural learning-to-rank models to rank candidates within each problem. On held-out exhaustive evaluation problems, hardware-aware representations reduce selection regret by up to 40\\% relative to structural baselines and 64.2\\% relative to NVIDIA's matrix-multiply heuristics. We further evaluate data-efficient cross-precision and epilogue-fusion transfer within CUTLASS GEMM, showing that explicitly representing candidate-induced hardware behavior provides a useful inductive bias for learned kernel selection.",
+        "categories": [
+          "cs.LG",
+          "cs.PF"
+        ],
+        "published": "2026-09-28T16:39:31Z",
+        "updated": "2026-09-28T16:39:31Z",
+        "abstract_url": "https://arxiv.org/abs/2609.35587v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.35587v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.35587v1",
+        "relevance_score": 6,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 7,
+        "confidence": 0.82,
+        "priority": "read",
+        "matched_topics": [
+          "compiler instruction scheduling",
+          "performance modeling",
+          "learned cost models",
+          "kernel selection",
+          "dataflow scheduling"
+        ],
+        "short_summary_zh": "基于标题与摘要：作者为CUTLASS矩阵乘等核选择引入硬件感知表示，静态估计候选配置诱导的硬件行为，构造4.9M配置数据集并训练学习排序模型。硬件感知特征在候选排序上显著降低遗憾，相较结构基线与NVIDIA启发式有较大提升，并展示跨精度/融合的迁移能力。",
+        "short_summary_en": "Based on title and abstract: the paper proposes hardware-aware features for CUTLASS kernel selection by statically estimating candidate-induced hardware behavior, builds a 4.9M kernel dataset, and trains learning-to-rank models. Hardware-aware features reduce selection regret significantly versus structural baselines and NVIDIA heuristics, and they enable data-efficient transfer across precisions and epilogue fusion variants.",
+        "why_interesting_zh": "明确将静态硬件行为估计作为特征，为学习型选择器提供了有力的归纳偏置。对MPC或保密推理运行时需要在广泛内核候选中做快速离线/在线选择（例如不同加密/明文核）时，这类表示很有用。",
+        "why_interesting_en": "Using statically computed hardware-behavior estimates as features provides a strong inductive bias for learned selectors. This can inform fast kernel/protocol selection in private inference runtimes where many semantically equivalent kernels or protocol variants compete.",
+        "relation_to_my_work_zh": "如果你的工作包含内核/协议选择器、autotuning或运行时决策（尤其在异构硬件或受限样本下），本文的硬件感知表示和学习排序方法具有直接借鉴价值。",
+        "relation_to_my_work_en": "If you build kernel/protocol selectors, autotuners, or runtime decision modules under heterogeneity or limited data, the hardware-aware feature design and ranking models are directly applicable.",
+        "possible_transfer_zh": "把静态硬件行为估计方法迁移到MPC/TEE运行时来预测不同加密协议或内核在特定硬件上的延迟/内存占用，用于在线选择或快速剪枝候选集。",
+        "possible_transfer_en": "Transfer static hardware-behavior estimates to MPC/TEE runtimes to predict latency/memory for different crypto protocols or kernels, enabling fast online selection or candidate pruning.",
+        "possible_overlap_or_conflict_zh": "需要验证对目标硬件（CPU/TPU/加密加速器）静态估计的准确性；对保密协议的性能建模可能需加入通信/同步成本。",
+        "possible_overlap_or_conflict_en": "Verify static estimators' accuracy on your target hardware; modeling secure-protocol performance requires adding communication and synchronization costs to the feature set.",
+        "questions_to_verify_zh": [
+          "候选诱导的“硬件行为”具体包括哪些静态量度（缓存占用、并行度估计等）？",
+          "数据集是否包含通信密集或内存受限情形？模型在新硬件/新精度下的迁移性能如何衡量？",
+          "是否公开了数据集与预处理方式？"
+        ],
+        "questions_to_verify_en": [
+          "What specific static hardware-behavior estimates are used (e.g., cache footprint, parallelism estimates)?",
+          "Does the dataset include communication-heavy or memory-constrained cases, and how is transfer to new hardware/precision measured?",
+          "Are the dataset and preprocessing publicly available for reuse?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
