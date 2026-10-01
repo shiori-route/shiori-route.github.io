@@ -1,0 +1,744 @@
+{
+  "date": "2026-10-01",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 8,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2609.37916",
+        "version": 1,
+        "title": "RLX: A Unified Multi-Backend Tensor Compiler and Distributed Runtime in Rust",
+        "authors": [
+          "Eugene Hauptmann",
+          "Nataliya Kosmyna"
+        ],
+        "abstract": "Production machine learning (ML) stacks often split graph compilation and kernel execution across different layers and languages, making backend behavior, deployment guarantees, and performance fallbacks hard to reason about end-to-end. RLX addresses this gap with a single Rust codebase that combines compiler and runtime roles around one primitive-level, three-level intermediate representation (IR), plus a transparent dispatch contract that resolves each operator to native, common-IR, or rewritten lowering and fails compilation when legalization is not possible. The same IR targets fourteen runtime devices (cpu, metal, mlx, ane, cuda, rocm, oneapi, tpu, hexagon, gpu, vulkan, opengl, directx, webgpu) and two specialty codegen paths (Cortex-M INT8 and FPGA), ingests safetensors, GGUF, ONNX, and rten formats, supports F16/BF16/F64/C64 and quantized INT4/INT8 flows with AMP/PTQ/QAT, and scales via tensor-/pipeline-parallel collectives over TCP and RDMA transports. Beyond neural workloads, RLX also extends to scientific/physics-style domains through sparse and dense linear algebra extensions (e.g., CSR LU/CG/matvec and LAPACK- backed factorizations) and 3D Gaussian splatting operators. We evaluate RLX against PyTorch, TensorFlow, JAX, candle, burn, tch, rten, MLX, CoreML, IREE, Glow, TensorRT, and tinygrad under identical input generation and p50 measurement methodology on one host. On all-MiniLM-L6-v2, RLX-Metal is fastest at every batch (e.g., 16.6 ms at batch 32 vs. PyTorch-MPS 26.7 ms). In the MNIST training table, RLX also has the top-throughput entry (graph-fused MLP: 946,487 img/s), above NumPy+BLAS (787,349 img/s), while retaining 100% top-1 parity on reference checks (e.g., Qwen3).",
+        "categories": [
+          "cs.AI",
+          "cs.DC"
+        ],
+        "published": "2026-09-29T16:09:48Z",
+        "updated": "2026-09-29T16:09:48Z",
+        "abstract_url": "https://arxiv.org/abs/2609.37916v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.37916v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.37916v1",
+        "relevance_score": 9,
+        "novelty_score": 7,
+        "transferability_score": 9,
+        "systems_score": 9,
+        "confidence": 0.78,
+        "priority": "deep_read",
+        "matched_topics": [
+          "MPC compiler",
+          "MPC runtime",
+          "network-aware runtime",
+          "dependency-aware scheduling",
+          "DAG scheduling",
+          "pipeline execution",
+          "protocol selection",
+          "communication rounds"
+        ],
+        "short_summary_zh": "基于摘要：RLX是一个用Rust实现的统一张量编译器及分布式运行时，整合编译器与运行时职责，采用三层IR与透明调度契约（native/common-IR/rewriting），支持十四种后端设备与两条特定代码生成路径，量化、混合精度与稀疏算子全部支持，并通过TCP与RDMA传输实现张量/流水线并行的collective。作者在与多种主流框架的对比基准上报告了显著的吞吐与延迟优势。",
+        "short_summary_en": "Based on the abstract: RLX is a unified Rust-based tensor compiler and distributed runtime combining compiler and runtime roles around a three-level IR and a transparent dispatch contract resolving operators to native/common-IR/rewriting. It targets 14 device backends, supports mixed precision/quantization, sparse/dense linear algebra, and scales via tensor-/pipeline-parallel collectives over TCP and RDMA. Reported benchmarks show substantial latency/throughput advantages over several frameworks.",
+        "why_interesting_zh": "高度相关：将编译器与运行时合并、透明分发契约、多端后台支持以及TCP/RDMA的集成直接触及MPC运行时、依赖感知调度、跨设备通信与协议选择等研究问题。若实现与评测方法可信，RLX可成为设计网络感知MPC运行时或优化WAN部署的参考实现或实验平台。",
+        "why_interesting_en": "Highly relevant: unifying compiler and runtime, a transparent dispatch contract, multi-backend support, and TCP/RDMA-integrated collectives directly touch MPC-runtime concerns (dependency-aware scheduling, protocol selection, cross-device communication). If its implementation and evaluation are sound, RLX could be a practical reference/experimental platform for network-aware MPC runtimes and scheduler research.",
+        "relation_to_my_work_zh": "直接相关：RLX的设计思路（单一代码库的IR、透明调度、后端抽象、collective实现）可能直接借用于MPC框架（比如MP-SPDZ或定制编译器）以减少跨层不可预期行为并实现网络感知优化。它还能为评估WAN延迟、RPC批处理与依赖合并策略提供实验平台。",
+        "relation_to_my_work_en": "Directly relevant: RLX's unified IR/dispatch approach, backend abstraction, and collective implementations could be adapted for MPC frameworks (e.g., MP-SPDZ) to reduce cross-layer surprises and enable network-aware optimizations. RLX could serve as an experimental platform for studying WAN latency effects, RPC batching, and dependency coalescing strategies.",
+        "possible_transfer_zh": "可移植点包括：统一IR与透明调度契约用于MPC前端到后端的端到端可预测性；对TCP/RDMA集成的collectives实现可为MPC在WAN/RDMA环境下的高效通信提供参考；量化/混合精度与稀疏算子支持可启发在受限资源下的安全推理优化。",
+        "possible_transfer_en": "Transferable ideas: unified IR and a transparent dispatch contract for end-to-end predictability in MPC front-to-backend stacks; TCP/RDMA-integrated collective implementations as references for communication-efficient MPC over WAN/RDMA; mixed-precision and sparse operator support to optimize secure inference under constrained resources.",
+        "possible_overlap_or_conflict_zh": "需核对其评测协议与基准可比性（输入生成与p50测度方法），并确认其在异构/高延迟网络与加密环境下的可适用性。与现有MPC框架的接口与安全假设也需对齐。",
+        "possible_overlap_or_conflict_en": "Verify benchmark methodology comparability (input generation and p50 measurement) and confirm applicability under heterogeneous/high-latency networks and encrypted/executed-in-MPC settings. Also align interfaces and security assumptions with existing MPC frameworks to avoid mismatches.",
+        "questions_to_verify_zh": [
+          "RLX的调度契约如何在有加密/安全通道（如MPC或TEE）时保持语义与性能？",
+          "在高WAN延迟或不可靠网络下，RLX的collective实现（TCP/RDMA）表现如何？是否支持延迟隐藏、RPC批处理或轮次合并策略？",
+          "论文的基准比较是否在相同图融合/算子分解与相同硬件/网络配置下进行？能否复现实验环境与测量脚本？"
+        ],
+        "questions_to_verify_en": [
+          "How does RLX's dispatch contract preserve semantics and performance in encrypted/secure channels (e.g., MPC or TEE)?",
+          "How do RLX's collective implementations (TCP/RDMA) perform under high WAN latency or unreliable networks? Do they support latency hiding, RPC batching, or round-coalescing strategies?",
+          "Were benchmarks compared under identical graph-fusion/operator-lowering choices and hardware/network configs? Are the experiment environments and measurement scripts reproducible?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.37916v1",
+        "research_problem_zh": "基于仅标题与摘要：将图编译器与多后端分布式运行时在一个统一代码库和统一中间表示（IR）中整合，以便在多设备、多后端（含 RDMA/TCP）和多种数值/量化流下提供可预测的部署行为和高性能。",
+        "research_problem_en": "Based only on title and abstract: unify graph compilation and kernel execution into a single Rust codebase and primitive-level, three-level IR that can dispatch across many device backends and scale distributed execution (TCP/RDMA) while supporting multiple numeric/quantized flows and sparse/dense operators.",
+        "core_method_zh": "基于标题与摘要：使用一个三层中间表示（IR）和透明的调度/合法化（dispatch/legalization）契约，在单一 Rust 代码库内同时承担编译器与运行时职责；将 IR 目标化到 14 个常规模型后端与两个专用代码生成路径，并通过张量/流水线并行集合操作（TCP 与 RDMA）做分布式扩展。",
+        "core_method_en": "Based on title and abstract: a single Rust implementation that couples compiler and runtime around a primitive-level, three-level IR plus a transparent dispatch/legalization contract; the IR targets 14 runtime devices and 2 specialty codegen paths and scales via tensor-/pipeline-parallel collectives over TCP and RDMA.",
+        "contributions_zh": [
+          "在单一 Rust 代码库中将编译器与运行时合并，围绕一套三层 IR 和透明调度/合法化契约。",
+          "将同一 IR 目标化到十四个通用设备后端及两个专用路径（Cortex-M INT8、FPGA）。",
+          "支持多种输入格式（safetensors、GGUF、ONNX、rten）以及多数值格式与量化流（F16/BF16/F64/C64、INT4/INT8、AMP/PTQ/QAT）。",
+          "通过张量/流水线并行的集合通信在 TCP 与 RDMA 上传播伸缩分布式执行。",
+          "扩展到稀疏/致密线性代数（CSR LU/CG/matvec、LAPACK 支撑的分解）与 3D Gaussian splatting 运算。",
+          "在本文给出的基准上（同一输入与 p50 测量方法），与多种框架比较并报告了若干领先性能点。"
+        ],
+        "contributions_en": [
+          "Combines compiler and runtime in a single Rust codebase around a primitive-level, three-level IR and a transparent dispatch/legalization contract.",
+          "Targets the same IR to 14 runtime devices and two specialty codegen paths (Cortex‑M INT8, FPGA).",
+          "Ingests multiple model formats (safetensors, GGUF, ONNX, rten) and supports many numeric/quantized flows (F16/BF16/F64/C64, INT4/INT8 with AMP/PTQ/QAT).",
+          "Scales via tensor- and pipeline-parallel collectives over TCP and RDMA transports.",
+          "Extends beyond neural workloads to sparse/dense linear algebra and 3D Gaussian splatting operators.",
+          "Evaluates against many established frameworks under identical input generation and p50 methodology, reporting top entries on selected benchmarks."
+        ],
+        "why_watch_zh": "基于摘要：对关注运行时调度、网络感知分布式执行、流水线/张量并行与编译器—运行时协同（与 MPC 运行时或隐私推理集成）的人来说，这篇工作可能包含实用的工程模式与可迁移优化。",
+        "why_watch_en": "Based on the abstract: relevant for people interested in runtime scheduling, network-aware distributed execution, pipeline/tensor parallelism, and compiler–runtime co-design — all potentially transferable to MPC runtimes or privacy-preserving inference systems.",
+        "direct_relation_zh": "基于摘要：与主课题的直接关系为“高（运行时/编译/网络感知）”——非常相关于 MPC 运行时、WAN/网络传输、流水线并行与集合通信优化；但不涉及安全/加密协议本身。",
+        "direct_relation_en": "Based on title and abstract: direct relation is high with respect to runtimes/compilers and network-aware distributed execution — relevant to MPC runtime design, WAN/transport optimization, pipeline parallelism and collective communication — but the paper does not address cryptographic/security protocol design.",
+        "transferable_mechanisms_zh": [
+          "统一 IR 设计 + 调度/合法化契约（可用于在 MPC 运行时中统一算子表述与后端选择）。",
+          "多后端代码生成策略与“降级/本地化失败”处理（可用于在安全推理中选择安全/高效协议路径）。",
+          "张量/流水线并行集合通信的实现与 RDMA/TCP 优化（可迁移到低延迟 MPC 通信层）。",
+          "对混合精度与量化流的端到端支持与调度（有助于降低 MPC 中的带宽/计算成本）。",
+          "稀疏/致密线性代数扩展与算子融合策略（对隐私计算中的线性代数密集工作负载有价值）。",
+          "统一编译器+运行时的工程模式（有助于构建可观测、可替换的 MPC 运行时）。"
+        ],
+        "transferable_mechanisms_en": [
+          "Unified IR design and dispatch/legalization contract (useful for representing operators and selecting backends in MPC runtimes).",
+          "Multi-backend codegen and downgrade/legalization failure handling (can inform protocol selection when native ops unavailable).",
+          "Implementation of tensor/pipeline-parallel collectives and RDMA/TCP optimization (transferable to low-latency MPC communication layers).",
+          "End-to-end support for mixed precision and quantization flows (helps reduce bandwidth/computation in privacy-preserving inference).",
+          "Sparse/dense linear algebra extensions and operator fusion strategies (relevant to ML workloads in MPC).",
+          "Compiler+runtime integration engineering patterns (helps build observable, swappable MPC runtimes)."
+        ],
+        "potential_overlap_zh": "基于摘要：与 MPC 运行时和网络感知调度高度重叠——特别是集合通信实现、流水线并行、调度与编译器层面的算子合法化。其工程和基准方法也可直接借鉴。",
+        "potential_overlap_en": "Based only on title and abstract: high overlap with MPC runtimes and network-aware scheduling — especially collective implementation, pipeline parallelism, scheduling, and operator legalization at the compiler layer. Engineering and benchmark methodology are directly reusable.",
+        "potential_conflict_zh": "基于摘要：不涉及任何加密或容错安全语义；因此在将方法直接移植到 MPC 时需注意不同的信任/安全与性能成本（例如加密开销、额外通信轮次）。",
+        "potential_conflict_en": "Based on the abstract: the work does not address cryptographic or secure semantics; direct transplantation to MPC must account for different trust/security costs (encryption overhead, additional rounds) that are not covered in the paper.",
+        "full_text_questions_zh": [
+          "三层 IR 的精确定义与语义是什么？各层的职责如何划分？",
+          "dispatch/合法化契约的接口与失败语义如何描述？是否有可插拔策略以选择后端或回退到通用 IR？",
+          "集合通信（tensor-/pipeline-parallel）在 TCP 与 RDMA 上的实现细节、拓扑与性能模型是什么？是否考虑 WAN/高延迟场景？",
+          "对稀疏算子与 LAPACK 式调用的实现细节与性能权衡有哪些？",
+          "论文中基准的硬件配置、驱动/库版本、批次大小范围与统计显著性如何保证？",
+          "是否提供开源实现、基准脚本与用于逐项重现的输入生成器？具体在哪些场景 RLX 未能覆盖（法律化失败示例）？"
+        ],
+        "full_text_questions_en": [
+          "What exactly are the semantics and responsibilities of the three IR levels? How are they partitioned?",
+          "How is the dispatch/legalization contract specified? What are the failure semantics and are there pluggable strategies for backend selection or fallback?",
+          "How are the tensor-/pipeline-parallel collectives implemented over TCP and RDMA? What topologies and performance models are used, and were WAN/high-latency settings considered?",
+          "What are the implementation details and trade-offs for sparse operators and LAPACK-backed factorizations?",
+          "What hardware/configuration details, driver/library versions, batch ranges and statistical measures underlie the benchmarks?",
+          "Is the implementation and benchmark code released? Are there documented legalization-failure examples where the system fails compilation?"
+        ],
+        "experiment_checks_zh": [
+          "确认基准是在相同硬件与驱动/库配置下运行（完整的环境说明）。",
+          "查看是否仅给出 p50，或同时提供 p95/p99 与方差/置信区间。",
+          "复现关键基准（如 MiniLM L6 v2、MNIST 训练），并与作者提供的输入生成器/脚本对齐。",
+          "检验分布式 (TCP/RDMA) 模式在多主机与高延迟（WAN）条件下的行为与缩放曲线。",
+          "审查量化/混合精度流程在数值正确性与性能之间的折衷（是否有回退策略）。"
+        ],
+        "experiment_checks_en": [
+          "Verify benchmarks were run under identical hardware and driver/library configurations (complete environment disclosure).",
+          "Check whether p50-only reporting is supplemented by p95/p99 and variance/confidence intervals.",
+          "Reproduce key benchmarks (e.g., MiniLM-L6-v2, MNIST training) using the authors' input generator/scripts if available.",
+          "Test distributed (TCP/RDMA) modes across multiple hosts and in higher-latency/WAN conditions to observe scaling behavior.",
+          "Examine quantization/mixed-precision flows for accuracy/performance trade-offs and any fallback strategies."
+        ],
+        "tracking_targets": [
+          "是否开源代码与基准脚本（repo +版本）",
+          "对多主机/跨机通信（TCP vs RDMA）的实现细节与性能数据",
+          "IR 文档（层级语义、可扩展性与合法化 API）",
+          "与主流 MPC/隐私推理系统的接口或集成示例",
+          "量化/混合精度流水线与数值回退策略的实现说明"
+        ],
+        "next_steps_zh": [
+          "阅读论文主体中 IR 规范、dispatch 契约与集合通信实现章节（基于摘要判断的第一优先级）。",
+          "检查是否有开源实现并尝试复现少量关键基准（单机与两主机 RDMA）。",
+          "评估将其 IR/算子合法化模式或集合通信实现迁移到 MPC 运行时的可行性与成本（加密/轮次开销）。"
+        ],
+        "next_steps_en": [
+          "Read the paper sections on IR specification, the dispatch/legalization contract, and collective communication implementation (top priority based on the abstract).",
+          "Look for an open-source repo and attempt to reproduce a small set of key benchmarks (single-host and two-host RDMA).",
+          "Assess feasibility and cost to adapt the IR/operator-legalization patterns or collective implementations into an MPC runtime (considering crypto/round overhead)."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.37737",
+        "version": 1,
+        "title": "Where Do LLMs Decide to Break the Rules? Mechanistic Localization of Prompt Injection Compliance",
+        "authors": [
+          "Rui Wen",
+          "Jiayang Liu",
+          "Zeyu Yang",
+          "Jun Sakuma",
+          "Lu Sun"
+        ],
+        "abstract": "When a prompt injection attack succeeds, a Large Language Model (LLM) abandons its assigned system role to comply with an adversarial instruction. While prior work has extensively quantified how often this occurs, we ask a more fundamental question: where inside the network does the model actually decide to break the rules? Using layer-by-layer causal activation patching across five models (4B to 32B parameters), we find a clear dissociation: attack information is linearly decodable from the first layer, yet causal leverage over the model's behavior is negligible until a late-layer bottleneck in the final third of the network. Patching this bottleneck reverses compliance in 77--92\\% of cases. We show that the compliance mechanism occupies a compact linear subspace (rank-8 in 4B and 14B models, scaling to rank-64 at 32B) and is architecturally stable across varying model families. Finally, we validate our mechanistic account by showing that this causal peak layer is also the representationally optimal site for detecting attacks, outperforming early-layer classifiers that degrade under surface-level obfuscation such as leetspeak substitution. This alignment between causal leverage and detection performance provides converging evidence that the late-layer bottleneck captures decision-relevant computation rather than merely reflecting an artifact of the intervention.",
+        "categories": [
+          "cs.CR"
+        ],
+        "published": "2026-09-29T14:54:21Z",
+        "updated": "2026-09-29T14:54:21Z",
+        "abstract_url": "https://arxiv.org/abs/2609.37737v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.37737v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.37737v1",
+        "relevance_score": 9,
+        "novelty_score": 8,
+        "transferability_score": 8,
+        "systems_score": 6,
+        "confidence": 0.78,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure LLM inference",
+          "prompt injection",
+          "detection",
+          "mechanistic interpretability"
+        ],
+        "short_summary_zh": "基于仅标题和摘要：作者通过逐层因果激活修补（causal activation patching）研究提示注入攻击何时使大模型放弃系统角色。发现攻击信息在第一层即可线性解码，但对行为有因果影响的杠杆直到网络后1/3处的一个晚层瓶颈才显著；对该层修补可在77–92%的案例中逆转遵从。该瓶颈对应一个低秩线性子空间，且在多种模型/规模上稳定；该晚层也是检测攻击的最优位置，比早层分类器对表面混淆更鲁棒。",
+        "short_summary_en": "Based only on title and abstract: the paper uses layer-wise causal activation patching across multiple LLMs (4B–32B) to localize where prompt-injection compliance is causally decided. While attack information is linearly decodable from early layers, causal leverage is concentrated in a late-layer bottleneck in the final third; patching that layer reverses compliance in 77–92% of cases. The mechanism is a compact linear subspace (low rank) and that layer is also the best site for robust attack detection.",
+        "why_interesting_zh": "基于仅标题和摘要：这把检测性能（分类可得信息）与因果杠杆（能改变输出的部位）联系起来，给出可操作的防御定位：在推理时把检测或干预放在晚层瓶颈可能更有效且更鲁棒。对安全的LLM推理与运行时防御有直接启发。",
+        "why_interesting_en": "Based only on title and abstract: the work aligns representational detectability with causal influence and identifies a compact late-layer decision bottleneck. That gives an actionable target for runtime detection and intervention in secure LLM inference, and suggests where to place defenses for robustness to obfuscation.",
+        "relation_to_my_work_zh": "基于仅标题和摘要：如果你的研究在安全LLM推理、MPC/加密推理中部署检测或拦截机制，这篇论文暗示了将检测逻辑或轻量干预放在模型的晚期表示处可能更有效；可用于设计在哪个阶段进行投影/校验以节省通信或加密开销。",
+        "relation_to_my_work_en": "Based only on title and abstract: for work on secure LLM inference or MPC-based inference, the result suggests placing detection or intervention at the late-layer bottleneck to maximize causal effect per unit of access (activation/communication), which may influence where to insert checks in a privacy-preserving pipeline.",
+        "possible_transfer_zh": "基于仅标题和摘要：将晚层检测策略迁移到受限访问环境（例如在加密或分布式推理中只能访问部分激活）；把低秩修补作为轻量防御适配于带有带宽/轮次限制的系统。",
+        "possible_transfer_en": "Based only on title and abstract: transfer possibilities include implementing late-layer detectors or low-rank corrective projections in constrained-access settings (encrypted/MPC inference), and using compact linear interventions to reduce communication/compute cost of runtime defenses.",
+        "possible_overlap_or_conflict_zh": "基于仅标题和摘要：可能与现有基于早层特征或输入级特征的检测方法存在比较/冲突；若论文评估主要在白盒场景，实用性与黑盒或受限激活场景的结论可能不同。",
+        "possible_overlap_or_conflict_en": "Based only on title and abstract: potential overlap/conflict with prior detection approaches that operate on early representations or input features. If evaluation is white-box, conclusions may not directly carry to black-box or restricted-activation deployment (e.g., MPC).",
+        "questions_to_verify_zh": [
+          "修补（patching）需要对内部激活做写操作吗？是否要求白盒访问或可在只读/加密环境实现？",
+          "实验覆盖了哪些攻击类型（简单提示注入、混淆、对抗例子等）？能否概括对抗的多样性？",
+          "“瓶颈”是如何识别的（度量/统计显著性）？不同模型尺寸与架构上秩的变化如何影响防御设计？",
+          "在受限部署（按轮次/带宽受限或在MPC/加密推理情形）将该检测/修补集成到运行时的开销估计是多少？"
+        ],
+        "questions_to_verify_en": [
+          "Does the patching require writable access to internal activations (i.e., white-box) or can it be implemented in read-only/encrypted settings?",
+          "What classes of prompt-injection attacks were evaluated (simple instructions, obfuscation, adversarial examples) and how diverse are the tests?",
+          "How is the ‘bottleneck’ operationally identified (metrics, statistical tests), and how does the reported low rank scale across model sizes/architectures?",
+          "What are the practical costs (computation, communication, latency) to integrate the proposed detection/patching in constrained deployments such as MPC or encrypted inference?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.37737v1",
+        "research_problem_zh": "基于仅标题与摘要：定位大型语言模型在遭遇提示注入（prompt injection）时“在哪一层”发生决定性地放弃系统角色，即找到模型内部作出合规/不合规决策的因果位置和表示结构。",
+        "research_problem_en": "Based only on title and abstract: localize where inside LLMs the model decides to comply with adversarial prompt injections — i.e., finding the layer(s) that causally implement compliance and the representational structure of that computation.",
+        "core_method_zh": "基于标题与摘要：对 5 个不同规模（4B–32B）模型逐层进行因果激活修补（causal activation patching），测量可解码的攻击信息与实际因果可操作性的时空分布，从而识别一个后层瓶颈和紧凑线性子空间作为合规机制。",
+        "core_method_en": "Based on title and abstract: perform layer-by-layer causal activation patching across several model sizes to compare linear decodability of attack information versus causal leverage, thereby identifying a late-layer bottleneck and a compact linear subspace that implements compliance.",
+        "contributions_zh": [
+          "展示攻击信息在模型第一层即可线性解码，但对行为的因果操控直到网络后段（最后三分之一）才显著。",
+          "通过修补该后层瓶颈，在 77–92% 的情况下可逆转模型的合规（阻止其屈从攻击）。",
+          "指出合规机制占据紧凑的线性子空间（对 4B/14B 模型约秩 8，32B 时扩展至秩 64），并在不同模型族间具有结构稳定性。",
+          "证明因果峰值层同时也是检测攻击的最佳表征位置，优于早层分类器（尤其对文字混淆/变体鲁棒）。"
+        ],
+        "contributions_en": [
+          "Shows that attack information is linearly decodable from the first layer but causal leverage over behavior appears in a late-layer bottleneck (final third).",
+          "Patching that late-layer bottleneck reverses compliance in 77–92% of cases.",
+          "Finds compliance occupies a compact linear subspace (rank ~8 at 4B/14B, scaling to ~64 at 32B) that is architecturally stable across model families.",
+          "Demonstrates the causal peak layer is also the representationally optimal site for detecting prompt-injection attacks, outperforming early-layer classifiers under obfuscations."
+        ],
+        "why_watch_zh": "基于摘要：对研究安全推理、模型内监测/检测、以及在推理服务中部署鲁棒检测器（包括隐私或受限环境下的检测）的人尤其重要；结果可能直接影响安全 LLM 推理与部署策略。",
+        "why_watch_en": "Based on the abstract: important for researchers working on secure inference, model-internal monitoring/detection, and deploying robust detection at inference time (including in privacy-constrained settings); findings could directly inform secure LLM serving strategies.",
+        "direct_relation_zh": "基于摘要：与主课题直接相关于“安全 LLM 推理/检测”以及可迁移到隐私/安全推理管线的检测模块；与 MPC 的加密协议层联系较弱，但检测方法可与安全推理一起部署。",
+        "direct_relation_en": "Based on title and abstract: directly related to secure LLM inference and detection mechanisms that can be integrated into privacy-preserving inference pipelines; less directly related to MPC cryptographic protocol design but the detection techniques are deployable alongside MPC-based serving.",
+        "transferable_mechanisms_zh": [
+          "逐层因果激活修补（causal activation patching）作为定位决策点的工具，可用于定位其它安全或隐私失败点。",
+          "使用紧凑线性子空间（低秩表示）定位决策机制，便于构建轻量检测器或干预器。",
+          "将检测器放在“因果峰值层”而非早层，可提高对表面混淆（如 leetspeak）的鲁棒性。",
+          "代表性最佳层的选择作为低开销在线监测点（易于在受限/加密推理中实现）。"
+        ],
+        "transferable_mechanisms_en": [
+          "Layerwise causal activation patching as a tool to localize decision points — applicable for other security/failure modes.",
+          "Identifying compact linear subspaces (low-rank representations) implementing behavior, enabling lightweight detectors or interventions.",
+          "Placing detectors at the causal-peak layer (rather than early layers) for robustness to surface obfuscation like leetspeak.",
+          "Selecting the representationally optimal layer as a low-cost online monitoring point suitable for constrained/encrypted inference."
+        ],
+        "potential_overlap_zh": "基于摘要：高重叠于“安全 LLM 推理”与“提示注入检测”——若目标是把检测/干预与隐私推理（例如 MPC）联合部署，这篇论文的方法与定位结果具有直接参考价值。",
+        "potential_overlap_en": "Based only on title and abstract: high overlap with secure LLM inference and prompt-injection detection — the methods and localization results are directly relevant if one wants to deploy detection/intervention alongside privacy-preserving inference (e.g., MPC).",
+        "potential_conflict_zh": "基于摘要：并非关于加密或分布式协议，故与 MPC 的通信/轮次/调度问题并不直接重叠；同时，机制研究可能需要大量白盒访问，这在某些受限部署中不可行。",
+        "potential_conflict_en": "Based on the abstract: not about cryptography or distributed protocol costs, so it does not directly address MPC communication/round/scheduling issues; additionally, the mechanistic methods assume white‑box access which may be infeasible in some constrained deployments.",
+        "full_text_questions_zh": [
+          "因果激活修补的具体实现细节是什么（如何替换/注入激活、是否需要梯度/重跑）？",
+          "“合规”与“顺从”如何在实验中量化？包含哪些提示注入类型和混淆手段？",
+          "模型家族、架构差异与尺度如何影响“峰值层”与秩估计（更多模型/任务的鲁棒性）？",
+          "修补操作是否影响模型的其他行为或专业能力（副作用评估）？",
+          "是否提供检测器的训练/部署方法以及实测的计算/延迟开销？"
+        ],
+        "full_text_questions_en": [
+          "What are the exact implementation details of causal activation patching (how activations are replaced/injected, does it require gradients/re-running, etc.)?",
+          "How is 'compliance' operationalized in the experiments and what kinds of prompt-injection attacks and obfuscations are considered?",
+          "How do different model families, architectures and scale affect the peak layer and rank estimates (robustness across more models/tasks)?",
+          "Does patching the bottleneck cause side effects on other model behaviors or capabilities?",
+          "Do they provide a candidate detector for deployment, and what are its compute/latency costs?"
+        ],
+        "experiment_checks_zh": [
+          "查看所测试模型（参数量、架构）和攻击类型的完整清单。",
+          "检查修补与检测的统计显著性与重复性（样本数、置信区间）。",
+          "评估方法对文本混淆/变体（如 leetspeak）的鲁棒性测试是否充分并有谱系化对比。",
+          "验证修补后模型除反应外的功能保持（是否出现回归或其他行为变化）。",
+          "确认是否提供重现实验所需的代码/模型检查点与脚本。"
+        ],
+        "experiment_checks_en": [
+          "Inspect the complete list of tested models (sizes, architectures) and the attack types used.",
+          "Check statistical significance and reproducibility of patching/detection results (sample sizes, confidence intervals).",
+          "Assess robustness tests against text obfuscation/variants (e.g., leetspeak) and whether comparisons to baselines are comprehensive.",
+          "Verify side effects of patching on other model behaviors (regression tests).",
+          "Confirm availability of code/checkpoints and scripts required for reproduction."
+        ],
+        "tracking_targets": [
+          "是否开源修补/检测代码与实验脚本",
+          "峰值层与秩估计在更多模型/任务上的扩展验证",
+          "检测器的延迟/计算开销与部署说明（尤其在受限推理环境中）",
+          "能否在黑箱或受限白盒情境下迁移该方法"
+        ],
+        "next_steps_zh": [
+          "阅读全文重点查看因果修补实验细节、攻击集合与检验程序。",
+          "在本地复现作者的关键修补/检测实验（若代码可得）。",
+          "评估将晚层检测器集成到隐私/受限推理管线（例如与 MPC 联合部署）的可行性与开销。"
+        ],
+        "next_steps_en": [
+          "Read the paper focusing on causal patching experiment details, attack sets, and evaluation procedures.",
+          "Reproduce key patching/detection experiments locally if code is available.",
+          "Evaluate feasibility and cost of integrating a late-layer detector into privacy-restricted inference pipelines (e.g., paired with MPC)."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.37913",
+        "version": 1,
+        "title": "Byzantine Causal Reliable Broadcast with Constant Metadata Overhead",
+        "authors": [
+          "Purv Patel",
+          "Ajay D. Kshemkalyani"
+        ],
+        "abstract": "Asynchronous Byzantine Reliable Broadcast (BRB) is a fundamental primitive that guarantees agreement and validity in distributed systems subject to Byzantine faults, but it lacks ordering guarantees. Causal message ordering is important for many applications such as blockchain and social networking. Existing solutions for Byzantine Causal Reliable Broadcast (BCRB) have several drawbacks. Such protocols typically append vector clocks or dependency barriers to application messages, resulting in a metadata overhead that scales linearly with $n$, the number of processes in the system. In this paper, we propose the first optimal message overhead BCRB algorithm that guarantees safety. We do this by re-engineering Bracha's BRB algorithm with relatively small but critical modifications, and prove that our algorithm solves BCRB with optimal message metadata. The algorithm achieves constant-size $\\mathcal{O}(1)$ message metadata overhead and $\\mathcal{O}(n^2)$ messages, resulting in $\\mathcal{O}(n^2)$ communication word complexity. This is as against $\\mathcal{O}(n^3)$ communication word complexity of existing protocols. The algorithm tolerates $f < n/3$ Byzantine processes, which is the well-known optimal resilience bound, and uses four phases.",
+        "categories": [
+          "cs.DC",
+          "cs.DS"
+        ],
+        "published": "2026-09-29T16:08:26Z",
+        "updated": "2026-09-29T16:08:26Z",
+        "abstract_url": "https://arxiv.org/abs/2609.37913v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.37913v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.37913v1",
+        "relevance_score": 8,
+        "novelty_score": 8,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.75,
+        "priority": "read",
+        "matched_topics": [
+          "communication rounds",
+          "round complexity",
+          "protocol selection",
+          "network-aware runtime"
+        ],
+        "short_summary_zh": "基于摘要：论文提出一种新的拜占庭因果可靠广播（BCRB）算法，宣称在消息元数据开销上达到最优：每条消息的元数据大小为常数级别O(1)，消息总数为O(n^2)，通信字复杂度为O(n^2)，相较于现有协议的O(n^3)通信字复杂度有理论改进。算法在Bracha的BRB上做出少量关键修改，使用四个阶段，容忍f<n/3的拜占庭进程，并证明满足因果性与安全性。",
+        "short_summary_en": "Based on the abstract: the paper presents a Byzantine Causal Reliable Broadcast (BCRB) algorithm that claims optimal message metadata overhead: constant-size O(1) metadata per message, O(n^2) messages, and O(n^2) communication-word complexity (versus O(n^3) of prior protocols). It re-engineers Bracha's BRB with critical modifications, uses four phases, tolerates f<n/3 Byzantine faults, and proves safety and causal ordering.",
+        "why_interesting_zh": "拜占庭因果广播在区块链、有顺序需求的分布式应用与对抗性多方协议中非常关键。若摘要陈述成立，这种把元数据降为常数的改进可显著减少带宽/存储开销并改善可扩展性。",
+        "why_interesting_en": "Byzantine causal broadcast is central to blockchains, ordered distributed applications, and adversarial MPC-like protocols. If the abstract's claims hold, reducing metadata to constant size while preserving causal ordering and safety could substantially cut bandwidth/storage costs and improve scalability.",
+        "relation_to_my_work_zh": "直接相关：BCRB的元数据与消息复杂度分析会影响多方安全协议的实际通信代价、轮数和协议选择。该结果可能被用于设计更高效的MPC子协议或用于减少MPC运行时的消息头/依赖信息。",
+        "relation_to_my_work_en": "Directly relevant: metadata and message-complexity improvements in BCRB affect practical communication costs, round structure, and protocol choices for secure multiparty protocols. The technique could be leveraged to design more efficient MPC primitives or reduce messaging headers/dependency info in MPC runtimes.",
+        "possible_transfer_zh": "常数元数据技巧可能被移植到MPC的可靠广播/同步子协议中，减少每条消息的附加依赖信息，从而降低WAN环境下的带宽与延迟成本。论文提出的四相构造和对Bracha BRB的修改也可能启发MPC协议中的相位设计与优化。",
+        "possible_transfer_en": "The constant-metadata techniques could transfer to MPC reliable-broadcast/synchronization primitives, lowering per-message dependency overhead and easing WAN bandwidth/latency costs. The four-phase construction and the specific modifications to Bracha BRB may inspire phase design and optimizations in MPC protocols.",
+        "possible_overlap_or_conflict_zh": "需要与已有的BCRB/Bracha变体文献对比：如果同行已有类似低开销方案，_claims_需核实。理论上宣称的最优性与具体模型假设（同步/异步、认证通道等）需要对齐。",
+        "possible_overlap_or_conflict_en": "Compare against prior BCRB/Bracha variants: if similar low-overhead schemes exist, the claims must be reconciled. The optimality claim depends on model assumptions (asynchrony, authenticated channels, etc.) that must align with MPC settings.",
+        "questions_to_verify_zh": [
+          "摘要中所用的通信模型与假设（完全异步/部分同步、有无签名/认证、信道特性）是什么？",
+          "常数元数据如何编码依赖/因果信息以在O(1)空间内恢复？是否增加了计算或其他消息开销？",
+          "论文证明所基于的最优性界对哪些参数（消息长度、系统模型）成立？"
+        ],
+        "questions_to_verify_en": [
+          "What communication model and assumptions are used (fully asynchronous/partially synchronous, signatures/authentication, channel model)?",
+          "How is causal/dependency information encoded in O(1) metadata per message, and does this shift cost to computation or other message counts?",
+          "Under which parameters/system model does the optimality proof hold (message length, adversary model, synchrony assumptions)?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.37913v1",
+        "research_problem_zh": "基于仅标题与摘要：在拜占庭故障设置下实现因果一致且有依赖顺序保证的广播（BCRB），同时将每条消息的元数据开销降到常数级，改善总体通信字复杂度和元数据扩展问题。",
+        "research_problem_en": "Based only on title and abstract: design Byzantine Causal Reliable Broadcast (BCRB) that provides causal ordering guarantees with constant-size per-message metadata overhead and optimal communication complexity while tolerating f < n/3 Byzantine processes.",
+        "core_method_zh": "基于标题与摘要：对 Bracha 的异步 Byzantine Reliable Broadcast（BRB）算法做若干关键修改并重构，使用四阶段流程保证安全，实现在异步环境下 O(1) 消息元数据并保持 O(n^2) 消息量与 O(n^2) 通信字复杂度的算法并给出证明。",
+        "core_method_en": "Based on title and abstract: re-engineer Bracha's BRB with critical small modifications into a four-phase algorithm that achieves safety while ensuring constant-size O(1) per-message metadata and O(n^2) messages / O(n^2) communication word complexity in an asynchronous Byzantine model (tolerating f < n/3).",
+        "contributions_zh": [
+          "提出首个在保证安全性的前提下消息元数据为常数的 BCRB 算法。",
+          "通过对 Bracha BRB 的重构，用四个阶段实现 O(1) 的消息元数据、O(n^2) 条消息和 O(n^2) 通信字复杂度（相较现有方案 O(n^3) 改进）。",
+          "在故障容忍方面保持经典最优界 f < n/3，并给出算法证明。"
+        ],
+        "contributions_en": [
+          "Proposes the first BCRB algorithm that guarantees safety with constant-size O(1) per-message metadata.",
+          "Re-engineers Bracha's BRB into a four-phase protocol achieving O(1) metadata, O(n^2) messages and O(n^2) communication word complexity (improving over prior O(n^3) word complexity).",
+          "Maintains optimal resilience bound f < n/3 and provides proofs of correctness."
+        ],
+        "why_watch_zh": "基于摘要：对研究分布式协议、通信轮次/复杂度、以及在资源受限或高延迟网络（如 WAN）中部署容错协议的研究者极为重要；其中将元数据开销从线性降到常数可直接影响带宽和延迟开销。",
+        "why_watch_en": "Based only on title and abstract: important for researchers of distributed protocols, round/communication complexity, and deploying fault-tolerant systems in constrained or high-latency networks (e.g., WAN). Reducing per-message metadata from linear to constant can materially reduce bandwidth and latency costs.",
+        "direct_relation_zh": "基于摘要：与主课题高度相关——直接触及通信轮次、消息元数据大小、以及在不可靠网络/拜占庭环境下的可靠广播，这些都与 MPC 中的协议带宽与轮次优化问题高度相干。",
+        "direct_relation_en": "Based on title and abstract: highly related to the primary topics — it directly targets communication rounds, per-message metadata size, and reliable broadcast under Byzantine faults, which are closely connected to bandwidth and round optimization in MPC protocols.",
+        "transferable_mechanisms_zh": [
+          "对 Bracha BRB 的重构思路和常数元数据技巧，可能可迁移到需要因果顺序的 MPC 子协议来减少消息体元数据。",
+          "四阶段协议结构与安全证明模式，可为 MPC 中的交互流程设计与轮次界定提供参考。",
+          "将通信字复杂度从 O(n^3) 降至 O(n^2) 的方法论，可能在多方加密/验证消息中带来直接收益。"
+        ],
+        "transferable_mechanisms_en": [
+          "The re-engineering of Bracha BRB and constant-metadata techniques could be adapted to MPC subprotocols requiring causal ordering to reduce per-message overhead.",
+          "The four-phase protocol structure and proof methodology can inform design and round accounting in MPC interactive flows.",
+          "Approaches that reduce communication word complexity from O(n^3) to O(n^2) may directly benefit multi-party cryptographic messaging patterns."
+        ],
+        "potential_overlap_zh": "基于摘要：高度重叠：直接可用于改善需要因果消息顺序的分布式私有计算或 MPC 协议中的带宽/元数据负担，尤其在 n 较大或带宽受限（或 WAN 延迟显著）时。",
+        "potential_overlap_en": "Based on title and abstract: high overlap — can be directly applied to reduce bandwidth/metadata burden in MPC or distributed private computation that requires causal ordering, particularly for large n or bandwidth-/latency-constrained settings (e.g., WAN).",
+        "potential_conflict_zh": "基于摘要：需验证模型假设（如认证/签名、消息大小或假设的网络模型）是否与目标 MPC 环境兼容；若依赖特定假设（例如可信认证或同步部分假设），直接移植可能受限。",
+        "potential_conflict_en": "Based on the abstract: must verify model assumptions (authentication/signatures, message size, network model) for compatibility with target MPC environments; if the protocol relies on specific assumptions, direct transplantation may be limited.",
+        "full_text_questions_zh": [
+          "对 Bracha BRB 的“若干关键修改”具体是什么？这些修改如何保证因果顺序且保持常数元数据？",
+          "协议的系统模型（异步/部分同步）、认证/签名假设、消息大小约束和网络假设是如何定义的？",
+          "四个阶段的具体消息类型、轮数以及最坏情况延迟（轮复杂度）如何？",
+          "是否有实现或仿真结果展示 O(n^2) 在实际负载/网络下的性能与常数元数据带来的带宽节省？",
+          "与现有 BCRB 协议或现实实现相比，有无可测的开销/复杂度权衡（计算/认证开销）？"
+        ],
+        "full_text_questions_en": [
+          "What exactly are the 'small but critical modifications' to Bracha's BRB and how do they enable causal ordering with constant metadata?",
+          "What is the system model (asynchronous/partially synchronous), authentication/signature assumptions, message-size constraints and other network assumptions?",
+          "What are the concrete message types, number of rounds/phases, and worst-case latency (round complexity) of the four-phase protocol?",
+          "Is there an implementation or simulation demonstrating O(n^2) performance under realistic loads/networks and showing bandwidth savings from constant metadata?",
+          "Compared to prior BCRB protocols, what are the practical trade-offs (computation, authentication overhead, constants hidden in O() notation)?"
+        ],
+        "experiment_checks_zh": [
+          "检查证明的严谨性：关键不等式/不变式与拜占庭模型下的证明细节。",
+          "若给出实现/仿真，核对仿真环境、消息大小、签名/认证成本与网络模型是否匹配论文假设。",
+          "验证最坏情况消息数与通信字复杂度的常数因子与真实消耗（是否有隐藏多轮、小消息开销）。",
+          "评估在典型 MPC 工作负载下（带签名或零知识证明的情形）迁移后的实际带宽与延迟影响。"
+        ],
+        "experiment_checks_en": [
+          "Check the rigor of the proofs: critical invariants/inequalities and correctness under the Byzantine model.",
+          "If implementation/simulation is provided, verify the simulation environment, message sizes, signature/authentication costs and network model match the paper's assumptions.",
+          "Validate worst-case message counts and communication word complexity accounting for constant factors and hidden costs (e.g., many small messages).",
+          "Evaluate practical bandwidth and latency implications when migrating to typical MPC workloads (with signatures or ZK proofs)."
+        ],
+        "tracking_targets": [
+          "完整证明与不变式细节（公开证明文本）",
+          "是否提供实现/参考实现或模拟代码并说明认证开销",
+          "实际常数因子（消息大小、签名次数）与在各种 n 下的基准",
+          "对 MPC 场景下的适配说明或后续工作"
+        ],
+        "next_steps_zh": [
+          "阅读全文重点审读算法描述与证明，核对系统模型与认证假设。",
+          "若感兴趣，将协议在现有分布式模拟器中实现以测量在不同 n 与网络条件（尤其 WAN）下的实际开销。",
+          "评估如何将常数元数据技巧应用到目标 MPC 协议中，并检查是否需要额外的认证/加密开销。"
+        ],
+        "next_steps_en": [
+          "Read the paper focusing on the algorithm description and proofs, and verify the system model and authentication assumptions.",
+          "If interested, implement the protocol in a distributed simulator to measure real costs across different n and network conditions (notably WAN).",
+          "Assess how to apply the constant-metadata techniques to target MPC protocols and whether extra authentication/encryption costs negate the gains."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.37759",
+        "version": 1,
+        "title": "Selective Channel Restoration for Backdoored Vision-Language Models",
+        "authors": [
+          "Shuming Liu",
+          "Zhifang Zhang",
+          "Suqin Yuan",
+          "Khin Mi Mi Aung",
+          "Zhuoyi Lin",
+          "Lei Feng"
+        ],
+        "abstract": "Vision-language models (VLMs) exhibit strong multimodal capabilities but remain vulnerable to backdoors implanted through poisoned fine-tuning data. Existing defenses often require extensive parameter updates during fine-tuning or incur per-query overhead during inference. To address these limitations, we propose Perturb-Select-Restore (PSR), a post-training defense that performs sparse updates to the projection interface and introduces no additional computation during inference. We reveal that backdoored VLM projectors are substantially more sensitive to bounded perturbations than clean VLM projectors, a phenomenon we term projection fragility. Building on this finding, PSR identifies the output channels most sensitive to perturbations in each projection layer of a backdoored VLM and restores their parameters to the corresponding pretrained values. Experiments across multiple tasks show that PSR reduces attack success rates to near zero while preserving clean-task performance.",
+        "categories": [
+          "cs.CR",
+          "cs.CV"
+        ],
+        "published": "2026-09-29T15:04:28Z",
+        "updated": "2026-09-29T15:04:28Z",
+        "abstract_url": "https://arxiv.org/abs/2609.37759v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.37759v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.37759v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 7,
+        "systems_score": 7,
+        "confidence": 0.75,
+        "priority": "read",
+        "matched_topics": [
+          "backdoor defense",
+          "vision-language models",
+          "secure ML",
+          "secure LLM inference"
+        ],
+        "short_summary_zh": "基于仅标题和摘要：提出PSR（Perturb-Select-Restore）——一种对VLM投影层的后训练防御：先用有界扰动找出对扰动最敏感的输出通道（projection fragility），再将这些通道的参数恢复为预训练值，采取稀疏更新且不增加推理开销。实验显示在多任务上可将后门攻击成功率降到接近零，同时保持干净任务性能。",
+        "short_summary_en": "Based only on title and abstract: PSR (Perturb-Select-Restore) is a post-training defense for backdoored vision-language model projectors. The method perturbs projector outputs to find channels exhibiting ‘projection fragility’, then restores those channels' parameters to pretrained values via sparse updates. PSR reportedly reduces attack success to near zero while preserving clean-task accuracy and adds no inference-time overhead.",
+        "why_interesting_zh": "基于仅标题和摘要：一个轻量、无需额外推理成本的后训练修复思路对部署受限或推理成本敏感的系统非常有吸引力；稀疏恢复到预训练参数也利于快速回滚和合规审计。",
+        "why_interesting_en": "Based only on title and abstract: a lightweight post-training repair that needs no inference-time overhead is attractive for deployment-constrained settings; sparse restoration to pretrained values facilitates quick rollback and auditing.",
+        "relation_to_my_work_zh": "基于仅标题和摘要：对在受限环境（如MPC或隐私保护推理）中部署预训练多模态模型的项目有直接参考价值——稀疏的通道恢复可能比全模型微调或重新训练在通信/计算上更可行。",
+        "relation_to_my_work_en": "Based only on title and abstract: directly relevant for deploying pretrained multimodal models in constrained settings (MPC/encrypted inference): channel-level sparse restoration may be far cheaper than full fine-tuning or re-training in terms of communication and compute.",
+        "possible_transfer_zh": "基于仅标题和摘要：将“扰动敏感通道选择+恢复”为一般模型的轻量后门缓解策略迁移到文本/LLM投影层或用于在线检测与自动回滚机制；适配为只读/受限访问情形的修复策略。",
+        "possible_transfer_en": "Based only on title and abstract: the perturb-select-restore recipe could generalize to other model classes (text encoders/LLM projection layers) as a lightweight backdoor mitigation, and be adapted into online detection+rollback systems or constrained-access repairs.",
+        "possible_overlap_or_conflict_zh": "基于仅标题和摘要：可能与其它后训练修复或微调防御（剪枝、稀疏化、通道修复）存在功能重叠；需确认对不同后门类型（数据中毒、喷头式触发）的一致效果。",
+        "possible_overlap_or_conflict_en": "Based only on title and abstract: overlaps with other post-training repair techniques (pruning, sparse fine-tuning, channel masking); need to verify robustness across diverse backdoor trigger types and poisoning regimes.",
+        "questions_to_verify_zh": [
+          "扰动选择过程是否需要访问原始预训练参数或额外数据？能否在黑盒/仅API访问场景下估计敏感通道？",
+          "对不同触发器（语义触发、像素模式、稀疏触发）的防御效果如何？是否有误回退或损伤干净性能的案例？",
+          "修复后的参数存储/传输成本与执行延迟是多少，是否适合带宽受限或MPC部署？"
+        ],
+        "questions_to_verify_en": [
+          "Does the perturb-select step require access to original pretrained parameters or extra calibration data, and can sensitive channels be estimated in black-box/API-only scenarios?",
+          "How does PSR perform against different trigger types (semantic, pixel-pattern, sparse) and are there cases where clean-task performance is harmed?",
+          "What are the storage/transfer costs and latency of applying the sparse restorations—are they practical for bandwidth-limited or MPC deployments?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.37728",
+        "version": 1,
+        "title": "Formal Reasoning about Performance Models",
+        "authors": [
+          "Moussa Labbadi",
+          "Rupak Majumdar",
+          "V. R. Sathiyanarayana",
+          "Sadegh Soudjani"
+        ],
+        "abstract": "Discrete-event simulation is a standard technique for modelling and analysing the performance of computer systems, networks, and services. Although simulation tools are widely used, reasoning about the correctness and performance guarantees of the models they implement remains largely ad hoc: simulation outputs are interpreted statistically, but there is no logical foundation for deductive reasoning about their behaviour. We present a core imperative calculus that captures the essential constructs common to discrete-event simulators: asynchronous execution, continuous and discrete sampling from distributions, and time-based event scheduling through a global event queue. On top of this calculus, we develop a proof system for reasoning about almost-sure reachability and expected reaching time properties. Our main result is a sound and complete proof rule for these properties. Our framework generalizes deductive reasoning for discrete-time probabilistic programs to the setting of performance models, in which continuous time and continuous probability distributions are central. We have implemented the proof rules in a tool embedded in Lean. We demonstrate the applicability of our proof rule by deriving proofs of almost-sure reachability and expected reaching time for a number of case studies, including client-server examples that go beyond analytic solutions from queueing theory as well as convergence behaviours in network routing protocols. Establishing the soundness and completeness of our proof rules requires significantly more complex arguments than in the discrete-time setting. This is due to the fundamentally discontinuous nature of the operational semantics and the measure-theoretic challenges of continuous time and probability distributions.",
+        "categories": [
+          "cs.LO",
+          "cs.PF",
+          "cs.PL"
+        ],
+        "published": "2026-09-29T14:50:33Z",
+        "updated": "2026-09-29T14:50:33Z",
+        "abstract_url": "https://arxiv.org/abs/2609.37728v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.37728v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.37728v1",
+        "relevance_score": 7,
+        "novelty_score": 8,
+        "transferability_score": 8,
+        "systems_score": 5,
+        "confidence": 0.8,
+        "priority": "read",
+        "matched_topics": [
+          "performance modeling",
+          "distributed runtime scheduling",
+          "latency hiding",
+          "network-aware systems"
+        ],
+        "short_summary_zh": "基于标题与摘要：提出了一个捕捉离散事件模拟器核心构造的命令式微元计算演算（包含异步执行、连续/离散采样、基于全局事件队列的时间调度），并在其上构建了针对几乎必达性和期望到达时间的已证真实用的证明系统，给出一个完备且正确的证明规则，并实现到Lean工具中以证明若干性能案例。",
+        "short_summary_en": "Based on title and abstract: The authors present a core imperative calculus modeling discrete-event simulators (async exec, continuous/discrete sampling, global event queue) and develop a proof system for almost-sure reachability and expected reaching time, including a sound and complete proof rule. They implemented the rules in Lean and demonstrated proofs for client-server and routing convergence examples.",
+        "why_interesting_zh": "基于标题与摘要：对性能建模和延迟/期望时间属性提供可证明的系统对设计网络感知的MPC运行时非常有价值；可以为延迟藏匿、调度策略或在线自适应调度器提供形式化保证或可验证成本模型。",
+        "why_interesting_en": "Based on title and abstract: A sound+complete logic for continuous-time discrete-event performance models can be valuable for formally reasoning about MPC runtime schedulers, expected completion times under stochastic networks, and for validating latency-hiding or adaptive scheduling policies.",
+        "relation_to_my_work_zh": "如果你开发网络感知的MPC运行时或需给出延迟/期望完成时间的保证，这套演算和证明规则可作为形式化基础，用于验证调度算法或模拟器模型的收敛与性能边界。",
+        "relation_to_my_work_en": "If you build network-aware MPC runtimes or need formal guarantees on latency/expected completion time, the calculus and proof rules could serve as a formal foundation to verify schedulers or simulator-derived performance claims.",
+        "possible_transfer_zh": "将该演算用于建模MPC协议在随机网络延迟下的行为、证明某些调度或批处理策略的几乎必达性或期望完成时间，以及为运行时优化策略构建可证的成本模型或安全边界。",
+        "possible_transfer_en": "Possible transfers include modeling MPC protocol behavior under stochastic network delays, proving almost-sure termination or bounds on expected completion time for schedulers/batching policies, and deriving formally verifiable performance models for runtime optimizers.",
+        "possible_overlap_or_conflict_zh": "与离散时间概率程序验证存在方法学重叠，但该工作拓展到连续时间与连续分布。需要确认其语义假设（如调度对抗性）是否与真实网络/MPC环境一致。",
+        "possible_overlap_or_conflict_en": "Overlaps methodologically with discrete-time probabilistic program verification; here it is extended to continuous time and distributions. Verify whether semantic assumptions (e.g., scheduler/adversary model) match real network/MPC conditions.",
+        "questions_to_verify_zh": [
+          "该演算是否能自然表达典型的网络模型（例如可变WAN延迟、丢包、重传）与对抗性调度？",
+          "工具在规模上可扩展到复杂运行时/协议模型的证明吗？是否有自动化或半自动化支撑？",
+          "连续分布与时间带来的测度论难题是否影响到实际构造可计算的上界或期望值估计？",
+          "证明规则如何与模拟器的数值实验互证（是否支持从模拟结果自动构造证明假设）？"
+        ],
+        "questions_to_verify_en": [
+          "Can the calculus naturally express common network phenomena (variable WAN delay, packet loss, retransmission) and adversarial schedulers?",
+          "Does the Lean-embedded tool scale to proofs for complex runtime/protocol models, and is there automation to assist developers?",
+          "Do measure-theoretic challenges of continuous time/distributions impede deriving practically useful bounds on expected times?",
+          "How can the proof rules be reconciled with numerical simulation—can simulation outputs be used to justify proof premises or vice versa?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.37924",
+        "version": 1,
+        "title": "Time-Anchored Diffusion Language Models: Latent-Space Caching for Fast Generation",
+        "authors": [
+          "Joel Anto Paul",
+          "Litu Rout",
+          "Aditya Akella",
+          "Sanjay Shakkottai"
+        ],
+        "abstract": "Recent work on anchored diffusion language models improves denoising by shaping an intermediate latent space with supervised important-token targets. In this work, we introduce time-based (self-supervised) anchoring, which learns and reuses latent anchors without requiring such targets. Our key observation is that anchors encode persistent properties of the clean sequence, such as its semantic intent, global structure, or intermediate plan. Although their hidden representations become stale as the token canvas evolves, their semantic content remains useful across nearby diffusion times. This is implemented through a two-stage architecture consisting of a relatively expensive anchor network that generates the latent cache state and a lightweight denoising network that intelligently combines the cached latent state with the current state at each reverse step using a fusion module. This gives anchoring a latent-space caching interpretation: the anchor network is evaluated periodically, while its cached representation is reused across multiple reverse steps. We instantiate this framework as TADM:Post-train, which time-anchorizes pretrained DLMs, and TADM:Pretraining, which learns time-based anchors during pretraining. Applied to DiffusionGemma-26B, TADM:Post-train improves throughput by approximately 49% to 79% on several math, code, and STEM benchmarks (GSM8K, AIME26, GPQA-Diamond, LiveCodeBench-v6, HumanEval, MMLU-Pro). TADM:Pretraining reduces Transformer-layer computation by up to 38% relative to a standard single-stage DLM, achieves up to 73% higher measured throughput than ADLM.",
+        "categories": [
+          "cs.CL",
+          "cs.LG"
+        ],
+        "published": "2026-09-29T16:16:26Z",
+        "updated": "2026-09-29T16:16:26Z",
+        "abstract_url": "https://arxiv.org/abs/2609.37924v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.37924v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.37924v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.86,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "latency hiding",
+          "communication and computation overlap",
+          "pipeline execution",
+          "privacy-preserving machine learning"
+        ],
+        "short_summary_zh": "基于标题与摘要：提出“时间锚定”的扩散语言模型架构（TADM），通过周期性计算并缓存高成本的锚网络输出，在后续多步反向扩散中复用该缓存，并由轻量去噪网络与融合模块结合当前状态与缓存，从而在不需标注目标token的情况下提高吞吐与减少Transformer计算。摘要报告对大模型（DiffusionGemma-26B）与预训练/后训练版本在若干基准上显著提升吞吐（约49%–79%）与降低层计算（最高38%）。",
+        "short_summary_en": "Based only on title and abstract: introduces time-based (self-supervised) anchoring for diffusion language models (TADM). A costly anchor network periodically computes a latent cache that is reused across multiple reverse diffusion steps; a lightweight denoiser fuses cached and current states. Reported gains: large throughput improvements (49–79%) on several benchmarks and reduced Transformer-layer computation in pretraining. ",
+        "why_interesting_zh": "摘要中的“延时/缓存”机制直接涉及减少重复昂贵计算并在多步生成中复用表征——这与安全推理（尤其MPC或TEE下的LLM推理）中减少通信轮数和计算量高度相关。若方法在加密或分布式环境中可移植，可显著降低安全推理的成本。",
+        "why_interesting_en": "The latent-space caching idea—periodically computing an expensive anchor and reusing it across multiple steps—maps well to needs in secure LLM inference and other latency/compute-constrained runtimes: caching can reduce rounds, computation, and optionally communication. This could be directly applicable to MPC-enabled LLM serving. ",
+        "relation_to_my_work_zh": "可直接启发在MPC/加密推理中用“锚点缓存”减少在线昂贵子网络调用，从而降低每次生成所需的交互轮数与算量。对MP-SPDZ或其它 MPC runtime 的协议选择、分阶段执行与批次策略具有潜在实用价值。",
+        "relation_to_my_work_en": "Directly relevant: the anchor-caching pattern could be adapted in secure inference pipelines (e.g., MP-SPDZ) to amortize expensive computations across multiple protocol rounds, reduce communication, and/or enable lightweight per-step updates. Useful for designing runtime scheduling, batching, and protocol selection. ",
+        "possible_transfer_zh": "将TADM的锚网络/缓存机制移植到MPC或混合分布式推理场景：周期性在可信或本地环境计算并加密/共享锚，随后在多次生成步骤内复用，减小交互与密文计算成本；还可与管道化或批处理结合。",
+        "possible_transfer_en": "Concrete transfers: (1) implement periodic expensive-anchor computation outside costly MPC rounds (e.g., in a trusted enclave or precomputation) and reuse latent anchors during interactive secure generation; (2) integrate anchor caching into DAG scheduling to coalesce rounds and reduce communication; (3) use fusion modules as lightweight private-update layers inside MPC. Engineering and security analysis required. ",
+        "possible_overlap_or_conflict_zh": "与现有基于预计算、层次化或缓存的生成加速技术有重叠；需评估在加密设置下的安全边界（缓存泄漏风险）與实现复杂度。",
+        "possible_overlap_or_conflict_en": "Overlaps with precomputation and caching methods for generation acceleration. Important to verify security implications of caching latent anchors in encrypted/secure settings (potential leakage) and to evaluate implementation complexity in MPC runtimes. ",
+        "questions_to_verify_zh": [
+          "摘要中报告的吞吐与计算减少是在明文环境下测量还是考虑了加密/分布式实现？",
+          "锚的更新频率与缓存陈旧性如何影响生成质量与稳定性？",
+          "在安全或加密推理下，缓存锚的机密性/可泄漏性如何评估？"
+        ],
+        "questions_to_verify_en": [
+          "Are the reported throughput and computation reductions measured in plaintext setups or do they consider encrypted/distributed implementations?",
+          "How sensitive are results to anchor evaluation frequency and cache staleness in terms of quality/robustness?",
+          "What are the privacy/security implications of caching latent anchors—could cached state leak sensitive info under MPC or TEE deployments?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.37731",
+        "version": 1,
+        "title": "Weights Read and Write Features: Scalable Parameter Decomposition Grounded in Activation Space",
+        "authors": [
+          "Tue M. Cao",
+          "Lisiane Pruinelli",
+          "My T. Thai"
+        ],
+        "abstract": "Activation space and parameter space provide complementary views of model computation. Activations represent information, while weights read, transform, and write that information. Yet existing interpretability methods largely study the two spaces separately, leaving the connection between represented information and parameter-level computation underexplored. We introduce Activation-Supported Parameter Decomposition (ASPD), which jointly decomposes activation and parameter spaces and grounds each learned weight component in the activation features it reads or writes. This grounding constrains otherwise non-unique parameter decompositions using the model's internal activations, while an internal reconstruction objective provides a local learning signal at the weight matrix being analyzed. Together, these properties enable scalable, interpretable, and causally editable parameter decomposition in pretrained large language models, demonstrated on Qwen-3-8B. The learned read--write components can also be composed into parameter-level mechanism circuits. We use ASPD to recover mechanisms underlying the classic IOI circuit and trace semantic transformations through model weights.",
+        "categories": [
+          "cs.LG"
+        ],
+        "published": "2026-09-29T14:53:32Z",
+        "updated": "2026-09-29T14:53:32Z",
+        "abstract_url": "https://arxiv.org/abs/2609.37731v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.37731v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.37731v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 7,
+        "systems_score": 5,
+        "confidence": 0.75,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "privacy-preserving machine learning",
+          "MPC compiler",
+          "low-rank student recovery"
+        ],
+        "short_summary_zh": "基于标题与摘要：提出Activation-Supported Parameter Decomposition (ASPD)，在激活与参数空间上联合分解权重矩阵，使得每个权重分量能在激活特征上被“支撑”或“接地”。通过内部重构目标提供局部学习信号，宣称可扩展用于预训练大模型（在摘要中以Qwen-3-8B演示），并能构建可编辑的参数级机制电路。",
+        "short_summary_en": "Based on title and abstract: The paper introduces Activation-Supported Parameter Decomposition (ASPD), a joint decomposition of activation and parameter spaces that grounds learned weight components in activation features they read/write. An internal reconstruction objective provides local learning signals, enabling scalable, interpretable, and causally editable decompositions on pretrained LLMs (demonstrated on Qwen-3-8B). They recover mechanisms and trace semantic transforms through weights.",
+        "why_interesting_zh": "基于标题与摘要：对想要在安全/受限计算环境中降低权重相关计算（例如通过低秩、稀疏或可编辑组件来预计算/加速）的人来说，ASPD能提供目标化的权重分解与可解释组件，可能用于有选择地在MPC中保留关键组件或做预计算。",
+        "why_interesting_en": "Based on title and abstract: For reducing weight-related secure computation costs (via low-rank/sparse or editable components), ASPD provides interpretable, activation-grounded decompositions that could inform which components to keep in expensive secure computation or to precompute outside MPC.",
+        "relation_to_my_work_zh": "可将ASPD学到的读/写分量用于生成低成本学生或在编译时决定哪些参数需要秘密共享/在线计算，从而减少MPC轮次与字节数；但需评估能否在不泄露激活的前提下获得这些分解。",
+        "relation_to_my_work_en": "ASPD's read/write components could guide creating low-cost students or compiler decisions on which parameters require secret-sharing or online computation to reduce MPC rounds/bytes—contingent on whether activations needed for decomposition are available without privacy leakage.",
+        "possible_transfer_zh": "用ASPD结果驱动模型压缩、按层选择性秘密共享、生成可在本地/离线求值的参数子集合，或作为编译器策略输入以优化指令调度和减少在线加密计算。",
+        "possible_transfer_en": "Use ASPD to drive model compression, selective secret-sharing at parameter/component granularity, generate parameter subsets for local/offline evaluation, or feed the decompositions into compilers to optimize scheduling and reduce online secure computation.",
+        "possible_overlap_or_conflict_zh": "与其他参数分解/低秩近似方法在目标上重叠；关键限制可能是该方法对激活访问的需求，在隐私场景实现上可能冲突。",
+        "possible_overlap_or_conflict_en": "Overlaps with other parameter-decomposition/low-rank approaches; key limitation may be the need for activations, which could conflict with privacy constraints in secure settings.",
+        "questions_to_verify_zh": [
+          "ASPD在更大模型规模（多十至百亿参数）上是否可扩展？训练或推断时需要多少额外开销？",
+          "方法是否需要明文访问激活来学习分解，若是，如何在加密/秘密共享环境下实现等价操作？",
+          "ASPD生成的组件在减少实际安全推理（例如MPC）成本上能带来多少定量收益？"
+        ],
+        "questions_to_verify_en": [
+          "Is ASPD scalable to much larger models (tens to hundreds of billions of parameters), and what extra compute does it require at analysis time?",
+          "Does the method require cleartext activation access to produce decompositions, and if so how could equivalent information be obtained under encryption/secret-sharing?",
+          "Quantitatively, how much does using ASPD-derived components reduce end-to-end cost of secure inference (communication, rounds, compute)?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.37932",
+        "version": 1,
+        "title": "Learning When to Update: A Near-Optimal Timing Bandit Approach",
+        "authors": [
+          "Qiulin Lin",
+          "Junyan Su",
+          "Liyuan Wang",
+          "Minghua Chen"
+        ],
+        "abstract": "Systems operating in dynamic environments require timely updates to sustain performance. For resource-intensive systems such as machine learning models and digital twins, strategically timing updates is essential. Updating too frequently wastes resources, while updating too infrequently leads to costly performance degradation. The problem is particularly challenging when the system's degradation pattern is unknown a priori, as is common in new operating environments. We formalize this challenge as a novel \\emph{timing bandit} problem, where each arm represents a candidate update interval with a fixed update cost and an unknown, stochastic degradation cost. Three structural properties distinguish this setting from standard multi-armed bandits: selecting an interval commits the learner to multiple time slots before the next update; arm costs are composed of per-step degradation costs and a fixed update cost; and selecting a longer interval naturally reveals degradation at every intermediate step, providing consecutive feedback relevant to shorter intervals. By exploiting these structures, we develop Balanced Consecutive Arm Elimination (BCAE). BCAE achieves $\\tilde{O}(\\sqrt{T})$ regret, improving upon the $\\tildeΩ(K\\sqrt{T})$ regret of standard bandit algorithms in this setting, where $K$ is the number of candidate update intervals. We further propose an Optimism-Enhanced variant (OE-BCAE) that integrates lower-confidence-bound principles to improve empirical adaptivity while preserving the same regret order. Moreover, the regret bound achieved by our algorithms matches the theoretical lower bound up to logarithmic factors. Simulation results demonstrate that our algorithms achieve low regret and remain stable as both the number of arms and the update cost vary.",
+        "categories": [
+          "cs.LG"
+        ],
+        "published": "2026-09-29T16:18:20Z",
+        "updated": "2026-09-29T16:18:20Z",
+        "abstract_url": "https://arxiv.org/abs/2609.37932v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.37932v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.37932v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 7,
+        "systems_score": 7,
+        "confidence": 0.88,
+        "priority": "read",
+        "matched_topics": [
+          "online optimization",
+          "adaptive systems",
+          "latency hiding",
+          "pipeline parallelism",
+          "learned cost models"
+        ],
+        "short_summary_zh": "基于标题与摘要：将系统更新时机选择形式化为新的“timing bandit”问题：每个臂代表一个固定更新间隔，选择某臂会在该间隔内连续提交、产生固定更新成本和未知的渐进性能退化成本，并揭示中间步骤的连续反馈。提出BCAE算法（以及一个乐观变体OE-BCAE），利用该结构将遗憾降至~O(√T)，并与下界匹配（对数因素除外），在模拟中表现稳健。",
+        "short_summary_en": "Based only on title and abstract: formalizes the problem of when to update as a 'timing bandit' where each arm is a fixed update interval with fixed update cost and stochastic degradation; selecting an interval commits multiple steps and reveals intermediate feedback. Proposes Balanced Consecutive Arm Elimination (BCAE) and OE-BCAE achieving ~O(√T) regret matching lower bounds up to logs; demonstrates empirical stability. ",
+        "why_interesting_zh": "选择更新时机与在线模型/数字孪生的维护密切相关：在MPC或安全服务中，更新（如重新训练、重新加密或重新同步）的成本昂贵且未知；该工作为如何以有限交互与未知退化率做出近最优更新决策提供理论与算法工具。",
+        "why_interesting_en": "The timing-bandit abstraction maps to practical problems where updates (model retraining, key rotation, re-encryption, synchronization) have fixed costs and unknown degradation—very relevant to scheduling updates in resource- and latency-constrained secure runtimes. The proposed BCAE algorithms and regret guarantees are directly useful for adaptive update scheduling. ",
+        "relation_to_my_work_zh": "可直接应用于运行时策略：何时触发重加密、何时重新训练/发布模型，或在WAN环境下何时重新同步分布式状态。该方法提供理论性能保证與可实现的算法，适合集成到调度器或控制器。",
+        "relation_to_my_work_en": "Directly applicable to runtime scheduling decisions in MPC systems: deciding update intervals (retraining, precomputation refresh, key updates) under cost and unknown degradation. The regret-optimal algorithms could be integrated into adaptive controllers for MPC/secure serving. ",
+        "possible_transfer_zh": "把BCAE/OE-BCAE用于MPC运行时调度：自动选择预计算刷新频率、模型同步周期或密钥轮换时机；结合性能模型可降低不必要的昂贵更新并保证长期性能。",
+        "possible_transfer_en": "Use BCAE/OE-BCAE to schedule refreshes in MPC runtimes (precomputation refill, model retraining, key rotation, synchronization) to balance update costs against degradation; combine with learned cost models or monitors for practical deployment. ",
+        "possible_overlap_or_conflict_zh": "与已有的周期性刷新或阈值触发策略存在功能重叠，但该文提供了分布式决策的在线最优性证据。部署时需考虑实际反馈延迟与成本估计误差。",
+        "possible_overlap_or_conflict_en": "Overlaps conceptually with periodic or threshold-based refresh policies, but supplies online regret guarantees; practical integration must handle delayed/noisy feedback and multi-armed action spaces. ",
+        "questions_to_verify_zh": [
+          "理论保证的假设（反馈模型、损伤过程的统计特性）有哪些？",
+          "模拟环境是否反映了网络/加密更新的延迟与带宽约束？",
+          "算法在非稳态或突变退化模式下的表现如何？"
+        ],
+        "questions_to_verify_en": [
+          "What assumptions underlie the regret bounds (e.g., independence, noise models, stationarity of degradation)?",
+          "Do the simulations model real-world costs like network delay or encryption/precomputation overheads?",
+          "How robust are BCAE/OE-BCAE to sudden changes in degradation dynamics or nonstationary environments?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
