@@ -1,0 +1,555 @@
+{
+  "date": "2026-10-02",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 5,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2609.40093",
+        "version": 1,
+        "title": "Efficient Expert-Parallel Communication on PCIe-Connected Consumer GPUs",
+        "authors": [
+          "Jaehwan Lee",
+          "Sangmin Lee",
+          "Chaewon Kim",
+          "Junsik Shin",
+          "Jaejin Lee"
+        ],
+        "abstract": "Expert parallelism (EP) enables inference of large Mixture-of-Experts (MoE) models by placing their experts across multiple GPUs, but requires substantial communication between GPUs at every MoE layer. As contemporary MoE models activate more experts per token, this communication accounts for a growing fraction of inference time. The cost becomes particularly pronounced on PCIe-based consumer GPU systems, where all inter-GPU transfers traverse CPU memory. However, existing MoE-specialized EP communication libraries assume that direct GPU-to-GPU access is available, largely overlooking consumer GPUs. Therefore, most LLM frameworks instead rely on NCCL, whose CPU-staged communication incurs redundant PCIe transfers and competes with expert computation for GPU resources, limiting their overlap. We present ThunderEP, a novel communication design for such systems that removes the relay hops of traditional ring algorithm, moves data through DMA engines to avoid compute resource contention, and minimizes synchronization latency by reducing the polling overhead of completion flags in CPU memory. We integrate the proposed design into vLLM and evaluate it on three widely used MoE models. Experiments on two PCIe systems equipped with RTX 4090 and RTX 5090 GPUs show that ThunderEP achieves average speedups of 2.00$\\times$ and 1.53$\\times$ over NCCL for dispatch and combine, respectively, and up to 1.66$\\times$ end-to-end speedup over state-of-the-art MoE inference frameworks.",
+        "categories": [
+          "cs.DC",
+          "cs.LG"
+        ],
+        "published": "2026-09-30T16:32:25Z",
+        "updated": "2026-09-30T16:32:25Z",
+        "abstract_url": "https://arxiv.org/abs/2609.40093v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.40093v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.40093v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.86,
+        "priority": "deep_read",
+        "matched_topics": [
+          "communication and computation overlap",
+          "expert-parallelism",
+          "MoE communication",
+          "PCIe consumer GPUs",
+          "network-aware systems",
+          "latency hiding",
+          "collective communication"
+        ],
+        "short_summary_zh": "基于标题与摘要：提出 ThunderEP，一种面向 PCIe‑互联消费级 GPU 的专家并行（EP）通信设计。核心是去掉传统环算法的中继跳，利用 DMA 路径避免 GPU 计算资源争用，减少 CPU 内存中完成标志的轮询开销。将设计集成到 vLLM 并在 RTX4090/5090 系统上对常用 MoE 模型评测，报告在 dispatch/combine 操作上分别平均 2.00× 和 1.53× 相对于 NCCL 的加速，并取得端到端最高 1.66× 提速。",
+        "short_summary_en": "Based on title and abstract: Presents ThunderEP, a communication design for expert‑parallel MoE inference on PCIe‑connected consumer GPUs that removes relay hops of ring algorithms, uses DMA to avoid compute contention, and reduces CPU polling overhead; integrated into vLLM and evaluated on MoE models with substantial speedups over NCCL on RTX‑class systems.",
+        "why_interesting_zh": "基于标题与摘要：高度相关于通信/延迟优化、通信‑计算重叠和面向受限互联硬件的运行时设计。对在消费 GPU 平台上进行大模型推理（含私有/本地化 MoE 或分布式安全推理）的研究者与工程师极具参考价值。",
+        "why_interesting_en": "Based on title and abstract: Directly applicable to optimizing MoE inference on PCIe systems—addresses redundant PCIe transfers, compute contention, and CPU polling that limit overlap; relevant for practitioners building low‑latency, multi‑GPU inference runtimes, including private/secure deployments that must run on consumer hardware.",
+        "relation_to_my_work_zh": "Based on title and abstract：若你研究 MPC/安全推理或调度在消费级 GPU 上的低延迟推理，ThunderEP 中移除中继、DMA 通道利用与降低 CPU 轮询的实现细节很有借鉴意义。",
+        "relation_to_my_work_en": "Based on title and abstract: Highly relevant if you work on secure/latency‑sensitive inference or runtime scheduling on consumer GPU platforms; techniques to reduce redundant PCIe hops and overlap communication with computation could be adapted for secure inference (e.g., EP for encrypted experts).",
+        "possible_transfer_zh": "基于标题与摘要：思想（去中继、利用 DMA、减少 CPU 轮询）可直接迁移到其他跨 PCIe 通信密集型并行推理场景或定制 EP 通信库；实现细节与假设需查正文。",
+        "possible_transfer_en": "Based on title and abstract: The removal of relay hops, DMA‑based transfers, and reduced polling are highly transferable to other PCIe­-bound distributed inference systems and could benefit MPC‑style distributed inference frameworks on consumer GPUs—subject to hardware/driver constraints noted in the paper.",
+        "possible_overlap_or_conflict_zh": "基于标题与摘要：与基于 NCCL 的通用通信库构成替代；需检查對比基準（NCCL 版本、系统配置）與可移植性限制。",
+        "possible_overlap_or_conflict_en": "Based on title and abstract: Competes with NCCL‑based approaches; verify experimental baselines, software stack, and whether assumptions (e.g., DMA availability) hold across platforms.",
+        "questions_to_verify_zh": [
+          "ThunderEP 依赖的低层 DMA/驱动特性與实现对不同主機/BIOS/操作系统的可移植性如何？",
+          "与 NCCL 的对比实验是否在公平配置（CUDA/NCCL 版本、流/线程分配）下进行？"
+        ],
+        "questions_to_verify_en": [
+          "What low‑level DMA/driver features does ThunderEP rely on and how portable are they across host/BIOS/OS configurations?",
+          "Were the NCCL baselines configured fairly (CUDA/NCCL versions, stream/thread allocations) and are end‑to‑end comparisons including memory contention measured?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.40093v1",
+        "research_problem_zh": "在以PCIe互联的消费级GPU上，专家并行（Expert Parallelism）对大型MoE模型的推理造成大量GPU间通信开销，尤其当系统必须通过CPU内存中继时，通信延迟与资源争用严重影响吞吐与延迟。如何设计一种低开销的通信方案，减少CPU中继与轮环中继跳数，避免与GPU计算争用，并降低完成标志轮询导致的同步延迟，从而提升端到端MoE推理性能？（仅基于题目与摘要）",
+        "research_problem_en": "Expert-parallel inference for large MoE models causes substantial inter-GPU communication overhead on PCIe-connected consumer GPU systems because transfers must traverse CPU memory. How to redesign the communication layer to eliminate relay hops, avoid compute-resource contention, reduce polling/synchronization latency, and improve end-to-end MoE inference performance on such hardware? (Based only on title and abstract)",
+        "core_method_zh": "提出ThunderEP：在PCIe消费级GPU上替代传统 ring 算法的通信设计，移除中继跳（relay hops），采用DMA引擎搬运数据以避免与专家计算争用，以及通过减少在CPU内存中对完成标志的轮询开销来最小化同步延迟。将这一设计集成到vLLM并在若干MoE模型上评估。",
+        "core_method_en": "Proposes ThunderEP: a communication design for PCIe-connected consumer GPUs that removes relay hops of traditional ring algorithms, moves data using DMA engines to avoid contention with compute, and reduces synchronization latency by lowering CPU-memory polling overhead of completion flags. Integrated into vLLM and evaluated on multiple MoE models. (Based only on title and abstract)",
+        "contributions_zh": [
+          "为PCIe消费级GPU上的MoE专家并行提出新的通信设计（ThunderEP），替代假定GPU直连的传统库。",
+          "利用DMA引擎避免与GPU上专家计算的资源争用，降低数据搬运对计算的影响。",
+          "通过减少CPU内存中完成标志的轮询来减小同步延迟。",
+          "在vLLM中实现并在多种MoE模型与两套RTX 4090/5090 PCIe系统上评估，报告了显著的dispatch/combine及端到端加速（摘要中报告的数值）。"
+        ],
+        "contributions_en": [
+          "Introduces ThunderEP, a new communication design for MoE expert-parallelism on PCIe-connected consumer GPUs that avoids assumptions of direct GPU-to-GPU access. ",
+          "Moves data with DMA engines to avoid contention with on-GPU expert computation. ",
+          "Reduces synchronization latency by minimizing CPU-memory polling of completion flags. ",
+          "Implements in vLLM and evaluates across multiple MoE models and two PCIe systems (RTX 4090/5090), reporting substantial dispatch/combine and end-to-end speedups (per abstract)."
+        ],
+        "why_watch_zh": "对那些在单机或消费级多GPU上进行大模型或隐私保护推理（例如将安全推理部署到GPU上）的人很有价值：论文关注的DMA搬运、轮询开销削减与通信/计算重叠技巧，可能可迁移到需要高效跨设备通信的安全推理或MPC GPU后端。注意：结论仅基于题目与摘要。",
+        "why_watch_en": "Valuable for practitioners running large-model inference on single-host or consumer multi-GPU setups (including privacy-preserving or GPU-backed secure inference): the DMA-based transfers, reduced polling, and communication/computation overlap techniques may transfer to secure inference and MPC GPU backends that need efficient inter-device communication. Note: claims above are based only on title and abstract. (Based only on title and abstract)",
+        "direct_relation_zh": "与本文关注点直接相关的领域：网络/设备感知的运行时设计、通信与计算重叠、轮次/同步延迟最小化等。对安全多方计算的直接影响有限，因论文针对PCIe本地通信而非WAN或分布式MPC协议；但机制可用于本地GPU加速的隐私保护推理实现。该判断基于题目与摘要。",
+        "direct_relation_en": "Directly related areas: network/device-aware runtimes, communication/computation overlap, and reducing synchronization/round latency. Limited direct impact on MPC over WAN since the paper addresses PCIe-local GPU communication; however, mechanisms could apply to locally-GPU-accelerated privacy-preserving inference. This statement is based only on title and abstract.",
+        "transferable_mechanisms_zh": [
+          "利用DMA引擎在主机内存与GPU之间移动大块数据以避免占用GPU计算资源（可迁移到GPU加速的安全推理后端）。",
+          "减少CPU内存中完成标志的轮询以降低同步延迟（可迁移到延迟敏感的分布式运行时）。",
+          "移除中继/轮环跳数以降低路径上的复制与延迟（适用于任何受多跳中继影响的通信模式）。",
+          "在推理框架中集成通信优化并评估端到端速度（对MPC部署的工程流程有借鉴意义）。"
+        ],
+        "transferable_mechanisms_en": [
+          "Using DMA engines to move large data blocks between host memory and GPUs to avoid occupying GPU compute (applicable to GPU-accelerated secure inference backends).",
+          "Reducing CPU-memory polling of completion flags to lower synchronization latency (applicable to latency-sensitive distributed runtimes).",
+          "Eliminating relay/ring hops to reduce redundant copies and path latency (applicable to multi-hop communication patterns).",
+          "Engineering pattern: integrate low-level communication optimizations into higher-level inference frameworks and evaluate end-to-end gains (relevant to deploying MPC on GPU)."
+        ],
+        "potential_overlap_zh": "可能与GPU上安全推理和MPC运行时的需求重叠，尤其是在单机多GPU场景：两者都关心减少跨设备数据移动、最大化通信/计算重叠和降低同步延迟。",
+        "potential_overlap_en": "May overlap with GPU-based secure inference and MPC runtimes in single-host multi-GPU settings: both care about reducing cross-device data movement, maximizing overlap of communication and computation, and lowering synchronization latency.",
+        "potential_conflict_zh": "如果MPC协议或安全实现要求不同的内存布局、加密/解密步骤或额外的同步语义，ThunderEP的设计假设（例如可安全地使用DMA或减少轮询）可能不直接适用或需要修改。",
+        "potential_conflict_en": "If MPC protocols or secure implementations require different memory layouts, cryptographic processing steps, or stricter synchronization semantics, ThunderEP assumptions (e.g., safe DMA use or reduced polling) might not apply directly and would need adaptation.",
+        "full_text_questions_zh": [
+          "ThunderEP如何保证与现有通信库（如NCCL）在功能与容错性上的兼容性？",
+          "处理不同GPU/驱动/操作系统组合（例如PCIe拓扑差异）的泛化能力如何？",
+          "设计在多主机（RDMA/InfiniBand）环境下是否有可迁移版本或局限性？",
+          "完成标志轮询优化的具体实现与负载下的CPU开销如何量化？",
+          "在内存占用和复制次数上与最优的NCCL实现相比有什么成本？"
+        ],
+        "full_text_questions_en": [
+          "How does ThunderEP preserve compatibility and fault-tolerance compared to existing communication libraries like NCCL?",
+          "How well does the design generalize across different GPU/driver/OS combinations and PCIe topologies?",
+          "Is there a transferable variant for multi-host/RDMA environments or are there inherent limitations?",
+          "How exactly is completion-flag polling optimized and what is the resulting CPU overhead under load?",
+          "What are the memory-usage and copy-count trade-offs relative to optimized NCCL implementations?"
+        ],
+        "experiment_checks_zh": [
+          "验证摘要报告的speedup时要看端到端而非仅dispatch/combine阶段，并提供95/99百分位延迟与吞吐对比。",
+          "展示CPU/GPU利用率、PCIe带宽利用、DMA引擎利用率与轮询开销的剖面分析。",
+          "在不同激活专家数、token批次大小和模型规模下评估可扩展性。",
+          "比较在无中断与有其他GPU工作负载竞争（例如并行专家计算）的场景下的表现。",
+          "在其他消费级GPU与驱动/内核版本上复现以确认泛化性。"
+        ],
+        "experiment_checks_en": [
+          "When validating reported speedups, measure end-to-end behavior not just dispatch/combine, and report 95/99th latency and throughput comparisons. ",
+          "Provide profiles of CPU/GPU utilization, PCIe bandwidth usage, DMA engine utilization, and polling overhead. ",
+          "Evaluate scalability across number of activated experts per token, token batch sizes, and model sizes. ",
+          "Compare performance under competing GPU workloads to assess how well DMA offload reduces contention. ",
+          "Reproduce on other consumer GPUs and driver/kernel versions to confirm generality."
+        ],
+        "tracking_targets": [
+          "dispatch/combine throughput and latency",
+          "end-to-end inference latency and throughput (p50/p95/p99)",
+          "CPU usage and polling overhead for completion flags",
+          "PCIe bandwidth and DMA utilization",
+          "memory copy count and host<->GPU transfer sizes"
+        ],
+        "next_steps_zh": [
+          "阅读全文确认实现细节与假设（DMA可用性、内存布局、安全性约束）。",
+          "尝试将ThunderEP的DMA与轮询优化移植到一个GPU化的隐私推理或MPC后端并基准。",
+          "评估是否能将相同思想扩展到多主机/RDMA或异构互连环境。",
+          "检查与加密/安全内存访问语义的兼容性（在保护密钥或中间密文时）。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to confirm implementation details and assumptions (DMA availability, memory layouts, safety constraints).",
+          "Attempt porting ThunderEP's DMA and polling optimizations into a GPU-backed private inference or MPC backend and benchmark. ",
+          "Evaluate whether the same ideas extend to multi-host/RDMA or heterogeneous interconnects. ",
+          "Check compatibility with cryptographic and secure-memory semantics (when protecting keys or intermediate ciphertexts)."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.40070",
+        "version": 1,
+        "title": "Inference Auctions",
+        "authors": [
+          "Keegan Harris",
+          "Siddharth Prasad",
+          "Asher Trockman",
+          "Nika Haghtalab",
+          "Michael I. Jordan"
+        ],
+        "abstract": "When inference demand exceeds available compute capacity, model providers must decide which requests should be served first. Users have different tolerances for delay from an LLM API, but current priority pricing schemes compress these differences into coarse fixed-price service tiers. We design an inference auction that allows users to bid for faster service. Our auction allocates priority in an economically efficient way without sacrificing latency, and we develop fast algorithms for implementing prices that incentivize truthful bidding. We also design an autobidding agent for our inference auction, where users specify an inference budget and the autobidder dynamically adjusts its bids over time to maximize user utility subject to the budget constraint. Experiments validate the practicality of our auction: it increases system welfare while maintaining the cache utilization and latency advantages of SGLang, a state-of-the-art inference serving framework.",
+        "categories": [
+          "cs.AI",
+          "cs.GT",
+          "cs.LG"
+        ],
+        "published": "2026-09-30T16:24:10Z",
+        "updated": "2026-09-30T16:24:10Z",
+        "abstract_url": "https://arxiv.org/abs/2609.40070v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.40070v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.40070v1",
+        "relevance_score": 7,
+        "novelty_score": 6,
+        "transferability_score": 6,
+        "systems_score": 7,
+        "confidence": 0.82,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure LLM inference",
+          "adaptive systems",
+          "LLM serving systems",
+          "latency hiding",
+          "inference auction",
+          "network-aware systems"
+        ],
+        "short_summary_zh": "基于标题与摘要：提出一种推理拍卖（Inference Auction），允许用户为更快的 LLM 推理服务出价。拍卖在不牺牲延迟的情况下经济高效地分配优先级，作者还设计了激励真实出价的快速定价算法和自动出价代理（给定预算动态调整出价）。摘要报告在实际推理框架（SGLang）上的实验，声称提高系统福利同时保持缓存利用率与延迟優勢。",
+        "short_summary_en": "Based on title and abstract: Designs an inference auction where users bid for faster LLM responses; provides pricing algorithms that incentivize truthful bidding, an autobidder that dynamically allocates budget, and experiments showing improved welfare while preserving cache utilization and latency characteristics of a state‑of‑the‑art serving framework (SGLang).",
+        "why_interesting_zh": "基于标题与摘要：直接切入 LLM 服务端的优先级分配与调度问题；对 LLM 推理平台、SLA 管理、延迟/排队调度与资源分配有实用启发，可能影响如何在多租户/受限带宽场景下分配有限推理资源。",
+        "why_interesting_en": "Based on title and abstract: Directly relevant to LLM serving, priority allocation, and latency‑sensitive scheduling; could inform designs for multi‑tenant inference systems and policies that trade off latency, utility, and resource sharing—potentially useful for MPC/secure inference providers that must schedule requests.",
+        "relation_to_my_work_zh": "基于标题与摘要：如果你的研究涉及安全/隐私的推理服务或需要在受限资源下分配优先级（包括隐私保護推理或 MPC 推理服务），拍卖与自动出价的机制设计与实现细节值得深入学习。",
+        "relation_to_my_work_en": "Based on title and abstract: Relevant if you study secure/private LLM inference, multi‑tenant scheduling, or resource pricing for latency‑sensitive workloads; mechanisms could be adapted to prioritize MPC inference jobs or budgeted secure workloads.",
+        "possible_transfer_zh": "基于标题与摘要：拍卖机制、快速定价算法和预算限制下的自动出价策略可迁移为对延迟敏感的隐私/加密推理队列的优先级分配方案；实现细节（延迟保证、缓存影响）需要正文验证。",
+        "possible_transfer_en": "Based on title and abstract: Auction design and autobidding algorithms may transfer to priority allocation for privacy‑preserving or secure inference workloads (e.g., MPC/TEE services); verify assumptions about latency models and cache behavior in the paper.",
+        "possible_overlap_or_conflict_zh": "基于标题与摘要：与典型基于服务等级（fixed tiers）策略存在替代/竞争关系，但是否优于其他 dynamic scheduling 策略需在论文中验证。",
+        "possible_overlap_or_conflict_en": "Based on title and abstract: This approach competes with fixed tier pricing and other scheduling policies; the paper should be checked for comparisons to alternative dynamic schedulers and fairness metrics.",
+        "questions_to_verify_zh": [
+          "拍卖在高负载/延迟敏感临界情形下如何保证稳定性与延迟上界？",
+          "自动出价器在预算约束下的收敛性与鲁棒性如何证明或评估？"
+        ],
+        "questions_to_verify_en": [
+          "How does the auction ensure latency bounds and stability under high load or latency‑critical workloads?",
+          "What guarantees or empirical evidence exist for the autobidder’s convergence/robustness under budget constraints?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.40070v1",
+        "research_problem_zh": "当推理请求超过可用计算容量时，如何以经济有效且延迟友好的方式为请求分配优先级？现有的固定价格分层不能细粒度反映用户对延迟的真实偏好。如何设计一个激励相容且可高效实现的竞拍机制，使得用户能为更快服务出价，而系统在保持延迟与缓存利用率优势的同时提高整体社会福利？（仅基于题目与摘要）",
+        "research_problem_en": "When inference demand exceeds compute capacity, how to allocate priority to requests in an economically efficient, latency-friendly way? Current fixed-tier pricing compresses heterogeneous delay tolerances. How to design an incentive-compatible auction and fast price algorithms (plus autobidding) so users can bid for faster service while preserving latency and cache benefits of modern serving frameworks? (Based only on title and abstract)",
+        "core_method_zh": "设计算法性竞拍（Inference Auction）用于优先级分配：证明该竞拍在经济学意义上效率化（社会福利），给出快速的价格计算算法以激励真实出价，并设计自动出价代理，允许用户基于预算动态调整出价以在预算约束下最大化效用。论文在SGLang等推理框架上做实验验证。",
+        "core_method_en": "Designs an auction mechanism (Inference Auction) for allocating priority: allocates priority efficiently, develops fast algorithms for computing prices that incentivize truthful bidding, and builds an autobidding agent that dynamically adjusts bids under a budget to maximize utility. Experiments validate practicality and show maintained cache utilization and latency benefits of SGLang. (Based only on title and abstract)",
+        "contributions_zh": [
+          "提出用于推理服务优先级分配的竞拍机制，使资源分配在经济上更有效。",
+          "给出可快速实现的定价算法，支持激励相容性（鼓励真实出价）。",
+          "设计并实现自动出价代理以在预算限制下动态优化用户效用。",
+          "通过实验展示竞拍可以提高系统福利，同时保持SGLang的缓存利用率和延迟优势（摘要声称）。"
+        ],
+        "contributions_en": [
+          "Proposes an auction mechanism to allocate inference priority more economically efficiently than coarse fixed-price tiers. ",
+          "Provides fast pricing algorithms that incentivize truthful bidding. ",
+          "Designs an autobidding agent that dynamically adjusts bids given a budget to maximize user utility. ",
+          "Experiments show the auction increases system welfare while preserving cache utilization and latency advantages of SGLang (as reported in abstract)."
+        ],
+        "why_watch_zh": "对研究多租户调度、资源定价、延迟敏感服务设计与服务质量定制化有价值；其技术可能对MPC/隐私推理的多租户资源分配、优先级收费或预算受限的私有推理请求调度有借鉴意义。请注意：此总结仅基于题目与摘要。",
+        "why_watch_en": "Relevant for multi-tenant scheduling, resource pricing, latency-sensitive service design, and customized QoS; techniques could inspire priority allocation or budgeted scheduling for MPC/private inference workloads. Note: assessment based only on title and abstract. (Based only on title and abstract)",
+        "direct_relation_zh": "与主题的直接联系是调度与资源分配机制：虽然不是关于MPC协议或通信优化，但其竞拍/自动出价思想可用于为隐私保护推理或MPC服务分配优先级或定价。该判断基于题目与摘要。",
+        "direct_relation_en": "Directly related to scheduling and resource allocation mechanisms: not about MPC protocols or comms, but auction/autobid ideas could be applied to priority/pricing for privacy-preserving inference or MPC services. This is based only on title and abstract.",
+        "transferable_mechanisms_zh": [
+          "基于机制设计的优先级分配，用于多租户资源分配与带预算约束的请求调度。",
+          "快速求价算法与激励相容性的证明方法，可集成到低延迟调度器中。",
+          "自动出价代理策略（在线/动态调整）适合受预算或效用约束的客户端。",
+          "保留缓存利用率与延迟的同时进行优先级分配的工程技巧（结合实际推理框架）。"
+        ],
+        "transferable_mechanisms_en": [
+          "Mechanism-design-based priority allocation for multi-tenant resource assignment and budget-constrained request scheduling. ",
+          "Fast price-computation algorithms and incentive-compatibility techniques that can be integrated into low-latency schedulers. ",
+          "Autobidding agent strategies (online/dynamic bid adjustment) for budget- or utility-constrained clients. ",
+          "Engineering techniques to preserve cache utilization and latency while implementing priority allocation in an inference framework."
+        ],
+        "potential_overlap_zh": "可与MPC/私有推理的多租户服务调度、成本分摊与SLA定价策略重叠；对于共享计算资源上敏感请求的优先级分配尤其相关。",
+        "potential_overlap_en": "May overlap with multi-tenant scheduling, cost-sharing, and SLA pricing for MPC/private inference; particularly relevant for prioritizing sensitive requests on shared compute. ",
+        "potential_conflict_zh": "竞拍机制在安全或隐私受限环境下需要谨慎部署：例如出价信息可能泄露业务意图或请求敏感性；自动出价代理需要在隐私约束下运作。若不可泄露的元数据被用作竞拍输入，设计需调整以保护隐私。",
+        "potential_conflict_en": "Auctions may raise privacy concerns: bid metadata can leak business intent or request sensitivity. Autobidders must operate under privacy constraints. If confidential metadata are inputs to the auction, the mechanism must be adapted to preserve privacy.",
+        "full_text_questions_zh": [
+          "拍卖设计是哪种类型（一次性拍卖、连续拍卖、拍卖频率与时间尺度）？",
+          "系统如何在实时性（低延迟）与复杂定价计算之间权衡？",
+          "在有策略性或对抗性参与者时，拍卖机制的鲁棒性如何？",
+          "自动出价代理需要哪些用户输入（价值函数/预算/延迟容忍度）？其隐私影响如何处理？",
+          "拍卖如何与现有缓存/批量化调度器（如SGLang）集成以不破坏缓存命中与批次效应？"
+        ],
+        "full_text_questions_en": [
+          "What auction format is used (one-shot, continuous, time-granularity of auctions)?",
+          "How does the system trade off real-time (low-latency) operation versus complexity of price computation?",
+          "How robust is the auction to strategic or adversarial participants?",
+          "What inputs does the autobidding agent require (value function/budget/latency tolerance) and how are privacy implications handled?",
+          "How is the auction integrated with existing cache/batching schedulers (like SGLang) without degrading cache hits or batching benefits?"
+        ],
+        "experiment_checks_zh": [
+          "衡量系统福利（welfare）同时需要报告尾延迟（p95/p99）、吞吐和缓存命中率以确认摘要中声称的“保持缓存利用率和延迟优势”。",
+          "在不同负载模式、出价分布和预算配置下测试鲁棒性与最坏情况行为。",
+          "评估自动出价器的收益与开销（计算负载、延迟引入、对用户效用的实际提升）。",
+          "检查能否在真实多租户集群中以低开销部署（包括价格计算延迟与调度器集成成本）。"
+        ],
+        "experiment_checks_en": [
+          "When measuring system welfare, also report tail latencies (p95/p99), throughput, and cache hit rates to confirm the claim of preserving cache utilization and latency benefits. ",
+          "Test robustness under varied load patterns, bid distributions, and budget configurations, including worst-case scenarios. ",
+          "Evaluate autobidder benefits vs. overhead (compute cost, added latency, impact on user utility). ",
+          "Check deployability in real multi-tenant clusters with low overhead (price-computation latency and scheduler integration costs)."
+        ],
+        "tracking_targets": [
+          "auction prices and price-computation latency",
+          "bid distributions and autobidder behavior over time",
+          "system welfare metrics and user utility",
+          "tail latency percentiles (p95/p99) and throughput",
+          "cache hit rates / batching effectiveness"
+        ],
+        "next_steps_zh": [
+          "阅读全文以理解拍卖形式、数值实验设置与理论保证的前提。",
+          "如果目标是私有或受限信息环境，研究如何使竞拍隐私化（例如差分隐私或在安全执行环境中运行）。",
+          "探索将拍卖机制与MPC或隐私推理服务的调度器结合的原型，并评估隐私/性能权衡。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to learn auction format, experimental setup, and assumptions behind theoretical guarantees. ",
+          "If targeting privacy-sensitive deployments, study how to privacy-preserve the auction (e.g., differential privacy or secure execution of the auction). ",
+          "Prototype integrating the auction with MPC/private-inference schedulers and evaluate privacy/performance tradeoffs."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.39844",
+        "version": 1,
+        "title": "Natural Barriers to Quantum Extraction: On the Post-Quantum (In)security of (O)EKE and Masny-Rindal OT",
+        "authors": [
+          "James Bartusek",
+          "Jake Januzelli"
+        ],
+        "abstract": "Encrypted key exchange (EKE), introduced by Bellovin and Merritt (IEEE S\\&P 1992), and Masny-Rindal OT, introduced by Masny and Rindal (ACM CCS 2019), are highly-efficient methods for compiling essentially any KEM into advanced cryptographic protocols, namely password-authenticated key exchange (PAKE) and oblivious transfer (OT), by relying only on idealized symmetric-key primitives. They have become leading candidates for practically-implementable PAKE and OT due to (1) their simplicity, (2) their plug-and-play nature, allowing for flexibility in the choice of KEM, and (3) existing proofs of UC-security (in the classical adversarial model). Due to point (2) above, these compilers yield attractive candidates for efficient \\emph{post-quantum} PAKE and OT, especially given the recent post-quantum KEM standardization efforts. This motivates the question of whether the (UC-)security of these compilers translates to the quantum adversarial model. In this work, we show that it does not. In particular, we prove that a general family of (O)EKE protocols, as well as Masny-Rindal OT, are \\emph{not} UC-secure against quantum polynomial-time adversaries, even when instantiated with a post-quantum KEM. To establish UC-insecurity, we devise an adversarial strategy that provably thwarts any attempt by the simulator to extract its input (the password in the case of PAKE, and the receiver's choice bit in the case of OT). To complement these negative results, we establish that both compilers yield certain notions of \\emph{game-based} security. Along the way, we establish a novel ``advantage-tight'' one-way to hiding lemma that may be of independent interest.",
+        "categories": [
+          "cs.CR",
+          "quant-ph"
+        ],
+        "published": "2026-09-30T14:37:38Z",
+        "updated": "2026-09-30T14:37:38Z",
+        "abstract_url": "https://arxiv.org/abs/2609.39844v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.39844v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.39844v1",
+        "relevance_score": 5,
+        "novelty_score": 4,
+        "transferability_score": 4,
+        "systems_score": 3,
+        "confidence": 0.8,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure multiparty computation",
+          "protocol selection",
+          "privacy-preserving machine learning"
+        ],
+        "short_summary_zh": "基于摘要：证明了广泛的(O)EKE类编译器与Masny-Rindal OT在面对量子多项式时间对手时并不保持UC安全（即使使用后量子KEM也不行），通过构造能阻止模拟器提取关键输入的攻击策略，并给出相应的基于博弈的安全替代与一个关于one-way-to-hiding的紧优势引理。摘要声明了负结果与一些正向（game-based）保证。",
+        "short_summary_en": "From the abstract: Shows that a broad class of (O)EKE compilers and Masny-Rindal OT are not UC-secure against quantum polynomial-time adversaries, even when instantiated with post-quantum KEMs. Constructs an adversarial strategy that prevents simulator extraction of secret inputs, and complements negatives with game-based security notions; also introduces an advantage-tight one-way-to-hiding lemma of independent interest.",
+        "why_interesting_zh": "OT与PAKE编译器在MPC和隐私保密协议中极为重要。若这些 compilers 在量子模型下失效，意味着对基于对称理想化构造的后量子工程化路径必须重新评估。论文直接触及协议选择、编译器可移植性与后量子部署风险。",
+        "why_interesting_en": "EKE and Masny-Rindal OT compilers are widely used building blocks for PAKE and OT, which in turn underpin many practical MPC constructions. A UC-insecurity result in the quantum model—even with post-quantum KEMs—has direct implications for protocol selection and secure-system design in post-quantum settings, and the new technical lemma may be broadly useful in quantum security proofs.",
+        "relation_to_my_work_zh": "高度相关：若我的研究涉及用现代 KEM/OT 构造高效 MPC 或在设计可部署的隐私协议时做协议选择，这篇工作会直接影响可信性假设与安全声明。",
+        "relation_to_my_work_en": "Highly relevant: if you work on MPC primitives, protocol compilers, or selecting post-quantum building blocks (PAKE/OT), this paper bears directly on whether certain practical compilers yield UC security against quantum adversaries and thus on safe protocol choices.",
+        "possible_transfer_zh": "理论引理（one-way-to-hiding 的紧优势版本）可能迁移到后量子安全性证明范式；攻击构造也能帮助审视其它编译器或提取步骤的脆弱性。",
+        "possible_transfer_en": "The advantage-tight one-way-to-hiding lemma and adversarial constructions could transfer to other post-quantum security analyses and inform safer compiler/primitive designs; motivates explicit quantum-aware runtime/protocol modeling for secure stacks.",
+        "possible_overlap_or_conflict_zh": "如果已有工作或工程实践假定(O)EKE或Masny-Rindal在后量子情形下保持UC安全，这篇结果将产生直接冲突，需要重新审视那些假设。",
+        "possible_overlap_or_conflict_en": "Conflicts with any prior assumptions that these compilers yield UC security in the quantum model; practitioners relying on post-quantum KEM instantiation should re-evaluate security claims in light of this negative result.",
+        "questions_to_verify_zh": [
+          "'广义(O)EKE族'的精确定义与包含哪些具体协议/变体？",
+          "攻击/模拟器失败构造是否依赖于强模型假设（如量子查询能力的具体细节）？",
+          "给出的game-based替代保证的具体语义与适用场景是什么？",
+          "本文提出的one-way-to-hiding引理具体陈述与适用范围如何？"
+        ],
+        "questions_to_verify_en": [
+          "What is the exact formal definition of the “general family” of (O)EKE protocols covered, and which concrete variants are included?",
+          "Does the simulator-failure attack rely on specific quantum capabilities or modeling choices (e.g., rewinding impossibility specifics)?",
+          "What precise game-based security notions do the authors establish and in which settings are those guarantees meaningful?",
+          "What is the formal statement and assumptions of the advantage-tight one-way-to-hiding lemma and its intended applicability?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2609.39844v1",
+        "research_problem_zh": "EKE（Encrypted Key Exchange）类编译器与Masny–Rindal OT利用对称理想化原语将通用KEM编译成PAKE或OT，且被认为是可插拔的后量子候选方案。问题是这些编译的UC安全性是否能在量子对手（量子多项式时间）模型下保持？摘要表明：在量子模拟器/UC模型下，这类编译器并不保持UC安全。该结果对构建后量子安全的PAKE/OT（以及基于它们的MPC）有重要影响。（仅基于题目与摘要）",
+        "research_problem_en": "Do EKE-style compilers and Masny–Rindal OT, which compile KEMs into PAKE and OT using idealized symmetric primitives and are attractive for post-quantum instantiations, remain UC-secure against quantum polynomial-time adversaries? The abstract claims that they are not UC-secure in that quantum model, impacting post-quantum PAKE/OT and thus potentially MPC constructions. (Based only on title and abstract)",
+        "core_method_zh": "通过构造一种对抗策略（adversarial strategy）和证明，展示一大类(O)EKE协议以及Masny–Rindal OT在量子多项式时间对手下不是UC安全的：具体地，给出模拟器无法从量子对手中提取输入（密码或选择位）的证明。与此同时，给出更弱的基于游戏（game-based）的安全性证明，并提出一个“优势紧致”的one-way to hiding引理作为技术贡献。",
+        "core_method_en": "Constructs an adversarial strategy and proofs to show that a broad family of (O)EKE protocols and Masny–Rindal OT are not UC-secure against quantum polynomial-time adversaries: the simulator cannot extract the input (password or receiver's choice bit). Also establishes certain game-based security results and introduces an 'advantage-tight' one-way-to-hiding lemma as a technical tool. (Based only on title and abstract)",
+        "contributions_zh": [
+          "证明了广泛的(O)EKE编译器与Masny–Rindal OT在量子多项式时间对手模型下不具UC安全性（即存在使模拟器无法成功提取输入的对抗策略）。",
+          "给出补充性正面结果：这些编译器仍满足某些基于游戏的安全定义。",
+          "提出并证明了一个‘优势紧致’的one-way to hiding引理，作为分析工具，可能独立有用。"
+        ],
+        "contributions_en": [
+          "Proves that a broad family of (O)EKE protocols and Masny–Rindal OT are not UC-secure against quantum polynomial-time adversaries by devising an adversarial strategy that prevents simulator extraction. ",
+          "Provides complementary positive (game-based) security results for the compilers. ",
+          "Introduces an 'advantage-tight' one-way-to-hiding lemma which may be of independent interest. (All based on title and abstract)"
+        ],
+        "why_watch_zh": "对从事构建后量子安全的密码原语、PAKE、OT与基于它们的MPC系统的研究者高度相关——若这些编译器在UC-量子模型下失效，许多‘可插拔’后量子方案需要重新审视或替代。请注意：以下评述仅基于题目与摘要。",
+        "why_watch_en": "Highly relevant to researchers designing post-quantum secure primitives, PAKE, OT, and MPC based on these compilers—if they fail UC-security in the quantum model, many plug-in post-quantum instantiations may need revisiting. Note: the following is based only on title and abstract. (Based only on title and abstract)",
+        "direct_relation_zh": "与安全多方计算直接相关：PAKE和OT是MPC构建的基石，若这些编译器在量子UC模型下不安全，则依赖它们的MPC编译器/协议在量子威胁下可能不满足所需的模拟化/安全保证。该结论基于题目與摘要。",
+        "direct_relation_en": "Directly related to secure multiparty computation: PAKE and OT are foundational for MPC; if these compilers are not UC-secure in the quantum UC model, MPC compilers/protocols relying on them may fail to provide simulator-based security against quantum adversaries. This is inferred from the title and abstract. ",
+        "transferable_mechanisms_zh": [
+          "对量子模型下模拟器提取失败的构造性对抗技术（可用于分析其它编译器或协议在量子UC模型中的安全性）。",
+          "‘优势紧致’one-way to hiding引理：分析工具可能适用于其他后量子安全性证明/否定的情形。",
+          "将编译器的安全性区分为UC（模拟化）与基于游戏的安全的分析框架，便于评估在不同威胁模型下的适用性。"
+        ],
+        "transferable_mechanisms_en": [
+          "Constructive adversarial techniques showing simulator-extraction failure in the quantum model (useful for analyzing other compilers/protocols under quantum UC).",
+          "The 'advantage-tight' one-way-to-hiding lemma as a proof tool applicable to other post-quantum security analyses. ",
+          "The framework of separating UC (simulation-based) security from game-based security when evaluating compilers under quantum threats."
+        ],
+        "potential_overlap_zh": "与MPC相关研究有高度重叠：任何依赖这些OT/PAKE编译器的MPC实现或编译器（特别是宣称后量子安全的）都应关注此类负面结果。",
+        "potential_overlap_en": "High overlap with MPC research: MPC implementations/compilers that rely on these OT/PAKE compilers—especially those claiming post-quantum security—should pay attention to these negative results. ",
+        "potential_conflict_zh": "若某些工程方案已在未经量子UC审查的假设下使用这些编译器作为后量子替代品，论文结论会与其安全主张冲突；需要谨慎重新审视那些部署或声称后量子安全性的系统。",
+        "potential_conflict_en": "If engineering deployments have used these compilers as post-quantum replacements without quantum-UC scrutiny, the paper's conclusions would conflict with such security claims; those systems need careful reassessment. (Based only on title and abstract)",
+        "full_text_questions_zh": [
+          "作者对‘广泛的一类(O)EKE协议’的形式化范围是什么（哪些变体包含/排除）？",
+          "不安全性的对抗策略依赖哪些模型假设——例如是否需要某种可编程量子随机预言机、或对KEM/对称原语的特殊假设？",
+          "摘要提到的‘某些基于游戏的安全性’具体是哪种定义，是否足以在实际MPC中替代UC保证？",
+          "one-way to hiding引理的形式与假设是什么，它在多大范围内可复用？",
+          "对实际KEM实例（特别是NIST候选）有何具体影响？是否存在可行的替代编译器或修补方法？"
+        ],
+        "full_text_questions_en": [
+          "What is the formal scope of the 'broad family' of (O)EKE protocols (which variants are included/excluded)?",
+          "What modeling assumptions does the insecurity adversary rely on—e.g., programmable quantum random oracle, or special assumptions about the KEM/symmetric primitives?",
+          "Which game-based security notions are established and are they sufficient replacements for UC guarantees in practical MPC?",
+          "What is the formal statement and assumptions of the advantage-tight one-way-to-hiding lemma and how broadly reusable is it?",
+          "What are concrete implications for real KEM instantiations (e.g., NIST PQC candidates) and are there practical compiler fixes or alternatives?"
+        ],
+        "experiment_checks_zh": [
+          "此类工作以理论证明为主，应检查完整证明、模型与前提（量子UC模型、可编程预言机等），以及反例构造的精准性。",
+          "验证论文是否给出具体实例（或黑盒说明）表明常见KEM实例也受影响，或只是存在构造性对手。",
+          "检查给出的基于游戏的正面结果与UC负面结果之间的边界条件以及是否有实作层面的替代方案。"
+        ],
+        "experiment_checks_en": [
+          "As a theoretical work, scrutinize full proofs, modeling assumptions (quantum UC model, programmability, oracle assumptions), and the precision of the adversarial constructions. ",
+          "Check whether the paper exhibits concrete instantiations showing commonly-used KEMs are affected or whether the insecurity is existential (existence of some adversary but not practical for standard KEMs). ",
+          "Verify the boundary between game-based positive results and UC negative results and whether the paper suggests practical alternatives or fixes. "
+        ],
+        "tracking_targets": [
+          "scope of affected (O)EKE/Masny–Rindal variants",
+          "assumptions used in insecurity proofs (quantum model, oracles)",
+          "details & statement of the one-way-to-hiding lemma",
+          "implications for concrete KEM instantiations (e.g., standardized candidates)",
+          "existence of practical fixes or alternative compilers"
+        ],
+        "next_steps_zh": [
+          "阅读全文以核查模型与证明细节，确认对具体KEM或实现的影响范围。",
+          "若目标是构建后量子MPC，评估是否需要避免使用这些编译器或采用替代的UC-secure构造。",
+          "研究是否能基于本文提出的引理与对抗构造设计修补方案或新的编译器，恢复量子UC安全性。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to verify models and proofs and determine the scope of impact on concrete KEMs or implementations. ",
+          "If building post-quantum MPC, evaluate whether to avoid these compilers or to adopt alternative UC-secure constructions. ",
+          "Investigate whether the paper's lemma and adversarial constructions can guide fixes or new compilers that restore quantum-UC security. (All assessments based only on title and abstract)"
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.39902",
+        "version": 1,
+        "title": "CodeMimicry: Exploiting Safety Generalization Lag in Large Language Models via Structured Code Completion",
+        "authors": [
+          "Zhen Liang",
+          "Hai Huang",
+          "Wentao Chen"
+        ],
+        "abstract": "Large language models have achieved remarkable capabilities across diverse domains, yet their safety alignment remains vulnerable to jailbreak attacks. In this work, we identify a previously underexplored failure mode - safety generalization lag - where alignment trained predominantly on natural language fails to transfer to the code domain. We show that this lag induces a code-completion blind spot, allowing malicious intent embedded within syntactically valid code to evade safety mechanisms. To exploit this vulnerability, we propose CodeMimicry, a fully automated black-box jailbreak framework that generates structured, object-oriented code prompts to induce harmful outputs via code completion. Experiments on 8 state-of-the-art commercial LLMs demonstrate that CodeMimicry achieves a 96.25% attack success rate with 1.51 queries on average, significantly outperforming both template-based and optimization-based baselines. Beyond empirical performance, we provide a mechanistic analysis of code-based jailbreaks through latent space representations, including projection onto refusal-related directions and activation steering. This analysis offers an explanation of how CodeMimicry bypasses safety mechanisms in code-related domains. Our findings reveal a weakness in current safety alignment and highlight the need for robust alignments in structured domains such as code.",
+        "categories": [
+          "cs.AI",
+          "cs.CR"
+        ],
+        "published": "2026-09-30T15:02:14Z",
+        "updated": "2026-09-30T15:02:14Z",
+        "abstract_url": "https://arxiv.org/abs/2609.39902v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.39902v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.39902v1",
+        "relevance_score": 9,
+        "novelty_score": 8,
+        "transferability_score": 6,
+        "systems_score": 7,
+        "confidence": 0.72,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "jailbreak detection",
+          "activation steering"
+        ],
+        "short_summary_zh": "（仅基于标题与摘要）本文揭示了一个“安全泛化滞后”失效模式：对自然语言训练的对齐未能泛化到代码域，导致代码补全可以绕过安全拒绝。作者提出CodeMimicry——一种自动化黑盒 jailbreak 框架，通过结构化面向对象代码提示诱导恶意输出。在8个商用LLM上平均以极低查询数高成功率攻破了安全机制，并通过潜在空间投影与激活操控给出机理性分析。",
+        "short_summary_en": "(Title-and-abstract-based only) The paper identifies ‘safety generalization lag’ where alignment trained on natural language fails to transfer to code, creating a code-completion blind spot. They propose CodeMimicry, an automated black-box jailbreak that uses structured OOP code prompts to induce harmful outputs; experiments on 8 commercial LLMs report ~96% success with ~1.5 queries on average. They analyze latent-space projections and activation steering to explain bypass mechanisms.",
+        "why_interesting_zh": "与安全的LLM推理直接相关：表明代码域是对齐盲点，且代码提示可高效触发绕过，这对构建安全的私有/托管推理服务（含基于MPC的推理）很重要。",
+        "why_interesting_en": "Directly relevant to secure LLM inference: identifies a high-impact attack vector (code-completion jailbreaks) and an automated, highly effective black-box method—implications for deployment and defense of private/partitioned inference systems (e.g., MPC-based serving).",
+        "relation_to_my_work_zh": "如果你的工作关注安全或隐私保护的LLM推理（包括MPC或网络化安全推理），此工作应当认真阅读以补充威胁模型并设计对抗措施。",
+        "relation_to_my_work_en": "Highly relevant if you study secure LLM inference or deploy LLMs under privacy constraints (e.g., MPC). The attack model and mechanistic analysis can inform threat models and defense integration at runtime.",
+        "possible_transfer_zh": "可将其攻击构造纳入对抗测试套件，或将激活/潜在方向分析用于运行时检测（激活签名）与拒绝策略。",
+        "possible_transfer_en": "The attack constructions should be incorporated into adversarial testing; latent-projection/activation-steering analyses might be adapted to runtime detectors or monitoring for secure inference services.",
+        "possible_overlap_or_conflict_zh": "与现有 jailbreak、prompt-engineering与安全对齐文献存在明显主题重叠。若在防御上继续工作，需对比已有检测/过滤方法的覆盖范围。",
+        "possible_overlap_or_conflict_en": "Overlaps with prior jailbreak/prompting and alignment-robustness literature; compare coverage vs template and optimization-based baselines as claimed.",
+        "questions_to_verify_zh": [
+          "摘要声称在8个商用模型上平均仅1.51次查询获96.25%成功率：评估设定、黑盒接口限制与样本选择如何？",
+          "潜在空间投影与激活操控的分析是否能转化为可行的检测或微调防御？",
+          "代码提示的通用性（不同语言/风格）如何测评？"
+        ],
+        "questions_to_verify_en": [
+          "The abstract reports ~96.25% success with 1.51 queries on 8 commercial models—what are the exact evaluation settings, API constraints, and sample selection?",
+          "Can the latent-space projection and activation-steering insights be operationalized into reliable detectors or finetune defenses?",
+          "How general are the code-prompt techniques across languages, styles, and model families?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2609.39978",
+        "version": 1,
+        "title": "LatencyLab: A DPDK-Based P4 Pipeline Latency Measurement Framework for FPGA SmartNICs",
+        "authors": [
+          "Pavani Kuppili",
+          "Zhaoyang Han",
+          "Yicheng Qian",
+          "Suranga Handagala",
+          "Michael Zink",
+          "Miriam Leeser",
+          "Robert Ricci"
+        ],
+        "abstract": "P4-programmable FPGA SmartNICs place packet processing directly on the wire, but open FPGA P4 toolflows do not expose timestamping at the pipeline boundary, so the latency a P4 program adds on the target FPGA is rarely measured. This paper presents LatencyLab, a DPDK-based measurement framework for FPGA P4 pipeline latency that needs neither PHC/PTP support on the datapath nor clock synchronization. The FPGA's two ports share a network segment, so the switch multicasts a copy of each probe packet to both: one copy passes through the VitisNetP4 pipeline, the other through a matched bypass path. A kernel-bypass DPDK receiver busy-polls both ports and timestamps every packet with the CPU timestamp counter (TSC) as it is retrieved from the NIC's receive circular buffer. The arrival-time difference of the two copies isolates the pipeline latency after calibration against a null bitstream carrying the same traffic; transmit time cancel in the subtraction. We evaluate four VitisNetP4 programs on an AMD Alveo U280, probing each with a 20,000-packet trace measured ten times per session over five independent sessions, all TSC-timestamped and reflected for hardware timestamping. The measured latency distributions are tight and reproducible: 99% of packets fall within 20 ns of the median, session medians repeating within 1 to 2 ns (FiveTuple 107/137 ns, Forward 149 ns, RemoveHeader 177 ns, Checksum 364 ns at 250 MHz). Two independent checks agree with the framework: a kernel-free reflector returns every probe pair to a ConnectX-5 NIC whose adapter clock reproduces the measured distributions within a few nanoseconds, quantile by quantile, and every measured packet falls 18 to 22 clock cycles below the vendor's worst-case latency bound.",
+        "categories": [
+          "cs.DC"
+        ],
+        "published": "2026-09-30T15:38:11Z",
+        "updated": "2026-09-30T15:38:11Z",
+        "abstract_url": "https://arxiv.org/abs/2609.39978v1",
+        "pdf_url": "https://arxiv.org/pdf/2609.39978v1"
+      },
+      "screening": {
+        "arxiv_id": "2609.39978v1",
+        "relevance_score": 7,
+        "novelty_score": 6,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.85,
+        "priority": "read",
+        "matched_topics": [
+          "network-aware systems",
+          "latency hiding",
+          "performance modeling",
+          "pipeline execution",
+          "collective communication"
+        ],
+        "short_summary_zh": "基于标题和摘要：LatencyLab 是一个基于 DPDK 的测量框架，用于在可编程 FPGA SmartNIC 上测量 P4 数据平面（VitisNetP4）管道的延迟而无需网络时钟同步（PHC/PTP）。其关键方法是让交换机多播每个探测包到两条路径（经管道与旁路），在主机端用 DPDK 从两个端口忙轮询并用 CPU 的 TSC 计时，从两份到达时间差中隔离出管道增加的延迟并通过空比特流校准传输时间。摘要报告了在 AMD Alveo U280 上对四个 P4 程序的高精度可复现测量以及与两个独立检查的一致性验证。",
+        "short_summary_en": "Based on the title and abstract: LatencyLab is a DPDK-based framework to measure FPGA P4 pipeline latency on SmartNICs without PHC/PTP or clock sync. The switch multicasts probe packets so one copy traverses the P4 pipeline and another a bypass; a DPDK receiver busy-polls both ports and timestamps packets with the CPU TSC, and the arrival-time difference isolates pipeline latency after calibration with a null bitstream. They report tight, reproducible latency distributions on an AMD Alveo U280 and validate results with independent checks.",
+        "why_interesting_zh": "与网络感知运行时、WAN/SMT 延迟分析和将计算卸载到 SmartNIC 的研究高度相关。该方法在不依赖硬件时间戳或全网同步的条件下提供高精度管道延迟测量，对评估 SmartNIC 上协议实现、MPC 协议化的网内加速或在部署前量化单跳处理开销非常有用。",
+        "why_interesting_en": "This is highly relevant to network-aware runtimes and any work that offloads computation to SmartNICs (including potential MPC accelerations). A synchronization-free, high-precision method to isolate on-NIC pipeline latency can inform protocol selection, performance modeling, and scheduling/round-coalescing decisions for distributed secure computations or low-latency RPC systems.",
+        "relation_to_my_work_zh": "若你研究MPC在边缘/SmartNIC上卸载、网络感知运行时或需要精确测量单设备处理延迟以优化轮次合并与通信-计算重叠，LatencyLab 的测量方法和实验可以直接借鉴或复现为评估基线。",
+        "relation_to_my_work_en": "If you study MPC offload to SmartNICs, network-aware runtimes, or need precise device-level latency numbers to optimize round coalescing and communication-computation overlap, LatencyLab's measurement technique and experimental results are directly applicable as a tool and methodology for evaluation.",
+        "possible_transfer_zh": "直接可转移：使用同样的双路径多播+TSC差分方法来测量其他SmartNIC管道、P4实现或在运行时做微基准。可用于构建更精细的性能模型，辅助网络感知任务调度、批处理策略或在高延迟场景下决定是否在NIC上执行特定协议步骤。",
+        "possible_transfer_en": "Directly transferable: use the multicast-bypass + TSC-differencing technique to measure other SmartNIC pipelines or P4 implementations. Can feed precise latency data into performance models to guide network-aware scheduling, batching strategies, or decisions about which protocol steps to offload onto the NIC in high-latency deployments.",
+        "possible_overlap_or_conflict_zh": "如果你已有用于测量或建模网内处理延迟的工具，注意对比本方法与硬件时间戳/同步测量的偏差与适用场景。没有安全或研究方向上的冲突。",
+        "possible_overlap_or_conflict_en": "If you already have tools for measuring or modeling on-NIC processing latency, compare this method's assumptions and accuracy versus hardware timestamp approaches. No methodological conflict with MPC research; rather, it complements measurement toolsets.",
+        "questions_to_verify_zh": [
+          "该方法对交换机多播行为与网络拓扑的依赖程度如何（需哪些交换/镜像配置）？",
+          "在高负载或多流并发情况下，TSC 差分测量的稳健性与抖动如何？",
+          "若目标是测量 SmartNIC 上加密/MPC 协议步骤，是否需要对探测包/旁路路径进一步修改以匹配真实工作负载？"
+        ],
+        "questions_to_verify_en": [
+          "How dependent is the method on switch multicast behavior and network topology—what switch/mirroring features are required?",
+          "How robust are the TSC-differencing measurements under high load or many concurrent flows (jitter and contention effects)?",
+          "To measure cryptographic/MPC protocol steps on a SmartNIC, would the probe/ bypass traffic need tailoring to match realistic workloads and packet sizes?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
