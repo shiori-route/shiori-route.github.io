@@ -1,0 +1,523 @@
+{
+  "date": "2026-10-03",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 4,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2610.01950",
+        "version": 1,
+        "title": "MoE-CORE: Coordinated Expert Offloading and Residency for Memory-Constrained MoE Inference",
+        "authors": [
+          "Ke Yang",
+          "Yongji Gao",
+          "Xushi Li",
+          "Kui Luo",
+          "Sicheng Zhang",
+          "Tianming Zhou",
+          "Keyi Liu",
+          "Shufang Lu",
+          "Aoxuan Chen",
+          "Jie Meng",
+          "Jingchun Gao",
+          "Dan Li",
+          "Xinkai You",
+          "Dan Li",
+          "Zhixiang Xia",
+          "Yan Shi",
+          "Yang Liu",
+          "Yanjia Zeng",
+          "Liangjun Feng"
+        ],
+        "abstract": "Sparse expert activation reduces MoE models' computation, yet expert weights can exceed limited device memory. Offloading makes inference feasible on a compact AI appliance but exposes host-to-device transfers to the inference path. We present MoE-CORE, a system that coordinates expert offloading and residency for memory-constrained MoE inference. It stages complete expert layers in alternating buffers during prefill. During decode, it combines nonuniform layer-wise cache capacity, domain-informed initialization, routing-history-aware replacement, and cross-layer prefetching. The main configuration executes router-selected experts exactly; an optional score-based substitution path handles eligible low-score misses. The main comparison uses 1K- and 128-token output caps for MoE-CORE and vLLM Prefetch, respectively. Across five workloads per model, MoE-CORE records a mean time per output token (TPOT) of 38.0-44.8 ms versus 1268.9-1269.1 ms for the evaluated vLLM Prefetch configuration on DeepSeek-V4-Flash-W4A8; the corresponding values on GLM-5.2-W4A8C8 are 206.6-220.5 and 5941.5-5941.8 ms. Under an 84-GB NPU-memory cap, the best measured DeepSeek GSM8K configuration achieves a TPOT of 21.5 ms with approximate expert substitution and multi-token prediction (MTP) at depth 2. These results support coordinated expert residency and transfer scheduling under a device-memory constraint. The code is here.",
+        "categories": [
+          "cs.DC"
+        ],
+        "published": "2026-10-01T16:11:45Z",
+        "updated": "2026-10-01T16:11:45Z",
+        "abstract_url": "https://arxiv.org/abs/2610.01950v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.01950v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.01950v1",
+        "relevance_score": 9,
+        "novelty_score": 8,
+        "transferability_score": 9,
+        "systems_score": 9,
+        "confidence": 0.88,
+        "priority": "deep_read",
+        "matched_topics": [
+          "memory-constrained inference",
+          "network-aware runtime",
+          "protocol selection",
+          "latency hiding",
+          "RPC batching",
+          "adaptive systems"
+        ],
+        "short_summary_zh": "（仅基于标题与摘要）MoE-CORE是一套协调专家权重驻留與离线/在线换入的系统设计，用于在设备内存受限时对稀疏专家（MoE）做推理。关键技术包括交替缓冲的层全体预填、非均匀层级缓存容量、基于领域的初始化、路由历史感知替换策略与跨层预取；主路径精确执行路由选中的专家，选配路径可进行低分替代。摘要给出在多个模型与配置下显著降低每输出token时间的实验结果。",
+        "short_summary_en": "(Title-and-abstract based) MoE-CORE coordinates expert offloading and residency for memory-constrained MoE inference. Techniques: alternating full-layer buffers during prefill, nonuniform layer-wise cache capacities, domain-informed initialization, routing-history-aware replacement, cross-layer prefetching; exact execution for selected experts and optional score-based substitution. Reports large TPOT reductions vs a prefetch baseline across workloads.",
+        "why_interesting_zh": "高度相关：论文处理的是内存受限环境下的分层/离线专家迁移与调度问题，与MPC运行时面临的设备内存限制、主机与设备间传输开销、路由/替换策略以及跨层预取思想直接类比，具有显著的可借鉴价值。",
+        "why_interesting_en": "Highly relevant: addresses coordinated residency/offloading and scheduling under device-memory constraints, overlapping with MPC runtime problems (offloading heavy cryptographic ops, minimizing host-device transfers, scheduling to hide WAN/PCIe latency). Techniques such as routing-history-aware replacement and cross-layer prefetching are directly transferable.",
+        "relation_to_my_work_zh": "可作为研究MPC运行时在内存/带宽约束下如何调度/缓存大规模协议状态或中间密文的参考；具体策略（层级缓存、预取、替代路径）可移植到MPC专家选择、协议替换与批处理机制中。",
+        "relation_to_my_work_en": "Directly applicable to MPC runtime/compiler work: strategies for expert residency and transfer scheduling can inspire caching/prefetching of cryptographic artifacts, round-coalescing strategies, and fallback approximations to reduce latency under memory constraints.",
+        "possible_transfer_zh": "非均匀层缓存、路由历史替换、跨层预取、主路径/替代路径分层执行等，可用于：MPC算子/协议的内存-带宽调度、设备-主机传输隐藏、近似替代以换取延迟。",
+        "possible_transfer_en": "Transferable ideas include nonuniform cache capacities, access-history-aware replacement, cross-layer prefetching, exact-main vs approximate-fallback execution—applicable to MPC operator residency, protocol selection, prefetching secrets/keys, and round-coalescing under device-memory limits.",
+        "possible_overlap_or_conflict_zh": "若已有面向MPC的专家/算子驻留工作，方法层面可能有重叠；但MoE领域的实现细节和替代策略很可能提供新启发而非冲突。",
+        "possible_overlap_or_conflict_en": "May overlap with prior MPC caching/offloading proposals; expected to be complementary rather than conflicting, offering concrete scheduling heuristics to evaluate.",
+        "questions_to_verify_zh": [
+          "路由历史感知替换的政策细节与冷启动行为如何？",
+          "主路径精确执行与替代分数替换的准确性/性能权衡如何量化？",
+          "公开实现（代码）是否包含可直接移植的调度模块与测量基准？"
+        ],
+        "questions_to_verify_en": [
+          "What are the exact routing-history-aware replacement policies and how do they behave on cold start?",
+          "How is the tradeoff between exact execution and score-based substitution quantified (accuracy vs TPOT)?",
+          "Is the released code modular so scheduling/prefetch modules can be adapted to MPC runtimes?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.01950v1",
+        "research_problem_zh": "在设备内存受限的情况下，使稀疏专家混合（MoE）模型推理可行且高效：如何协调专家（expert）在主机与设备间的驻留與迁移，以在有限NPU/GPU内存下最小化主机-设备传输对每个输出token的延迟。（基于仅标题和摘要的分析）",
+        "research_problem_en": "Making sparse Mixture-of-Experts (MoE) inference feasible and fast under strict device-memory constraints: how to coordinate expert residency and host↔device transfers so that offloading does not dominate per-token latency. (Analysis based only on title and abstract)",
+        "core_method_zh": "提出系统MoE-CORE：在prefill阶段用交替缓冲区分批驻留完整专家层；在decode阶段结合非均匀的层级缓存容量、领域知情的初始化、基于路由历史的替换策略与跨层预取；主路径精确执行路由选择的专家，备选路径使用基于分数的替代以处理低分未命中；支持近似替代与多token预测(MTP)以进一步降低平均每token时间。",
+        "core_method_en": "MoE-CORE coordinates expert offloading/residency by staging full expert layers in alternating buffers during prefill and, during decode, using nonuniform per-layer cache capacities, domain-informed initialization, routing-history-aware replacement policies, and cross-layer prefetching. The system has a main exact-execution path and an optional score-based substitution path; it also supports approximate substitution and multi-token prediction (MTP). (Based only on title+abstract)",
+        "contributions_zh": [
+          "提出MoE-CORE：一种面向内存受限MoE推理的协调驻留与传输调度系统（摘要宣称）。",
+          "在prefill/交替缓冲与decode阶段引入层级非均匀缓存、路由历史替换和跨层预取的工程策略（摘要描述）。",
+          "提出可选的基于分数的替代路径以应对未命中并在保留准确度的同时降低延迟（摘要描述）。",
+          "在多个模型与工作负载上与vLLM Prefetch基线比较（摘要报告了大幅度的TPOT改进），并在受限NPU内存下展示了近似替代与MTP组合的最佳TPOT配置（按摘要报告）。"
+        ],
+        "contributions_en": [
+          "Proposes MoE-CORE for coordinated expert offloading/residency under device-memory caps (reported in abstract).",
+          "Introduces engineering techniques: alternating-buffer staging in prefill, nonuniform layer-wise cache allocation, routing-history-aware replacement, and cross-layer prefetching (as described in abstract).",
+          "Adds an optional score-based expert-substitution path and supports approximate substitution plus multi-token prediction to trade accuracy for latency (abstract claims).",
+          "Reports large empirical speedups vs a vLLM Prefetch configuration across workloads and models; reports TPOT figures under an 84-GB NPU-memory cap (numbers are taken from the abstract)."
+        ],
+        "why_watch_zh": "（基于标题和摘要）本文提出的“协调驻留與传输调度”思想对任何在受限设备内存和高主机-设备传输成本下运行的大模型推理系统都具备直接实用价值。对MPC/隐私推理或跨设备安全推理系统，关于如何安排迁移、预取与替代的机制具有可迁移的启发意义，尤其当WAN/主机-设备延迟成为主导成本时。",
+        "why_watch_en": "(Based on title+abstract) The paper's coordinated residency-and-transfer scheduling techniques are directly useful for large-model inference on memory-constrained devices. The mechanisms (routing-history replacement, cross-layer prefetch, staged buffers, score-based substitution) are potentially transferable to privacy-preserving or distributed inference runtimes where host↔device or WAN transfers dominate latency.",
+        "direct_relation_zh": "间接但高度相关于“运行时/调度”主题：与依赖感知调度、分批/预取、延迟隐藏及网络/设备感知运行时机制直接相关；与“安全MPC”在功能上不重合，但其调度与传输策略可为MPC推理的通信/内存管理提供可迁移思路。",
+        "direct_relation_en": "Indirect but highly relevant to runtime/scheduling topics: directly relates to dependency-aware scheduling, batching/prefetching, latency hiding, and network/device-aware runtime design. Not an MPC protocol paper, but its residency/transfer scheduling ideas may transfer to MPC inference runtimes' memory and communication management.",
+        "transferable_mechanisms_zh": [
+          "交替缓冲的层级驻留（staged layer buffering）",
+          "基于路由历史的替换策略（routing-history-aware replacement）",
+          "跨层预取（cross-layer prefetching）",
+          "非均匀层级缓存分配（layer-wise cache sizing）",
+          "基于分数的近似替代路径（score-based substitution）",
+          "多token预测以减少同步/交互开销（MTP）"
+        ],
+        "transferable_mechanisms_en": [
+          "alternating-buffer staging of whole expert layers",
+          "routing-history-aware replacement policies",
+          "cross-layer prefetching",
+          "nonuniform per-layer cache sizing",
+          "score-based approximate expert substitution",
+          "multi-token prediction (MTP) to amortize synchronization/transfer costs"
+        ],
+        "potential_overlap_zh": "可与MPC/隐私推理运行时（例如MP-SPDZ类系统）的调度器和内存管理模块发生交集：同样需要在受限加速器内存与主机/网络传输之间做出权衡；替代与预取策略可以用于减少频繁的安全通信。",
+        "potential_overlap_en": "Overlap with MPC/privacy-inference runtimes (e.g., MP-SPDZ) at the scheduler/memory-management level: both must balance limited accelerator memory against (secure) host/network transfers. Substitution and prefetch strategies could be repurposed to reduce frequent secure communication events.",
+        "potential_conflict_zh": "摘要未涉及安全模型；在MPC或安全部署中直接将主机-设备传输引入推理路径可能与隐私/机密性保证冲突。score-based近似替代会改变输出并可能破坏对准确性/合规性的要求。实现时须重新考虑安全通道、认证与一致性语义。",
+        "potential_conflict_en": "The abstract does not state a security model. Introducing host↔device transfers in an MPC/security context may violate confidentiality guarantees if not protected. Score-based approximate substitutions change outputs and may violate accuracy or regulatory constraints. Adapting MoE-CORE to secure settings requires careful treatment of secure channels, authentication, and consistency semantics.",
+        "full_text_questions_zh": [
+          "调度/驻留决策的具体算法与成本模型是什么？是否有在线成本估计或预测器？",
+          "路由历史替换如何表示与更新？换出/换入的触发条件与复杂度？",
+          "跨层预取的触发策略与带宽/内存占用控制如何设计？",
+          "score-based替代的可接受性准则与对预测准确性的定量影响如何度量？",
+          "与vLLM Prefetch的比较配置细节（特别是token cap、预取策略、内存限制）是什么？",
+          "代码与实验环境是否开源，能否复现摘要中的TPOT数字？"
+        ],
+        "full_text_questions_en": [
+          "What is the precise scheduling/residency algorithm and cost model? Is there an online cost estimator or learned predictor?",
+          "How is routing-history represented and updated for replacement decisions? What are the evict/prefetch triggers and complexity?",
+          "How are cross-layer prefetch triggers chosen and how is prefetch bandwidth/memory controlled?",
+          "What acceptance criteria govern score-based substitution and how does it quantitatively affect model accuracy?",
+          "Exact baseline/vLLM-Prefetch configurations used in comparisons (token caps, prefetch/eviction policy, memory limits)?",
+          "Is the implementation and experimental setup open-sourced to reproduce the reported TPOT numbers?"
+        ],
+        "experiment_checks_zh": [
+          "验证基线（vLLM Prefetch）配置与公平性：相同token caps、相同内存/IO约束下比较。",
+          "测量主机-设备传输、预取、计算三部分的时间分解，评估瓶颈是否真正来自传输。",
+          "替代路径对输出准确度的影响测试（不同阈值/低分策略的误差分析）。",
+          "在不同内存上限（包括比摘要更低/更高）重复实验以观察规模性与稳健性。",
+          "在WAN（高RTT/低带宽）与机内互联两类环境下测试迁移性能差异。"
+        ],
+        "experiment_checks_en": [
+          "Verify baseline (vLLM Prefetch) configurations and fairness: match token caps, same memory/IO constraints.",
+          "Break down time into host↔device transfer, prefetch, and computation to confirm the transfer bottleneck.",
+          "Measure accuracy impact of substitution paths across thresholds and workloads.",
+          "Repeat experiments under a range of memory caps to test scalability/robustness.",
+          "Evaluate under different network conditions (WAN/high RTT/low bandwidth vs PCIe/NVLink) to characterize sensitivity to link latency and bandwidth."
+        ],
+        "tracking_targets": [
+          "alternating-buffer staging",
+          "routing-history-aware replacement policy",
+          "cross-layer prefetching",
+          "score-based substitution logic and thresholds",
+          "MTP (multi-token prediction) integration",
+          "reported TPOT numbers and baseline configurations"
+        ],
+        "next_steps_zh": [
+          "阅读全文并检验算法伪码与成本模型；在受信任的实现中重现关键实验（或复现作者公开代码）。",
+          "将替代与预取策略移植并在安全/加密推理场景（如MPC或TEE）中评估，关注加密传输开销与一致性。",
+          "构建简单成本模型/模拟器以探索不同网络（WAN/机内）与内存预算下的调度策略。",
+          "评估替代策略对下游任务准确性与合规性的影响，并设计安全地允许近似替代的策略。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to verify algorithmic details and cost model; reproduce key experiments (or run the authors' code if available).",
+          "Port the substitution/prefetch strategies to a secure/instrumented inference runtime (e.g., MP-SPDZ or a TEE-based stack) and measure encrypted-transfer costs and consistency implications.",
+          "Build a small simulator/cost model to explore scheduler behavior under varying network RTT/bandwidth and memory budgets.",
+          "Quantify accuracy/utility impact of score-based substitution in privacy-sensitive tasks and design safe policies for approximate substitution."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.01995",
+        "version": 1,
+        "title": "Can AI Oversight Be Zero Knowledge?",
+        "authors": [
+          "Alessandro Chiesa",
+          "Ziyi Guan",
+          "Burcu Yildiz"
+        ],
+        "abstract": "AI systems increasingly produce outputs from confidential data, such as a fitness-for-duty assessment from medical records or the predicted properties of a drug candidate from its secret structure. It is important to verify that such outputs are correct without revealing the underlying data. A recent line of work studies verification of AI outputs via interactive proofs and debate for oracle-aided computation, where correctness may depend on an oracle such as human judgment, a physical experiment, or the web. These works focus on verification by a verifier that runs much faster than the computation. However, such efficient verification is impossible for general oracle-aided computation, and these works therefore rely on additional assumptions. We focus instead on privacy: allowing the verifier to run in time polynomial in the computation, we ask whether interactive arguments for oracle-aided computation can be zero knowledge, so that the verifier learns nothing about the confidential data beyond the correctness of the output. We prove that, in general, they cannot. In the random oracle model, there are no zero-knowledge proofs for all oracle-aided computations, even if both the prover and the verifier are allowed to run much longer than the computation itself. The impossibility extends to debate, a canonical model for scalable oversight. On the positive side, we show that if the oracle attaches a cryptographic signature to each of its answers, then every oracle-aided computation can be verified in zero knowledge with an efficient prover and verifier, assuming only collision-resistant hash functions. Beyond privacy, this also gives an alternative approach to scalable oversight that relies neither on an honest opponent, as in debate, nor on the robustness of the computation, as in prior single-prover protocols.",
+        "categories": [
+          "cs.AI",
+          "cs.CC",
+          "cs.CR"
+        ],
+        "published": "2026-10-01T16:30:16Z",
+        "updated": "2026-10-01T16:30:16Z",
+        "abstract_url": "https://arxiv.org/abs/2610.01995v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.01995v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.01995v1",
+        "relevance_score": 8,
+        "novelty_score": 8,
+        "transferability_score": 7,
+        "systems_score": 6,
+        "confidence": 0.84,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure computation",
+          "privacy-preserving machine learning",
+          "protocol selection"
+        ],
+        "short_summary_zh": "基于标题与摘要：本文研究带有外部判定器/实验等‘oracle’的计算（oracle-aided computation）下的交互式论证/争辩机制能否做到零知识。摘要给出否定性结果：在随机预言机模型下不存在对所有此类计算的零知识证明（即不可能性），并把不可能性扩展到争辩模型。另一方面，若 oracle 对每次回答附带加密签名，则在仅假设抗碰撞哈希的条件下可以构造零知识验证方案，且有高效的证明者与验证者。以上内容基于标题与摘要。",
+        "short_summary_en": "Title-and-abstract-based: The paper studies zero-knowledge interactive arguments for oracle-aided computation. It proves impossibility results in the random-oracle model (no ZK proofs for all oracle-aided computations, also extending to debate). Positively, if the oracle signs its answers, then under only collision-resistant hashing every oracle-aided computation admits zero-knowledge verification with efficient prover and verifier. Statements are based solely on the title and abstract.",
+        "why_interesting_zh": "对隐私保护的 AI 输出验证与可扩展监督（scalable oversight）有直接理论影响：它说明在不额外信任 oracle 的条件下无法在保持零知识的同时普适地验证 oracle 依赖的计算；同时提出在 oracle 签名存在时的可行构造，可能启发隐私保密验证与 MPC 中的设计。",
+        "why_interesting_en": "This has direct theoretical relevance to privacy-preserving verification of AI outputs and scalable oversight: it shows fundamental limits on zero-knowledge verification for oracle-dependent computations, and provides a constructive positive route when oracles sign answers. This could inform designs for privacy-preserving verifiers and MPC protocols.",
+        "relation_to_my_work_zh": "基于摘要：若你的研究涉及验证模型输出而不泄露机密数据（例如用 MPC/零知识证明验证模型推断），则这篇论文的否定性结果与 oracle-签名的正向构造很可能与协议选择、威胁模型和信任假设直接相关。",
+        "relation_to_my_work_en": "Based on the abstract: if you work on verifying model outputs without revealing secret inputs (e.g., MPC or ZK-based verification), the impossibility results and the oracle-signature constructive result are likely directly relevant to protocol choice, threat models, and trust assumptions.",
+        "possible_transfer_zh": "可能的迁移方向包括：将论文提出的带签名 oracle 架构映射到 MPC 场景（如何让数据源/传感器/人类评审签名并验证），以及评估在何种工程假设下可实现零知识监督/验证。",
+        "possible_transfer_en": "Possible transfers: map the oracle-signature approach to MPC settings (how to have data sources/experiments/human oracles sign and be verifiable), and evaluate practical trust/engineering assumptions under which ZK oversight is achievable.",
+        "possible_overlap_or_conflict_zh": "可能与现有以争辩（debate）或单一证明者可扩展监督方案的假设产生冲突：摘要表明某些先前依赖较弱假设的可扩展方案在零知识目标下不成立。",
+        "possible_overlap_or_conflict_en": "Potential conflict with prior scalable oversight approaches based on debate or single-prover robustness—abstract suggests some prior schemes relying on weaker assumptions do not yield zero-knowledge guarantees.",
+        "questions_to_verify_zh": [
+          "不可能性定理的精确形式和假设（模型、资源界限、随机预言机的用法）是什么？",
+          "正向构造中对 oracle 签名的具体接口和信任模型如何定义？",
+          "证明者/验证者的时间与通信复杂度在实际规模下如何？是否有实施或性能估计？"
+        ],
+        "questions_to_verify_en": [
+          "What are the precise statements and assumptions of the impossibility results (computational/cryptographic model, resource bounds, role of the random oracle)?",
+          "In the positive construction, how is the oracle-signing interface and the oracle trust model formally defined?",
+          "What are prover/verifier time and communication costs at realistic scales? Any implementation or performance estimates?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.01995v1",
+        "research_problem_zh": "在oracle-aided计算（例如依赖人类判断、实验或网络查询的推理任务）场景下，能否实现既能验证AI输出正确性又对机密输入保持零知识（verifier只能学到输出正确性而不泄露数据）的交互证明/争辩机制？摘要基于标题与摘要的分析指出，这个问题在一般情形下是否可行、以及在什么额外假设下可行。",
+        "research_problem_en": "For oracle-aided computation (where correctness depends on external oracles like human judgment, experiments, or the web), can interactive arguments/debate protocols verify AI outputs while being zero-knowledge—i.e., the verifier learns nothing beyond the correctness of the output? The paper asks when this is possible or impossible under what assumptions. (Analysis based only on title+abstract)",
+        "core_method_zh": "基于理论证明：在随机预言机模型中给出泛化的不可能性结果——不存在对所有oracle-aided计算的零知识证明（即使证明者与验证者时间远超被验证计算）。同时给出一个正向构造条件：如果oracle在其回答上附加加密签名，则在仅假设抗碰撞哈希函数的前提下，可以为任意oracle-aided计算构造零知识的高效验证机制（对证明者和验证者都高效）。摘要同时扩展了不可能性到争辩（debate）模型，并讨论可扩展监督的替代路径。",
+        "core_method_en": "The paper gives a theoretical impossibility in the random-oracle model: there are no zero-knowledge proofs for all oracle-aided computations, even if prover and verifier are allowed to run much longer than the computation. The impossibility also applies to debate models. Positively, the authors show that if the oracle signs each answer, then—assuming only collision-resistant hash functions—every oracle-aided computation can be verified in zero knowledge efficiently. (Based only on title+abstract)",
+        "contributions_zh": [
+          "在随机预言机模型中证明了对任意oracle-aided计算实现零知识验证的一般不可能性（摘要宣称）。",
+          "将不可能性结果推广到争辩（debate）模型，指出可扩展监督下隐私的根本限制。",
+          "给出正向构造：当oracle对其答案附带签名时，在仅依赖抗碰撞哈希函数的假设下，能够构造对任意oracle-aided计算的零知识验证协议，且证明者与验证者效率可接受（摘要宣称）。",
+          "提出了一种替代的可扩展监督方法，不依赖诚实对手（debate）或计算鲁棒性。"
+        ],
+        "contributions_en": [
+          "Impossibility result in the random-oracle model: no zero-knowledge proofs exist for all oracle-aided computations (as stated in abstract).",
+          "Extends the impossibility to the debate model—limiting scalable oversight approaches that rely on debate.",
+          "Gives a positive construction: if the oracle signs its answers, then under only collision-resistant hash assumptions, one can verify any oracle-aided computation in zero knowledge with efficient prover and verifier (reported in abstract).",
+          "Offers an alternative scalable oversight approach that does not rely on honest opponents or the robustness assumptions of prior single-prover protocols. (Abstract-based summary)"
+        ],
+        "why_watch_zh": "此工作直接触及“在不泄露机密数据的前提下验证AI/LLM输出”的核心问题，对隐私保护的机器学习与安全多方计算（MPC）领域有重要理论与实践含义。若目标是在保持输入保密的同时对外部/人类/实验型oracle相关的AI输出进行可验证检查，本文给出的不可能性与带签名oracle的可行性条件是关键参考。",
+        "why_watch_en": "This paper directly addresses the core problem of verifying AI/LLM outputs without revealing confidential inputs—highly relevant to privacy-preserving ML and secure MPC. The impossibility result and the signed-oracle positive construction are crucial for designing verification mechanisms when external oracles are involved.",
+        "direct_relation_zh": "与安全计算和隐私验证高度相关：结果影响如何在保密数据上进行监督、审计与可验证推理，并限定了在没有额外信任/签名假设下可实现的保证。对设计用于私有数据的可验证推理（包括安全LLM推理、MPC中的输出验证）具有直接理论影响。",
+        "direct_relation_en": "Highly relevant to secure computation and privacy-preserving verification: the results constrain what guarantees are possible when verifying oracle-aided computations over secret data. Direct theoretical impact on output verification for private-data pipelines including secure LLM inference and MPC output-checking.",
+        "transferable_mechanisms_zh": [
+          "将oracle答案用加密签名绑定（signed-oracle model）的构造思想",
+          "把可扩展监督问题形式化为oracle-aided交互证明与争辩的问题框架",
+          "在ROM下的不可能性证明技巧与归约方法（对设计安全协议的理论边界有借鉴意义）"
+        ],
+        "transferable_mechanisms_en": [
+          "the signed-oracle construction idea (binding oracle answers with cryptographic signatures)",
+          "formalization of scalable oversight as oracle-aided interactive proofs/debate",
+          "impossibility proof techniques/reductions in the random-oracle model that delimit protocol design space"
+        ],
+        "potential_overlap_zh": "可用于为私有LLM/隐私机器学习系统设计输出验证层：若外部信息源（web API、人类评审或实验设备）能够对其回答签名，则能在零知识下验证复杂推理过程，适配MPC与安全推理管线。",
+        "potential_overlap_en": "Can be applied to designing output-verification layers for private LLMs/privacy-ML systems: if external sources (web APIs, human annotators, experiments) can sign their answers, one can obtain zero-knowledge verification constructions suitable for MPC/secure inference pipelines.",
+        "potential_conflict_zh": "签名oracle的前提需要额外信任或协议改造：现实系统中的oracle（例如人类或网络搜索）可能无法或不愿提供签名，这与许多MPC/隐私模型的无信任假设冲突。摘要中的不可能性结论也警示在无签名/无额外假设下不能期望零知识验证。",
+        "potential_conflict_en": "The signed-oracle assumption requires extra trust/protocol changes: real-world oracles (humans, web APIs) may not provide signatures—this conflicts with no-trust MPC threat models. The impossibility result warns that without such assumptions, zero-knowledge verification for oracle-aided computations is untenable.",
+        "full_text_questions_zh": [
+          "不可能性证明的精确定义与模型细节是什么？（对证明者/验证者的时间上限、oracle访问模式等）",
+          "随机预言机模型中不可能性的主要归约/关键思想是什么？是否存在强/弱版本的正反结果？",
+          "签名oracle的形式要求如何？需要不可伪造的时间戳/nonces/防重放？签名单元的信任边界如何定义？",
+          "正向构造的复杂度（证明者与验证者时间、通信量、交互轮数）有何明确界定？是否适用于大型模型/LLM相关的oracle查询？",
+          "对现实场景（人类评审、实验结果、网络查询）的可操作化建议是什么？",
+          "是否有实现示例或仅为理论构造？若有，效率常数是多少？"
+        ],
+        "full_text_questions_en": [
+          "What are the exact model details behind the impossibility (bounds on prover/verifier time, oracle access patterns, etc.)?",
+          "What is the main reduction/idea in the ROM impossibility proof—are there stronger/weaker variants?",
+          "What are the formal requirements for the signed oracle? Does it need anti-replay measures, timestamps, or nonces? How is trust in the signing key modeled?",
+          "What are the concrete complexity bounds (time/communication/rounds) of the positive construction for signed-oracles? Is it practical for large-model/LLM-style oracle queries?",
+          "How can the construction be operationalized for real oracles (human raters, experiments, web APIs)?",
+          "Is there an implemented prototype or only theoretical constructions? If implemented, what are the efficiency constants?"
+        ],
+        "experiment_checks_zh": [
+          "这是理论工作：重点检查证明的形式化假设、归约步骤与是否对边界条件做了充分说明。",
+          "检验正向构造的可实现性细节（签名格式、签名公开密钥分发、证明/验证时间复杂度的具体表达）。",
+          "若论文包含实现或微基准：检验原始设置、签名费用与协议通信开销是否与现实oracle情形匹配。"
+        ],
+        "experiment_checks_en": [
+          "This is primarily theoretical: scrutinize formal model assumptions, reduction steps, and edge cases in the impossibility proofs.",
+          "Check implementability details of the positive construction: signature formats, public-key distribution, and explicit prover/verifier complexity expressions.",
+          "If the paper includes prototypes or microbenchmarks, validate measurement setup and the practical cost of signing and verification against real oracle scenarios."
+        ],
+        "tracking_targets": [
+          "formal model for oracle-aided computation and timing assumptions",
+          "ROM impossibility theorem statements and proof structure",
+          "signed-oracle construction: assumptions, signature requirements, complexity bounds",
+          "implications for debate models and scalable oversight"
+        ],
+        "next_steps_zh": [
+          "阅读全文并逐步检查不可能性证明与正向构造的细节；关注签名oracle情形的可操作性与信任边界。",
+          "探索将签名oracle思想应用于私有LLM/安全推理：评估现实API或人类审稿签名化的可行性与成本。",
+          "若可行，则尝试在受控原型中实现签名oracle流水线并测量通信/计算开销。"
+        ],
+        "next_steps_en": [
+          "Read the full paper and audit the impossibility proofs and positive construction in detail—pay attention to signature assumptions and the trust model.",
+          "Explore applying the signed-oracle idea to private LLM/secure-inference settings: assess feasibility and cost of getting oracle answers signed (APIs, human raters).",
+          "If promising, prototype a signed-oracle verification flow in a controlled setting and measure prover/verifier overhead and practicality."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.01887",
+        "version": 1,
+        "title": "TRACE: Tackling Real-World Resource Assignment Problems via Agentic Heuristic Design",
+        "authors": [
+          "Jose A. Ayala-Romero",
+          "Andres Garcia-Saavedra",
+          "Xavier Costa-Perez"
+        ],
+        "abstract": "Dynamic resource assignment, the real-time allocation of task streams to heterogeneous processing nodes, is the backbone of modern computing infrastructure. While learning-based schedulers excel in research, industrial deployments still rely on hand-written rules that operators can read, audit, and execute within tight latency budgets. LLM-based Automatic Heuristic Design (AHD) promises to automate writing such rules. However, existing AHD frameworks were developed for combinatorial problems fully specified to the LLM, and they learn only from a scalar fitness score. In real systems, the behaviour that determines a good heuristic, such as processor speeds or power consumption, is unknown a priori: the score reveals which heuristic performs better, but not why. This missing information is recorded in the system logs that every evaluation produces. Exploiting it is non-trivial: logs are massive and noisy, the relevant signals depend on the objective, and their content and format vary across hardware and software stacks, so they can neither be fed to an LLM as is nor processed by a fixed parser. We propose TRACE, which couples an evolutionary AHD loop with an agentic knowledge-extraction workflow. A Reasoner agent analyzes the log schema in light of the objective and formulates hypotheses about the system dynamics; a Coder agent writes and executes schema-specific code to test them, producing insights or executable tools for the evolved heuristics. We evaluate TRACE on a synthetic cloud benchmark and a 5G vRAN scenario built from industrial testbed measurements and operational traffic traces. TRACE consistently outperforms state-of-the-art AHD methods in resource assignment problems and yields more auditable heuristics at under 2% overhead.",
+        "categories": [
+          "cs.LG",
+          "cs.NE"
+        ],
+        "published": "2026-10-01T15:38:04Z",
+        "updated": "2026-10-01T15:38:04Z",
+        "abstract_url": "https://arxiv.org/abs/2610.01887v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.01887v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.01887v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 7,
+        "systems_score": 8,
+        "confidence": 0.8,
+        "priority": "deep_read",
+        "matched_topics": [
+          "dependency-aware scheduling",
+          "network-aware runtime",
+          "online optimization",
+          "adaptive systems",
+          "learned cost models",
+          "protocol selection",
+          "latency hiding",
+          "batching"
+        ],
+        "short_summary_zh": "基于题目和摘要：TRACE 将进化式自动启发式设计(AHD)与“代理式”日志知识抽取相结合。Reasoner 代理在目标上下文中分析日志 schema 并提出假设，Coder 代理生成并执行专用代码来检验假设，产出可执行工具或洞见。作者在合成云基准与基于工业 5G vRAN 测试数据的场景上评测，声称在资源分配问题上优于现有 AHD 且启发式可审计且开销<2%。",
+        "short_summary_en": "Title-and-abstract-based summary: TRACE couples an evolutionary Automatic Heuristic Design loop with an agentic log-driven knowledge-extraction pipeline: a Reasoner inspects log schema + objective to hypothesize system dynamics, and a Coder generates tests/tools to validate them. Evaluated on a synthetic cloud benchmark and a 5G vRAN trace-based scenario; authors report improvements over prior AHD and more auditable heuristics at under 2% overhead.",
+        "why_interesting_zh": "（基于题目和摘要）对 MPC/secure-inference runtimes 有直接吸引力：runtime heuristics for task assignment, protocol selection 和 WAN-aware scheduling 需要可审计、低延迟规则。TRACE 提供了从系統產生日誌自動萃取有用信号并把它編碼成启发式的思路，這可能降低手工规则维护成本并改进调度决策。",
+        "why_interesting_en": "(Title-and-abstract-based) This is interesting for MPC/secure-inference runtimes because it targets auditable, low-latency heuristics for heterogeneous resource assignment, protocol selection and network-aware scheduling. TRACE's approach—leveraging execution logs via a Reasoner/Coder loop—could reduce manual tuning and produce interpretable scheduling rules useful in constrained MPC deployments.",
+        "relation_to_my_work_zh": "（基于题目和摘要）若你研究 MPC 运行时或 MP-SPDZ 风格系统中的调度/协议选择，TRACE 的 log-driven heuristic synthesis 可以用于：自动生成针对不同网络/CPU 特性的调度规则、为 WAN 场景选择分批/合并轮次策略，或为混合协议决策提供可审计规则。",
+        "relation_to_my_work_en": "(Title-and-abstract-based) If your work targets MPC runtimes (e.g., MP-SPDZ) or protocol selection under WAN latency, TRACE's log-driven heuristic synthesis could be adapted to auto-generate scheduling rules tuned to observed processor/network characteristics, to inform batching/round-coalescing strategies, or to produce auditable protocol-switch heuristics.",
+        "possible_transfer_zh": "（基于题目和摘要）可移植点包括：1) 用 Reasoner 自动识别 MPC 栈日志字段（带宽、延迟、CPU/crypto cost）并生成特征；2) 用 Coder 生成轻量规则/解析器并内嵌到 runtime；3) 用进化循环搜索低延迟/少轮次的启发式调度器。",
+        "possible_transfer_en": "(Title-and-abstract-based) Transferable elements: (1) Reasoner-style log schema analysis to extract MPC-relevant signals (crypto op costs, network RTT/bandwidth); (2) Coder-generated, schema-specific parsers/tools embedded into a runtime; (3) evolutionary search for heuristics optimizing latency/round-complexity and auditability.",
+        "possible_overlap_or_conflict_zh": "（基于题目和摘要）可能与已有的学习型调度器或 AHD 框架重叠；与黑盒强化学习方法相比，TRACE 更侧重可审计规则，可能在 QoS/性能极限上表现不同。需验证作者与哪些 SOTA 方法比较并是否包含 MPC-like baselines。",
+        "possible_overlap_or_conflict_en": "(Title-and-abstract-based) Likely overlap with prior learning-based schedulers and AHD frameworks; unlike black-box learned schedulers TRACE emphasizes auditable rules, which may trade off asymptotic performance. Need to check which SOTA baselines were used and whether MPC-like workloads were considered.",
+        "questions_to_verify_zh": [
+          "作者如何表示并过滤不同系统日志的噪声？能否概括 Reasoner 提取的代表性特征？",
+          "Coder 生成的代码/工具是如何保证低延迟且安全可嵌入 runtime 的？",
+          "实验中與哪些 AHD / 学习型调度器比较？是否包含 WAN/高延迟 MPC 风格场景？",
+          "“低于2%开销”如何计算（运行时开销、额外延迟、内存）？可否复现？"
+        ],
+        "questions_to_verify_en": [
+          "How does the Reasoner represent and filter noisy, heterogeneous logs; what representative features does it extract?",
+          "How are Coder-generated artifacts constrained to be low-latency and safe to embed into a production runtime?",
+          "Which SOTA AHD or learned schedulers are used as baselines, and do experiments include WAN/high-latency (MPC-like) workloads?",
+          "How is the claimed “under 2% overhead” measured (runtime cost, added latency, memory), and is the evaluation reproducible?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.01887v1",
+        "research_problem_zh": "在实际资源指派（dynamic resource assignment）问题中，如何用可审计且延迟可接受的方式自动生成高质量调度启发式规则？特别是当系统行为（影响启发式表现的因素）未知且每次评估只返回标量得分但会产生大量异构日志时，如何从日志中提取有用信息以改进启发式设计？（基于标题与摘要的分析）",
+        "research_problem_en": "For real-world dynamic resource assignment, how can we automatically generate high-quality, auditable scheduling heuristics that meet tight latency/auditability budgets? Specifically, how to exploit massive, noisy, heterogeneous evaluation logs (when only scalar fitness is available) to learn why heuristics perform well and use that knowledge to produce better heuristics? (Analysis based only on title+abstract)",
+        "core_method_zh": "提出TRACE：把进化式自动启发式设计（AHD）与agent式知识抽取工作流耦合。Reasoner agent在目标导向下分析日志模式并提出关于系统动力学的假设；Coder agent针对这些假设生成并执行专用代码（解析器/检测/工具）来检验假设，产出可执行工具或见解供进化循环使用。该方法在合成云基准与基于工业测试床测量的5G vRAN场景上评估并据称优于现有AHD方法。",
+        "core_method_en": "TRACE couples an evolutionary Automatic Heuristic Design loop with an agentic knowledge-extraction workflow. A Reasoner agent inspects log schemas relative to an objective and formulates hypotheses about system dynamics; a Coder agent writes and runs schema-specific code to test them, producing insights or executable tools that feed into the evolved heuristics. Evaluated on a synthetic cloud benchmark and a 5G vRAN scenario. (Based on title+abstract)",
+        "contributions_zh": [
+          "提出TRACE框架：将日志驱动的假设生成与自动化启发式演化结合以处理现实系统的异构日志与不可观测因素。",
+          "引入两类agent（Reasoner与Coder）分别负责发现有用信号并自动生成/执行验证代码，从而把原始日志转换为可被演化算法利用的信号或工具。",
+          "在合成云基准和5G vRAN场景上进行了评估，摘要报告TRACE持续优于现有AHD方法且产生更可审计的启发式，同时对系统开销低于2%。"
+        ],
+        "contributions_en": [
+          "Proposes TRACE: a framework that combines log-driven hypothesis extraction with evolutionary AHD to handle heterogeneous, noisy logs and hidden system dynamics.",
+          "Introduces Reasoner and Coder agents: Reasoner hypothesizes about system dynamics from logs, Coder produces/tests schema-specific code that yields features/tools for heuristics.",
+          "Evaluated on a synthetic cloud benchmark and a 5G vRAN scenario; abstract reports that TRACE outperforms state-of-the-art AHD and yields more auditable heuristics at under 2% overhead."
+        ],
+        "why_watch_zh": "TRACE直接切入“自动设计可审计调度规则”的实用需求，对要在生产环境部署调度器（包括MPC/分布式推理的运行时调度器）且需可解释/可审计策略的场景非常相关。其从海量日志中抽取可操作知识的机制可能对构造网络感知、延迟敏感的运行时调度器有直接借鉴意义。",
+        "why_watch_en": "TRACE addresses automatic design of auditable scheduling heuristics for production systems—relevant for runtime schedulers (including MPC/distributed inference runtimes) that need explainable/auditable policies. Its log-driven knowledge extraction can inform network-aware, latency-sensitive runtime schedulers.",
+        "direct_relation_zh": "与主要主题（依赖感知调度、网络感知运行时、学到的代价模型、在线优化）高度相关：它解决如何把运行日志转成可用信号并自动生成可审计的启发式，这与调度器设计与编译层指令调度具有明显交叉。",
+        "direct_relation_en": "Highly related to primary topics: dependency-aware scheduling, network-aware runtime, learned cost models, and online optimization. TRACE focuses on turning logs into usable signals and automated, auditable heuristics—overlapping with scheduler and compiler instruction-scheduling concerns.",
+        "transferable_mechanisms_zh": [
+          "基于目标的日志模式分析（Reasoner）与自动生成/执行解析代码（Coder）的双agent工作流",
+          "把结构化假设与可执行测试注入到演化AHD循环以得到可审计的启发式",
+          "面向schema的自动化工具生成以处理不同硬件/软件栈的异构日志",
+          "注重可审计性与低运行时开销的策略设计"
+        ],
+        "transferable_mechanisms_en": [
+          "dual-agent workflow: Reasoner for goal-directed log-schema analysis and hypothesis generation, Coder for auto-generating/executing schema-specific tests/tools",
+          "injecting structured hypotheses and executable tests into the evolutionary AHD loop to produce auditable heuristics",
+          "schema-targeted automated parser/tool generation to handle heterogeneous logs across stacks",
+          "design-for-auditability with low runtime overhead (claimed <2%)"
+        ],
+        "potential_overlap_zh": "可用于生成与调优MPC或分布式推理运行时的调度启发式：通过收集运行时日志（延迟、带宽、CPU/NPU利用率）并让TRACE生成可审计规则，能加速在多节点/异构链路上的资源分配改进。",
+        "potential_overlap_en": "Could be used to generate and tune scheduling heuristics for MPC or distributed inference runtimes: collect runtime logs (latency, bandwidth, CPU/NPU utilization) and let TRACE produce auditable rules for multi-node/heterogeneous-link resource assignment.",
+        "potential_conflict_zh": "依赖LLM/agent生成代码与假设可能带来正确性与安全隐患：自动生成的解析或执行代码若未受限，可能引入错误或安全漏洞；在高安全场景（如MPC）需要附加沙箱与审计流程。",
+        "potential_conflict_en": "Reliance on LLM/agent code generation could raise correctness and security concerns: auto-generated parsers/tests must be sandboxed and audited; in high-security scenarios (e.g., MPC) additional safeguards are required to avoid introducing vulnerabilities.",
+        "full_text_questions_zh": [
+          "Reasoner如何描述日志schema并产生假设？使用的表示法（统计、程序式或符号）是什么？",
+          "Coder生成的代码如何保证安全性与可审计性？是否有自动测试或沙箱措施？",
+          "演化循环的表征（空间）、变异/交叉算子与适应度评估细节是什么？",
+          "对不同格式/大小日志的标注/预处理工作量怎样？方法对日志格式变化的鲁棒性如何评估？",
+          "评估基准（合成云、5G vRAN）的具体特性与是否能代表更广泛的生产场景？",
+          "可审计性是如何量化的？抽取的规则是否便于人工审查与证据回溯？"
+        ],
+        "full_text_questions_en": [
+          "How does the Reasoner represent log schemas and generate hypotheses? What representation is used (statistical, programmatic, symbolic)?",
+          "How does the Coder ensure generated code is safe and auditable? Are there automated tests or sandboxing?",
+          "What is the evolutionary design space (representation), mutation/crossover operators, and fitness evaluation details?",
+          "What preprocessing/annotation is required for heterogeneous logs? How robust is the method to changes in log formats?",
+          "What are the exact characteristics of the synthetic cloud and 5G vRAN benchmarks? How representative are they of production workloads?",
+          "How is auditability quantified? Are produced rules human-readable and traceable for manual inspection?"
+        ],
+        "experiment_checks_zh": [
+          "核对对比基线和度量：是否与最先进AHD方法在相同工作负载和日志异构程度下比较？",
+          "提供消融研究：去掉Reasoner或Coder会怎样影响性能与可审计性？",
+          "测量生成规则的可解释性/可审计性（人工评审耗时、规则复杂度）与运行时开销（是否低于2%在更广泛场景下成立？）。",
+          "在日志损坏、缺失或格式漂移情况下测试鲁棒性。"
+        ],
+        "experiment_checks_en": [
+          "Check baselines and metrics: are comparisons against state-of-the-art AHD methods fair across same workloads and log heterogeneity?",
+          "Ablation studies: effect of removing Reasoner or Coder on performance and auditability.",
+          "Measure interpretability/auditability of generated rules (human review time, rule complexity) and runtime overhead (is the <2% claim robust across scenarios?).",
+          "Test robustness under corrupted/missing logs and schema drift."
+        ],
+        "tracking_targets": [
+          "Reasoner hypothesis generation process",
+          "Coder's code-generation & safety mechanisms",
+          "evolved-heuristics representations and examples",
+          "evaluation on 5G vRAN traces and reported overhead numbers"
+        ],
+        "next_steps_zh": [
+          "阅读全文确认Reasoner/Coder的实现细节与安全约束；查看生成规则的实际示例以评估可审计性。",
+          "在一个小型调度器/运行时中试点TRACE：收集日志、让TRACE生成启发式，并评估调度性能与人工可审计性。",
+          "为MPC/隐私推理场景设计附加的沙箱与审计流程，以安全采用自动生成代码/工具。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to confirm Reasoner/Coder implementation details and safety constraints; inspect concrete generated rules to assess auditability.",
+          "Pilot TRACE in a small scheduler/runtime: collect logs, let TRACE produce heuristics, and evaluate scheduling performance and human-audit effort.",
+          "Design sandboxing and audit controls tailored to MPC/privacy-inference deployments before adopting auto-generated parsers or test code."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.01907",
+        "version": 1,
+        "title": "Detection and Resolution of Periodic Artifacts in OpenDP's Discrete Laplace Sampler",
+        "authors": [
+          "Cesare Gerolimetto Fabrello",
+          "Valeria Rossi",
+          "Alberto Trombetta",
+          "Massimo Caccia"
+        ],
+        "abstract": "Differential privacy implementations rely on precise sampling from noise distributions to provide formal privacy guarantees. We report the discovery of systematic artifacts in OpenDP's discrete Laplace sampler that manifest as periodic distortions in the output distribution. Through systematic testing, we trace these artifacts to a faulty implementation in the rational arithmetic library used by the bernoulli_exp1 function, a low-level primitive that implements sampling from Bernoulli(e^(-x)) distributions. We present a diagnostic methodology that isolates the faulty component in the nested sampling hierarchy and propose an alternative implementation based on exact rational arithmetic that eliminates the artifacts. Statistical validation with 10^6 samples confirms that the corrected sampler produces outputs indistinguishable from the theoretical distribution at the tested precision level.",
+        "categories": [
+          "cs.CR",
+          "stat.CO"
+        ],
+        "published": "2026-10-01T15:51:08Z",
+        "updated": "2026-10-01T15:51:08Z",
+        "abstract_url": "https://arxiv.org/abs/2610.01907v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.01907v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.01907v1",
+        "relevance_score": 7,
+        "novelty_score": 6,
+        "transferability_score": 6,
+        "systems_score": 7,
+        "confidence": 0.8,
+        "priority": "read",
+        "matched_topics": [
+          "privacy-preserving machine learning",
+          "secure computation",
+          "implementation correctness",
+          "performance modeling"
+        ],
+        "short_summary_zh": "基于题目和摘要：作者发现 OpenDP 的离散 Laplace 采样器存在周期性分布伪影，归因于 bernoulli_exp1 函数所依赖的有理算术库中的实现错误。提出诊断方法定位该低层次采样问题，并用基于精确有理算术的替代实现修复，10^6 样本的统计验证显示修复后输出与理论分布一致。",
+        "short_summary_en": "Title-and-abstract-based summary: The authors detect systematic periodic artifacts in OpenDP's discrete Laplace sampler, trace them to a faulty rational-arithmetic implementation in bernoulli_exp1, present a diagnostic method to isolate the faulty sampling primitive, and propose an exact-rational-arithmetic alternative that eliminates the artifacts; statistical tests on 10^6 samples validate the fix at tested precision.",
+        "why_interesting_zh": "（基于题目和摘要）与隐私保护 ML 密切相关：DP 采样器的实现错误会破坏形式隐私保证。对 MPC/DP 复合系统或任何依赖 OpenDP 的隐私流水线，这种实现级别的错误很重要且可直接影响安全性/合规性。",
+        "why_interesting_en": "(Title-and-abstract-based) Highly relevant to privacy-preserving ML: implementation bugs in DP samplers can invalidate formal privacy guarantees. For MPC+DP pipelines or systems relying on OpenDP, identifying and fixing such low-level artifacts is critical for correctness and compliance.",
+        "relation_to_my_work_zh": "（基于题目和摘要）如果你的项目使用 OpenDP 或其他 DP primitives（例如在 MPC 上添加噪声），需要关注此类实现缺陷；论文提供的诊断方法和精确有理数实现思路可能直接可采用于你的工具链审计或实现修复。",
+        "relation_to_my_work_en": "(Title-and-abstract-based) If your work uses OpenDP or DP primitives (e.g., adding noise within MPC), this paper's diagnostic methodology and exact-rational implementation approach are directly relevant for auditing and repairing libraries to preserve formal guarantees.",
+        "possible_transfer_zh": "（基于题目和摘要）迁移点：将诊断流程用于审计其他 DP/采样原语、采用精确有理算术或其它数值安全替代实现以消除离散采样伪影，以及在 CI/测试中加入高样本统计验证。",
+        "possible_transfer_en": "(Title-and-abstract-based) Transferable actions: apply the diagnostic methodology to audit other DP/ sampling primitives, adopt exact-rational or numerically-safe implementations to remove artifacts, and add large-sample statistical checks into CI for DP libraries.",
+        "possible_overlap_or_conflict_zh": "（基于题目和摘要）可能与 OpenDP 社区的已知补丁/实现差异有交集；需要核实该问题是否已被 upstream 修复以及替代实现的性能/可移植性权衡。",
+        "possible_overlap_or_conflict_en": "(Title-and-abstract-based) Potential overlap with existing OpenDP fixes or community patches; verify whether upstream has already addressed this bug and examine tradeoffs of the exact-rational implementation (performance, portability).",
+        "questions_to_verify_zh": [
+          "作者是如何在采样层级逐步定位到 bernoulli_exp1 的？诊断流程是否可复现？",
+          "替代实现的性能开销（慢多少）与不同精度/平台的可移植性如何？",
+          "统计验证使用的检验类型与置信区间如何保证“不可区分于理论分布”？",
+          "该问题是否已被 OpenDP upstream 修复或有其它已知补丁？"
+        ],
+        "questions_to_verify_en": [
+          "How exactly was the nested diagnostic procedure used to isolate bernoulli_exp1; is the workflow reproducible?",
+          "What is the performance overhead of the exact-rational alternative, and how portable is it across platforms/precisions?",
+          "Which statistical tests and confidence thresholds were used to claim outputs are indistinguishable from the theoretical distribution?",
+          "Has this bug already been fixed upstream in OpenDP or are there alternative community patches?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
