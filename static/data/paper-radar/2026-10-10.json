@@ -1,0 +1,601 @@
+{
+  "date": "2026-10-10",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 6,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2610.12106",
+        "version": 1,
+        "title": "Could LLM Watermark Detection be Public?",
+        "authors": [
+          "Georgios Milis",
+          "Tom Sander",
+          "Tomáš Souček",
+          "Heng Huang",
+          "Pierre Fernandez"
+        ],
+        "abstract": "Watermarking large language models is popular for tracing chatbot and agentic outputs, yet detectors remain unreleased since exposing them could let attackers do targeted edits with the detector's feedback. However, watermarks are already vulnerable to uninformed tampering attacks. We thus first quantify whether a public detector would be an additional liability in a deployment setting at varying levels of access, from token-level scores to a binary verdict. Second, we introduce a split-key public-private watermarking method that exposes one key through a public detector while keeping the other for full verification and forensics. An informed attacker can only move the public signal, creating an imbalance between public and private scores. We introduce a statistical test for this imbalance, and combine it with the full key verdict in a two-stage mechanism. Third, we evaluate the split-key method on a wide range of removal and forgery attacks, comparing the uninformed to detector-informed settings. Public detection improves removal only at small edit budgets, since plain rephrasing already strips the watermark at a lower quality cost, but it does enable forgery, which the private pipeline can identify. Overall, releasing half of the watermark enables transparency and interoperability, and tampering with the released half stays detectable. This bounds the provider's liability and questions the need to keep detectors fully private.",
+        "categories": [
+          "cs.CR",
+          "cs.LG"
+        ],
+        "published": "2026-10-08T15:05:58Z",
+        "updated": "2026-10-08T15:05:58Z",
+        "abstract_url": "https://arxiv.org/abs/2610.12106v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.12106v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.12106v1",
+        "relevance_score": 9,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 5,
+        "confidence": 0.85,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "privacy-preserving machine learning"
+        ],
+        "short_summary_zh": "仅基于标题与摘要：作者研究向公众公开LLM水印检测器是否会增加部署风险。提出一种“拆分密钥”（public-private）水印方案：公开一半密钥以供检测互操作，同时保留私钥用于完全验证和取证。定义了用于检测公开/私有得分不平衡的统计检验，并在两阶段流程中结合私钥判定。摘要中还报告了对多种移除与伪造攻击的评估，结论是公开半密钥能提升透明性，且对半密钥的有针对性篡改仍可被检测到。",
+        "short_summary_en": "Title-and-abstract only: The paper studies the security and liability trade-offs of releasing LLM watermark detectors. It proposes a split-key public/private watermarking scheme that exposes a public key (and public detector) while retaining a private key for full verification and forensics. The authors introduce a statistical test for imbalance between public and private watermark signals and evaluate robustness to removal and forgery attacks, reporting that releasing half the watermark permits interoperability while keeping tampering detectable.",
+        "why_interesting_zh": "与安全LLM推理与隐私保护ML高度相关：讨论了检测器公开性的风险与缓解方案，兼顾互操作性与取证，直接关联部署策略与攻击面评估。",
+        "why_interesting_en": "Highly relevant to secure LLM inference and privacy-preserving ML: addresses whether detectors should be public, proposes an auditable split-key design that balances interoperability and forensic capability, and empirically evaluates attacker capabilities under varying access levels.",
+        "relation_to_my_work_zh": "如果你的工作涉及安全LLM推理、模型取证或部署策略，这篇论文可能提供可移植的设计思想（拆分密钥、两阶段检验）与威胁模型。",
+        "relation_to_my_work_en": "If you work on secure LLM inference, model forensics, or deployment policy, this paper offers a potentially transferable split-key design and an attacker-access graded threat model worth examining.",
+        "possible_transfer_zh": "拆分密钥与不对称公开/私有验证流程可直接迁移到安全推理服务、模型审计流水线、或合规性日志设计。公开半密钥的“可测不对称性”检测思路也可用于其他完整性信标。",
+        "possible_transfer_en": "The split-key concept and two-stage verification test could transfer to secure inference services, model-audit pipelines, and compliance logging. The imbalance-statistic idea may generalize to other integrity beacons where part of a signal is public.",
+        "possible_overlap_or_conflict_zh": "摘要未给出具体密钥设计、统计检验阈值或性能开销；与现有水印/检测工作可能在假设（攻击者知识、编辑预算）上冲突。仅基于摘要，无法判断是否与你已有方法重叠或存在实验不可比性。",
+        "possible_overlap_or_conflict_en": "The abstract omits details on key formats, statistical thresholds, and overheads; assumptions about attacker knowledge or edit budgets may conflict with other watermarking/forensic schemes. Based only on the abstract, overlap or experimental incomparability with other methods is possible but unverified.",
+        "questions_to_verify_zh": [
+          "公开密钥泄露后私钥的安全边界如何精确定义？",
+          "统计检验的显著性阈值与误报/漏报曲线如何随编辑预算变化？",
+          "实验中使用的攻击预算和语义保持度（quality-utility trade-off）如何设定？",
+          "公开检测器对实时服务延迟或吞吐有无显著开销？"
+        ],
+        "questions_to_verify_en": [
+          "How is the private-key security boundary formally defined when the public key is exposed?",
+          "How do the statistical-test thresholds translate to false-positive/false-negative rates as attacker edit budgets vary?",
+          "What attack edit budgets and semantic-quality trade-offs were used in evaluation?",
+          "Does exposing the public detector incur measurable latency or throughput costs in deployment?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.12106v1",
+        "research_problem_zh": "是否可以公开LLM水印检测器而不显著增加部署风险——在不同访问级别下（从逐标记分数到二元判决）评估公开检测器对水印篡改与伪造的影响，并提出一种公开/私有分裂密钥的水印方案以平衡透明度与取证能力。",
+        "research_problem_en": "Whether LLM watermark detectors can be made public without substantially increasing deployment risk — quantify the effect of releasing detectors at different access granularities (token scores to binary verdicts), and propose a split public/private-key watermarking scheme to enable public detection while retaining private verification/forensics.",
+        "core_method_zh": "提出“分裂密钥”水印：对水印使用两部分密钥，公开一半以驱动公共检测器，保留另一半用于完整验证；定义在公开信号和私有信号之间的统计不平衡检验，并将此检验与私有密钥判决组合为两阶段机制。通过无信息/有信息攻击（移除与伪造）比较公开检测的影响。",
+        "core_method_en": "Introduce a split-key watermark: split the watermark key into a public part (exposed via a public detector) and a private part (kept for full verification/forensics). Define a statistical test for imbalance between public and private signals, combine it into a two-stage verification pipeline, and empirically evaluate against removal and forgery attacks under informed and uninformed attacker models (varying edit budgets).",
+        "contributions_zh": [
+          "提出并形式化评估在不同访问级别下公开检测器是否增加被动/主动篡改风险。",
+          "设计分裂密钥(公/私)水印方案和基于公私分数不平衡的统计检验，两阶段验证流程。",
+          "在多种移除和伪造攻击场景下实验比较了无信息与检测器知情攻击，评估了公开检测器的利弊。"
+        ],
+        "contributions_en": [
+          "Formalize and quantify whether public detectors increase risk across access granularities.",
+          "Design a split-key (public/private) watermarking scheme plus a statistical test for imbalance between public and private signals, forming a two-stage verification pipeline.",
+          "Empirically evaluate removal and forgery attacks under informed/uninformed attacker models and characterize when public detection helps or harms. "
+        ],
+        "why_watch_zh": "与隐私与合规相关的LLM部署、模型取证和防止模型滥用密切相关；提出的分裂密钥+不平衡检验在可解释性、互操作性和责任限定方面有实际意义。对于需在受限/公开检测之间权衡的服务商和审计器很有参考价值。",
+        "why_watch_en": "Directly relevant to LLM deployment, provenance/forensics, and abuse mitigation. The split-key idea and imbalance test provide a practical tradeoff between transparency/interoperability and forensic robustness — important for providers deciding detector release policies and auditors seeking scalable detection. (Assessment based only on title+abstract.)",
+        "direct_relation_zh": "基于题目与摘要判断：与主要主题（如“secure LLM inference”、“privacy-preserving ML”）在应用与威胁建模层面相关，但与MPC和运行时调度的直接技术关系有限。可迁移思想在于公/私验证分离、两阶段审计流程与对可用信息级别的威胁建模。",
+        "direct_relation_en": "Title-and-abstract-based assessment: The paper is directly relevant to secure LLM inference and privacy-preserving ML from a forensics/auditing standpoint, but has limited direct overlap with core MPC runtime/compiler topics. Transferable ideas include public/private verification separation, two-stage auditing, and formal threat modeling by detector access level.",
+        "transferable_mechanisms_zh": [
+          "分裂密钥（public/private）验证架构，可用于其他需要部分公开证据但保留完整取证能力的系统。",
+          "基于公私信号不平衡的统计检验思想，可改造为检测篡改或中间结果被干预的证明机制（例如分布式推理或协同模型服务的篡改检测）。",
+          "分级威胁模型（按访问粒度量化风险）与实证评估流程，可用于设计网络感知或隐私感知的检测/审计策略。"
+        ],
+        "transferable_mechanisms_en": [
+          "Split-key (public/private) verification architecture for systems that must expose partial evidence while retaining full forensic capability.",
+          "Statistical imbalance test between public and private signals — can be adapted to detect tampering/intervention of intermediate outputs in distributed/instrumented inference.",
+          "Threat-modeling by detector access granularities and empirical evaluation framework — applicable when deciding what to expose in privacy-preserving or networked runtimes."
+        ],
+        "potential_overlap_zh": "与模型水印、模型取证和滥用检测文献高度重叠；和隐私/合规方向的工作（可解释性、审计）相关。",
+        "potential_overlap_en": "High overlap with literature on model watermarking, model forensics, and abuse-detection; related to privacy/compliance work (auditing and explainability).",
+        "potential_conflict_zh": "摘要声称公开半个水印可“限定责任”并保持可检测性；需核查是否假定了对攻击者能力（访问/编辑预算、白盒vs黑盒）过于乐观，或忽略了实际部署中对阈值/误报的成本。",
+        "potential_conflict_en": "The abstract claims that releasing half the watermark bounds provider liability while keeping tampering detectable — must verify whether attacker capabilities (access levels, edit budgets, white-box/black-box) are realistically modeled and whether false-positive/operational costs are acceptable in deployment.",
+        "full_text_questions_zh": [
+          "公开/私有密钥的具体格式与强度如何？如何生成和嵌入水印？",
+          "不平衡统计检验的数学形式、显著性/样本复杂度与置信控制如何？",
+          "攻击模型精确描述（攻击者能否访问模型权重、解码器得分、token级置信等）？",
+          "实验中使用的数据集、评估指标（TP/FP、AUC、编辑距离预算）与攻击实现细节？",
+          "公开检测器的输出类型（逐token分数、位置标注、二元判决）如何影响结果？是否有延迟/效能开销评估？",
+          "在跨模型、跨域（不同生成风格/温度）下的鲁棒性如何？",
+          "是否考虑联合攻击（例如先重写/微调+后门/噪声注入）？"
+        ],
+        "full_text_questions_en": [
+          "What exactly are the public/private key formats and how are watermarks embedded?",
+          "What is the mathematical form of the imbalance statistical test, its sample complexity, significance control, and power?",
+          "Precise attacker model: what access is allowed (weights, token scores, logits, API only)?",
+          "Experimental datasets, metrics (TP/FP, AUC), edit-budget definitions, and attack implementation details?",
+          "How do detector output granularities (token scores vs binary verdict) affect detectability and operational cost? Any latency/overhead measurements?",
+          "Robustness across models, generation temperatures, and domains?",
+          "Do experiments include combined attacks (rephrasing + fine-tuning/poisoning)?"
+        ],
+        "experiment_checks_zh": [
+          "重现实验：对照无信息/有信息攻击（不同编辑预算）重跑，报告TP/FP、AUC与误报成本。",
+          "对不同访问等级（token分数/概率/二元）分别评估并绘制可操作阈值与样本需求曲线。",
+          "做面对面（white-box）与仅API（black-box）威胁的分组实验。",
+          "消融：只公开随机信号或部分密钥位，检验不平衡检验的灵敏度。",
+          "评估部署成本：检测时延、额外存储/计算、对生成质量的影响。"
+        ],
+        "experiment_checks_en": [
+          "Reproduce experiments for uninformed vs detector-informed attackers across edit budgets, reporting TP/FP, AUC, and operational false-positive costs.",
+          "Evaluate each access granularity (token scores/probabilities vs binary verdict) and map detection thresholds to sample-size requirements.",
+          "Run separate threat buckets for white-box vs API-only (black-box) attackers.",
+          "Ablations: expose random public bits or partial key slices to test sensitivity of imbalance test.",
+          "Measure deployment overheads: detection latency, extra storage/computation, and any impact on generation quality."
+        ],
+        "tracking_targets": [
+          "public/private key format and entropy; sample complexity of imbalance test; attacker access assumptions (white/black-box); empirical curves of TPR vs edit budget; false positive rate under benign variation; latency/overhead numbers."
+        ],
+        "next_steps_zh": [
+          "在受限环境（如MPC/加密推理）中评估能否安全地公开部分检测信号，检验是否会泄露额外信息。",
+          "将分裂密钥与现有水印/指纹方法对接，比较兼容性与组合策略。",
+          "把不平衡检验移植为实时审计模块并评估在线误报/鲁棒性。"
+        ],
+        "next_steps_en": [
+          "Evaluate whether partial public detectors can be exposed safely inside constrained settings (e.g., MPC/encrypted inference) and whether the public signal leaks additional information.",
+          "Integrate split-key approach with existing watermark/fingerprinting methods to assess compatibility and combined robustness.",
+          "Port the imbalance test into an online auditing module and evaluate real-time false-positive behavior and robustness."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.12137",
+        "version": 1,
+        "title": "Poster: A Preliminary Study of LLM Distillation Inference",
+        "authors": [
+          "Edward Chen",
+          "Yuntao Du"
+        ],
+        "abstract": "Unauthorized model distillation, in which a model is trained on the outputs of a proprietary large language model (LLM), is a growing threat to model providers. We study distillation inference: determining whether a suspect model was distilled from another model or trained independently. We formulate this problem as a hypothesis test and estimate the behavior expected under each hypothesis by training shadow models: distilled shadow models learn from the teacher's reasoning traces, whereas independent shadow models learn only from reference answers. The auditor measures how closely each model predicts the teacher's reasoning outputs and then uses the shadow models to convert the suspect's score into a calibrated p-value. In a preliminary study using Qwen2.5-7B as the teacher and Llama-3.2-3B for the suspects, our test achieves a true positive rate of 1.0 at a significance level of 0.02. These results demonstrate the feasibility of using distillation inference to detect distillation attacks.",
+        "categories": [
+          "cs.CR",
+          "cs.LG"
+        ],
+        "published": "2026-10-08T15:24:29Z",
+        "updated": "2026-10-08T15:24:29Z",
+        "abstract_url": "https://arxiv.org/abs/2610.12137v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.12137v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.12137v1",
+        "relevance_score": 9,
+        "novelty_score": 6,
+        "transferability_score": 8,
+        "systems_score": 5,
+        "confidence": 0.75,
+        "priority": "read",
+        "matched_topics": [
+          "privacy-preserving machine learning",
+          "secure LLM inference"
+        ],
+        "short_summary_zh": "仅基于标题与摘要：本文研究“蒸馏推断”——判断可疑模型是否由专有LLM的输出（尤其是推理/推理痕迹）蒸馏得到。将问题建模为假设检验，使用影子模型（蒸馏式影子模型学习教师的推理痕迹；独立式影子模型只学习参考答案）估计两种假设下行为分布，并据此把可疑模型对教师推理输出的相似度转化为校准p值。摘要给出一次初步实验（Qwen2.5-7B教师、Llama-3.2-3B嫌疑模型）在显著水平0.02下达到1.0真阳性率的结果。",
+        "short_summary_en": "Title-and-abstract only: The paper proposes 'distillation inference' to test whether a suspect model was distilled from a teacher LLM. Framed as a hypothesis test, the auditor trains shadow models: distilled shadows learn from the teacher's reasoning traces whereas independent shadows learn only reference answers. The suspect's similarity to the teacher's reasoning is converted to a calibrated p-value using the shadows. A preliminary experiment reports high detection power in one teacher/suspect pairing.",
+        "why_interesting_zh": "直接相关于模型产权与滥用检测、供应商对抗未授权蒸馏的取证能力，以及维护模型所有权的合规/安全工具链。",
+        "why_interesting_en": "Directly relevant to model intellectual-property protection and detection of unauthorized distillation — useful for model providers and forensics in secure LLM inference contexts.",
+        "relation_to_my_work_zh": "若你的研究关注模型窃取检测、模型供应链安全或部署时的合规性审计，这种基于影子模型的假设检验框架可能是可移植的起点。",
+        "relation_to_my_work_en": "If you work on model theft detection, supply-chain security, or deployment auditing, the shadow-model-based hypothesis-testing approach could be a practical, transferable method to prototype.",
+        "possible_transfer_zh": "影子模型+校准p值的检测框架可被移植到其他溯源/取证任务（如数据外泄、微调来源识别），并可扩展为服务侧监测工具。",
+        "possible_transfer_en": "The shadow-model and calibrated p-value framework can be adapted for other provenance/forensics tasks (data leakage, fine-tune origin detection) and integrated into provider-side monitoring toolchains.",
+        "possible_overlap_or_conflict_zh": "摘要未说明影子模型的训练数据、计算成本与对教师-嫌疑相似性的具体度量；若假设与攻击者可获得信息较弱（或强），检测效力可能显著变化。",
+        "possible_overlap_or_conflict_en": "The abstract omits shadow-training data assumptions, compute cost, and the precise similarity metric; detection power likely depends heavily on attacker access and experimental choices, so overlap/conflict with other detection claims is possible.",
+        "questions_to_verify_zh": [
+          "影子模型训练所需的数据（教师输出集、参考答案）与规模是多少？",
+          "对手若仅暴露有限推理痕迹或对输出做噪声/后处理，检测稳健性如何？",
+          "方法的假阳性/假阴性随教师-嫌疑架构差异和训练数据重合度如何变化？",
+          "部署检测时的计算/时间成本（训练影子模型）是否可接受？"
+        ],
+        "questions_to_verify_en": [
+          "What data and scale are required to train the shadow models (teacher output traces, reference answers)?",
+          "How robust is detection if an attacker exposes only limited reasoning traces or applies noise/post-processing to outputs?",
+          "How do false-positive / false-negative rates vary with teacher–suspect model architecture differences and training-data overlap?",
+          "Is the compute/time cost of training shadow models acceptable for practical deployment?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.12137v1",
+        "research_problem_zh": "如何判定一个可疑模型是否通过对另一个（受保护）LLM的蒸馏而来（未授权蒸馏），即在模型来源辨认上建立统计检验框架。",
+        "research_problem_en": "How to determine whether a suspect model was distilled from a proprietary LLM (unauthorized distillation) — formulate a hypothesis test for model provenance and estimate expected behavior under each hypothesis using shadow models.",
+        "core_method_zh": "用影子模型进行校准的假设检验：训练两类影子模型（蒸馏型从教师的推理轨迹学习，独立型只学参考答案），比较可疑模型对教师推理输出的预测相似度，并用影子模型将其分数转换为经校准的p值以做出判定。",
+        "core_method_en": "Calibration via shadow models for hypothesis testing: train distilled shadow models (learn from teacher's reasoning traces) and independent shadows (learn only from reference answers). Measure how closely the suspect predicts the teacher's reasoning outputs and use the shadow models to convert the score into a calibrated p-value for the hypothesis test.",
+        "contributions_zh": [
+          "将未经授权蒸馏判定问题形式化为可校准的假设检验问题。",
+          "提出用两类影子模型（蒸馏 vs 独立）估计在两种假设下的行为并据此校准检测统计量。",
+          "提出并在初步实验（Qwen2.5教师，Llama-3.2嫌疑）上展示了高检出率的可行性。"
+        ],
+        "contributions_en": [
+          "Formalize distillation inference as a calibrated hypothesis test.",
+          "Propose using two types of shadow models (distilled vs independent) to estimate null/alternative behavior and calibrate the suspect model's score into a p-value.",
+          "Provide preliminary empirical evidence (Qwen2.5 teacher, Llama-3.2 suspects) demonstrating feasibility with high true-positive at low significance. "
+        ],
+        "why_watch_zh": "检测模型来源对知识产权保护、模型治理和合规审计重要；该方法（影子模型+校准）为模型取证提供了可操作路线，可能与水印技术互补。",
+        "why_watch_en": "Provenance detection is important for IP protection, governance and auditing; shadow-model calibration offers a practical route for model forensics and could complement watermarking/other provenance techniques. (Assessment based only on title+abstract.)",
+        "direct_relation_zh": "基于题目与摘要判断：与保护模型所有权、模型取证相关，间接关联到secure LLM inference和privacy-preserving ML（因为检测可用于滥用监测）。与MPC编译器或运行时的直接技术关系较弱，但‘影子模型校准’思想可迁移到审计或协同训练情形。",
+        "direct_relation_en": "Title-and-abstract-based assessment: Relevant to model ownership/provenance and auditing; indirectly related to secure LLM inference and privacy-preserving ML via misuse detection. Limited direct overlap with MPC compiler/runtime, but the shadow-model calibration idea could transfer to auditing or collaborative training settings.",
+        "transferable_mechanisms_zh": [
+          "影子模型（shadow models）用于估计在两种假设下的行为分布，这种校准策略可移植到其他模型取证或异常检测任务。",
+          "利用推理轨迹（reasoning traces）作为判别信号——在可观测中间结果的系统中，这类信号也可用于取证或完整性检测。",
+          "将模型来源判定作为统计假设检验并报告p值的框架，可用于可审计的合规流程。"
+        ],
+        "transferable_mechanisms_en": [
+          "Use of shadow models to estimate behavior under null/alternative hypotheses — transferable to other model forensics or anomaly-detection tasks.",
+          "Using reasoning traces as discriminative signal — applicable where intermediate outputs are observable and can be checked for provenance.",
+          "Casting provenance detection as a statistical hypothesis-test with calibrated p-values — useful for auditable compliance workflows."
+        ],
+        "potential_overlap_zh": "与模型取证、版权/滥用检测及蒸馏/模型窃取检测相关工作高度重叠；也与水印、指纹化方法存在交叉。",
+        "potential_overlap_en": "High overlap with literature on model forensics, copyright/abuse detection, and distillation/model-stealing detection; intersects with watermarking/fingerprinting approaches.",
+        "potential_conflict_zh": "摘要报告的初步结果（极高TPR）可能局限于特定模型/数据/实验设置；若推理轨迹在部署中不可获取或被攻击者隐藏，则方法适用性受限。",
+        "potential_conflict_en": "The preliminary high TPR may be specific to particular teacher/suspect models and datasets; applicability is limited if reasoning traces are unavailable in deployment or can be suppressed by attackers.",
+        "full_text_questions_zh": [
+          "“推理轨迹”（reasoning traces）具体指什么信号（中间日志、注意力、token级输出、一步步链式思考文本）？",
+          "影子模型的数量、容量、训练数据来源与训练协议如何设置？",
+          "如何衡量‘接近度’（相似度度量、分布检验）以及p值是如何计算与校准的？",
+          "对抗性设置下（恶意蒸馏、知识筛选、信息擦除）的鲁棒性如何？",
+          "模型架构/规模/训练集差异对检测的泛化性如何？"
+        ],
+        "full_text_questions_en": [
+          "What exactly are the 'reasoning traces' (intermediate logs, attention maps, token-level outputs, chain-of-thought text)?",
+          "How are shadow models configured (#, capacity), what training data and protocols are used?",
+          "How is closeness measured (similarity metric, distribution test) and how are p-values computed and calibrated?",
+          "Robustness against adversarial distillation strategies (information filtering, trace suppression)?",
+          "Generalization across architectures, model sizes, and dataset shifts?"
+        ],
+        "experiment_checks_zh": [
+          "在更多教师/嫌疑模型组合上复现（跨架构与多尺度），并报告ROC、TPR@FP与p值分布。",
+          "对黑盒蒸馏（仅API输出）与白盒蒸馏场景分别评估。",
+          "添加对抗基线：疑似模型通过自蒸馏/信息删减来隐藏来源时的检测率。",
+          "检验影子模型数量与容量对校准置信度的敏感性。"
+        ],
+        "experiment_checks_en": [
+          "Reproduce across more teacher/suspect model pairs (cross-architecture and scale) and report ROC, TPR@FP, and p-value distributions.",
+          "Evaluate both black-box (API-only) and white-box distillation scenarios.",
+          "Include adversarial baselines where suspect models attempt to hide provenance (self-distillation, trace filtering).",
+          "Test sensitivity of calibration to the number and capacity of shadow models."
+        ],
+        "tracking_targets": [
+          "definition and accessibility of 'reasoning traces'; shadow model count/capacity/training data; similarity metric and p-value calibration method; performance across teacher/suspect pairs and under adversarial disguise."
+        ],
+        "next_steps_zh": [
+          "尝试在仅黑盒访问下适配该框架（仅凭API响应推断蒸馏来源）。",
+          "将该检验和水印或指纹技术结合以提高稳健性与证据链。",
+          "评估在受限或加密推理环境（MPC/TEE）中能否安全获取或模拟推理轨迹用于审计。"
+        ],
+        "next_steps_en": [
+          "Adapt the framework to black-box-only settings (API responses only).",
+          "Combine this calibrated-test approach with watermarking/fingerprinting for stronger multi-evidence provenance.",
+          "Evaluate whether reasoning traces can be safely accessed or simulated for auditing inside constrained/encrypted inference environments (MPC/TEE)."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.12133",
+        "version": 1,
+        "title": "Rehearse Everything, Remember Nothing: Attic-KV Rehearses What Will Be Read",
+        "authors": [
+          "Zhiyun Shi"
+        ],
+        "abstract": "Many key-value (KV) caches are compressed before anyone knows what will be asked of them: a document cached for retrieval, a prompt prefix shared across requests, the memory of a long conversation. The prevailing approach scores KV entries by rehearsal: the model rereads the context and keeps the entries it attends to, assuming that the more completely a cache rehearses its context, the better it remembers it. We show that under tight budgets this assumption backfires: rehearse everything, remember nothing. At a 3% keep ratio, rereading the whole context keeps 31.5 of 96.5 points on RULER, and on LongBench's natural-text tasks it falls below methods that rehearse nothing at all. The cause is that a cache keeps what it rehearses: rereading spreads the budget across the whole context, so the answer's own entries survive at little more than chance. Like a student before an exam, a cache remembers more by testing itself than by rereading. Two principles follow: rehearse what will be read, and rehearse as much as there is. We instantiate them as Attic-KV (Attic for short), a training-free rehearsal in which the model quizzes itself with question-answer pairs that quote the context, alongside anchor tokens in a content-adaptive amount. Changing only the rehearsal lifts three hosts that score it in three different ways: Attic alone is the best training-free method in all eight settings we test on RULER and LongBench's natural-text tasks, and plugged into the gradient-based KVgrad and the trained RestoreKV+, it raises them by up to 17.1 and 28.1 points. Its advantage grows as the budget shrinks, reaching 41.9 points over full rereading at a 3% keep ratio, and it compresses faster than rereading the whole context.",
+        "categories": [
+          "cs.CL",
+          "cs.LG"
+        ],
+        "published": "2026-10-08T15:22:50Z",
+        "updated": "2026-10-08T15:22:50Z",
+        "abstract_url": "https://arxiv.org/abs/2610.12133v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.12133v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.12133v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.78,
+        "priority": "read",
+        "matched_topics": [
+          "LLM serving systems",
+          "latency hiding",
+          "communication and computation overlap",
+          "performance modeling"
+        ],
+        "short_summary_zh": "仅基于标题与摘要：本文提出Attic-KV，一种训练免费（zero-training）的KV缓存压缩/复现策略，用“自我测验”代替全文重读（rehearsal）。通过用引用上下文的问题—答案对（及锚定token、内容自适应数量）来“测验”缓存，避免将有限预算均摊到整个上下文上，从而在低保持率（keep ratio）条件下显著提高检索质量。摘要报告在RULER和LongBench的多项任务上，相较于全文重读与若干训练/梯度方法取得显著提升，且在预算极低时优势更大。",
+        "short_summary_en": "Title-and-abstract only: Attic-KV is a training-free KV rehearsal strategy for compressed caches: instead of rereading full contexts, the model quizzes itself with question–answer pairs that quote the context plus adaptive anchors. This focuses rehearsal budget on entries likely to be read and yields large quality gains at small keep ratios versus full rereading and some learned baselines, with faster compression behavior reported on RULER and LongBench tasks.",
+        "why_interesting_zh": "直接相关于LLM推理系统与KV缓存压缩：提出一个低成本、部署友好的启发（无需再训练），可用于提升服务在带宽/内存受限环境下的质量与延迟表现。",
+        "why_interesting_en": "Directly relevant for LLM serving and cache-compression: offers a deployment-friendly, zero-training rehearsal that focuses limited cache budget on likely-to-be-accessed entries, improving quality/efficiency under tight memory/latency constraints.",
+        "relation_to_my_work_zh": "如果你的工作涉及安全/高效的LLM推理部署、KV缓存、或网络/延迟敏感的runtime调度，Attic-KV的“自测”原则与实现细节值得深入阅读与实验复用。",
+        "relation_to_my_work_en": "If you develop LLM-serving runtimes, cache policies, or network/latency-aware schedulers, Attic-KV’s self-quizzing rehearsal and budget-allocation principles are likely directly applicable and worth reimplementing/evaluating.",
+        "possible_transfer_zh": "可直接迁移到LLM推理缓存、分层缓存策略、以及与批处理/管线并行相结合的压缩前/后调度策略；也可与带学习成分的恢复器（如KVgrad）混合以获得更好结果。",
+        "possible_transfer_en": "Directly transferable to LLM inference caches, hierarchical cache policies, and scheduling strategies that co-design compression with batching/pipelining; can be combined with learned recovery methods like KVgrad or RestoreKV+ as the abstract demonstrates.",
+        "possible_overlap_or_conflict_zh": "可能与已有的训练型压缩/恢复方法（KVgrad、RestoreKV等）在假设和评测基线上存在重叠。摘要未给出关于多样化查询分布或跨域稳健性的完整细节。",
+        "possible_overlap_or_conflict_en": "Likely overlaps with prior learned compression/recovery methods (KVgrad, RestoreKV+); the abstract does not detail robustness across diverse query distributions or deployment costs (CPU/latency).",
+        "questions_to_verify_zh": [
+          "自测问题—答案对如何自动构造？是否需要访问训练数据或额外标注？",
+          "在真实在线服务中，生成自测对的CPU/延迟开销与带宽/内存节省如何权衡？",
+          "对不同查询分布、对话历史长度或域的稳健性如何？是否有对抗性查询能使方法失效？",
+          "与训练型恢复方法结合（如KVgrad）时的工程复杂度与收益曲线如何？"
+        ],
+        "questions_to_verify_en": [
+          "How are the QA self-test pairs constructed automatically — do they require training data or annotations?",
+          "What are the CPU/latency costs of generating and using self-tests in online serving, and how do they trade off with memory/bandwidth savings?",
+          "How robust is Attic-KV under varying query distributions, conversation lengths, or adversarial queries?",
+          "What is the engineering complexity and benefit curve when combining Attic-KV with learned recovery methods such as KVgrad?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.12133v1",
+        "research_problem_zh": "在资源受限的KV缓存压缩场景下，如何选择性‘复述’（rehearse）上下文以最大化缓存保留的有用信息？当前“复述全部”策略在极限压缩下表现不佳，需要新的内容自适应的无训练选择策略。",
+        "research_problem_en": "In tight-budget key-value (KV) cache compression for LLMs, how to selectively 'rehearse' context entries so the cache preserves useful information? The common 'rehearse-everything' approach fails at very low keep ratios, so a new content-adaptive, training-free rehearsal is needed.",
+        "core_method_zh": "提出Attic-KV：一种训练-free的自我提问（self-quizzing）复述方法。模型用引用上下文的问答对来检测将被读取的内容，并结合锚点tokens按内容自适应地选择复述量。两个原则：只复述将被读取的内容，并且按可用内容量复述。",
+        "core_method_en": "Propose Attic-KV: a training-free self-quizzing rehearsal method where the model generates question-answer pairs quoting the context, supplemented with anchor tokens in a content-adaptive amount. Two principles: rehearse what will be read and rehearse as much as there is.",
+        "contributions_zh": [
+          "指出并量化‘复述全部’在极低保留率下的失败模式。",
+          "提出Attic-KV，一种训练-free、基于自我提问的内容自适应复述机制。",
+          "在多个任务/基线上展示显著改进，尤其在极紧预算下相对优势巨大，并可作为其他方法（KVgrad、RestoreKV+）的插件提升性能。"
+        ],
+        "contributions_en": [
+          "Characterize failure modes of 'rehearse everything' at very low keep ratios.",
+          "Propose Attic-KV, a training-free self-quizzing, content-adaptive rehearsal mechanism.",
+          "Show strong empirical gains across benchmarks and that Attic can plug into gradient-based and trained KV methods to substantially improve compression utility, especially at tiny keep ratios."
+        ],
+        "why_watch_zh": "KV缓存压缩与检索效率对大规模/带宽受限的LLM推理非常重要；提出的无训练、可插拔选择机制在资源受限或需要低延迟的推理（包括隐私/加密场景）中潜在价值高。",
+        "why_watch_en": "KV cache compression and retrieval efficiency are crucial for large-scale and bandwidth-constrained LLM inference; a training-free, plug-in selection mechanism has potential value for resource-constrained or low-latency inference (including privacy/encrypted settings). (Assessment based only on title+abstract.)",
+        "direct_relation_zh": "基于题目与摘要判断：与‘secure LLM inference’和‘privacy-preserving ML’有间接应用相关性（高效缓存可降低带宽与延迟），同时与运行时调度、依赖感知选择和通信/带宽优化的研究主题较为相关。直接与MPC编译器/协议选择关系较弱，但其选择/裁剪策略可迁移到MPC中降低通信量或轮次。",
+        "direct_relation_en": "Title-and-abstract-based assessment: Indirectly relevant to secure LLM inference and privacy-preserving ML because efficient KV caching reduces bandwidth and latency. More directly related to runtime scheduling, dependency-aware selection, and communication/bandwidth optimization. Limited direct overlap with MPC compilers/protocols, but selection heuristics could transfer to reduce MPC communication or rounds.",
+        "transferable_mechanisms_zh": [
+          "内容自适应选择（按被读取概率/被问及程度选择条目）可类比为在MPC/分布式推理中选择要传输或公开的中间结果以减低通信/轮次。",
+          "自我提问（self-quizzing）作为无监督评估重要性的机制，可用于在线依赖分析或关键路径识别，辅助调度器决定优先传输哪些对象。",
+          "可插拔训练-free模块思想适合于在受约束运行时（低带宽/WAN）中作为轻量决策器嵌入。"
+        ],
+        "transferable_mechanisms_en": [
+          "Content-adaptive selection (choosing entries based on predicted read probability) can be mapped to selecting which intermediate values to transmit in MPC/distributed inference to reduce communication or rounds.",
+          "Self-quizzing as an unsupervised importance estimator — useful for online dependency analysis or critical-path identification to guide schedulers about what to prioritize.",
+          "A plug-in, training-free decision module is suitable for constrained runtimes (low-bandwidth/WAN) as a lightweight selection policy."
+        ],
+        "potential_overlap_zh": "与检索缓存、KV压缩、记忆增强模型与高效推理文献重叠；也与基于梯度的压缩方法（KVgrad）和训练型恢复方法（RestoreKV+）有交集。",
+        "potential_overlap_en": "Overlaps with retrieval-caching, KV compression, memory-augmented models, and efficient inference literature; intersects with gradient-based compression (KVgrad) and trained restoration methods (RestoreKV+).",
+        "potential_conflict_zh": "若摘要中的自测问答依赖于访问模型生成能力或内部得分，这在加密或MPC场景中可能受限；需要核查附加计算/延迟开销以及在受限接口下的适用性。",
+        "potential_conflict_en": "If the self-quizzing relies on unconstrained model generation/access to internal scores, it may be infeasible in encrypted/MPC settings. Need to verify extra compute/latency overhead and applicability under limited interfaces.",
+        "full_text_questions_zh": [
+          "自我提问对上下文的构造细节（如何生成QA，锚点tokens如何选取）？",
+          "内容自适应量如何计算（阈值、预算分配算法）？",
+          "与KVgrad/RestoreKV+结合的集成接口与成本如何（额外计算、延迟）？",
+          "在不同模型规模、生成温度与任务类型上的稳定性如何？",
+          "是否有对在线、流式场景（逐步生成/长对话）适配的说明？"
+        ],
+        "full_text_questions_en": [
+          "How are self-quizzing Q-A pairs constructed and how are anchor tokens selected?",
+          "How is the content-adaptive amount computed (thresholds, budget allocation algorithm)?",
+          "What are the integration costs with KVgrad/RestoreKV+ (compute overhead, latency)?",
+          "Stability across model sizes, decoding temperatures, and task types?",
+          "Any adaptation for online/streaming scenarios (incremental generation/long conversations)?"
+        ],
+        "experiment_checks_zh": [
+          "在与原文相同的RULER与LongBench任务上复现，并在不同keep ratios（尤其极低如3%）下对比基线。",
+          "对比不同自测策略（随机、基于attention、基于训练的评分器）并做消融（无锚点、不同锚点数）。",
+          "评估额外延迟/计算开销与插入点（提前/实时复述）。",
+          "检验在访问受限场景（仅API/加密）下是否可构造QA并保持效果。"
+        ],
+        "experiment_checks_en": [
+          "Reproduce on RULER and LongBench natural-text tasks and compare at multiple keep ratios (especially very low like 3%).",
+          "Compare different self-test strategies (random, attention-based, trained scorers) and run ablations (no anchors, varying number of anchors).",
+          "Measure additional latency and compute overhead and when rehearsal is performed (precompute vs real-time).",
+          "Test whether QA construction and effectiveness hold under restricted-access scenarios (API-only or encrypted inference)."
+        ],
+        "tracking_targets": [
+          "Q/A construction procedure and anchor-selection rules; algorithm for content-adaptive budget allocation; plug-in API/overhead numbers when combined with KVgrad or RestoreKV+; robustness across tasks and keep ratios; applicability under API/encrypted settings."
+        ],
+        "next_steps_zh": [
+          "在受带宽/高延迟网络（WAN）和隐私受限环境（MPC/加密推理）中评估Attic-KV的实用性與开销。",
+          "将自我提问重要性得分作为调度器策略的一部分，探索与依赖感知DAG调度或批次合并的协同优化。",
+          "研究轻量化或近似的QA生成以减低额外计算，或用学习型轻打分器替代完全生成的自测。"
+        ],
+        "next_steps_en": [
+          "Evaluate Attic-KV practicality and overhead under bandwidth/latency-constrained (WAN) and privacy-limited environments (MPC/encrypted inference).",
+          "Integrate the self-quizzing importance scores into scheduler policies, exploring synergy with dependency-aware DAG scheduling and batch coalescing.",
+          "Investigate lightweight/approximate QA generation to reduce compute, or replace full generation with learned lightweight scorers."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.11999",
+        "version": 1,
+        "title": "Decentralized Latency Models and Information Flow for TSN Shapers - A Tutorial",
+        "authors": [
+          "Alexej Grigorjew",
+          "Stefan Geissler",
+          "Jürgen Schmitt",
+          "Tobias Hossfeld"
+        ],
+        "abstract": "Recent advancements in the fields of industrial automation and in-vehicle communication have also increased the requirements on their underlying networks. Traditional field bus technologies are being replaced by regular Ethernet devices with features from the IEEE Time-Sensitive Networking working group. Their standards are designed to achieve zero congestion loss and deterministic latency bounds, but the specific guarantees can differ depending on the shapers used and how the bounds are calculated. After several contributions to the standardization efforts, this work presents a number of decentralized latency models that can be applied locally on the switches, without requiring global knowledge from the rest of the network. It includes a formal definition of delay segments that allows to incorporate interoperability between different shapers and latency models in the future. It presents pseudo-code suggestions for the latency bounds computation of Strict Priority, Credit-Based Shaping, Asynchronous Traffic Shaping, and Cyclic Queuing and Forwarding, all of which can be applied locally on the devices. Finally, five models were implemented and evaluated with respect to their efficiency in terms of latency, jitter, and number of accepted streams. The results illustrate how different shapers are suited for different networks and traffic distributions.",
+        "categories": [
+          "cs.NI"
+        ],
+        "published": "2026-10-08T14:05:54Z",
+        "updated": "2026-10-08T14:05:54Z",
+        "abstract_url": "https://arxiv.org/abs/2610.11999v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.11999v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.11999v1",
+        "relevance_score": 8,
+        "novelty_score": 6,
+        "transferability_score": 8,
+        "systems_score": 7,
+        "confidence": 0.78,
+        "priority": "read",
+        "matched_topics": [
+          "WAN latency",
+          "decentralized latency models",
+          "network-aware runtime",
+          "latency bounds",
+          "TSN shapers",
+          "communication rounds",
+          "dependency-aware scheduling"
+        ],
+        "short_summary_zh": "（仅基于标题和摘要）本文是一篇教程/实用工作，提出一系列可在交换机本地应用的去中心化时延模型与计算伪代码，涵盖 Strict Priority、Credit-Based Shaping、Asynchronous Traffic Shaping 和 Cyclic Queuing and Forwarding 等 TSN（Time-Sensitive Networking）整形器的局部延迟边界计算，并在实现评估中比较它们在延迟、抖动与可接纳流数方面的表现。作者引入延迟段（delay segments）的形式化定义以便未来支持不同整形器的互操作分析。",
+        "short_summary_en": "(Based only on title and abstract) This tutorial presents decentralized latency models and algorithms that can be applied locally on TSN-capable switches to compute latency bounds for various shapers (Strict Priority, Credit-Based Shaping, Asynchronous Traffic Shaping, Cyclic Queuing & Forwarding). It formalizes 'delay segments', provides pseudocode for local computations, and evaluates five models regarding latency, jitter, and accepted streams, showing different shapers suit different traffic patterns.",
+        "why_interesting_zh": "直接相关：研究WAN/边缘部署中延迟敏感的安全计算或私有推理时需要本地可计算的延迟边界与模型，以在运行时做协议选择、批次划分、轮次合并或依赖感知调度。该工作提供可集成到运行时的本地延迟估计算法与实践对比。",
+        "why_interesting_en": "Directly relevant: for latency-sensitive MPC / private inference, decentralized, per-switch latency bounds and shaper-aware models enable runtime decisions for protocol choice, batching, round-coalescing, or dependency-aware scheduling. The paper provides practical local algorithms and comparative evaluation across shapers.",
+        "relation_to_my_work_zh": "可直接用来构建或校准MPC/私有推理运行时的网络延迟模型，作为调度器/协议选择器的输入；其伪代码和评估可加速集成到测试平台或数字孪生。",
+        "relation_to_my_work_en": "Can directly inform building or calibrating per-switch latency models for MPC/private-inference runtimes, feeding schedulers and protocol selectors; the provided pseudocode/evaluations expedite integration into testbeds or DTs.",
+        "possible_transfer_zh": "将去中心化延迟计算嵌入运行时以支持延迟感知批处理、轮次合并和网络感知调度；用作模拟器与孪生的精确网络层模型。",
+        "possible_transfer_en": "Embed the decentralized latency computations into runtimes to enable latency-aware batching, round-coalescing and network-aware scheduling; use the models as accurate network-layer components in simulators/DTs.",
+        "possible_overlap_or_conflict_zh": "如果你已有自定义网络延迟模型或TSN实现，可能在模型细节、假设或评估基准上出现重合或不同结论。",
+        "possible_overlap_or_conflict_en": "Overlap possible if you already maintain custom latency models/TSN implementations — compare modeling assumptions and evaluation baselines closely.",
+        "questions_to_verify_zh": [
+          "各延迟模型的输入可在何种交换机资源与接口上本地获取？",
+          "评估是否包含跨流优先级与多跳TSN配置下的复合效应？"
+        ],
+        "questions_to_verify_en": [
+          "Which switch-local inputs are required and are they practically available on commodity TSN-capable devices?",
+          "Does the evaluation cover composite effects across flows with differing priorities and multi-hop TSN configurations?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.11934",
+        "version": 1,
+        "title": "Digital Twin for Pre-Deployment Validation of AI-Driven Safety-Critical Industrial Edge Control Loops",
+        "authors": [
+          "Sara Cavallero",
+          "Federico Tonini",
+          "Tony Chahoud",
+          "Giampaolo Cuozzo",
+          "Davide Borsatti",
+          "Walter Cerroni",
+          "Maurizio Fodrini",
+          "Riccardo Marini"
+        ],
+        "abstract": "Industrial environments are increasingly characterized by the tight interaction among physical processes, communication infrastructures, and intelligent applications. In this context, Digital Twins (DTs) have emerged as a key technology for system analysis and optimization. However, existing DT solutions typically focus either on industrial processes or communication networks, while lacking an integrated and application-aware perspective. To fill this gap, this paper proposes a modular DT framework for industrial environments that jointly models physical processes, wireless communications, and application logic within a unified architecture. The feasibility of the proposed framework is experimentally validated through a real-world Proof-of-Concept (PoC) implemented in the BI-REX pilot line, involving a 5G-connected Autonomous Mobile Robot (AMR) transporting hazardous liquids and remotely controlled by an AI-driven application. The proposed DT is used to reproduce the behaviour of the real deployment and to investigate the impact of different placements of the AI application, including on-premise, edge, and remote cloud execution scenarios. Experimental results demonstrate a close agreement between DT predictions and PoC measurements in terms of both network-level metrics, such as Reference Signal Received Power (RSRP) and latency, and end- to-end application metrics, including application-level Round- Trip-Time (RTT). Moreover, the analysis shows how inaccuracies of network modeling can critically affect the feasibility of latency-sensitive industrial control loops, highlighting the potential of integrated DTs as tools for the pre-deployment design and validation of next-generation industrial systems.",
+        "categories": [
+          "cs.NI",
+          "cs.RO"
+        ],
+        "published": "2026-10-08T13:28:53Z",
+        "updated": "2026-10-08T13:28:53Z",
+        "abstract_url": "https://arxiv.org/abs/2610.11934v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.11934v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.11934v1",
+        "relevance_score": 7,
+        "novelty_score": 5,
+        "transferability_score": 7,
+        "systems_score": 6,
+        "confidence": 0.75,
+        "priority": "read",
+        "matched_topics": [
+          "network-aware runtime",
+          "WAN latency",
+          "latency hiding",
+          "network modeling",
+          "edge/cloud placement",
+          "privacy-preserving machine learning"
+        ],
+        "short_summary_zh": "（仅基于标题和摘要）本文提出一个模块化工业数字孪生框架，联合建模物理过程、无线通信和应用逻辑，并在真实5G连接的AMR（运输危险液体、AI驱动远程控制）PoC上验证。作者用孪生重现部署行为，比较AI部署位置（本地/边缘/云）对网络指标（例如RSRP、延迟）及端到端应用 RTT 的影响，指出网络建模不准确会危及延迟敏感控制回路的可行性。",
+        "short_summary_en": "(Based only on title and abstract) The paper proposes a modular Digital Twin (DT) framework that jointly models physical processes, wireless communications, and application logic for industrial settings. They validate on a 5G-connected AMR proof-of-concept, use the DT to reproduce measured network and application metrics (RSRP, latency, app RTT), and study effects of placing the AI application on-premise, edge, or cloud. They highlight that network-model inaccuracies can critically affect latency-sensitive control loops.",
+        "why_interesting_zh": "对以延迟为主导的隐私/安全关键闭环（例如远程私有推理或联邦/分布式安全推算）来说，能在部署前评估不同部署位置与真实无线网络条件下的端到端时延与丢包，是设计网络感知MPC运行时或通信-计算权衡策略的重要参考。",
+        "why_interesting_en": "For latency-sensitive privacy-preserving workloads (e.g., remote private inference, distributed MPC), a DT that predicts end-to-end network+application metrics under different placement scenarios is useful for pre-deployment design and for informing network-aware runtime and protocol selection decisions.",
+        "relation_to_my_work_zh": "如果你的研究关注MPC/安全推断在现实无线/边缘环境下的延迟与可用性，这项工作提供评估部署位置与无线建模误差影响的真实用例与测量对照，可用于构建更现实的网络成本模型或仿真场景。",
+        "relation_to_my_work_en": "If you study MPC/secure inference deployment over wireless/edge/cloud, this PoC gives real-measurement comparisons and a DT methodology you could adapt to produce realistic network cost models and pre-deployment checks for protocol/runtime selection.",
+        "possible_transfer_zh": "将DT中的网络延迟与丢包预测导出为MPC运行时的延迟模型，用于调度、协议切换或回退策略（例如在高延迟时切到更少轮次或压缩通信方案）；或把DT用于合成测试负载以评估WAN/边缘下的MPC性能。",
+        "possible_transfer_en": "Use the DT's network latency/loss predictions to build MPC runtime cost models for scheduling, protocol selection or fallback (e.g., switch to lower-round protocols under high latency), or to synthesize realistic test workloads for WAN/edge MPC evaluation.",
+        "possible_overlap_or_conflict_zh": "摘要中声称的“密切一致”基于该PoC的指标匹配；需要验证其可推广性与建模假设。若你已有自己的网络测量数据，可能与其工具链重叠。",
+        "possible_overlap_or_conflict_en": "The claimed close agreement is based on the PoC measurements — its generality and modeling assumptions should be verified. If you already maintain a network-measurement-based toolchain, there may be overlap in functionality.",
+        "questions_to_verify_zh": [
+          "PoC中网络模型的细节与假设是什么（链路模型、流量模型、移动性）？",
+          "孪生如何与实际系统进行校准与更新？",
+          "是否提供可导出的延迟/丢包模型或API以供外部运行时使用？"
+        ],
+        "questions_to_verify_en": [
+          "What are the DT's network-modeling assumptions and parameterizations (link models, traffic, mobility)?",
+          "How is the DT calibrated/updated against live measurements?",
+          "Does the work expose exported latency/loss models or APIs usable by external runtimes?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.12139",
+        "version": 1,
+        "title": "Toward Intelligent Networks via AI-Aware GPU-Native Packet Processing",
+        "authors": [
+          "Seyed Mohammad Mehdi Mirnajafizadeh",
+          "Yiwen Hu",
+          "Rhongho Jang"
+        ],
+        "abstract": "The integration of inline Artificial Intelligence (AI) models into critical network infrastructure is fundamentally bottlenecked by the high latency and synchronization overhead of CPU-mediated packet processing. While legacy GPU offload and recent CPU-bypass frameworks attempt to bridge this gap, they remain trapped in proprietary ecosystems or still rely on the host CPU and coarse-grained batching to coordinate stateful telemetry and AI pipeline execution. In this paper, we propose AGP, a novel framework that promotes the GPU from a passive accelerator to a primary data-path controller, answering what changes architecturally when the GPU autonomously owns the complete packet-to-inference pipeline. By enabling GPU-native packet processing, contention-free in-GPU stateful aggregation, and a persistent mega-kernel for continuous AI inference, AGP removes the CPU from the critical path. Our evaluation demonstrates that native in-GPU packet processing sustains line-rate throughput while being over 6.1x more power-efficient. Furthermore, our integrated Intrusion Detection System (IDS) stress test eliminates the legacy CPU-GPU synchronization tax, reducing end-to-end latency by 7.9x (up to 35x p99) and accelerating whole-system inference throughput by 9.3x using only ~2% of the GPU's thread capacity.",
+        "categories": [
+          "cs.NI"
+        ],
+        "published": "2026-10-08T15:25:10Z",
+        "updated": "2026-10-08T15:25:10Z",
+        "abstract_url": "https://arxiv.org/abs/2610.12139v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.12139v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.12139v1",
+        "relevance_score": 6,
+        "novelty_score": 8,
+        "transferability_score": 7,
+        "systems_score": 8,
+        "confidence": 0.9,
+        "priority": "read",
+        "matched_topics": [
+          "network-aware runtime",
+          "pipeline execution",
+          "latency hiding",
+          "communication and computation overlap",
+          "performance modeling"
+        ],
+        "short_summary_zh": "本文提出 AGP，一种将 GPU 从被动加速器提升为数据路径控制器的框架：在 GPU 内部直接处理数据包、进行无争用的状态聚合，并通过常驻 mega-kernel 实现连续 AI 推理，从而将主机 CPU 从关键路径移除。作者声称在吞吐、功耗和端到端延迟上显著优于传统 CPU-GPU 协同方案，并用入侵检测系统（IDS）工作负载进行了评估。",
+        "short_summary_en": "The paper proposes AGP, a framework that promotes the GPU to a primary data-path controller: GPU-native packet processing, contention-free in-GPU stateful aggregation, and a persistent mega-kernel for continuous AI inference. AGP removes the CPU from the critical path; the abstract reports large gains in power efficiency, latency (p99 improvements), and inference throughput on an IDS stress test.",
+        "why_interesting_zh": "对于关注 WAN/网络延迟与系统级同步开销的研究人员，AGP 提供了一个极端但 concrete 的例子：把协调和状态管理下放到加速器内部以消除主机同步税，这可能启发面向低延迟安全多方或隐私推理的运行时设计与批处理/流水线策略。",
+        "why_interesting_en": "AGP is interesting because it demonstrates eliminating CPU-mediated synchronization by making the GPU the owner of packet-to-inference pipeline and in-accelerator state. This is a concrete systems approach to reducing end-to-end latency and coordination overhead, relevant to low-latency secure inference and network-aware runtime design.",
+        "relation_to_my_work_zh": "与 MPC/安全计算直接不同，但在如何减少主机同步、隐藏网络/同步延迟以及在加速器内实现持续流水线方面有可借鉴之处；对于设计 WAN 敏感的 MPC 运行时（减少轮次、合并通信）有启发意义。",
+        "relation_to_my_work_en": "Not MPC-specific, but the techniques for removing host synchronization, enabling in-accelerator stateful aggregation, and persistent kernels are potentially applicable to MPC runtimes that need to reduce coordination rounds, coalesce messages, or offload repeated inference steps to accelerators.",
+        "possible_transfer_zh": "思路可迁移：把同步逻辑下移到参与方的加速器以减少轮次/同步延迟；利用常驻任务（mega-kernel）实现流水线并减少中断/重协商；在 MPC 推理里可用于减少 CPU 参与和合并多次小通信为更大批次。",
+        "possible_transfer_en": "Transferable ideas: pushing coordination/state into accelerators to reduce rounds/synchronization; using persistent kernels to sustain pipeline execution; coalescing many small protocol steps into accelerator-side execution to reduce host-mediated overhead in secure inference.",
+        "possible_overlap_or_conflict_zh": "无明显研究冲突；但需要注意硬件/平台假设（特定 GPU 功能、驱动或专利生态）可能限制可复用性。",
+        "possible_overlap_or_conflict_en": "No direct conflict with MPC literature, but hardware or platform assumptions (GPU features, driver modifications, proprietary toolchains) might limit applicability.",
+        "questions_to_verify_zh": [
+          "评估是否只基于特定 GPU/驱动版本？需要哪些 GPU 功能（如持久内核、低延迟网卡互联）？",
+          "状态聚合的一致性语义如何保证？在有丢包/重传/网络分区时如何恢复？",
+          "功耗与吞吐效率的测量基线是什么？相比哪些主流 CPU-GPU 框架？",
+          "在多租户或共享 GPU 场景下，常驻 mega-kernel 对调度/公平性的影响如何？",
+          "实现是否需要修改驱动/固件或专有组件，影响可移植性吗？"
+        ],
+        "questions_to_verify_en": [
+          "Which GPU features or driver changes are required? Is the evaluation tied to specific GPU hardware or interconnects?",
+          "What are the consistency and failure-recovery semantics of the in-GPU stateful aggregation under packet loss or reordering?",
+          "What are the baselines for power and throughput comparisons, and how were measurements obtained?",
+          "How does a persistent mega-kernel interact with GPU scheduler and multi-tenant workloads?",
+          "Does the implementation depend on vendor-specific or proprietary components that affect portability?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
