@@ -1,0 +1,560 @@
+{
+  "date": "2026-10-14",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 5,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2610.18444",
+        "version": 1,
+        "title": "An Optical KV Cache Network for Disaggregated LLM Serving",
+        "authors": [
+          "Seongwon Yoon",
+          "Shimeng Yu"
+        ],
+        "abstract": "Disaggregated LLM serving moves each request's KV cache from a prefill GPU to a decode GPU before the response begins, and a coding-agent turn often moves the KV of its whole long context. Behind an oversubscribed packet fabric this transfer adds to time to first token (TTFT). An optical circuit switch (OCS) can give every transfer a full-rate circuit for less than an oversubscribed packet fabric costs, but a mechanical OCS needs tens of milliseconds to reconfigure. We hide this delay inside the prefill. A reservation scheduler commits each circuit while the prefill is still computing, so the circuit is ready when the KV is, and each GPU reaches the OCS over its own wavelength-multiplexed (WDM) optics on one fiber pair. In simulations of GPU clusters on real serving traces with measured prefill times on H100 GPUs, this optical KV cache network matches 400G packet fabrics with adaptive routing at 0.55 to 0.78 times the cost of a 2:1 fabric and tolerates the 50 ms reconfiguration delay of a 384-port mechanical OCS.",
+        "categories": [
+          "cs.NI"
+        ],
+        "published": "2026-10-13T14:16:48Z",
+        "updated": "2026-10-13T14:16:48Z",
+        "abstract_url": "https://arxiv.org/abs/2610.18444v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.18444v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.18444v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.75,
+        "priority": "read",
+        "matched_topics": [
+          "network-aware runtime",
+          "latency hiding",
+          "communication and computation overlap",
+          "disaggregated runtime scheduling",
+          "WAN latency"
+        ],
+        "short_summary_zh": "基于标题与摘要：提出在分离式 LLM 服务中用光学电路交换(OCS)与波分复用(WDM)光学链路构造的 KV 缓存网络。通过在 prefill 期间提前预约电路来隐藏 OCS 重新配置延迟，模拟结果显示在成本上可匹配或优于传统 400G 分组交换结构，并能容忍几十毫秒的重配置延时。",
+        "short_summary_en": "Title-and-abstract-based: The paper designs an optical KV-cache network for disaggregated LLM serving: each GPU accesses an OCS via per-GPU WDM optics; a reservation scheduler commits circuits during prefill to hide mechanical OCS reconfiguration latency. Simulations on H100 prefill traces claim cost and performance benefits compared to 400G packet fabrics, tolerating ~50ms reconfiguration delays.",
+        "why_interesting_zh": "直接对分布式/分离式 LLM 推理的网络层设计有高度相关性。解决了 KV 传输导致的 TTFT 问题并在成本-性能权衡上提出可行替代，且方法涉及调度（预留电路）与通信-计算重叠，这与网络感知运行时与延迟隐藏研究高度相关（基于摘要）。",
+        "why_interesting_en": "Highly relevant to disaggregated LLM serving and network-aware runtime research. It targets TTFT costs due to KV transfers and proposes a scheduling/reservation approach to hide OCS reconfiguration delay via prefill overlap — directly related to communication-computation overlap and scheduling in LLM runtimes (abstract-only).",
+        "relation_to_my_work_zh": "与研究 WAN 延迟、网络感知调度、KV 缓存移动与分布式推理紧密相关。可借鉴其 reservation-scheduler 概念、WDM 利用与成本模型到 MPC/安全推理场景中以降低跨机器通信轮次开销。",
+        "relation_to_my_work_en": "Closely related to WAN-latency aware scheduling, KV cache transfers, and disaggregated inference. The reservation-scheduler and circuit reservation idea and their cost model could be adapted to MPC/distributed secure inference to reduce transfer latency and overlap communication with computation.",
+        "possible_transfer_zh": "可移植的点包括：用预留/预约资源隐藏长重配置延迟、把预填充（prefill）阶段作为调度窗口、以及用成本模型比较光学电路与分组交换。对 WAN/安全场景可替换为慢重配置交换或租用长时隙资源的策略。",
+        "possible_transfer_en": "Transferable ideas: reservation scheduling to hide long reconfiguration latencies, exploiting prefill as a scheduling window to overlap work, and cost-model based comparison of circuit vs packet fabrics. In WAN/MPC contexts, analogous strategies could reserve slower but high-throughput links or amortize setup costs across prefill work.",
+        "possible_overlap_or_conflict_zh": "若你的工作目标是通用软实现（纯以太网/现成云），则依赖硬件（OCS、WDM）可能难以直接采用。需要核实硬件成本假设与部署可行性。",
+        "possible_overlap_or_conflict_en": "If your work targets pure-software deployments on commodity clouds, the hardware assumptions (OCS, per-GPU WDM optics) may limit direct adoption. Verify cost and deployment assumptions from the paper (abstract-based).",
+        "questions_to_verify_zh": [
+          "预约调度器如何决定何时为哪个 KV 传输预约电路？",
+          "成本模型的假设是什么（OCS 端口/重配置成本、WDM 硬件费用）？",
+          "对延迟敏感的尾延与 TTFT 在不同负载下如何表现（实际 traces 除外）？",
+          "方案对故障或并发重配置冲突的容错如何？"
+        ],
+        "questions_to_verify_en": [
+          "How does the reservation scheduler decide when to commit circuits and for which KV transfers?",
+          "What are the cost-model assumptions (OCS port count, reconfiguration cost, WDM hardware pricing)?",
+          "How do TTFT and tail latencies behave under varying load conditions and real serving traces?",
+          "What fault-tolerance mechanisms exist for concurrent reservation conflicts or circuit failures?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.18444v1",
+        "research_problem_zh": "在分解式（disaggregated）LLM推理中，将每个请求的KV缓存从预填(prefill) GPU 移到解码GPU会在受超额订阅(packet-fabric)限制的网络下增加首令牌时间(TTFT)。光学电路交换（OCS）能够以低成本提供专用带宽，但机械OCS的重配置需要数十毫秒，如何在不增加显著延迟和成本的前提下利用OCS为KV传输服务是本文要解决的问题（基于题目与摘要）。",
+        "research_problem_en": "In disaggregated LLM inference, moving a request's KV cache from prefill GPU to decode GPU adds time-to-first-token (TTFT) under oversubscribed packet fabrics. An optical circuit switch (OCS) can provide full-rate transfers cheaply but a mechanical OCS has long reconfiguration latency. The problem is how to use OCS to serve KV transfers without incurring large added latency or cost (based only on title and abstract).",
+        "core_method_zh": "作者提出使用“预约调度器”（reservation scheduler）在GPU仍在执行prefill时就为KV传输预先申请光路，同时每个GPU通过波分复用（WDM）光学通道到达OCS，使得重配置延迟被隐藏在prefill计算中。通过仿真并与400G自适应路由包交换网络及2:1超额订阅网络比较成本与性能。",
+        "core_method_en": "They propose a reservation scheduler that commits circuits while prefill is computing, so circuits are ready when the KV is available. Each GPU reaches the OCS via its own wavelength-multiplexed (WDM) optics over one fiber pair. They evaluate via simulations on real serving traces and measured H100 prefill times, comparing cost and TTFT against packet fabrics.",
+        "contributions_zh": [
+          "提出将机械OCS与预约调度相结合、在prefill期间隐藏重配置延迟以服务KV缓存传输的系统设计（光学KV缓存网络）。",
+          "结合每GPU独立WDM链路的拓扑建议，减少包交换超额订阅带来的传输延迟。",
+          "通过仿真（真实服务轨迹与测量的H100 prefill时间）展示在成本与性能上的对比：在给定参数下，光学方案的成本为匹配2:1包交换的0.55到0.78倍，并可容忍384端口机械OCS的50 ms重配置延迟。"
+        ],
+        "contributions_en": [
+          "Design of an optical KV-cache network that uses a reservation scheduler to hide mechanical OCS reconfiguration latency inside prefill.",
+          "Use of per-GPU WDM optics to give each GPU dedicated circuits and reduce contention compared to oversubscribed packet fabrics.",
+          "Simulation-based cost/performance comparison on real traces and measured H100 prefill times showing the optical approach can match 400G packet fabrics at 0.55–0.78× the cost of a 2:1 fabric and tolerate a 50 ms reconfiguration delay."
+        ],
+        "why_watch_zh": "对于关注LLM推理系统的研究者和工程师，這篇工作提出了一个网络层面的优化思路（用OCS+预约调度隐藏延迟），对降低TTFT和网络成本有直接启发；其调度和预取重叠的思想可迁移到其他延迟敏感的分布式推理/服务运行时设计中。",
+        "why_watch_en": "This paper is relevant to LLM-serving researchers/engineers because it proposes a network-level optimization (OCS + reservation scheduling to hide reconfiguration delay) that can reduce TTFT and cost. The scheduling and prefetch-overlap idea is transferable to other latency-sensitive distributed inference/runtime designs.",
+        "direct_relation_zh": "基于题目与摘要分析：本文与您的主要研究主题（如安全多方计算、MP-SPDZ等）并不直接重叠，但与“网络感知运行时”、“延迟隐藏”、“通信与计算重叠”、“调度/预取策略”这些相邻主题高度相关。若您的工作涉及跨节点大状态迁移（例如分解式或隐私保护的LLM推理），其中的预约调度与预填重叠策略可提供可借鉴的机制。此结论仅基于标题与摘要。",
+        "direct_relation_en": "Based on title+abstract only: the paper is not directly about secure MPC/MP-SPDZ, but it closely relates to adjacent topics such as network-aware runtimes, latency hiding, communication-computation overlap, and scheduling/prefetch strategies. If your work involves large-state transfers across nodes (e.g., disaggregated or privacy-preserving LLM inference), its reservation-scheduling and prefill-overlap mechanisms are potentially useful.",
+        "transferable_mechanisms_zh": [
+          "预约调度器（在计算仍在进行时为未来传输预留网络资源）的概念，可用于任何需隐藏网络重配置或批次启动延迟的系统。",
+          "把重配置/同步延迟重叠进先行计算（prefill）以隐藏延迟的工程思路。",
+          "将每执行单元分配独立物理通道（这里是WDM波长）的资源分配思想，可用于减少网络争用的调度决策。",
+          "基于真实服务轨迹与测量时间的仿真评估流程与成本—性能比较方法，适合评估替代网络技术对延迟/成本的影响。"
+        ],
+        "transferable_mechanisms_en": [
+          "The reservation-scheduler concept (reserving network resources while computation is ongoing) applicable where hiding network reconfiguration or startup latency is needed.",
+          "Engineering pattern of overlapping reconfiguration/synchronization latency with earlier computation (prefill).",
+          "Assigning independent physical channels per execution unit (here, per-GPU WDM wavelengths) to reduce contention—a resource-allocation idea for schedulers.",
+          "Simulation methodology using real serving traces and measured prefill times to compare cost/performance of alternative network technologies."
+        ],
+        "potential_overlap_zh": "与您关注的‘网络感知运行时’、‘延迟隐藏/通信-计算重叠’、‘调度器设计’等主题存在直接概念重叠；若您在MPC或隐私推理场景需优化大状态迁移，这篇文章的网络调度思想可能与您的工作在目标层面重合。",
+        "potential_overlap_en": "Conceptual overlap exists with your interests in network-aware runtimes, latency hiding/communication-computation overlap, and scheduler design. If you optimize large-state transfers in MPC or privacy-preserving inference, the networking scheduling ideas may overlap in objectives.",
+        "potential_conflict_zh": "无明显学术冲突（基于标题与摘要）。若之后在实现上用于多租户或隐私敏感场景，可能需要额外考虑安全与隔离，但摘要中未涉及安全权衡。",
+        "potential_conflict_en": "No obvious conceptual conflict (based on title and abstract). If applied in multi-tenant or privacy-sensitive settings, security/isolation concerns would arise, but the abstract does not address these tradeoffs.",
+        "full_text_questions_zh": [
+          "预约调度器的算法细节是什么？是否是在线调度、启发式还是优化求解？",
+          "如何建模并发KV传输的到达模式与优先级？调度器如何处理冲突/抢占？",
+          "WDM每GPU所需波长数、波长分配策略以及物理层约束如何影响系统可扩展性？",
+          "对包交换网络的成本模型与假设（包括自适应路由、端口计费等）如何构建？",
+          "仿真中使用的服务轨迹覆盖哪些负载情形？对长上下文/突发负载的鲁棒性如何？",
+          "预填（prefill）时间的分布与变动对预约成功率和TTFT的敏感性如何？",
+          "在故障或重配置失败的情况下，系统如何退化回包交换？有无混合路径策略？",
+          "能否在多租户场景下支持公平性与隔离，摘要是否讨论多租户问题？"
+        ],
+        "full_text_questions_en": [
+          "What are the scheduler algorithmic details—online heuristic, optimization, or simple rules?",
+          "How are concurrent KV transfer arrival patterns and priorities modeled? How does the scheduler handle conflicts/preemption?",
+          "How many wavelengths per GPU are needed, what is the wavelength-assignment policy, and how do physical-layer constraints affect scalability?",
+          "How is the packet-fabric cost model and its assumptions (adaptive routing, port charging) built?",
+          "What serving traces were used and how well do they cover long-context or bursty workloads?",
+          "How sensitive are reservation success rates and TTFT to the distribution and variability of prefill times?",
+          "How does the system degrade on switch failure or failed reconfiguration? Is there a hybrid fallback to packet switching?",
+          "Does the design consider multi-tenant fairness and isolation, and how would that affect reservation policies?"
+        ],
+        "experiment_checks_zh": [
+          "对比不同OCS重配置延迟（例如10/20/50/100 ms）下系统对TTFT和成本的敏感性分析。",
+          "用多样化的真实负载轨迹（短/长上下文、突发、高并发）验证预约调度器的稳健性。",
+          "评估波长资源受限时的降级性能：当波长不足，如何分配与调度？",
+          "故障注入实验（OCS重配置失败或链路中断）以观察退化行为与恢复时间。",
+          "与不同级别超额订阅包交换（1:1, 2:1, 4:1 等）和不同自适应路由实现的性能/成本对比。"
+        ],
+        "experiment_checks_en": [
+          "Sensitivity analysis across different OCS reconfiguration latencies (e.g., 10/20/50/100 ms) on TTFT and cost.",
+          "Validate reservation scheduler robustness using diverse real traces (short/long contexts, bursty/high concurrency).",
+          "Evaluate degraded performance when wavelength resources are constrained and the allocation strategy used.",
+          "Fault-injection experiments (OCS reconfiguration failure or link outage) to observe degradation and recovery.",
+          "Cost/performance comparisons against various oversubscription ratios (1:1, 2:1, 4:1) and alternative adaptive-routing packet-fabric implementations."
+        ],
+        "tracking_targets": [
+          "TTFT（time-to-first-token）平均与尾延迟（p95/p99）",
+          "被OCS成功服务的KV传输比例（预约成功率）",
+          "光学方案相对于指定包交换基线的成本比（成本模型中的系数）",
+          "OCS重配置延迟的容忍阈值（系统性能失效点）",
+          "波长/通道利用率与争用率"
+        ],
+        "next_steps_zh": [
+          "在小规模物理光学测试床上验证预约调度器和WDM链路的工程可行性与实际延迟特性。",
+          "将预约调度器与实际LLM服务框架（如vLLM、DeepSpeed等）的prefill阶段集成，测量系统端到端影响。",
+          "扩展调度策略以支持多租户与优先级，研究公平性与隔离措施。",
+          "研究混合OCS+包交换退化策略与在线切换机制以提高鲁棒性。"
+        ],
+        "next_steps_en": [
+          "Validate the reservation scheduler and WDM links on a small physical optical testbed to measure real delays and engineering issues.",
+          "Integrate the scheduler into an LLM-serving framework (e.g., vLLM/DeepSpeed) to measure end-to-end impact on TTFT and throughput.",
+          "Extend scheduling policies to support multi-tenant priorities and isolation to study fairness tradeoffs.",
+          "Develop hybrid OCS+packet-fabric fallback and online switching mechanisms to improve robustness."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.18642",
+        "version": 1,
+        "title": "MultiAlloc: Budget-Aware Precision Allocation for KV Cache Quantization",
+        "authors": [
+          "Yangchengyu Zhou",
+          "Zhiping Wu",
+          "Runchang Jiang",
+          "Dongdong Ren",
+          "Youfang Han",
+          "Wei Zhao",
+          "Dongqi Cai",
+          "Wenbin Li"
+        ],
+        "abstract": "The Key-Value (KV) cache constitutes a dominant source of memory consumption during large language model (LLM) inference, particularly in long-context and complex reasoning scenarios. Existing KV cache quantization methods have explored different compression granularities, including layer-wise precision adjustment and token-level information preservation. In practical deployment, however, the key challenge is not merely compression, but how to allocate limited quantization resources among heterogeneous precision preservation strategies under a fixed KV cache memory budget. We propose MultiAlloc, a profiling-guided precision allocation framework for KV cache quantization that adaptively distributes limited quantization resources between layer-wise precision enhancement and token-wise preservation. MultiAlloc employs lightweight offline profiling to characterize layer sensitivity and token importance, enabling adaptive precision allocation under a fixed memory constraint. Guided by the profiled memory--accuracy trade-off, it automatically derives an effective precision allocation strategy without online allocation search, and applies the resulting policy during inference. Extensive experiments on reasoning and long-context benchmarks demonstrate that MultiAlloc consistently improves over layer-wise, token-wise, and recent multi-granularity KV cache quantization methods under matched memory budgets across diverse models, including Mistral, Llama, DeepSeek-Qwen, and QwQ.",
+        "categories": [
+          "cs.LG"
+        ],
+        "published": "2026-10-13T16:10:45Z",
+        "updated": "2026-10-13T16:10:45Z",
+        "abstract_url": "https://arxiv.org/abs/2610.18642v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.18642v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.18642v1",
+        "relevance_score": 8,
+        "novelty_score": 6,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.9,
+        "priority": "read",
+        "matched_topics": [
+          "secure LLM inference",
+          "LLM serving systems",
+          "latency hiding",
+          "memory budgeting"
+        ],
+        "short_summary_zh": "提出MultiAlloc，一种为KV缓存量化在固定内存预算下做预算感知精度分配的框架。通过轻量离线剖面分析来评估层敏感性与token重要性，MultiAlloc在层级精度增强与token级保留之间自适应分配量化资源，免在线搜索。作者在多种推理/长上下文基准与不同模型上显示比现有层级、token级或多粒度方法更优的内存—准确度权衡（摘要与标题为依据）。",
+        "short_summary_en": "MultiAlloc is a profiling-guided precision-allocation framework for KV-cache quantization under a fixed memory budget. It profiles layer sensitivity and token importance offline, then adaptively allocates precision between layer-wise enhancement and token-wise preservation without online search. Experiments reportedly show consistent improvements over layer-wise, token-wise, and recent multi-granularity methods across models and long-context/reasoning benchmarks. Claims are based only on title+abstract.",
+        "why_interesting_zh": "KV缓存是长上下文LLM推理中的内存瓶颈；这篇工作直接对内存/精度权衡提出系统化、自动化方案，且无需在线搜索，具有工程可行性。对在受限内存或在MPC加密推理中试图压缩KV数据结构的工作高度相关。",
+        "why_interesting_en": "The KV cache is a dominant memory consumer in long-context LLM inference. MultiAlloc's profiling-guided allocation is a practical, low-overhead approach to improve memory–accuracy trade-offs and is directly relevant for LLM serving systems and for secure LLM inference where KV memory is costly to store/transfer under cryptographic protocols.",
+        "relation_to_my_work_zh": "高度相关：若你研究安全/私有LLM推理（例如在MPC或TEE中保持KV），降低KV内存或以更高效的精度分配可以减少加密/传输成本并降低延迟。MultiAlloc的离线剖面与策略导出思路可直接被用于MPC场景的资源预算分配。",
+        "relation_to_my_work_en": "Highly relevant. For secure/private LLM inference (MPC/TEE), reducing KV cache memory or allocating precision intelligently can cut cryptographic storage/communication costs and latency. MultiAlloc's profiling + offline policy synthesis is directly applicable for budgeted secure inference.",
+        "possible_transfer_zh": "直接迁移：用离线剖面评估在加密表示或秘密共享下各层/各token的重要性；将精度预算映射为加密位精度或打包策略，从而在固定安全内存预算下最小化准确度损失。",
+        "possible_transfer_en": "Direct transfers: perform offline profiling to assess layer/token importance under secret-shared or encrypted representations; map precision budget to quantization bits or packing strategies to minimize accuracy loss under fixed secure-memory budgets.",
+        "possible_overlap_or_conflict_zh": "需验证剖面方法在加密/分布式存储场景（无法直接观测中间激活/缓存）下的可行性；此外要检查量化对安全性（例如数值稳定性或泄露风险）的影响。",
+        "possible_overlap_or_conflict_en": "Need to verify that the profiling approach is feasible when internals are encrypted/distributed (and not directly observable). Also check whether quantization introduces numerical issues or side-channels relevant to security.",
+        "questions_to_verify_zh": [
+          "离线剖面的开销（时间/数据/样本）和在不同任务/模型上的鲁棒性如何？",
+          "剖面是否依赖于可直接读取的浮点KV表示，若KV被加密或秘密共享该如何实现？",
+          "作者是否评估了量化在分布式或加密环境下对延迟、带宽与数值稳定性的影响？"
+        ],
+        "questions_to_verify_en": [
+          "What is the offline profiling cost (time/data) and how robust are the profiles across tasks/models?",
+          "Does profiling require direct access to float KV representations—how would it be done if KV is encrypted or secret-shared?",
+          "Have the authors evaluated quantization effects on latency, bandwidth and numerical stability in distributed/encrypted inference settings?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.18642v1",
+        "research_problem_zh": "LLM推理时KV缓存是内存消耗的主要来源。现有量化方法在不同粒度（层级精度调整、按token保留信息）上进行了探索，但实际部署中关键问题是如何在固定KV缓存内存预算下，在这些异质精度保存策略之间分配有限的量化资源以获得最优精度/内存权衡（基于题目与摘要）。",
+        "research_problem_en": "The KV cache is a major memory consumer during LLM inference. Existing quantization explores different granularities (layer-wise precision, token-level preservation), but the practical challenge is how to allocate limited quantization resources among heterogeneous precision strategies under a fixed KV-cache memory budget (based on title and abstract).",
+        "core_method_zh": "提出MultiAlloc：一种基于轻量离线分析(profiling)的精度分配框架。通过离线分析层敏感度和token重要性，在固定内存约束下自适应分配精度资源，基于剖析得到的内存-精度（或精度-准确率）权衡，自动导出策略并在推理时应用，无需在线搜索。",
+        "core_method_en": "They propose MultiAlloc, a profiling-guided precision allocation framework. Using lightweight offline profiling to characterize layer sensitivity and token importance, MultiAlloc adaptively distributes quantization resources between layer-wise precision enhancement and token-wise preservation under a fixed memory constraint, deriving allocation policies offline and applying them at inference without online search.",
+        "contributions_zh": [
+          "提出面向KV缓存量化的预算感知精度分配框架（MultiAlloc），在层级和token级别粒度之间自适应分配量化资源。",
+          "使用轻量离线剖析来表征层敏感度与token重要性，并基于剖析结果自动导出精度分配策略，避免在线搜索开销。",
+          "在多种模型（Mistral、Llama、DeepSeek-Qwen、QwQ）以及推理长上下文与复杂推理基准上，展示在相同内存预算下相较于层级或token独立方法的一致改进（摘要所述）。"
+        ],
+        "contributions_en": [
+          "A budget-aware precision-allocation framework for KV-cache quantization (MultiAlloc) that adaptively balances layer-wise and token-wise preservation.",
+          "Lightweight offline profiling to characterize layer sensitivity and token importance and automatic derivation of allocation policies without online search.",
+          "Demonstration (per the abstract) that MultiAlloc consistently outperforms layer-wise, token-wise, and recent multi-granularity methods under matched memory budgets across diverse models."
+        ],
+        "why_watch_zh": "如果您的工作涉及LLM推理优化、内存/带宽受限的推理部署，或者将KV缓存大小作为系统设计约束（例如在分解式或隐私保护推理中），MultiAlloc提供了一种预算驱动的分配范式，其剖析与近似优化思想可迁移到其他资源分配问题（例如通信预算、编码比特分配等）。",
+        "why_watch_en": "If you work on LLM inference optimization, memory/bandwidth constrained deployments, or KV-cache size as a design constraint (e.g., in disaggregated or privacy-preserving inference), MultiAlloc offers a budget-driven allocation paradigm. Its profiling and offline policy derivation ideas can transfer to other resource allocation tasks (e.g., communication budget, bit-allocation).",
+        "direct_relation_zh": "基于标题与摘要：此论文不是关于安全多方计算或MP-SPDZ，但与‘性能建模、预算约束下的资源分配、离线剖析和成本-精度权衡’这些相邻主题直接相关。其用离线剖析来决定资源分配的思路，能迁移到为MPC运行时在固定通信/内存预算内分配不同协议或精度的场景。",
+        "direct_relation_en": "Based on title+abstract only: the paper is not about secure MPC/MP-SPDZ, but it relates directly to adjacent topics like performance modeling, budget-constrained resource allocation, offline profiling, and cost-accuracy tradeoffs. Its offline profiling approach to allocate resources could transfer to MPC runtimes that must allocate communication/memory budget across protocols or precisions.",
+        "transferable_mechanisms_zh": [
+          "离线剖析（profile）层敏感度与元素/对象重要性以指导资源分配（可用于通信/加密参数分配或协议选择）。",
+          "在固定预算下用剖析驱动的策略代替在线搜索以降低运行时开销的设计思路。",
+          "多粒度混合分配（层级与token级别）并自动求解映射到实际存储布局的技巧，可启发MPC中跨层或跨数据块的预算分配。"
+        ],
+        "transferable_mechanisms_en": [
+          "Offline profiling of layer sensitivity and element importance to guide resource allocation (applicable to communication/encryption parameter or protocol selection).",
+          "Design choice to derive allocation policies offline to avoid online search/runtime overhead.",
+          "Multi-granularity mixed allocation (layer + token) and mapping to storage layout—could inspire budget allocation across layers or data blocks in MPC."
+        ],
+        "potential_overlap_zh": "与您关心的‘KV缓存与推理内存优化’、‘预算感知调度/分配’等主题存在方法学上的重合；如果您的工作需要在固定带宽/内存限制下做协议/精度折中，这篇工作的框架理念与目标可能高度重叠。",
+        "potential_overlap_en": "Methodological overlap with interests in KV-cache and inference memory optimization and budget-aware scheduling/allocation. If you need to trade off protocols/precision under fixed bandwidth or memory constraints, this framework's ideas are closely overlapping.",
+        "potential_conflict_zh": "无明显学术冲突（基于标题与摘要）。若在安全/隐私场景将量化与密文格式结合使用，需要额外考量量化对安全性或加密兼容性的影响，但摘要未覆盖此点。",
+        "potential_conflict_en": "No obvious conflict (based on title and abstract). If combining quantization with encryption in privacy/security settings, additional considerations on compatibility would be required; the abstract does not address this.",
+        "full_text_questions_zh": [
+          "离线剖析具体收集哪些指标？层敏感度与token重要性如何量化？使用什么度量（损失、下游任务准确率等）？",
+          "如何把剖析结果转化为内存-精度的映射？用于搜索/优化的算法细节是什么？",
+          "剖析和策略是否对不同输入分布（不同prompt/任务）具有泛化能力？是否需要为不同任务重新剖析？",
+          "推理时的运行时开销（例如解码分配表、解码逻辑）是多少？是否增加延迟或影响吞吐？",
+          "与已有的端到端量化方法或动态精度分配方法（如果有）相比，如何保证公平比较？"
+        ],
+        "full_text_questions_en": [
+          "What exact metrics are collected during offline profiling? How are layer sensitivity and token importance quantified (loss, downstream accuracy, etc.)?",
+          "How are profiling results converted into a memory-vs-precision mapping? What optimization/search algorithm is used to derive allocation?",
+          "Does the profiling and resulting policy generalize across input distributions (prompts/tasks), or is per-task profiling needed?",
+          "What is the inference-time overhead of applying the policy (lookup/decoding costs)? Does it affect latency or throughput?",
+          "How are comparisons to other quantization baselines conducted to ensure fair evaluation?"
+        ],
+        "experiment_checks_zh": [
+          "在不同剖析数据集/任务上做鲁棒性与泛化测试：同一策略在新任务上的效果如何？",
+          "消融实验：只用层级或只用token特性与混合策略的对比；证明剖析导出的策略优于简单启发式（例如按层重要性均匀分配）。",
+          "评估量化策略对推理延迟与吞吐的影响，特别是在长上下文场景下。",
+          "敏感性分析：不同内存预算下的性能曲线（memory-accuracy tradeoff）。"
+        ],
+        "experiment_checks_en": [
+          "Robustness/generalization tests across different profiling datasets/tasks: how does a policy perform on unseen tasks?",
+          "Ablations comparing layer-only, token-only, and mixed strategies to show the profiling-derived policy beats simple heuristics.",
+          "Measure impact of quantization strategy on inference latency and throughput, especially for long-context inference.",
+          "Sensitivity analysis: memory-vs-accuracy curves across different budgets."
+        ],
+        "tracking_targets": [
+          "给定内存预算下的准确率或任务指标（例如困惑度、下游任务准确率）",
+          "每层/每token的分配位宽（bits）分布与最终总内存占用",
+          "离线剖析时间开销与生成策略所需时间",
+          "推理时的额外延迟与吞吐影响"
+        ],
+        "next_steps_zh": [
+          "将MultiAlloc与KV传输/网络协议的成本模型联合优化（例如量化减少传输代价的联合优化）。",
+          "探索在线或半在线版本：在运行时快速调整分配以应对输入分布变化。",
+          "评估在加密或MPC环境中使用量化（例如密文压缩或带宽/成本受限下的量化方案）时的兼容性与安全影响。"
+        ],
+        "next_steps_en": [
+          "Jointly optimize MultiAlloc with KV transfer/network cost models (e.g., quantization reducing transfer cost) for end-to-end system gains.",
+          "Explore online or semi-online versions to adapt allocations quickly to changing input distributions at runtime.",
+          "Evaluate compatibility and security implications of applying quantization within encrypted/MPC environments (e.g., ciphertext compression under MPC)."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.18451",
+        "version": 1,
+        "title": "FastEEP: Fast Intra-Instance Elastic Scaling for Expert-Parallel MoE Serving",
+        "authors": [
+          "Yunfei Feng",
+          "Jingkai He",
+          "Shiqi Liu",
+          "Cheng Zhang",
+          "Dong Du",
+          "Erhu Feng"
+        ],
+        "abstract": "Large-scale expert parallelism (EP) has become the standard deployment configuration for Mixture-of-Experts (MoE) models in production. Meanwhile, the highly dynamic nature of LLM workloads requires providers to continuously adjust serving capacity to match fluctuating demand. Scaling MoE serving cannot be efficiently achieved by simply adding or removing serving instances; instead, it often requires resizing the EP group within an existing instance, which we refer to as intra-instance scaling.Existing inference engines primarily rely on instance-level scaling, which destroys and reconstructs entire serving instances, incurring substantial scaling overhead. We present FastEEP (Fast Elastic Expert Parallel), a fast intra-instance scaling system for MoE serving based on the principle of Partial Reuse. FastEEP reuses existing runtime state across worker execution, GPU memory, and communication by separating reusable execution structures from the resources activated by the current EP configuration. This separation enables coordinated resource reclamation and reconfiguration while preserving costly-to-reconstruct state, allowing fast EP scaling without full instance teardown and reconstruction. Our evaluation shows that FastEEP achieves 4.5x--11.7x faster scaling than the existing vLLM-based approach across different models, enabling efficient, fine-grained scaling of MoE serving.",
+        "categories": [
+          "cs.DC",
+          "cs.LG"
+        ],
+        "published": "2026-10-13T14:22:00Z",
+        "updated": "2026-10-13T14:22:00Z",
+        "abstract_url": "https://arxiv.org/abs/2610.18451v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.18451v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.18451v1",
+        "relevance_score": 7,
+        "novelty_score": 6,
+        "transferability_score": 7,
+        "systems_score": 7,
+        "confidence": 0.72,
+        "priority": "read",
+        "matched_topics": [
+          "dependency-aware scheduling",
+          "resource reconfiguration",
+          "pipeline execution",
+          "elastic scaling",
+          "network-aware systems"
+        ],
+        "short_summary_zh": "基于标题与摘要：FastEEP 提出面向专家并行（EP）MoE 服务的快速实例内弹性伸缩方法“部分重用”（Partial Reuse）：分离可重用的运行时结构与随 EP 配置激活的资源，从而在不完全销毁实例的情况下快速回收/重配置资源，实现显著加速的 EP 大小调整。",
+        "short_summary_en": "Title-and-abstract-based: FastEEP introduces intra-instance elastic scaling for expert-parallel MoE serving using Partial Reuse: separate reusable execution structures from resources activated by the current EP configuration so expensive state (GPU memory, communication setup) can be preserved and only necessary resources reclaimed/reconfigured, yielding 4.5x–11.7x faster scaling vs a vLLM-based baseline (per abstract).",
+        "why_interesting_zh": "与需要快速弹性资源重配置的分布式推理系统高度相关。保存昂贵重建状态并局部重配置是减少伸缩延迟的实系统技巧，可能启发在 MPC/安全推理中减少全量重建或重新协商成本的设计（基于摘要）。",
+        "why_interesting_en": "Relevant for systems needing fast elastic reconfiguration. Preserving costly runtime state and performing partial reconfiguration can drastically reduce scaling latency; the idea may inspire methods to avoid full teardown or rekeying in MPC/secure inference when resizing groups (abstract-only).",
+        "relation_to_my_work_zh": "直接可用于 MoE/LLM 运行时研究。对你的 MPC/runtime 工作的启发在于如何保存中间通信状态、避免全局重协商，以及如何在运行时低成本改变并行度或参与方。",
+        "relation_to_my_work_en": "Directly applicable to MoE/LLM runtimes; inspires MPC/runtime ideas about preserving communication state, avoiding full re-keying or re-setup on scaling, and low-cost reconfiguration of parallelism degree or participant set.",
+        "possible_transfer_zh": "将“部分重用”策略移植到 MPC 场景：保留会话密钥、保持部分通信拓扑、并只重配置受影响的参与方来减少重协商开销。",
+        "possible_transfer_en": "Transfer partial-reuse ideas to MPC: preserve session state or communication channels, avoid full protocol re-instantiation, and only reconfigure resources for changed participants to lower re-setup cost.",
+        "possible_overlap_or_conflict_zh": "若目标环境要求强安全隔离或重新认证才允许更改成员，部分重用可能与安全政策冲突，需要权衡恢复时间与安全保证。",
+        "possible_overlap_or_conflict_en": "If the security model mandates full re-authentication or rekeying on membership changes, partial reuse may conflict with those policies; trade-offs between speed and security must be assessed (abstract-only).",
+        "questions_to_verify_zh": [
+          "哪些运行时状态被视为可重用／不可重用？",
+          "在保留状态的同时如何避免内存泄露或不一致（例如专家分配变化）？",
+          "对不同规模的 EP 变更（小幅 vs 大幅）性能如何？",
+          "安全/隔离与部分重用之间是否存在权衡（作者是否讨论）？"
+        ],
+        "questions_to_verify_en": [
+          "Which runtime states are considered reusable vs non-reusable?",
+          "How do they ensure correctness and avoid memory/resource inconsistency when reusing preserved state while changing expert allocations?",
+          "How does performance scale for small vs large changes in EP group size?",
+          "Do they discuss security/isolation trade-offs when preserving state across reconfigurations?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.18451v1",
+        "research_problem_zh": "Mixture-of-Experts (MoE) 大模型在生产环境通常采用大规模expert parallel (EP)。当工作负载动态变化时，需要高效调整服务容量。简单地新增或移除实例代价高昂，实际需要在实例内部调整EP组大小（intra-instance scaling）。现有推理引擎主要靠实例级别的伸缩（摧毁并重建实例），导致高昂开销。如何实现快速的实例内EP伸缩而避免完全重建，这是本文要解决的问题（基于题目与摘要）。",
+        "research_problem_en": "Mixture-of-Experts (MoE) deployments use large expert-parallel (EP) groups. Dynamic workloads require continuous capacity adjustment; scaling MoE efficiently often requires resizing EP groups within an instance (intra-instance scaling). Existing engines perform instance-level scaling (tear down/reconstruct), which is expensive. The problem is how to achieve fast intra-instance EP scaling without full instance teardown (based on title+abstract).",
+        "core_method_zh": "提出FastEEP，基于“部分重用（Partial Reuse）”原则，将可重用的执行结构与当前EP配置所需激活资源分离；在此基础上重用worker执行状态、GPU内存与通信状态，通过协调回收与重配置保留难以重建的状态，从而实现快速EP大小调整而无需完整实例重建。",
+        "core_method_en": "They present FastEEP based on 'Partial Reuse': separate reusable execution structures from resources activated by the current EP configuration, reuse runtime state across worker execution, GPU memory, and communication. Coordinated resource reclamation and reconfiguration preserves costly-to-reconstruct state and enables fast EP scaling without full instance teardown.",
+        "contributions_zh": [
+          "提出FastEEP系统，针对MoE服务实现快速实例内EP伸缩的工程设计与实现思路。",
+          "引入并系统化‘部分重用’原则：分离可重用执行结构与激活资源以支持快速回收与重配置。",
+          "在评估中（摘要透露）对比vLLM-based方法显示4.5x–11.7x的加速，表明在不同模型下能显著降低伸缩开销。"
+        ],
+        "contributions_en": [
+          "FastEEP system design for fast intra-instance EP scaling in MoE serving.",
+          "Formalization of the 'Partial Reuse' principle: separating reusable execution structures from resources to enable quick reclamation/reconfiguration.",
+          "Evaluation (per abstract) showing 4.5x–11.7x faster scaling versus an existing vLLM-based approach across different models."
+        ],
+        "why_watch_zh": "如果您的研究关注分布式运行时的动态重配置、依赖感知调度或减少重建开销的系统优化，这篇工作提供了关于如何在不销毁实例的前提下快速改变资源配置的具体设计，思想可迁移到MPC或隐私推理运行时（例如切换协议、调整并行分区时减少重建成本）。",
+        "why_watch_en": "If you study dynamic runtime reconfiguration, dependency-aware scheduling, or reducing teardown overhead, this paper offers concrete designs on quickly changing resource configurations without destroying instances. The idea is transferable to MPC/privacy-preserving runtimes for protocol switching or repartitioning with minimal rebuild cost.",
+        "direct_relation_zh": "基于标题与摘要：论文与您的主要主题（安全多方计算等）不是直接相同，但与‘运行时调度与重配置’、‘保持/重用运行时状态以降低重配置开销’等相邻主题高度相关。若MPC运行时面临类似的重配置或组大小调整问题，FastEEP中的状态分离与重用策略值得借鉴。",
+        "direct_relation_en": "Based on title+abstract only: the paper is not directly about secure MPC, but is highly relevant to adjacent topics like runtime reconfiguration and preserving/reusing runtime state to reduce reconfiguration overhead. If an MPC runtime faces similar scaling or group-size adjustment problems, FastEEP's state-separation and reuse strategies are applicable.",
+        "transferable_mechanisms_zh": [
+          "将执行结构与激活资源分离以便部分重用的架构模式，可用来在改变并行分区或通信拓扑时避免昂贵的重建。",
+          "跨worker协同回收/重配置的控制平面设计，可迁移到需要协调多方状态切换的分布式系统（例如MPC协议切换）。",
+          "保留代价高昂状态（如已分配的GPU内存、通信上下文）以减少重新初始化成本的工程实践。"
+        ],
+        "transferable_mechanisms_en": [
+          "Architecture pattern of separating execution structures from activated resources to enable partial reuse when changing parallelism or topology.",
+          "Control-plane designs for coordinated reclamation/reconfiguration across workers—transferable to systems that coordinate distributed state switches (e.g., MPC protocol changes).",
+          "Engineering practice of preserving costly-to-construct state (GPU allocations, communication contexts) to reduce reinit costs."
+        ],
+        "potential_overlap_zh": "与您关注的‘依赖感知调度、DAG调度、网络感知运行时’等主题存在方法学上的重合。若您在MPC或隐私推理中需要快速改变并行方式或参与者分布（例如调整SMPC分组或并行度），该论文的部分重用思想与实现策略会直接重叠。",
+        "potential_overlap_en": "Methodological overlap with dependency-aware/DAG scheduling and network-aware runtimes. If your MPC/privacy inference work requires fast changes in parallelism or participant allocation (e.g., resizing SMPC groups), the partial-reuse ideas directly overlap.",
+        "potential_conflict_zh": "无明显学术冲突（基于题目与摘要）。在安全敏感场景将状态重用带入MPC需谨慎，需确认重用状态不会导致泄漏或一致性问题；摘要未讨论安全相关影响。",
+        "potential_conflict_en": "No obvious conflict (based on title and abstract). Bringing state reuse into security-sensitive MPC contexts requires caution to ensure reuse does not leak information or break consistency; the abstract does not discuss security considerations.",
+        "full_text_questions_zh": [
+          "‘可重用的执行结构’和‘激活资源’的精确定义与边界是什么？哪些状态被标记为不可重建？",
+          "如何保证在部分回收/重配置过程中保持一致性与正确性（尤其是在并发请求或失败场景下）？",
+          "协调回收/重配置的控制平面协议细节是什么？是否需要全局同步或是可逐步进行？",
+          "对GPU内存、通信上下文（例如持久连接、collectives）做了什么样的处理以支持重用？",
+          "在不同EP组大小调整幅度/频率下的性能与内存占用曲线如何？有无显著内存碎片或累积负担？"
+        ],
+        "full_text_questions_en": [
+          "What exactly are defined as 'reusable execution structures' versus 'activated resources'? Which states are marked too costly to reconstruct?",
+          "How is correctness and consistency ensured during partial reclamation/reconfiguration, especially under concurrent requests or failures?",
+          "What are the control-plane protocol details for coordinated reclamation/reconfiguration? Is global synchronization required or can it be incremental?",
+          "How are GPU memory objects and communication contexts (e.g., persistent connections or collectives) handled to enable reuse?",
+          "What are the performance and memory-usage curves across different magnitudes/frequencies of EP resizing? Any fragmentation or accumulation issues?"
+        ],
+        "experiment_checks_zh": [
+          "测量伸缩操作对在线请求延迟与吞吐的即时影响（平稳态下与伸缩窗口中）。",
+          "在故障与回退场景下测试部分重用策略的鲁棒性（例如中途worker失败或回收失败）。",
+          "评估不同模型规模与EP调整幅度下的内存重用率与性能增益（细分到GPU内存、通信上下文、执行结构）。",
+          "对比不同粒度的重用策略（更多保留状态 vs 更保守回收）带来的长期资源占用与性能权衡。"
+        ],
+        "experiment_checks_en": [
+          "Measure the immediate impact of scaling operations on online-request latency and throughput (steady-state vs during scaling).",
+          "Test robustness of partial-reuse strategies under failure and rollback scenarios (e.g., worker fails during reclamation).",
+          "Evaluate memory-reuse rates and performance gains across model sizes and EP-resize magnitudes, broken down by GPU memory, communication contexts, and execution structures.",
+          "Compare different reuse granularities (aggressive state preservation vs conservative reclamation) to understand long-term resource and performance tradeoffs."
+        ],
+        "tracking_targets": [
+          "EP伸缩延迟（从触发到完成的时间）",
+          "伸缩期间与伸缩后系统吞吐与尾延迟（p95/p99）",
+          "被重用的状态比例（GPU内存、通信上下文、执行结构）与重建代价节省量",
+          "在多次伸缩后的内存碎片与长期资源占用"
+        ],
+        "next_steps_zh": [
+          "将部分重用设计思想移植到需要快速重配置的其他分布式运行时中（例如MPC运行时、私有推理后端），评估实现难点与安全影响。",
+          "研究更细粒度的回收策略与自动化决策逻辑，以在性能与资源占用之间做在线折中。",
+          "公开工具化接口以便其他推理框架能够采用部分重用机制并评估互操作性。"
+        ],
+        "next_steps_en": [
+          "Port the partial-reuse design to other distributed runtimes that require fast reconfiguration (e.g., MPC runtimes, private inference backends) and study implementation challenges and security implications.",
+          "Investigate finer-grained reclamation strategies and automated decision logic to trade off performance vs resource usage online.",
+          "Provide practical interfaces/APIs so other inference frameworks can adopt partial reuse and evaluate interoperability."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.18640",
+        "version": 1,
+        "title": "Pedestrian Trajectory Prediction through LoRA Federated Training",
+        "authors": [
+          "Simone Travagliati",
+          "Maria Luisa Merani"
+        ],
+        "abstract": "In Intelligent Transport Systems, protecting vulnerable road users, specifically pedestrians, is a paramount challenge. The present work contributes to this field, putting forth a distributed architecture in which vehicles connected to the cellular infrastructure collect pedestrians' trajectories and fine-tune a foundation model for pedestrian trajectory forecasting via federated training. A server positioned at the edge of the cellular network is responsible for aggregating the local model's parameters from the vehicles and updating the global model's parameters. To reduce radio resource utilization, Low-Rank Adaptation is proposed; to decrease both the number and the size of updates, an increase in the number of training rounds performed by the vehicles per communication round is put forth. A novel figure of merit is then introduced to quantify the use of radio resources dedicated to Vehicle-to-Infrastructure communications as required by the federated solution. The proposed scheme delivers excellent prediction accuracy while significantly reducing the communication cost compared to alternative federated training methods. This shows that combining fine-tuning, Low-Rank Adaptation, and a reduction of the communication periodicity between the vehicles and the edge server is key to enabling a distributed approach to trajectory prediction in vehicular environments.",
+        "categories": [
+          "cs.NI"
+        ],
+        "published": "2026-10-13T16:10:16Z",
+        "updated": "2026-10-13T16:10:16Z",
+        "abstract_url": "https://arxiv.org/abs/2610.18640v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.18640v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.18640v1",
+        "relevance_score": 7,
+        "novelty_score": 6,
+        "transferability_score": 7,
+        "systems_score": 7,
+        "confidence": 0.86,
+        "priority": "read",
+        "matched_topics": [
+          "WAN latency",
+          "communication rounds",
+          "network-aware runtime",
+          "protocol selection"
+        ],
+        "short_summary_zh": "在车载场景下提出将车辆作为客户端、边缘服务器作为聚合器的联邦训练方案，用于行人轨迹预测。为减少无线资源占用，作者采用Low-Rank Adaptation（LoRA）减少上行更新量，并通过让车辆在每次通信轮次内执行更多本地训练轮次来减少通信频率。文中还提出了衡量车-基站无线资源占用的新指标，并报告了在相似精度下比其它联邦方法更低的通信开销。摘要与标题为依据。",
+        "short_summary_en": "The paper proposes a federated fine-tuning architecture for pedestrian trajectory forecasting where vehicles collect trajectories and fine-tune a foundation model; an edge server aggregates updates. To reduce radio resource use, they apply LoRA to lower update size and increase local training rounds per communication round to reduce periodicity. They introduce a new radio-resource figure-of-merit and report comparable accuracy with substantially reduced communication cost versus alternatives (abstract-based).",
+        "why_interesting_zh": "直接触及通信-计算折衷：通过参数-efficient updates（LoRA）与增加本地轮次来减少通信频率，正是对付高WAN延迟与通信代价的常见工程做法，和MPC/分布式隐私训练的需求高度相关。",
+        "why_interesting_en": "Addresses the compute-vs-communication tradeoff concretely—LoRA plus increasing local epochs to reduce communication rounds—which is directly relevant for WAN-limited distributed training and for designing MPC or privacy-preserving distributed learning where communication cost and rounds matter.",
+        "relation_to_my_work_zh": "若你的研究涉及WAN条件下的多方学习或安全推理（例如在车辆/边缘环境下部署私有模型或对模型进行联邦更新），论文提出的减少通信频率与低秩适配策略是可借鉴的系统设计要点。",
+        "relation_to_my_work_en": "If you work on WAN-constrained federated learning or secure inference at the edge (vehicles/edge servers), the strategies—LoRA to shrink uploads and increasing local computation to lower communication rounds—are potentially directly applicable to reduce rounds and bandwidth in MPC-based protocols or hybrid secure pipelines.",
+        "possible_transfer_zh": "可借鉴技术包括：用LoRA或其他低秩适配减少交互数据量；把通信频率作为设计参数（trade local compute vs rounds）来降低全局交互次数；提出的无线资源度量可用来评估MPC部署在移动/边缘网络下的成本。",
+        "possible_transfer_en": "Concrete transfers: use LoRA/low-rank updates to shrink update payloads in secure/federated workflows; tune local computation vs communication periodicity to reduce rounds in WAN-constrained MPC; adopt the proposed radio-resource metric when budgeting edge-MPC deployments in vehicular scenarios.",
+        "possible_overlap_or_conflict_zh": "摘要未显示与MPC算法或隐私模型的冲突，但需要验证其在差分隐私或加密通信下的通信/计算权衡是否保持。",
+        "possible_overlap_or_conflict_en": "No obvious conflict with MPC algorithms in the abstract. Need to verify whether the communication savings persist under DP, secure aggregation, or encrypted transport used in MPC/federated privacy setups.",
+        "questions_to_verify_zh": [
+          "作者提出的无线资源度量如何与实际吞吐/延迟/丢包情形对应？",
+          "在加密或安全聚合（MPC/secure aggregation）下，LoRA更新与增加本地轮次的通信节省是否仍然有效？",
+          "车辆侧的计算/能耗假设是什么，实际能否支撑更多本地训练轮次？"
+        ],
+        "questions_to_verify_en": [
+          "How does the proposed radio-resource figure-of-merit map to real throughput/latency/packet loss conditions?",
+          "Do the communication savings from LoRA and increased local epochs hold when using encrypted updates or secure aggregation (MPC) and under DP constraints?",
+          "What are the vehicle-side compute and energy assumptions—can they realistically support more local training rounds?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.18565",
+        "version": 1,
+        "title": "Orrery: Modeling and Simulation of GPU-direct MPI Communication with SimGrid",
+        "authors": [
+          "Ahmad Moh'd Saleh A. Belbeisi",
+          "Amir Raoofy",
+          "Josef Weidendorfer",
+          "Majid Salimi Beni"
+        ],
+        "abstract": "Simulation of HPC applications is an essential tool for analyzing system design trade-offs and enabling effective hardware--software co-design. As modern supercomputers increasingly rely on GPU acceleration, MPI implementations have evolved to support GPU-aware communication, enabling direct GPU data transfers. Modeling these mechanisms is therefore critical for simulating HPC applications on current systems. In this paper, we introduce Orrery, an interposition layer built on SimGrid's SMPI to model GPU-aware MPI communication using existing collective implementations and flow-based simulation. Orrery intercepts GPU memory allocations, kernel launches, data transfers, and MPI operations, and models their execution in SimGrid according to target system specifications, enabling simulation without requiring physical GPUs. We validate Orrery using CUDA-aware MPI microbenchmarks and a Jacobi solver on up to 32 nodes of the MUSICA supercomputer and demonstrate that it reproduces key GPU-aware MPI mechanisms.",
+        "categories": [
+          "cs.DC",
+          "cs.PF"
+        ],
+        "published": "2026-10-13T15:33:31Z",
+        "updated": "2026-10-13T15:33:31Z",
+        "abstract_url": "https://arxiv.org/abs/2610.18565v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.18565v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.18565v1",
+        "relevance_score": 6,
+        "novelty_score": 6,
+        "transferability_score": 8,
+        "systems_score": 9,
+        "confidence": 0.82,
+        "priority": "read",
+        "matched_topics": [
+          "MPI compiler",
+          "MP-SPDZ",
+          "MPC runtime",
+          "GPU-direct MPI",
+          "distributed runtime scheduling",
+          "simulation",
+          "network-aware runtime",
+          "performance modeling"
+        ],
+        "short_summary_zh": "基于标题与摘要：本文提出 Orrery，一种基于 SimGrid/SMPI 的插桩层，用于模拟 GPU-aware MPI（包括GPU内存分配、内核启动、数据传输与MPI操作），通过现有的集合实现与基于流的仿真模型在无需真实GPU的情况下再现GPU-direct MPI机制。作者以CUDA-aware MPI微基准和Jacobi求解器在多节点上验证了该工具。",
+        "short_summary_en": "Based only on title and abstract: The paper presents Orrery, an interposition layer built on SimGrid's SMPI to model GPU-aware (GPU-direct) MPI communication using existing collective implementations and flow-based simulation. Orrery intercepts GPU allocations, kernels, transfers, and MPI ops and models them per target specs to enable simulation without physical GPUs; validated against CUDA-aware MPI microbenchmarks and a Jacobi solver up to 32 nodes.",
+        "why_interesting_zh": "高度相关：对想要模拟/评估在GPU加速集群上运行的MPC或安全推理系统（尤其依赖GPU-direct传输与多节点通信）的研究者非常有价值。它可用于离线性能建模、协议选择（带宽/延迟权衡）以及网络/调度策略的快速原型设计（基于标题和摘要）。",
+        "why_interesting_en": "Highly relevant: valuable for simulating/evaluating MPC or secure inference on GPU-accelerated clusters where GPU-direct MPI matters. Useful for offline performance modelling, protocol selection (bandwidth/latency trade-offs), and prototyping network-aware schedulers without physical GPU hardware (based only on title and abstract).",
+        "relation_to_my_work_zh": "如果你的项目需要在多GPU/MPI环境中评估协议性能或测试 scheduling/communication strategies，Orrery 看起来是一个直接可用且高优先级的工具，值得深入阅读与试用（基于标题和摘要）。",
+        "relation_to_my_work_en": "If you need to evaluate protocols or scheduling/communication strategies on multi-GPU/MPI clusters, Orrery appears directly applicable and high-priority to read and try (based only on title and abstract).",
+        "possible_transfer_zh": "可迁移为MPC运行时的仿真平台：用以评估GPU直连通信、不同MPI实现、集体算法选择、批量/管线策略与WAN延迟对整体协议性能的影响。",
+        "possible_transfer_en": "Transferable as a simulation platform for MPC runtimes: evaluate GPU-direct communications, MPI implementations, collective algorithms, batching/pipelining strategies, and the impact of WAN/latency on protocol performance.",
+        "possible_overlap_or_conflict_zh": "需要核查与现有 GPU-通信仿真工具或SimGrid扩展的差异点，以及验证基准覆盖度与精度声明（基于标题和摘要）。",
+        "possible_overlap_or_conflict_en": "Check differences from existing GPU-communication simulators or SimGrid extensions and verify claimed validation coverage and accuracy (based only on title and abstract).",
+        "questions_to_verify_zh": [
+          "Orrery 对于不同GPU互联（NVLink、PCIe、RoCE等）和MPI实现的建模细节与参数化能力如何？",
+          "验证结果（延迟/带宽/collective行为）与真实硬件的误差范围是多少？",
+          "是否支持模拟跨机房/WAN场景以及与现有仿真器（SimGrid）集成的可用API/部署流程？"
+        ],
+        "questions_to_verify_en": [
+          "How does Orrery model different GPU interconnects (NVLink, PCIe, RoCE) and various MPI implementations?",
+          "What are the error bounds between Orrery's simulated latency/bandwidth/collective behavior and real hardware measurements?",
+          "Does it support cross-datacenter/WAN scenarios and what APIs/deployment workflows exist for integration with SimGrid?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
