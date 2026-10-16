@@ -1,0 +1,632 @@
+{
+  "date": "2026-10-16",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 6,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2610.22047",
+        "version": 1,
+        "title": "SMT-Boosted Security Types and Correctness for Low-Level MPC",
+        "authors": [
+          "Christian Skalka",
+          "Steven Baldasty",
+          "Yeonhee Yeh",
+          "Felix Walberg",
+          "Joseph P. Near"
+        ],
+        "abstract": "Secure Multi-Party Computation (MPC) is an important enabling technology for data privacy in modern distributed applications. We develop a new Hoare logic and type theory to automatically enforce correctness, confidentiality, and integrity properties of protocols written in the Prelude/Overture language framework. Both definition and automation of our analyses leverages SMT verification, supporting precision and efficiency. Our approach is compositional, scalable, and generalizes to arbitrary prime fields and secret sharing schemes.",
+        "categories": [
+          "cs.CR"
+        ],
+        "published": "2026-10-15T15:16:32Z",
+        "updated": "2026-10-15T15:16:32Z",
+        "abstract_url": "https://arxiv.org/abs/2610.22047v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.22047v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.22047v1",
+        "relevance_score": 10,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 7,
+        "confidence": 0.8,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure multiparty computation",
+          "secure computation",
+          "MPC compiler",
+          "MPC runtime",
+          "protocol selection"
+        ],
+        "short_summary_zh": "基于题目与摘要：在Prelude/Overture语言框架上，为低層次MPC协议开发了新的Hoare逻辑與类型理论，用以自动强制执行协议的正确性、机密性与完整性属性。该方法依赖SMT验证以实现自动化，声称具可组合性、可扩展并支持任意素数域和秘密分享方案。",
+        "short_summary_en": "Title+abstract-based summary: The authors develop a Hoare logic and type theory for automatically enforcing correctness, confidentiality, and integrity of protocols written in the Prelude/Overture framework for low-level MPC. The analysis and automation leverage SMT solving and are claimed to be compositional, scalable, and generalizable to arbitrary prime fields and secret-sharing schemes.",
+        "why_interesting_zh": "直接命中主要研究方向（MPC、编译器级保证与运行时安全）。如果实现可靠，这能显著降低编写低级MPC协议时的人工证明成本，并在编译/运行时捕获安全属性，对你的研究高度相关。",
+        "why_interesting_en": "Directly relevant to MPC and compiler/runtime assurances. An SMT-backed Hoare logic/type system for low-level MPC could provide automated, compositional guarantees for confidentiality and correctness—potentially impactful for MPC compilers and runtimes like MP-SPDZ or similar stacks.",
+        "relation_to_my_work_zh": "若你从事MPC编译器、协议选择或运行时保证研究，这篇摘要所述的静态验证与类型化方法应详细阅读以评估是否可整合到现有工具链。",
+        "relation_to_my_work_en": "If you work on MPC compilers, protocol selection, or runtime verification, the SMT-boosted type system could be directly applicable and worth integrating/testing in your toolchain.",
+        "possible_transfer_zh": "- SMT自动化验证、Hoare逻辑与类型系统的结合可迁移到MPC编译器前端或到自动化安全审计流程。\n- 支持任意素数域与分享方案意味着方法可能适配多种现实MPC实现（如加法/乘法门电路、不同分享基数）。",
+        "possible_transfer_en": "- The SMT-based automation could be integrated into MPC compilers' frontends or verification toolchains.\n- Generality over prime fields/secret-sharing schemes suggests the approach could apply across diverse MPC implementations and protocol choices.",
+        "possible_overlap_or_conflict_zh": "需要核查该方法在低级优化（例如通信合并、轮次减少）与保密约束间是否有适配；还需确认对真实网络/运行时假设与抽象是否一致。",
+        "possible_overlap_or_conflict_en": "Verify how the logic interacts with low-level optimizations (communication batching, round coalescing) and whether network/runtime assumptions in proofs match real-world MPC constraints.",
+        "questions_to_verify_zh": [
+          "该逻辑如何表示并验证通信轮次/交互模式（round complexity）与秘密分享的不变性？",
+          "对复杂优化（例如批处理、依赖感知调度、协议混合）的支持程度如何？",
+          "有没有公开实现、示例协议及可复现的评测（包括规模与SMT求解时间）？"
+        ],
+        "questions_to_verify_en": [
+          "How does the logic represent and verify communication rounds/interactions and invariants of secret sharing?",
+          "To what extent does the system support low-level optimizations (batching, dependency-aware scheduling, mixed-protocol pipelines)?",
+          "Is there a public implementation, example protocols, and reproducible evaluation including SMT solving costs and scalability?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.22047v1",
+        "research_problem_zh": "基于仅标题与摘要：自动在低层次MPC程序中强制执行正确性、机密性与完整性属性（在Prelude/Overture框架内）；以可组合、可扩展的方法支持多种素数域与秘密共享方案。",
+        "research_problem_en": "Based only on title and abstract: automatically enforce correctness, confidentiality, and integrity properties for low-level MPC protocols written in the Prelude/Overture framework, in a compositional and scalable way that generalizes across prime fields and secret-sharing schemes.",
+        "core_method_zh": "基于Hoare逻辑与类型理论的形式化分析，借助SMT求解器进行自动化验证，集成于Prelude/Overture语言框架；分析为可组合且支持任意素数域和秘密共享方案。",
+        "core_method_en": "A new Hoare logic and type-theoretic framework for low-level MPC, whose definitions and automated analyses are implemented using SMT solving; integrated with the Prelude/Overture language framework and designed to be compositional and generalize across prime fields and secret-sharing schemes.",
+        "contributions_zh": [
+          "提出用于低层MPC的Hoare逻辑与安全类型体系（题目与摘要所述）",
+          "用SMT求解器自动化定义与验证，旨在兼顾精度与效率",
+          "方法具可组合性和可扩展性，并声称对任意素数域和不同秘密共享方案有效",
+          "在Prelude/Overture框架下实现或演示（摘要暗示的整合点）"
+        ],
+        "contributions_en": [
+          "A Hoare-logic and security type system for low-level MPC (as stated in title/abstract)",
+          "Automation of definitions and verification via SMT solving, targeting precision and efficiency",
+          "A compositional and scalable approach claimed to generalize to arbitrary prime fields and secret-sharing schemes",
+          "An integration or demonstration within the Prelude/Overture language framework (implied by the abstract)"
+        ],
+        "why_watch_zh": "与主课题高度相关：提供对低层MPC代码的自动化安全与正确性保证，对MPC编译器/运行时、协议选择与安全审计具有直接价值；其SMT驱动可验证机制和可组合性可能被用于编译器级检查或将静态保证和运行时策略结合。",
+        "why_watch_en": "Highly relevant: it addresses automated security and correctness guarantees for low-level MPC code, which is directly useful for MPC compilers/runtimes, protocol selection, and security auditing. The SMT-backed verification and compositional design may be applicable to compiler-level checks or integrating static guarantees with runtime policies.",
+        "direct_relation_zh": "直接关联：secure multiparty computation、secure computation、MPC编译器；间接关联较弱到运行时调度与WAN延迟问题（该摘要未提及调度或通信优化）。",
+        "direct_relation_en": "Directly related to secure multiparty computation, secure computation, and MPC compilers. It is only loosely related to runtime scheduling and WAN/communication-optimization topics (the abstract does not mention scheduling or communication).",
+        "transferable_mechanisms_zh": [
+          "SMT驱动的自动化验证流程可移植到编译器前端/优化验证",
+          "Hoare逻辑与安全类型体系可用于表达并证明调度与通信相关的不变式（例如泄漏/完整性约束）",
+          "可组合分析方法可用于分段优化或模块化证明（有助于调度器/运行时组件的逐步验证）",
+          "对多种素数域与共享方案的抽象可帮助支持多协议选择或混合协议场景"
+        ],
+        "transferable_mechanisms_en": [
+          "SMT-backed automated verification pipelines could be reused in compiler frontends or optimization verification",
+          "Hoare logic and security type systems could express and prove invariants relevant to scheduling or communication (e.g., leakage/integrity constraints)",
+          "Compositional analysis supports modular proofs useful for verifying scheduler/runtime components",
+          "Abstractions over prime fields and sharing schemes can help support multiple protocol choices or hybrid-protocol compilers"
+        ],
+        "potential_overlap_zh": "与已有形式化MPC语言、类型系统与验证工具存在概念上重叠的可能（摘要未列出具体对比）；需要阅读全文确认与现有工作的具体差异。",
+        "potential_overlap_en": "There is potential conceptual overlap with existing formal MPC languages, type systems, and verification tools; the abstract does not list specific comparisons—full text is needed to establish novelty relative to prior work.",
+        "potential_conflict_zh": "基于摘要：未见明显冲突。实用性风险包括SMT在大程序上的可扩展性瓶颈及对复杂运行时行为（如并行/网络交互）的处理能力。",
+        "potential_conflict_en": "No obvious conflicts from the abstract. Practical risks include SMT scalability on large programs and how well the approach handles complex runtime behaviors (parallelism, network interactions).",
+        "full_text_questions_zh": [
+          "该Hoare逻辑与类型体系的具体语义和规则是什么？",
+          "如何在Prelude/Overture中集成——是作为静态分析器、編譯器通道，还是證明助手？",
+          "支持哪些具体属性（非泄露、逐步正确性、回放完整性等）？",
+          "SMT求解的具体约束语言与规模限制如何？有什么工程技巧（抽象、分割、lemma库）以提高可扩展性？",
+          "如何处理并发、网络通信和运行时优化引入的语义差异？",
+          "有无工具实现、开源代码与评估基准？评估使用了哪些MPC协议与示例？"
+        ],
+        "full_text_questions_en": [
+          "What are the concrete semantics and rules of the Hoare logic and type system?",
+          "How is the integration with Prelude/Overture realized—static analyzer, compiler pass, or proof assistant?",
+          "Which concrete properties are supported (non-leakage, stepwise correctness, replay integrity, etc.)?",
+          "What SMT constraints/formula language are used and what are the scalability limits? Any engineering techniques (abstractions, decomposition, lemma libraries) to improve scale?",
+          "How are concurrency, network communication, and runtime optimizations modeled/handled?",
+          "Is there a tool implementation, open-source release, and what benchmarks/MPC protocols were used for evaluation?"
+        ],
+        "experiment_checks_zh": [
+          "在多种真实MPC协议（例如布尔/算术共享、BGW、SPDZ变体）上的适用性与性能基准",
+          "SMT验证运行时与内存开销、验证耗时与被验证程序规模的关系",
+          "误报/漏报率分析（即验证不能证明真实属性或产生错误警报的情况）",
+          "验证过程对字段大小和秘密共享方案变化的敏感性",
+          "与其他MPC验证/类型系统工具的对比（若存在）"
+        ],
+        "experiment_checks_en": [
+          "Applicability and performance on a range of real MPC protocols (e.g., arithmetic/boolean sharing, BGW, SPDZ variants)",
+          "SMT verification runtime and memory overhead as a function of program size",
+          "False positive/negative analysis for the verifier (cases where properties are missed or spurious alarms occur)",
+          "Sensitivity of verification to field sizes and different secret-sharing schemes",
+          "Comparisons against other MPC verification/type-system tools if available"
+        ],
+        "tracking_targets": [
+          "paper implementation/repository",
+          "citations in MPC compiler/runtime papers",
+          "integration attempts with MP-SPDZ or Prelude/Overture deployments",
+          "benchmarks showing verified MPC protocols",
+          "follow-up work on SMT scalability for MPC verification"
+        ],
+        "next_steps_zh": [
+          "阅读全文并定位实现/工具代码库；检视示例与基准",
+          "评估是否能将其验证器/类型系统移植或对接到目标MPC编译器（如MP-SPDZ）",
+          "检查对并发与网络语义的建模是否适合运行时调度和通信优化的证明",
+          "联系作者询问开源与复现细节（若需要）"
+        ],
+        "next_steps_en": [
+          "Read the full paper and locate the implementation/repository and benchmarks",
+          "Assess whether their verifier/type system can be adapted or integrated into target MPC compilers (e.g., MP-SPDZ)",
+          "Examine how concurrency and network semantics are modeled to judge applicability to scheduler/communication-optimization proofs",
+          "Contact authors for code and reproducibility details if needed"
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.22172",
+        "version": 1,
+        "title": "Efficient KV Cache Migration for Geo-Distributed LLM Inference in Collaborative Edge Computing",
+        "authors": [
+          "Mingjin Zhang",
+          "Jiannong Cao",
+          "Tao Wu",
+          "Xiangchun Chen",
+          "Ne Wang"
+        ],
+        "abstract": "Large Language Models (LLMs) have shown exceptional capabilities but rely heavily on centralized cloud GPU clusters, leading to high bandwidth costs, latency, and privacy issues. Edge computing offers a solution by deploying LLMs closer to users on edge servers, yet single edge servers often cannot meet LLMs' heavy computational demands. Collaborative Edge Computing (CEC) addresses this challenge by integrating resources of multiple geo-distributed heterogeneous edge servers, which jointly host small model shards and associated Key-Value (KV) cache for distributed inference. However, edge servers may disconnect or easily become overloaded, making it essential to migrate stateful KV cache to other servers for ensuring continuous service. Existing cloud-based KV cache management methods, such as direct cross-GPUs transmission and recomputation from input tokens are ill-suited for bandwidth-constrained and resource-limited edge environments. In this work, we propose EdgeFlow, a novel hybrid KV cache migration scheme that integrates direct KV cache transmission with activation-based recomputation, leveraging parallel computation and communication to minimize migration time. On this basis, we formulate a multi-node KV migration optimization problem and design a 2-approximation algorithm based on improved linear programming relaxation and bipartite graph techniques. Extensive experiments on a real-world distributed LLM inference platform demonstrate that EdgeFlow reduces migration time by up to 45%, significantly enhancing the robustness and efficiency of distributed LLM inference in collaborative edge computing.",
+        "categories": [
+          "cs.DC"
+        ],
+        "published": "2026-10-15T16:31:19Z",
+        "updated": "2026-10-15T16:31:19Z",
+        "abstract_url": "https://arxiv.org/abs/2610.22172v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.22172v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.22172v1",
+        "relevance_score": 5,
+        "novelty_score": 4,
+        "transferability_score": 5,
+        "systems_score": 5,
+        "confidence": 0.7,
+        "priority": "deep_read",
+        "matched_topics": [
+          "secure LLM inference",
+          "network-aware runtime",
+          "WAN latency",
+          "KV cache",
+          "protocol selection"
+        ],
+        "short_summary_zh": "（基于标题与摘要）EdgeFlow 提出一种用于地理分布式协同边缘计算上 LLM 推理的 KV cache 状态迁移方案：混合直接传输与基于激活的重算以并发利用计算与通信，从而最小化迁移时间；并将迁移问题形式化为多节点优化问题，给出基于改进线性规划松弛與二分圖技术的 2-近似算法。实验在真实分布式 LLM 推理平台上显示迁移时间最多可减少 ~45%。摘要结论仅基于标题与摘要。",
+        "short_summary_en": "(Title-and-abstract-based) EdgeFlow is a hybrid KV cache migration scheme for geo-distributed collaborative edge LLM inference that mixes direct KV transmission with activation-based recomputation, exploiting parallel computation and communication to minimize migration time. The migration problem is posed as a multi-node optimization and a 2-approximation algorithm (improved LP relaxation + bipartite techniques) is proposed; experiments report up to 45% migration time reduction on a real LLM inference platform. Summary based only on title+abstract.",
+        "why_interesting_zh": "该工作直接触及在受限带宽/不可靠边缘环境中维持状态化分布式 LLM 服务的工程核心问题。混合传输+重算以并行化迁移并引入理论近似保证，在 MPC/安全 LLM 推理场景（需要在节点间迁移中间状态或 KV 缓存）具有高度可迁移价值。仅基于摘要判断。",
+        "why_interesting_en": "Directly addresses state migration for distributed LLM inference at edge: the hybrid transmit+recompute strategy and a provable 2-approximation for the migration scheduling problem are highly relevant to robust, bandwidth-constrained distributed LLM serving — including secure/MPC settings that require transferring or recreating intermediate KV state. Based only on title+abstract.",
+        "relation_to_my_work_zh": "与安全多方/私有 LLM 推理高度相关：MPC 或分片化推理中频繁需要在节点间传递 KV/中间态，EdgeFlow 的迁移策略、并行计算通信与近似算法可以直接启发协议选择、迁移策略与运行时调度设计。",
+        "relation_to_my_work_en": "Highly relevant: MPC-based or sharded secure LLM inference requires migrating KV/intermediate state between nodes; EdgeFlow's hybrid migration, parallelization of compute/comm, and provable approximation algorithm can directly inform protocol selection, network-aware runtime design, and migration scheduling in secure LLM systems. Statement based only on title+abstract.",
+        "possible_transfer_zh": "（基于摘要）直接可迁移的方面：混合传输与重算的迁移策略（可在带宽受限的 MPC 场景中用于权衡通信与本地重算）；并行化迁移以隐藏延迟；将迁移调度表述为带理论保证的近似优化问题，以促进运行时的自适应策略。",
+        "possible_transfer_en": "(Title-and-abstract-based) Direct transfers: hybrid transmission+recomputation tactics to trade bandwidth vs compute (applicable to bandwidth-constrained MPC); parallelizing migration to hide latency; formulating migration scheduling as an optimization with provable approximation to drive adaptive runtime policies.",
+        "possible_overlap_or_conflict_zh": "摘要显示与已有 KV 缓存管理、状态迁移与迁移重计算策略存在交叉；需核验与云端 KV 迁移方法、分布式推理重算方案、以及已有带理论保证的调度算法的对比与差异化点。",
+        "possible_overlap_or_conflict_en": "The abstract suggests overlap with prior KV cache management, state migration, and recomputation approaches in distributed inference; verify comparisons to cloud-based KV migration, recompute vs transfer baselines, and existing scheduling algorithms with approximation guarantees.",
+        "questions_to_verify_zh": [
+          "迁移优化问题的精确数学模型与约束是什么（如带宽、CPU、并行性上限）？",
+          "所得 2-近似算法的具体步骤、复杂度与在实际网络波动下的鲁棒性如何？",
+          "和直接跨GPU/重算基线的实验设置与成本模型是否公平（考虑不同能耗/延迟/带宽计价）？",
+          "该方案如何与加密或 MPC 环境（加密KV、秘密共享）结合，额外成本如何计量？",
+          "在节点掉线或频繁短时断连时策略如何保证一致性与服务可用性？"
+        ],
+        "questions_to_verify_en": [
+          "What is the exact optimization formulation and constraints (bandwidth, CPU, parallelism caps)?",
+          "What are the algorithmic steps, complexity, and robustness of the 2-approximation under real network variability?",
+          "Are experiments and baseline comparisons (direct GPU transfer, full recompute) using fair cost models (latency, energy, bandwidth pricing)?",
+          "How would the scheme integrate with encrypted or MPC-based KV caches (secret sharing, ciphertext transfer) and what are the extra costs?",
+          "How does the approach handle node churn/disconnections while preserving consistency and availability?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.22172v1",
+        "research_problem_zh": "基于仅标题与摘要：在地理分布的异构边缘服务器上进行分布式LLM推理时，如何在带宽受限与节点易过载/断连的环境中，快速迁移状态化的KV缓存以保障服务连续性并最小化迁移时间。",
+        "research_problem_en": "Based only on title and abstract: how to minimize migration time for stateful KV caches used in geo-distributed, heterogeneous edge servers that jointly serve LLM inference, under bandwidth constraints and unstable/overloaded nodes.",
+        "core_method_zh": "提出混合KV缓存迁移方案（EdgeFlow）：将直接KV传输与基于激活的重算相结合，利用并行计算和通信减少迁移时间；将迁移问题形式化为多节点优化问题，并给出基于改进线性规划松弛与二部图技术的2-近似算法；在真实分布式LLM推理平台上进行实验验证。",
+        "core_method_en": "Proposes EdgeFlow: a hybrid KV-cache migration scheme that mixes direct KV transmission with activation-based recomputation, overlaps computation and communication, formulates a multi-node migration optimization problem, and provides a 2-approximation algorithm via improved LP relaxation and bipartite-graph techniques; evaluated on a real distributed LLM inference platform.",
+        "contributions_zh": [
+          "提出将直接传输与激活重算相结合的混合迁移策略以适应带宽受限的边缘环境",
+          "将多节点KV迁移建模为优化问题并设计了一个基于LP松弛和二部图的2-近似算法",
+          "并行化计算与通信以缩短迁移时间",
+          "在真实平台上实验，报告迁移时间可减少至45%的性能提升（摘要声明）"
+        ],
+        "contributions_en": [
+          "A hybrid migration strategy combining direct transfer and activation-based recomputation tailored to bandwidth-constrained edge settings",
+          "Formulation of a multi-node migration optimization problem and a 2-approximation algorithm using LP relaxation and bipartite graph techniques",
+          "Overlapping computation and communication to reduce migration time",
+          "Experimental evaluation on a real distributed LLM inference platform reporting up to 45% migration-time reduction (as claimed in abstract)"
+        ],
+        "why_watch_zh": "与目标主题的关联性：对分布式LLM推理、网络感知运行时、WAN延迟以及通信/计算重叠高度相关；其混合迁移与优化算法对于需要在受限网络中迁移状态（包括某些隐私保护场景）具有直接参考价值。",
+        "why_watch_en": "Relevance: directly relevant to distributed LLM inference, network-aware runtimes, WAN latency, and communication/computation overlap. The hybrid migration scheme and approximation algorithm provide ideas useful for state-migration and scheduling in bandwidth-constrained distributed systems, including some privacy-preserving deployments (with caveats).",
+        "direct_relation_zh": "直接关联：network-aware runtime、pipeline execution、communication-computation overlap、WAN延迟、调度与迁移算法。与MPC特定问题（如秘密共享缓存的迁移）相关性取决于隐私/加密限制。",
+        "direct_relation_en": "Directly related to network-aware runtimes, pipeline execution, communication-computation overlap, WAN latency, and migration/scheduling algorithms. Relation to MPC-specific state migration (e.g., secret-shared caches) depends on privacy/encryption constraints.",
+        "transferable_mechanisms_zh": [
+          "混合传输+重算范式可用于在带宽受限系统中权衡传输成本与重算成本",
+          "将迁移问题形式化为可近似求解的优化问题（LP松弛、二部图匹配）是可移植的算法设计思路",
+          "并行化通信与计算以隐藏迁移延迟的工程模式适用于其他分布式推理或MPC场景",
+          "对异构节点与链路带宽变化的成本建模与调度决策可被搬用至网络感知的MPC运行时"
+        ],
+        "transferable_mechanisms_en": [
+          "The hybrid transfer+recompute pattern for trading off transfer cost vs recomputation cost in bandwidth-limited systems",
+          "Formulating migration as an optimizable problem amenable to approximation (LP relaxation, bipartite matching) is a transferable algorithmic approach",
+          "Engineering pattern of overlapping communication and computation to hide migration latency applies to other distributed inference or MPC systems",
+          "Cost models and scheduling decisions for heterogeneous nodes and variable link bandwidths can inform network-aware MPC runtimes"
+        ],
+        "potential_overlap_zh": "与现有缓存迁移、状态迁移、重算（checkpoint/recomputation）以及分布式缓存管理文献在主题上可能重叠；摘要未指明与哪些先前方案比较。",
+        "potential_overlap_en": "There is likely overlap with prior work on cache migration, state migration, recomputation/checkpointing, and distributed cache management; the abstract does not specify baseline comparisons or related work context.",
+        "potential_conflict_zh": "摘要未提及安全与隐私问题：在秘密共享或加密KV缓存场景中直接传输或重算的可行性受限（重算可能需要原始密钥/明文或各方协同），因此该方法不一定直接适用于严格的MPC/隐私情形。",
+        "potential_conflict_en": "Privacy/security concerns are not addressed in the abstract: direct transfer or recomputation may be infeasible for secret-shared or encrypted KV caches (recomputation may require plaintext or cooperation), so the approach may not directly apply to strict MPC/privacy-preserving deployments without adaptation.",
+        "full_text_questions_zh": [
+          "详细的系统/网络模型是什么（带宽、延迟、断连模型、异构性度量）？",
+          "激活级重算的成本模型如何构建？它是否影响响应延迟与模型准确性？",
+          "2-近似算法的形式化说明、复杂度与证明细节是什么？",
+          "是否考虑缓存一致性、状态版本与服务中断窗口？",
+          "隐私/安全方面是否考虑将缓存加密或缓存为秘密共享？若没有，如何适配隐私要求？",
+          "实验基线、平台细节与迁移场景的选择如何？"
+        ],
+        "full_text_questions_en": [
+          "What is the precise system/network model (bandwidth, latency, disconnection model, heterogeneity metrics)?",
+          "How is activation-based recomputation cost modeled, and does recomputation affect response latency or inference correctness/accuracy?",
+          "What are the formal details, complexity, and proof of the 2-approximation algorithm?",
+          "Are cache consistency, state versions, and service interruption windows handled?",
+          "Does the paper consider privacy/security (encrypted or secret-shared caches)? If not, how could the approach be adapted to privacy constraints?",
+          "What are the experimental baselines, platform specifics, and migration scenarios used in evaluation?"
+        ],
+        "experiment_checks_zh": [
+          "核查实验平台与重现说明（是否公开代码与数据）",
+          "评估在不同带宽/延迟/节点数量/故障率下的稳健性与敏感性",
+          "对比基线（纯传输、纯重算、重分配策略）与能耗/CPU开销分析",
+          "分析迁移对在线请求延迟与吞吐的影响以及迁移期间的服务可用性",
+          "检查算法在不同模型大小与KV缓存规模下的可扩展性与近似比表现"
+        ],
+        "experiment_checks_en": [
+          "Verify experiment platform and reproduction artifacts (is code/data public?)",
+          "Stress sensitivity under varying bandwidth/latency/node counts/failure rates",
+          "Compare baselines (pure transfer, pure recompute, reallocation strategies) and analyze CPU/energy overheads",
+          "Measure impact on online request latency and throughput and service availability during migration",
+          "Check scalability with different model sizes and KV-cache sizes, and empirical approximation ratio behavior"
+        ],
+        "tracking_targets": [
+          "论文实现/开源代码与实验脚本",
+          "实系统（分布式LLM部署）中的应用案例或引用",
+          "将算法或Cost模型移植到MPC或隐私-preserving缓存迁移相关工作",
+          "后续针对隐私/加密缓存的扩展或剖析"
+        ],
+        "next_steps_zh": [
+          "阅读全文并获取实现与基准数据；复现关键实验以评估在目标网络条件下的表现",
+          "评估如何将混合迁移策略适配到秘密共享或加密的KV缓存（需要协同或密钥管理机制）",
+          "考虑在MPC/保隐场景中把激活重算替换为可行的替代（如安全多方共同重算）并评估开销"
+        ],
+        "next_steps_en": [
+          "Read the full paper and obtain implementation and benchmark artifacts; reproduce key experiments under target network conditions",
+          "Assess how the hybrid migration strategy could be adapted for secret-shared or encrypted KV caches (would require cooperation or key management)",
+          "Explore replacing activation recomputation with MPC-feasible alternatives (e.g., secure joint recomputation) and estimate overheads"
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.22003",
+        "version": 1,
+        "title": "Stateful Testing for Deep Learning Compilers",
+        "authors": [
+          "Jiatao Ge",
+          "Ruixiang Qian",
+          "Yibo Hu",
+          "Yanzhou Mu",
+          "Yinglong Zou",
+          "Jiawei Liu",
+          "Zhenyu Chen",
+          "Chunrong Fang"
+        ],
+        "abstract": "Modern deep learning compilers compile models lazily and cache artifacts across invocations. Retained compiler state can make a later invocation incorrect even when it is correct in isolation. An analysis of 26 publicly reported issues in PyTorch, JAX, and TensorFlow shows that detecting such bugs requires sequences that first establish compiler state and then expose a failure. We present Rondo, a stateful testing method that represents each test case as a model paired with an invocation sequence. Rondo mutates invocation sequences and uses a Markov chain Monte Carlo sampler guided by compilation behavior to favor rarely observed behaviors. Its three-way differential oracle compares execution without compilation, compiled execution with compiler state reset, and compiled execution with state retained. It confirms stateful bugs by replaying the same invocation with state retained and reset while preserving inputs and program state, then shortens sequences while preserving the original bug. We evaluate Rondo on four deep learning frameworks using 24 common model architectures. Rondo detects 117 bugs, including 35 stateful bugs. We submit 39 bug reports, including 18 for stateful bugs; developers confirm 35 reports, including 16 for stateful bugs, and fix 18 bugs, including 11 stateful bugs. Rondo achieves the highest behavior coverage and compiler Python source-line coverage among the compared methods, with 99.26% alarm precision. It shortens 44 of 117 invocation sequences, reducing the lengths of these 44 sequences by 83.34% on average.",
+        "categories": [
+          "cs.LG",
+          "cs.SE"
+        ],
+        "published": "2026-10-15T14:45:46Z",
+        "updated": "2026-10-15T14:45:46Z",
+        "abstract_url": "https://arxiv.org/abs/2610.22003v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.22003v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.22003v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 9,
+        "confidence": 0.85,
+        "priority": "read",
+        "matched_topics": [
+          "MPC compiler",
+          "MP-SPDZ",
+          "compiler instruction scheduling",
+          "stateful caching",
+          "reproducibility"
+        ],
+        "short_summary_zh": "基于标题与摘要：本文研究深度学习编译器的‘有状态’缺陷，提出Rondo：将测试表示为模型加上调用序列，变异序列并用MCMC引导以覆盖罕见编译行为；三向差分判定（无编译、编译后重置状态、编译后保留状态）确认有状态bug，并可最小化触发序列。评估发现多项确认与修复的缺陷。",
+        "short_summary_en": "Based only on title and abstract: The paper studies stateful bugs in deep-learning compilers and introduces Rondo, a stateful testing method that encodes tests as (model, invocation-sequence), mutates sequences using MCMC to explore rare compiler behaviors, uses a three-way differential oracle (no compilation / compiled with reset / compiled with retained state) to detect stateful bugs, and minimizes failing sequences. They found and confirmed many bugs across frameworks.",
+        "why_interesting_zh": "直接涉及 compiler/runtime retained-state 导致错误的问题，方法学（sequence-based testing、三向差分判定、MCMC导向变异、序列缩短）对任何保留状态的编译/运行时（包括MPC编译器、MP-SPDZ等）高度相关。",
+        "why_interesting_en": "Directly relevant to issues caused by retained compiler/runtime state. The sequence-based testing, three-way differential oracle, and MCMC-guided mutation are highly relevant to compilers and runtimes that cache artifacts (including MPC compilers like MP-SPDZ). Their minimization replay approach is practical for debugging stateful failures. ",
+        "relation_to_my_work_zh": "高度相关：若你的工作涉及MPC编译器、运行时缓存或跨调用优化（如MP-SPDZ、MPC编译流水线），Rondo 的测试与最小化流程可直接借鉴用于发现或回归测试有状态错误。",
+        "relation_to_my_work_en": "Highly relevant: If you work on MPC compilers or runtimes that cache artifacts across invocations, Rondo’s methodology for finding/stateful bug minimization could be directly applicable to test suites and CI for those systems. ",
+        "possible_transfer_zh": "可以把Rondo的三向差分oracle、基于调用序列的变异与MCMC探索策略，迁移到MPC编译器与运行时的测试；还可用于验证依赖感知调度或缓存优化在保留状态下的正确性。",
+        "possible_transfer_en": "Rondo’s three-way oracle, invocation-sequence mutation, and MCMC-guided sampling are transferable to testing MPC compilers/runtimes and to verifying correctness of dependency-aware scheduling and cache/coalescing optimizations under retained state. ",
+        "possible_overlap_or_conflict_zh": "无直接冲突；如在安全敏感系统里运行测试时注意不要泄露私有模型/数据。",
+        "possible_overlap_or_conflict_en": "No direct conflict; when applying tests to privacy-sensitive systems, ensure test inputs/artifacts do not expose confidential models/data. ",
+        "questions_to_verify_zh": [
+          "Rondo的实现是否可用于非Python或自定义编译器（如MP-SPDZ）的驱动？",
+          "其MCMC采样与变异策略对特定编译器特征需做多少调优？",
+          "是否开源并能被集成到CI/回归测试流水线？"
+        ],
+        "questions_to_verify_en": [
+          "Is Rondo’s implementation adaptable to non-Python or custom compilers (e.g., MP-SPDZ)?",
+          "How much tuning of the MCMC sampler and mutation operators is required per target compiler?",
+          "Is the tool open-sourced and integrable into CI/regression pipelines?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.22003v1",
+        "research_problem_zh": "基于仅标题与摘要：深度学习编译器保留的编译器状态会导致后续单次调用在有状态的上下文下表现不正确；如何以序列化的、状态感知的测试方法发现此类缺陷并最小化触发序列？",
+        "research_problem_en": "Based only on title and abstract: retained compiler state in deep-learning compilers can make otherwise-correct invocations fail when executed after specific sequences; how to design stateful testing that finds such bugs and shortens the failure-triggering invocation sequences.",
+        "core_method_zh": "提出Rondo：将测试用例表示为模型与调用序列，使用序列变异和由编译行为驱动的马尔可夫链蒙特卡洛采样以偏好罕见行为；采用三向差异判定器比较无编译、已编译且重置状态、已编译且保留状态的执行，确认状态性错误并回放以缩短序列。",
+        "core_method_en": "Rondo represents tests as a model plus an invocation sequence, mutates sequences and uses an MCMC sampler guided by compilation behavior to favor rare behaviors; a three-way differential oracle compares execution without compilation, compiled execution with state reset, and compiled execution with state retained to detect stateful bugs; it confirms and shrinks triggering sequences.",
+        "contributions_zh": [
+          "定义并实现了以调用序列为核心的有状态测试方法Rondo（摘要中描述）",
+          "引入以编译器行为指导的MCMC采样来探索少见的状态轨迹",
+          "设计三向差异判定器以精确定位因编译器状态导致的错误，并实现序列缩短",
+          "在四个深度学习框架上发现并报告大量缺陷，展示高覆盖率与高精度（摘要提供的实验成果）"
+        ],
+        "contributions_en": [
+          "Defines and implements the stateful testing method Rondo",
+          "Uses MCMC sampling guided by compiler behavior to explore rare stateful behaviors",
+          "Introduces a three-way differential oracle to detect compiler-state-induced bugs and shrinks sequences",
+          "Demonstrates effectiveness across four deep-learning frameworks, finding many bugs and achieving high coverage and precision (per the abstract)"
+        ],
+        "why_watch_zh": "与主课题关联：编译器/运行时的状态性错误同样可能发生在MPC编译器或安全运行时（例如缓存、跨调用的优化状态），Rondo的方法学（序列化测试、三向差分、序列压缩）对MPC编译器测试与回归检测具有直接借鉴意义。",
+        "why_watch_en": "Relevance: stateful bugs can also affect MPC compilers and secure runtimes (e.g., caches, cross-invocation optimization state). Rondo's methodology—sequence-based testing, three-way differential oracle, and sequence shrinking—can be directly useful for testing MPC compilers and runtimes.",
+        "direct_relation_zh": "直接关联：MPC编译器和MPC运行时中的状态性错误检测、编译器测试与回归检测。与调度/通信优化的直接关系较弱，但测试方法可用于发现与这些优化相关的状态错误。",
+        "direct_relation_en": "Directly relevant to detecting stateful bugs in MPC compilers and runtimes, and to compiler testing/regression detection. Less directly related to scheduling/communication optimization, but the testing approach can uncover stateful bugs introduced by such optimizations.",
+        "transferable_mechanisms_zh": [
+          "将测试用例视为“程序+调用序列”的表示法适用于任何有跨调用状态的系统（包括MPC运行时）",
+          "三向差异判定器（no-compile / compile+reset / compile+retain）能定位是否为编译器保留状态引起的错误",
+          "基于编译行为引导的MCMC采样和序列变异可提高对稀有状态路径的覆盖率",
+          "序列缩短（最小触发集合）对故障定位与开发者修复非常有用"
+        ],
+        "transferable_mechanisms_en": [
+          "Representing tests as program+invocation-sequence applies to systems with cross-invocation state (including MPC runtimes)",
+          "The three-way differential oracle (no-compile / compile+reset / compile+retain) helps localize whether an error is due to retained compiler state",
+          "Compilation-behavior-guided MCMC sampling and sequence mutation increase coverage of rare stateful paths",
+          "Sequence shrinking to find minimal triggering sequences is valuable for debugging and fixes"
+        ],
+        "potential_overlap_zh": "该方向与已有的编译器模糊测试、差分测试、状态化回归测试工具在目标和技术上可能有交叉；摘要未列出与现有工具的定量对比细节。",
+        "potential_overlap_en": "This overlaps conceptually with existing compiler fuzzers, differential testing, and stateful regression-testing tools; the abstract does not provide detailed quantitative comparisons to prior approaches.",
+        "potential_conflict_zh": "无明显冲突。现实风险包括对复杂、分布式或需保密的MPC执行环境重放的可行性（重放可能受安全/隐私/多方协作限制）。",
+        "potential_conflict_en": "No clear conflicts. Practical issues include feasibility of replaying sequences in complex, distributed, or privacy-sensitive MPC environments, where replay may be constrained by security or multi-party coordination requirements.",
+        "full_text_questions_zh": [
+          "MCMC采样用到的特征/奖励信号具体是什么？如何度量“罕见行为”？",
+          "序列变异操作集与接受准则有哪些？",
+          "三向差异判定器的精确判定策略与容错阈值如何设置？",
+          "在有分布式/多方运行时（例如MPC）中如何实现确定性回放？",
+          "缩短序列的算法细节是什么，以及是否保证最小性或近似最小性？",
+          "工具开源性与易用性（对不同框架的适配成本）如何？"
+        ],
+        "full_text_questions_en": [
+          "What signals/features guide the MCMC sampler and how is “rare behavior” quantified?",
+          "What mutation operators and acceptance criteria are used for sequence mutation?",
+          "What is the exact decision logic and tolerance for the three-way differential oracle?",
+          "How is deterministic replay handled in distributed/multi-party runtimes (e.g., MPC) if attempted?",
+          "What is the sequence-shrinking algorithm and does it guarantee minimality or an approximation?",
+          "Is the tool open-source and how costly is adaptation to new frameworks?"
+        ],
+        "experiment_checks_zh": [
+          "核查bug确认流程（是否可复现；是否提供测试用例与回放脚本）",
+          "评估在目标系统（如MPC编译器）上的适配难度與效果",
+          "与现有静态/动态测试方法的对比（覆盖率、误报率、运行成本）",
+          "检查缩短后的序列是否仍能在有状态执行环境中被可靠重放",
+          "统计学上验证报告的覆盖率与精度度量是否稳健"
+        ],
+        "experiment_checks_en": [
+          "Verify bug confirmation process (reproducibility and availability of test cases/replay scripts)",
+          "Assess adaptation difficulty and effectiveness on target systems (e.g., MPC compilers)",
+          "Compare against existing static/dynamic testing methods (coverage, false positive rate, runtime cost)",
+          "Check that shortened sequences still reliably replay in stateful execution environments",
+          "Statistically validate claimed coverage and precision metrics"
+        ],
+        "tracking_targets": [
+          "Rondo代码仓库与issues/PRs",
+          "被深度学习/编译器项目采纳（CI集成、测试套件）",
+          "在MPC编译器或安全运行时中应用案例或衍生工作",
+          "论文中提交并被修复的bug列表与开发者反馈记录"
+        ],
+        "next_steps_zh": [
+          "获取Rondo实现并在目标MPC编译器（如MP-SPDZ或Prelude/Overture）上尝试适配测试器",
+          "设计针对MPC特有语义（秘密共享、分布式回放）的序列变异与回放方案",
+          "对比Rondo与现有编译器测试工具在发现状态性错误方面的效果与成本"
+        ],
+        "next_steps_en": [
+          "Obtain Rondo implementation and try adapting it to target MPC compilers (e.g., MP-SPDZ, Prelude/Overture)",
+          "Design mutation and replay strategies tailored to MPC semantics (secret-sharing, distributed replay)",
+          "Compare Rondo against existing compiler testing tools for effectiveness and cost in discovering stateful bugs"
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.21832",
+        "version": 1,
+        "title": "Local Epochs as Optimal Stopping: Theory and Evidence in Federated Learning",
+        "authors": [
+          "Ke Xiao",
+          "Qiyuan Wang",
+          "Christos Anagnostopoulos"
+        ],
+        "abstract": "How long should each client train before communicating? Federated learning usually answers with a fixed, hand-tuned number of local epochs, yet an extra epoch helps only while the loss it removes outweighs the client drift it adds. We cast local training as finite-horizon optimal stopping: a client trains while the next epoch's expected loss reduction exceeds its priced squared drift. We prove that this one-stage look-ahead threshold is optimal whenever stopping decisions are nested, derive closed forms for geometric and power-law returns, and show that an estimated rule loses utility only through wrong-signed decisions. Epoch-level evidence supports the model's structure (geometric diminishing returns and additive drift) and reveals a simple regularity: the stage of training, not the client, sets the budget. The resulting rule, FedStop, is never more than one point below tuned FedAvg in mean accuracy. Where its budgets vary, it raises worst-decile accuracy by 4-8 points over tuned FedAvg and an adaptive-interval baseline, and every one of these gains remains significant after a Holm correction. Against the client-side stopping rules ALT and FLASH, it has the highest CIFAR-10 worst decile on every seed and is level elsewhere. It stays stable where per-client early stopping collapses, and each stopping decision takes constant time.",
+        "categories": [
+          "cs.DC",
+          "cs.LG"
+        ],
+        "published": "2026-10-15T13:15:03Z",
+        "updated": "2026-10-15T13:15:03Z",
+        "abstract_url": "https://arxiv.org/abs/2610.21832v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.21832v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.21832v1",
+        "relevance_score": 7,
+        "novelty_score": 6,
+        "transferability_score": 6,
+        "systems_score": 6,
+        "confidence": 0.86,
+        "priority": "read",
+        "matched_topics": [
+          "privacy-preserving machine learning",
+          "latency hiding",
+          "adaptive systems"
+        ],
+        "short_summary_zh": "作者将联邦学习中的本地训练轮次数问题建模为有限时域的最优停止问题：客户端在下一轮预期损失降低超过定价的平方漂移时停止训练。提出规则 FedStop，理论上给出单步前瞻阈值的最优性条件，提供闭式解并在 CIFAR-10 等实验中展示比调参的 FedAvg 在最差分位上更鲁棒的效果（基于摘要）。",
+        "short_summary_en": "The paper frames local epochs in federated learning as a finite-horizon optimal stopping problem: train until the next epoch's expected loss reduction is less than a priced squared client-drift. They derive a one-step look-ahead threshold rule (FedStop), closed forms for certain return models, and empirical results showing improved worst-decile accuracy over tuned FedAvg and other baselines (based on the abstract).",
+        "why_interesting_zh": "与隐私保留机器学习紧密相关；在 MPC/secure aggregation 上可影响 client-side computation budgeting and communication frequency 的设计，尤其当WAN延迟或通信成本高时，自动化本地训练预算有助于运行时调度与延迟-通信折中。",
+        "why_interesting_en": "Closely related to privacy-preserving ML. The stopping rule could inform client-side computation budgeting and communication frequency in MPC/secure aggregation settings, relevant for WAN-latency-aware runtime scheduling where local work vs. communication tradeoffs matter.",
+        "relation_to_my_work_zh": "可直接借鉴于 MPC/secure-inference runtimes：FedStop 的预算决策逻辑或许能用于决定何时在客户端/参与方执行本地预处理、何时触发通信或切换协议（如更少轮次但更重本地计算）。但需验证模型在异构/有恶意延迟场景下的稳健性。",
+        "relation_to_my_work_en": "Potentially usable in MPC/secure-inference runtimes: FedStop's budgeting could guide when to perform local precomputation vs. trigger communication or protocol switches (fewer rounds with heavier local compute). Need to verify robustness under client heterogeneity and adversarial/straggler behaviors.",
+        "possible_transfer_zh": "决策阈值形式（基于预期收益与漂移代价）可以被迁移为 MPC 任务的本地批次大小/本地迭代数自适应规则；可与延迟模型结合用于 WAN-aware 调度器或协议选择器。",
+        "possible_transfer_en": "The threshold decision (expected gain vs. priced drift) could be adapted to MPC tasks for deciding local batch sizes/local iterations; combine with latency/cost models to drive WAN-aware schedulers or protocol selectors.",
+        "possible_overlap_or_conflict_zh": "若已有工作在 MPC 场景采用手工或学习的本地训练预算策略，FedStop 可能与之重叠；摘要未提及对非合作/恶意客户端的处理。",
+        "possible_overlap_or_conflict_en": "Possible overlap with existing MPC works that use hand-tuned or learned local-training budgets; the abstract does not address non-cooperative or adversarial clients.",
+        "questions_to_verify_zh": [
+          "FedStop 在高异构性（数据分布、算力、延迟）客户端集合上的表现如何？",
+          "论文是否提供与真实网络延迟/带宽模型耦合的评估，或仅在 IID/CIFAR-10 风格任务上测试？",
+          "实现是否需要额外通信/计量开销来估计‘漂移价格’？该估计如何高效计算？"
+        ],
+        "questions_to_verify_en": [
+          "How does FedStop perform under high client heterogeneity (data, compute, latency)?",
+          "Are evaluations coupled with realistic network latency/bandwidth models, or only on IID/CIFAR-10-like settings?",
+          "Does FedStop require extra communication/measurement overhead to estimate the 'priced drift', and how is that computed efficiently?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.21969",
+        "version": 1,
+        "title": "Uncertainty-Aware Federated Learning for Joint Communication and Computation in XR Systems",
+        "authors": [
+          "Robert-Jeron Reifert",
+          "Hayssam Dahrouj",
+          "Alaa Alameer Ahmad",
+          "Haris Gacanin",
+          "Aydin Sezgin"
+        ],
+        "abstract": "The convergence of communication and computation, empowered by artificial intelligence (AI) enhanced capabilities, emerges as a key enabler for realizing the promising functionalities of the sixth-generation of communication systems (6G). To this end, this paper investigates an AI-native, robust network, where multiple base stations (BSs) simultaneously serve several extended reality (XR) devices. The paper then presents an innovative distributed deep learning-based approach to simultaneously manage the transmit and computing powers, and computation allocation, amidst uncertainties in both channel and computing states information. Under such an interference network scenario, the paper proposes a robust approach for minimizing the worst-case delay across the served XR devices, subject to computation and power constraints. The paper leverages a deep neural network (DNN) that can be trained either centrally or in a federated manner to map estimated channels and computation requirements to optimized resource allocations per BS. During training, uncertainty samples, reflecting both channel and computing estimation errors, are injected after the DNN output to account for such joint uncertainties. Our results validate the enhanced robust delay performance and scalability of joint uncertainty injection as compared to uncertainty-agnostic methods and state-of-the-art benchmarks, with federated learning-based solutions achieving near-centralized performance while enhancing efficiency, privacy, and adaptability.",
+        "categories": [
+          "cs.IT",
+          "cs.LG"
+        ],
+        "published": "2026-10-15T14:27:05Z",
+        "updated": "2026-10-15T14:27:05Z",
+        "abstract_url": "https://arxiv.org/abs/2610.21969v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.21969v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.21969v1",
+        "relevance_score": 7,
+        "novelty_score": 6,
+        "transferability_score": 7,
+        "systems_score": 7,
+        "confidence": 0.8,
+        "priority": "skim",
+        "matched_topics": [
+          "network-aware runtime",
+          "communication and computation overlap",
+          "federated learning",
+          "protocol selection"
+        ],
+        "short_summary_zh": "基于标题与摘要：面向6G情境，本文研究多基站为若干XR设备提供服务的鲁棒网络资源分配问题，提出在信道/计算状态不确定下通过中心化或联邦训练的DNN映射估计信息到每基站的发射与算力分配；训练时注入代表不确定性的样本以提升最坏情况延迟性能。",
+        "short_summary_en": "Based only on title and abstract: The paper studies an AI-native robust network for multi-BS serving XR devices, proposing a DNN-based resource allocation (transmit power, compute allocation) trained centrally or federatedly; they inject uncertainty samples post-DNN output to handle channel and compute estimation errors and minimize worst-case delay under constraints.",
+        "why_interesting_zh": "直接涉及联合通信与计算分配、联邦/网络-aware训练策略和鲁棒性——这些主题与网络感知运行时与跨节点资源协调高度相关。",
+        "why_interesting_en": "Touches joint communication-computation allocation, federated training, and robustness to estimation errors—topics relevant to network-aware runtimes and protocol/resource selection for distributed ML or secure inference. ",
+        "relation_to_my_work_zh": "与网络感知运行时、WAN延迟优化和协议选择有较好契合；可借鉴其鲁棒训练（不确定性注入）与分布式/联邦部署经验。",
+        "relation_to_my_work_en": "Good fit for network-aware runtime concerns, WAN latency mitigation, and protocol/resource selection; their robust/federated training and uncertainty-injection techniques could be transferable. ",
+        "possible_transfer_zh": "方法可为MPC/私有推理场景提供资源分配或调度策略的学习式控制思路，特别是在估计不确定性和联邦部署方面。",
+        "possible_transfer_en": "Approach could inform learned resource/scheduling controllers for MPC or privacy-preserving inference, especially handling state/measurement uncertainty and federated deployment. ",
+        "possible_overlap_or_conflict_zh": "若将DNN决策嵌入安全推理场景，需注意隐私/安全约束（例如不泄露链路或负载信息），这是额外实现负担。",
+        "possible_overlap_or_conflict_en": "Embedding DNN-based allocation into secure inference/MPC may raise privacy/leakage concerns (e.g., exposing link/load info) and require safe design. ",
+        "questions_to_verify_zh": [
+          "评估中是否包含广域网（高延迟/高抖动）场景？",
+          "不确定性注入具体如何构造、是否对联邦训练收敛有副作用？",
+          "是否公开代码与训练/评估设置以便复用？"
+        ],
+        "questions_to_verify_en": [
+          "Do evaluations include WAN/high-latency/high-jitter scenarios?",
+          "How exactly are uncertainty samples constructed and do they affect federated training convergence?",
+          "Is code/data released to reproduce allocation policies and deployment profiling?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.22015",
+        "version": 1,
+        "title": "Resource-aware Sub-network Allocation for Heterogeneous Decentralized Learning",
+        "authors": [
+          "Zhuojun Tian",
+          "Ming Xiao",
+          "Mikael Skoglund"
+        ],
+        "abstract": "System heterogeneity in computation, communication, and memory can substantially limit synchronous decentralized learning, where each training round is constrained by resource-limited nodes. Existing approaches provide limited support for jointly determining node-specific model capacities from deployment resources. We propose RASA-DL, a resource-aware sub-network allocation framework that treats the maximum sub-network width assigned to each node as a deployment variable. RASA-DL combines offline hardware profiling of computation and memory costs with deployment-aware profiling of learning utility under heterogeneous decentralized training. Using these profiles together with node- and link-level resource information, we formulate deployment as a bottleneck-latency minimization problem subject to per-node memory constraints and a required aggregate learning utility. Exploiting the monotone feasibility of the latency threshold, RASA-DL efficiently identifies the deployment through a binary-search-based allocation procedure. Experiments under controlled resource heterogeneity demonstrate favorable accuracy--latency tradeoffs. Under the Moderate and Severe regimes, the minimum-latency operating point improves accuracy over the largest globally feasible uniform deployment by 2.80 and 2.43 percentage points, respectively, at the same modeled round latency. The advantage is further amplified under strong Non-IID data heterogeneity.",
+        "categories": [
+          "cs.DC"
+        ],
+        "published": "2026-10-15T14:56:12Z",
+        "updated": "2026-10-15T14:56:12Z",
+        "abstract_url": "https://arxiv.org/abs/2610.22015v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.22015v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.22015v1",
+        "relevance_score": 7,
+        "novelty_score": 6,
+        "transferability_score": 7,
+        "systems_score": 7,
+        "confidence": 0.8,
+        "priority": "skim",
+        "matched_topics": [
+          "decentralized runtime scheduling",
+          "round latency",
+          "resource-aware deployment",
+          "heterogeneous nodes"
+        ],
+        "short_summary_zh": "基于标题与摘要：提出RASA-DL，一个资源感知子网络分配框架，将每个节点可用的子网络宽度作为部署变量，结合离线硬件概况与部署时学习效用剖面，将部署表述为在内存约束下的瓶颈延迟最小化问题，并通过二分搜索的可行性判定高效求解。实验在受控异构性下显示对延迟—精度权衡有利。",
+        "short_summary_en": "Based only on title and abstract: RASA-DL is a resource-aware sub-network allocation framework that chooses per-node maximum sub-network widths using offline hardware profiling and learning-utility profiles; it formulates deployment as a bottleneck-latency minimization under memory constraints and uses binary-search over latency thresholds to find feasible allocations, improving accuracy-latency tradeoffs under heterogeneity.",
+        "why_interesting_zh": "直接触及异构分布式训练中的部署变量分配、延迟瓶颈最小化与可扩展的求解逻辑，对设计异构MPC或分布式推理的调度器/部署器有借鉴意义。",
+        "why_interesting_en": "Addresses per-node capacity allocation under heterogeneity and formulates an efficiently solvable bottleneck-latency minimization—relevant to scheduling and deployment of heterogeneous distributed ML and potentially MPC runtimes. ",
+        "relation_to_my_work_zh": "与依赖感知调度、网络/节点异构性处理紧密相关；其二分+可行性检验的求解策略可为在线/离线部署决策提供模板。",
+        "relation_to_my_work_en": "Closely related to dependency-aware scheduling and heterogeneity-aware deployment; their binary-search feasibility approach could be adapted for runtime allocation decisions in MPC systems. ",
+        "possible_transfer_zh": "可将其离线硬件剖面与学习效用表征用于MPC部署决策（例如选择不同协议或本地资源配置），并把瓶颈延迟目标替换为回合延迟或吞吐量指标。",
+        "possible_transfer_en": "Offline hardware profiling and learning-utility profiling could be reused for MPC deployment choices (protocol selection, per-node resource caps), and the bottleneck-latency formulation can be mapped to round-latency or throughput objectives. ",
+        "possible_overlap_or_conflict_zh": "将学习效用与安全/隐私约束联合考虑时，可能需要额外的约束建模。",
+        "possible_overlap_or_conflict_en": "When combined with privacy/security constraints, the optimization needs extra constraints (e.g., certain nodes cannot host particular sub-networks), which changes feasibility. ",
+        "questions_to_verify_zh": [
+          "學習效用剖面如何构建，是否对非IID数据场景做充分建模？",
+          "二分方法在更大规模节点/模型空间上的可扩展性如何？",
+          "是否能处理动态资源变化或在线重配置？"
+        ],
+        "questions_to_verify_en": [
+          "How are learning-utility profiles constructed and do they model strong non-IID scenarios sufficiently?",
+          "How does the binary-search approach scale to many nodes/models?",
+          "Can the method handle dynamic resource changes or online reconfiguration?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
