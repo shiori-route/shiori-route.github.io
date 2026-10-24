@@ -1,0 +1,547 @@
+{
+  "date": "2026-10-23",
+  "disclaimer_zh": "以下分析由自动化系统根据论文标题和摘要生成，可能存在错误，请以论文原文为准。",
+  "disclaimer_en": "This automated analysis is based only on paper titles and abstracts and may be wrong. Please consult the original paper.",
+  "statistics": {
+    "fetched": 100,
+    "new": 100,
+    "screened": 60,
+    "recommended": 5,
+    "deep": 3,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "paper": {
+        "base_id": "2610.31383",
+        "version": 1,
+        "title": "Pipelining vs. Combining in Aggregation Tasks",
+        "authors": [
+          "Gabriel Marques Domingues",
+          "Claire Mathieu",
+          "Boaz Patt-Shamir"
+        ],
+        "abstract": "We study the aggregation task (convergecast) in networks in the case that the values to be aggregated do not fit in a single message. We assume that every node starts with an input value, and there is an aggregation operator that is commutative, associative, and length-preserving, i.e., the result of aggregating two values has the same length as each of the input values. Since values do not fit in a message, they are transferred in a ``train'' of pipelined messages, which must be terminated whenever we want to aggregate values. The goal is to minimize the makespan time of aggregating all values. We present general lower bounds on the problem and optimal algorithms for several prevalent parallel computing architectures, including the hypercube and complete bipartite graphs, under both the splittable and unsplittable flows models. We also present an $O(\\log n)$ approximation for general graphs in the unsplittable flows model.",
+        "categories": [
+          "cs.DC",
+          "cs.DS"
+        ],
+        "published": "2026-10-22T14:52:00Z",
+        "updated": "2026-10-22T14:52:00Z",
+        "abstract_url": "https://arxiv.org/abs/2610.31383v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.31383v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.31383v1",
+        "relevance_score": 9,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 8,
+        "confidence": 0.88,
+        "priority": "deep_read",
+        "matched_topics": [
+          "pipelining",
+          "communication rounds",
+          "round complexity",
+          "batching",
+          "pipeline execution",
+          "DAG scheduling",
+          "dependency-aware scheduling"
+        ],
+        "short_summary_zh": "基于论文标题与摘要：研究在消息长度超过单条消息的情况下网络中的聚合（convergecast）问题。作者在可拆分与不可拆分流模型下给出一般下界，并为超立方体、完全二分图等架构给出最优算法；对一般图在不可拆分模型给出O(log n)近似算法。摘要强调通过“消息列车”流水线传输与终止条件来最小化汇聚完工时间。",
+        "short_summary_en": "Based on title and abstract: studies aggregation (convergecast) when node values do not fit in a single message. Values are pipelined as 'trains' and must be terminated to combine; authors derive general lower bounds and present optimal algorithms for architectures (hypercube, complete bipartite) under splittable/unsplittable flow models and an O(log n) approximation for general graphs in the unsplittable model.",
+        "why_interesting_zh": "与安全多方计算/保密推理的运行时密切相关：MPC 在广域网/高延迟环境下也常用流水线、批处理与轮次合并来减少延迟和通信量。该工作从理论上分析流水线与合并的权衡，并给出最优与近似算法，可能揭示降低MPC makespan 或轮次复杂度的新策略（基于题目与摘要）。",
+        "why_interesting_en": "Closely relevant to MPC and secure-computation runtimes: MPC deployments use pipelining, batching and round-coalescing to reduce makespan under WAN latency. This paper provides theoretical lower bounds and optimal/approximate algorithms for pipelined aggregation under splittable/unsplittable flows, potentially informing MPC scheduler and protocol-selection strategies (based on title+abstract).",
+        "relation_to_my_work_zh": "若你研究MP-SPDZ/MPC运行时或编译器的指令/任务调度、轮次合并或流水线执行，这篇论文的模型、下界与算法可直接作为理论参考或为依赖图（DAG）调度器提供新的调度原型（基于题目与摘要）。",
+        "relation_to_my_work_en": "If you work on MP-SPDZ / MPC runtimes or compiler scheduling for instruction/DAG batching, this paper's models, lower bounds and algorithms can inform scheduler design and round-coalescing strategies (based on title+abstract).",
+        "possible_transfer_zh": "- 将“消息列车”与MPC的多轮通信映射，用于设计终止/刷新策略以减少轮次。\n- 利用给出的图类（hypercube, bipartite）算法作为分布式协议在特定拓扑下的优化基线。\n（基于题目与摘要）",
+        "possible_transfer_en": "- Map the 'train' model to MPC multi-round communication and design termination/refresh policies to reduce rounds.\n- Use the specialized optimal algorithms for particular topologies as baselines for distributed secure protocols.\n(Based on title+abstract)",
+        "possible_overlap_or_conflict_zh": "若你已有基于启发式调度或工程评估的系统，这篇论文提供的理论边界可能与工程结论冲突或补充。需核实模型假设（消息长度、同步/异步模型、网络费率）是否匹配你的系统。",
+        "possible_overlap_or_conflict_en": "If you have heuristic/engineering scheduling work, the paper's theoretical bounds may complement or contradict those results. Verify whether their assumptions (message length model, sync/async, network cost model) match your system before transferring results. (Based on title+abstract)",
+        "questions_to_verify_zh": [
+          "问题模型是否包含延迟与带宽分离的成本？",
+          "splittable 与 unsplittable 模型的精确定义与实用性如何（在MPC消息语义下）？",
+          "论文所给算法是否具备多项式时间实现与实际调度策略？",
+          "实验/示例是否评估了在高WAN延迟下的makespan改进？"
+        ],
+        "questions_to_verify_en": [
+          "Does the cost model separate latency and bandwidth, and how are they weighted?",
+          "Precise definitions and practicality of the splittable vs. unsplittable flow models for MPC-style messages?",
+          "Are the algorithms polynomial-time and implementable as practical schedulers?",
+          "Do they provide empirical evaluations under high-WAN latency to illustrate makespan improvements?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.31383v1",
+        "research_problem_zh": "在网络中进行聚合(convergecast)时，输入值长度超过单条消息容量的情况下如何最小化完成时间（makespan）？考虑可合并、结合且保持长度的聚合算子，以及分裂/不可分裂流模型和多种并行计算拓扑（如超立方体、完全二分图）。",
+        "research_problem_en": "How to minimize the makespan of an aggregation (convergecast) task in networks when input values do not fit in a single message? The setting assumes a commutative, associative, length-preserving aggregation operator, pipelined \"train\" messages that must be terminated to aggregate, and studies both splittable and unsplittable flow models across several parallel topologies (hypercube, complete bipartite, general graphs).",
+        "core_method_zh": "基于抽象模型对带流水线的多消息聚合问题建立一般下界，并在特定拓扑上（超立方体、完全二分图）给出最优算法；在一般图的不可分流模型下设计了O(log n)近似算法。区分可分裂与不可分裂流以构建算法与分析。",
+        "core_method_en": "Develops general lower bounds for pipelined multi-message aggregation and derives optimal algorithms for specific parallel topologies (hypercube, complete bipartite). For general graphs under the unsplittable flows model they provide an O(log n)-approximation. The approach distinguishes splittable vs. unsplittable flow models to guide algorithm design and analysis.",
+        "contributions_zh": [
+          "为消息无法全部装入单条消息的聚合问题给出一般性下界（基于抽象流水线/终止模型）。",
+          "在超立方体和完全二分图等常见并行架构下，针对可分裂与不可分裂流模型提出并证明最优算法。",
+          "在一般图的不可分裂流模型中提出一个O(log n)近似算法。"
+        ],
+        "contributions_en": [
+          "General lower bounds for aggregation when values must be pipelined across multiple messages (termination model).",
+          "Optimal algorithms for common parallel architectures (hypercube, complete bipartite) under both splittable and unsplittable flow models.",
+          "An O(log n)-approximation algorithm for general graphs in the unsplittable flows model."
+        ],
+        "why_watch_zh": "如果你的工作涉及在高延迟/WAN环境下的MPC或分布式安全计算，其中消息分片、流水线与聚合的轮次/完成时间很关键，这篇论文的下界、拓扑特定最优算法以及不可分裂流近似算法可能提供有价值的理论工具或对比基准（基于标题与摘要）。",
+        "why_watch_en": "If your research concerns MPC or distributed secure computation in high-latency/WAN settings where message fragmentation, pipelining and aggregate completion time (round/makespan complexity) matter, the paper's lower bounds, topology-specific optimal algorithms, and unsplittable-flow approximation could provide useful theoretical tools or baselines (based only on title and abstract).",
+        "direct_relation_zh": "与主要主题高度相关：集中于流水线消息与聚合完成时间、分裂/不可分裂流模型、拓扑敏感调度，这直接触及轮次复杂度、依赖敏感调度、DAG/流水线执行与延迟隐藏等问题（基于标题与摘要）。",
+        "direct_relation_en": "Highly relevant to primary topics: it addresses pipelined messages and aggregation makespan, splittable vs. unsplittable flow models, and topology-aware algorithms—directly touching round complexity, dependency-aware scheduling, DAG/pipeline execution and latency hiding (based only on title and abstract).",
+        "transferable_mechanisms_zh": [
+          "拓扑感知的调度/路由策略可用于MPC运行时以降低跨WAN的轮次数或流水线终止次数。",
+          "对可分裂/不可分裂流的建模与分析可用于选择在不同协议间（比如按带宽/轮次权衡的MPC原语）切换的策略。",
+          "为DAG上聚合/汇聚操作设计的近似算法可迁移到MPC编译器的依赖合并与批处理/轮次合并优化。"
+        ],
+        "transferable_mechanisms_en": [
+          "Topology-aware scheduling/routing strategies could be applied in MPC runtimes to reduce number of rounds or pipeline termination events across WAN links.",
+          "Modeling splittable vs. unsplittable flows can inform protocol selection when trading bandwidth for round complexity in MPC primitives.",
+          "Approximation techniques for aggregation on DAGs can transfer to MPC compilers for dependency coalescing, batching, and round-merging optimizations."
+        ],
+        "potential_overlap_zh": "与关注通信轮次、轮次合并、依赖敏感调度与DAG批处理的MPC系统研究高度重叠；可作为理论基准或设计灵感来源（基于摘要）。",
+        "potential_overlap_en": "High overlap with research on communication rounds, round coalescing, dependency-aware scheduling and DAG batching in MPC systems; could serve as a theoretical baseline or source of design ideas (based on abstract).",
+        "potential_conflict_zh": "摘要未提及安全属性或隐私开销——若在MPC上下文直接采用其算法，需要评估是否引入额外的安全/通信假设冲突（摘要基础上的潜在冲突）。",
+        "potential_conflict_en": "The abstract does not mention security/privacy overheads—if directly adopted in MPC contexts, one must check whether algorithms introduce assumptions conflicting with cryptographic protocol constraints (a potential conflict based only on the abstract).",
+        "full_text_questions_zh": [
+          "对下界的模型假设有哪些精确的网络/同步/消息大小约束？是否允许异步/部分同步模型？",
+          "超立方体与完全二分图上的最优算法是否构造性？复杂度（时间/消息/轮次）如何量化？",
+          "可分裂与不可分裂流模型的正式定义是什么？在不可分裂模型中近似算法的关键思想与性能保证如何证明？",
+          "算法是否考虑节点/链路带宽与延迟异质性？对WAN场景的适用性如何？",
+          "论文是否给出将这些算法集成到现有分布式运行时或MPC编译器的讨论或限制？"
+        ],
+        "full_text_questions_en": [
+          "What are the exact model assumptions behind the lower bounds (network synchrony, message-size constraints, termination semantics)? Are asynchronous or partially synchronous models allowed?",
+          "Are the optimal algorithms for hypercube and complete bipartite graphs constructive? How are time/message/round complexity formally stated?",
+          "What are the formal definitions of splittable vs. unsplittable flow used? What are the key ideas and proofs behind the O(log n)-approximation for unsplittable flows?",
+          "Do the algorithms account for heterogeneous bandwidth/latency of nodes/links? How applicable are the results to WAN deployments?",
+          "Is there a discussion on integrating these algorithms into runtimes or MPC compilers, and what limitations would arise?"
+        ],
+        "experiment_checks_zh": [
+          "检查模型与下界证明使用的精确假设（同步性、消息排序、通道容量、带宽/延迟计量）。",
+          "复现拓扑（超立方体/完全二分图）上所述算法，验证在不同n与消息长度下的makespan与理论界接近度。",
+          "在带有带宽/延迟异质性的仿真中测试不可分裂近似算法，观察常数因子与O(log n)行为在现实参数下的表现。"
+        ],
+        "experiment_checks_en": [
+          "Verify exact assumptions used in the model and lower-bound proofs (synchrony, message ordering, channel capacities, bandwidth/latency accounting).",
+          "Reproduce algorithms on the specified topologies (hypercube, complete bipartite) and measure makespan across varying n and message lengths to compare against theoretical bounds.",
+          "Evaluate the unsplittable-flow approximation under simulations with heterogeneous bandwidth/latency to assess constant factors and practical scaling of the O(log n) bound."
+        ],
+        "tracking_targets": [
+          "round complexity / makespan improvements",
+          "splittable vs. unsplittable flow modeling",
+          "topology-aware aggregation algorithms",
+          "applicability to WAN-latency MPC runtimes",
+          "proof assumptions (synchrony, message termination semantics)"
+        ],
+        "next_steps_zh": [
+          "阅读全文以核实模型假设与证明细节，并提取对MPC运行时可用的具体调度规则或启发式。",
+          "尝试在MPC仿真框架（含WAN延迟）中实现其拓扑感知调度以评估实际对轮次/延迟的影响。",
+          "联系作者或搜索后续工作，查看是否有人将这些算法应用到安全多方或隐私敏感场景中。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to confirm model assumptions and proof details, and extract concrete scheduling rules or heuristics usable by MPC runtimes.",
+          "Implement topology-aware scheduling from the paper in an MPC simulator with WAN latency to evaluate real effects on rounds and latency.",
+          "Search for follow-up work or contact authors to learn about applications to secure multiparty computation or privacy-sensitive settings."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.31169",
+        "version": 1,
+        "title": "SARIA: Persistence-Aware KV Caching with Coordinated DRAM--SSD Reload for LLM Agents",
+        "authors": [
+          "Hui Li",
+          "Qihui Zhou",
+          "Xiao Yan",
+          "Shumeng Zhang",
+          "Zijie Dai",
+          "Zequn Gong",
+          "Mingcong Song",
+          "Guoping Long",
+          "Hongjie Si",
+          "James Cheng"
+        ],
+        "abstract": "Multi-turn LLM agents usually reuse long context prefixes, making key value (KV) caching crucial for reducing prefill latency. SSDs provide a low-cost extension to limited DRAM capacity but introduce two key challenges. Eagerly persisting all KV cache blocks incurs substantial write traffic and rapidly consumes finite SSD endurance. Meanwhile, the small number of SSDs provisioned in typical GPU servers limits aggregate reload bandwidth, making SSD-resident KV cache much slower to retrieve than that in DRAM and inflating prefill latency. We present \\textsc{Saria} (Selective Admission and Reload for Inference Acceleration), a KV caching system that jointly manages DRAM and SSD by exploiting the session-level temporal locality of LLM agents to reduce SSD writes and accelerate cache reload. On the write path, \\textsc{Saria} uses eviction and reuse history to selectively persist KV cache blocks that exhibit reuse opportunities beyond their DRAM residency, avoiding unnecessary writes for KV cache already hosted in DRAM. On the read path, \\textsc{Saria} promotes selected SSD-hit KV cache blocks from GPU memory into DRAM after prefill, allowing subsequent reuse within the same session to reduce SSD read traffic while limiting DRAM contention. A transfer coordinator paces DRAM reads while SSD transfers are active, allowing both paths to make progress and efficiently share GPU ingress bandwidth. We implement \\textsc{Saria} on LMCache MP and evaluate it using workloads from TraceLab and WEKA, covering both full-attention and hybrid-attention models. The results show that \\textsc{Saria} reduces SSD writes by 57.1--58.9\\% compared with popular full duplicate caching and the mean time to first token (TTFT) by 42.3--79.7\\% over DRAM-only caching.",
+        "categories": [
+          "cs.OS"
+        ],
+        "published": "2026-10-22T12:25:27Z",
+        "updated": "2026-10-22T12:25:27Z",
+        "abstract_url": "https://arxiv.org/abs/2610.31169v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.31169v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.31169v1",
+        "relevance_score": 8,
+        "novelty_score": 6,
+        "transferability_score": 9,
+        "systems_score": 9,
+        "confidence": 0.82,
+        "priority": "read",
+        "matched_topics": [
+          "LLM serving systems",
+          "latency hiding",
+          "KV caching",
+          "pipeline execution",
+          "DRAM--SSD coordination",
+          "network-aware runtime"
+        ],
+        "short_summary_zh": "仅基于标题与摘要：SARIA提出面向LLM多轮会话的KV缓存管理系统，通过选择性持久化与会话内提升机制在DRAM与SSD之间协同减少SSD写入并加速缓存重载，实验显示显著降低SSD写入量并将首令牌时间(TTFT)大幅缩短。",
+        "short_summary_en": "Based only on title and abstract: SARIA is a KV-caching system for multi-turn LLM agents that selectively persists KV blocks to SSD and promotes SSD-hit blocks into DRAM after prefill to exploit session locality; a transfer coordinator paces reads to share GPU ingress bandwidth. Reported reductions: SSD writes ~57–59% and TTFT improvement 42–80% over DRAM-only caching.",
+        "why_interesting_zh": "直接触及部署LLM代理时的实务瓶颈（SSD耐久、重载带宽、预填延迟），提出端到端的缓存策略與协调机制，对WAN/跨机集群部署与延迟优化具有很高的参考价值。",
+        "why_interesting_en": "Addresses practical LLM serving bottlenecks: SSD endurance from eager persistence, limited SSD reload bandwidth, and prefill latency. Joint DRAM–SSD admission and coordinated reload exploiting session locality is a pragmatic systems contribution with strong reported gains—highly relevant to low-latency LLM inference systems.",
+        "relation_to_my_work_zh": "与MPC/安全多方计算不是直接密码协议相关，但在安全/隐私场景下进行受保护的LLM推理（例如在加密/隔离环境）时，KV缓存与盘—内/外存协调策略可直接影响预填延迟与吞吐，值得深入阅读与借鉴。",
+        "relation_to_my_work_en": "Not cryptographic MPC per se, but directly applicable to secure/privileged LLM inference deployments (including MPC-backed inference) where KV caching, SSD endurance, and reload latency materially affect TTFT and throughput.",
+        "possible_transfer_zh": "策略可迁移到受带宽/延迟约束的推理后端、异构内存层级管理、或结合隐私保护（加密/隔离执行）时的KV缓存调度与带宽分配。",
+        "possible_transfer_en": "Techniques (selective persistence based on reuse; promotion after prefill; coordinated transfer pacing) can be adapted to heterogeneous-memory caching for latency-sensitive inference, including encrypted or MPC-backed inference stacks.",
+        "possible_overlap_or_conflict_zh": "若在加密或多主机安全环境中实现，需要评估额外的加密/解密开销与并发带来的带宽/端到端延迟影响；摘要未包含安全部署细节。",
+        "possible_overlap_or_conflict_en": "Implementing SARIA in encrypted/MPC environments requires evaluating crypto overheads and potential serialization points introduced by coordinated transfers—abstract does not address secure-deployment implications.",
+        "questions_to_verify_zh": [
+          "选择性持久化的启发式或学习模型如何定义并在不同会话模式下稳健？",
+          "promote-then-reuse策略对DRAM争用与内存压力的定量影响如何？",
+          "系统实现细节（LMCache MP集成、transfer coordinator的实现、trace与模型设置）和代码是否可复现？"
+        ],
+        "questions_to_verify_en": [
+          "How is selective persistence (eviction+reuse history) defined—heuristic or learned—and how robust is it across varied session workloads?",
+          "What is the quantitative impact of promoting SSD-hit blocks to DRAM on DRAM contention and memory pressure?",
+          "Are implementation details (LMCache MP integration, transfer coordinator) and evaluation traces/code available to reproduce results?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.31169v1",
+        "research_problem_zh": "针对多回合LLM代理的KV缓存，当DRAM有限且使用SSD作为低成本扩展时，如何减小SSD写入（延长耐久）并同时降低从SSD重载KV到DRAM/GPU引起的预填充延迟（TTFT）？",
+        "research_problem_en": "For multi-turn LLM agents that reuse long context prefixes, when DRAM is limited and SSDs are used as a low-cost extension, how to reduce SSD writes (improve endurance) and minimize prefill latency (time-to-first-token) caused by reloading KV cache from SSD to DRAM/GPU?",
+        "core_method_zh": "提出SARIA系统：基于会话级时间局部性，在线选择性地将有重用潜力的KV块持久化到SSD以避免不必要写入；在预填充后将选定的SSD命中块提升到DRAM以便同会话内再利用；通过传输协调器节拍化DRAM与SSD传输以共享GPU入口带宽并隐藏延迟。",
+        "core_method_en": "Proposes SARIA: a KV caching system that leverages session-level temporal locality to selectively persist KV blocks to SSD (reducing unnecessary writes), promote selected SSD-hit blocks into DRAM after prefill for intra-session reuse, and use a transfer coordinator to pace DRAM reads while SSD transfers are active to share GPU ingress bandwidth and hide latency.",
+        "contributions_zh": [
+          "设计并实现一个面向LLM代理的协同DRAM--SSD KV缓存系统（SARIA），采用选择性持久化与提升策略来减少SSD写入并加速重载。",
+          "引入传输协调器来节拍化DRAM/SSD传输，避免GPU入口带宽争用并提高并发传输效率。",
+          "在LMCache MP上实现并使用TraceLab与WEKA工作负载评估，报告显著的SSD写入与TTFT降低（摘要中给出量化范围）。"
+        ],
+        "contributions_en": [
+          "Design and implementation of SARIA, a coordinated DRAM–SSD KV caching system for LLM agents that uses selective persistence and promotion to reduce SSD writes and speed up reloads.",
+          "Introduction of a transfer coordinator to pace DRAM/SSD transfers, reducing GPU ingress contention and improving transfer overlap.",
+          "Implementation on LMCache MP and evaluation with TraceLab/WEKA workloads, showing substantial reductions in SSD writes and mean time-to-first-token (as reported in the abstract)."
+        ],
+        "why_watch_zh": "直接相关于隐私保护LLM推理与高效MPC部署的工程问题：若你的MPC/隐私推理场景需要在资源受限GPU服务器上为多回合会话管理大KV缓存，SARIA提出的选择性持久化、会话内提升与带宽协调机制具有可迁移的系统级思想（基于标题与摘要）。",
+        "why_watch_en": "Directly relevant to engineering problems for privacy-preserving LLM inference and efficient MPC deployment: if your setting requires managing large KV caches for multi-turn sessions on resource-constrained GPU servers, SARIA's selective persistence, intra-session promotion and bandwidth-coordination ideas are system-level mechanisms likely transferable (based only on title and abstract).",
+        "direct_relation_zh": "与主题（secure LLM inference、MPC运行时、网络/存储延迟隐藏）有中高相关性：关注缓存策略、IO写入成本与重载延迟，这些会影响预填充延迟与整体响应时间，进而影响安全推理的实用性（基于摘要）。",
+        "direct_relation_en": "Medium-high relevance to topics (secure LLM inference, MPC runtimes, latency hiding across network/storage): it focuses on cache policies, I/O endurance and reload latency, which affect prefill latency and overall response time—important in practical secure inference deployments (based on abstract).",
+        "transferable_mechanisms_zh": [
+          "会话感知的缓存持久化决策（基于重用历史）可用于MPC/隐私推理中选择哪些中间状态或视图持久化到更慢存储以平衡重用与写入成本。",
+          "在重载路径中将热点对象提升到更快层（SSD->DRAM）以利用同会话多次重用的思想，可用于减少跨网络/协议的重复通信。",
+          "传输协调器的带宽节拍化与延迟重叠策略可迁移到MPC运行时以协调并行网络/磁盘/计算传输，避免入口带宽争用并隐藏延迟。"
+        ],
+        "transferable_mechanisms_en": [
+          "Session-aware persistence decisions (based on reuse history) can be used in MPC/privacy inference to choose which intermediate states to persist to slower storage, balancing reuse vs. write cost.",
+          "Promoting hot objects from slower to faster layers after initial load for intra-session reuse can reduce repeated communication across network/protocol layers.",
+          "The transfer coordinator's bandwidth pacing and overlap strategies could be adapted by MPC runtimes to coordinate parallel network/disk/compute transfers and hide latency while avoiding ingress contention."
+        ],
+        "potential_overlap_zh": "与缓存管理、延迟隐藏和带宽协调研究高度重叠；在隐私推理部署中，减少IO写入并优化重载路径是实际需求，SARIA的工程方案可作为实现参考（基于摘要）。",
+        "potential_overlap_en": "High overlap with work on cache management, latency hiding and bandwidth coordination; in privacy inference deployments reducing IO writes and optimizing reload paths is a practical need—SARIA's engineering solution could serve as an implementation reference (based on abstract).",
+        "potential_conflict_zh": "摘要没有提及与安全/隐私机制的兼容性（例如在加密/受保护的KV缓存上执行选择性持久化或提升），实际集成到MPC/受保护内存时可能出现安全或一致性限制（仅基于摘要的潜在问题）。",
+        "potential_conflict_en": "The abstract does not address compatibility with security/privacy mechanisms (e.g., performing selective persistence/promotion on encrypted/protected KV caches). Integration into MPC/secure-memory contexts might face security or consistency constraints (potential issue based only on the abstract).",
+        "full_text_questions_zh": [
+          "选择性持久化的策略与阈值如何定义？是否使用预测模型或纯统计历史？",
+          "提升（promotion）策略的代价模型如何制定？从SSD提升到DRAM的带宽/延迟/内存占用权衡如何量化？",
+          "传输协调器的调度策略细节（节拍长度、优先级、回退策略）是什么？是否支持多会话并发？",
+          "评测设置细节：服务器硬件、SSD型号、LMCache MP配置、工作负载的会话特性（会话长度/重用分布）是什么？",
+          "系统在加密/受保护内存或受限IO权限情形下的适用性如何？"
+        ],
+        "full_text_questions_en": [
+          "How are selective-persistence policies and thresholds defined? Do they use predictive models or simple reuse-history statistics?",
+          "What is the cost model for promotion? How are bandwidth/latency/DRAM occupancy trade-offs for SSD->DRAM promotion quantified?",
+          "What are the transfer coordinator's scheduling details (epoch length, priorities, backoff) and does it support concurrent sessions robustly?",
+          "Evaluation details: hardware, SSD models, LMCache MP configuration, and session/workload characteristics (session lengths, reuse distributions)?",
+          "How applicable is the system when caches are encrypted or running under protected memory/IO constraints?"
+        ],
+        "experiment_checks_zh": [
+          "验证报告的SSD写入与TTFT下降是否在相同硬件/工作负载条件下可重现（需要同类SSD与LMCache MP版本）。",
+          "测试在不同会话重用分布与DRAM容量下SARIA策略的稳健性，观察写入减少与TTFT改善的敏感性。",
+          "在受保护/加密KV缓存情形（若可行）测试SARIA以验证安全约束对持久化/提升策略的影响。"
+        ],
+        "experiment_checks_en": [
+          "Reproduce reported SSD write and TTFT reductions under similar hardware/workload conditions (same class of SSD and LMCache MP version).",
+          "Test SARIA's robustness across varying session reuse distributions and DRAM capacities to observe sensitivity of write reduction and TTFT improvements.",
+          "If applicable, evaluate SARIA with encrypted/protected KV caches to verify how security constraints affect persistence/promotion policies."
+        ],
+        "tracking_targets": [
+          "session-aware caching heuristics for KV stores",
+          "SSD write-reduction techniques and endurance metrics",
+          "transfer coordination / ingress bandwidth pacing",
+          "applicability to encrypted/protected cache scenarios",
+          "TTFT / prefill latency improvements"
+        ],
+        "next_steps_zh": [
+          "阅读全文以获取策略细节、成本模型与实验配置，关注是否提供代码或补充材料以便复现。",
+          "如果目标是将该机制用于保密推理，检查论文是否讨论了加密缓存或一致性/安全性问题并设计对应措施。",
+          "考虑在本地LLM推理或MPC服务环境中以小规模试验SARIA的关键策略（选择性持久化与传输协调）。"
+        ],
+        "next_steps_en": [
+          "Read the full paper for policy details, cost models and experimental configurations; look for code or supplementary material for reproducibility.",
+          "If aiming to adopt mechanisms for confidential inference, check whether the paper discusses encrypted caches or consistency/security considerations.",
+          "Consider small-scale trials of SARIA's core strategies (selective persistence and transfer coordination) in a local LLM inference or MPC service environment."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.31188",
+        "version": 1,
+        "title": "ChainSEED: A Scalable, High-Fidelity Blockchain Emulator",
+        "authors": [
+          "Qishu Jin",
+          "Wenliang Du",
+          "Kairui Feng"
+        ],
+        "abstract": "Researchers need blockchain experimental environments with configurable workloads, controllable network conditions, and observable outcomes. Public blockchains and testnets limit experimental control, model-based simulators omit real client implementations, and real-client environments face challenges in combining network control with resource-efficient deployment. We present ChainSEED, a scalable, high-fidelity blockchain emulator built on the SEED Internet Emulator. It separates blockchain configuration from client placement on a configurable routed network. For Ethereum PoS, it organizes separately configured execution, consensus, and validator clients and provides APIs for customizing genesis state, peer connections, and client software. A transaction generator informed by Ethereum mainnet activity, application interfaces, and chain- and node-level monitoring support experiments. ChainSEED also supports Monero and Solana. We examine beacon-node memory reduction, execution-client memory allocation, and validator-client multiplexing to support larger experiments within limited hardware budgets. On a single server with approximately 1 TiB of memory and 384 logical CPU cores, ChainSEED deploys 400 beacon nodes, 400 execution nodes, and 60,000 validator identities while sustaining approximately 20 TPS. It also emulates a 1,200-node Monero network with up to 200 active single-threaded PoW miners and a 200-node Solana network with sustained finalization. Case studies demonstrate routing attacks, blockchain amplification attacks, Monero eclipse attacks, topology-discovery benchmarking against known peer graphs, and network-configuration experiments.",
+        "categories": [
+          "cs.NI"
+        ],
+        "published": "2026-10-22T12:39:05Z",
+        "updated": "2026-10-22T12:39:05Z",
+        "abstract_url": "https://arxiv.org/abs/2610.31188v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.31188v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.31188v1",
+        "relevance_score": 8,
+        "novelty_score": 7,
+        "transferability_score": 8,
+        "systems_score": 9,
+        "confidence": 0.78,
+        "priority": "read",
+        "matched_topics": [
+          "network-aware runtime",
+          "WAN latency",
+          "communication and computation overlap",
+          "network-aware systems",
+          "pipeline execution",
+          "protocol selection"
+        ],
+        "short_summary_zh": "ChainSEED 是基于 SEED Internet Emulator 的区块链高保真仿真器，分离链配置与客户端在可配置路由网络上的部署，支持以太坊 PoS（执行节点、信标节点、验证者分离）、Monero、Solana 的可编程实验。提供可定制创世态、对等连接、客户端软件和以主网活动为依据的事务生成器，并在单台大内存多核服务器上展示了成百上千节点与大量验证者身份的可扩展部署与案例实验（路由攻击、Eclipse、放大攻击等）。",
+        "short_summary_en": "ChainSEED is a high-fidelity blockchain emulator built on the SEED Internet Emulator. It separates chain configuration from client placement on a configurable routed network, supports Ethereum PoS (separate execution/consensus/validator clients), Monero and Solana, offers APIs for genesis/peering/client software, a mainnet-informed transaction generator, and demonstrates large-scale deployments on a single server plus case studies of network attacks and topology experiments.",
+        "why_interesting_zh": "对关注 WAN 延迟、网络拓扑和运行时行为对安全多方计算（MPC）性能影响的研究者很有价值：它为可控网络条件下的大规模分布式协议评估提供了真实客户端可执行环境，能模拟路由/拓扑失效和延迟对分布式协议（含需多轮通信的 MPC）的影响。",
+        "why_interesting_en": "Valuable for researchers studying WAN latency, topology and runtime effects on distributed protocols (including MPC): it provides a controllable, high-fidelity environment with real client binaries, enabling experiments on routing/topology/failure effects and large-scale node placement under constrained hardware.",
+        "relation_to_my_work_zh": "与我的 MPC 运行时与编译器研究直接相关：可用于评估多轮 MPC 在可配置网络、不同 peer 布局和带宽/延迟约束下的实际交互延迟、分批与轮次合并策略，以及协议切换在不同网络条件下的成本/收益。",
+        "relation_to_my_work_en": "Directly relevant to MPC runtime and compiler work: could be used to evaluate multi-round MPC latency under configurable networks and peer placements, to test batching/round-coalescing strategies, and to measure costs/benefits of protocol selection across network conditions.",
+        "possible_transfer_zh": "可借鉴的点包括：把区块链客户端拆分（执行/共识/验证者）以降低单节点资源占用、验证者身份复用/复用策略、事务发生器/负载模型用于生成可重复的 MPC 工作负载、以及在单机多核上规模化部署真实二进制的技巧。",
+        "possible_transfer_en": "Transferable ideas: separating client roles to reduce per-node resources, identity multiplexing to scale many logical participants, mainnet-informed workload generators as MPC workload models, and techniques for efficiently running many real binaries on a single large server for reproducible network experiments.",
+        "possible_overlap_or_conflict_zh": "可能与已有的模拟器/仿真工具（Emulab，Mininet，SEED）在目标和实现上重叠，但本摘要基于标题/摘要得出结论，无法确认实现细节或与 MPC 工具链直接兼容性。",
+        "possible_overlap_or_conflict_en": "May overlap with existing emulators/simulators (Emulab, Mininet, SEED) in goals/implementation. Based on title/abstract only — compatibility with MPC toolchains or exact interfaces is not verifiable here.",
+        "questions_to_verify_zh": [
+          "是否能为任意二进制 MPC 实现（MP-SPDZ 等）提供相同级别的进程部署与网络可控性？",
+          "网络模型支持的精细度（按链路的带宽/延迟/丢包/重排）和可复现性如何？",
+          "资源节省（内存/CPU）与身份复用的具体机制与对时延/吞吐的影响是多少？"
+        ],
+        "questions_to_verify_en": [
+          "Can the emulator host arbitrary MPC binaries (e.g., MP-SPDZ) with the same placement/network-control APIs?",
+          "What is the granularity and reproducibility of the network model (per-link bandwidth/latency/loss/reordering)?",
+          "What are the concrete mechanisms and performance trade-offs for memory reductions and identity multiplexing?"
+        ]
+      },
+      "deep_analysis": {
+        "arxiv_id": "2610.31188v1",
+        "research_problem_zh": "如何在受控网络条件、可配置工作负载与可观察结果下，提供一个可扩展且高保真的区块链仿真/仿真器，以便进行可控实验？需要在真实客户端实现与网络控制之间取得平衡并高效利用硬件资源。",
+        "research_problem_en": "How to provide a scalable, high-fidelity blockchain emulator that supports configurable workloads, controllable network conditions, and observable outcomes—balancing real client implementations with network control and resource-efficiency for experiments?",
+        "core_method_zh": "构建ChainSEED，一种基于SEED Internet Emulator的区块链仿真器：将区块链配置与客户端部署分离，分别配置执行/共识/验证客户端，提供API定制genesis、对等连接与软件，使用主网活动驱动的交易生成器以及链/节点级监控；通过内存优化、执行客户端内存分配与验证者复用在单服务器上支持大规模部署。",
+        "core_method_en": "Builds ChainSEED, a blockchain emulator on top of the SEED Internet Emulator: separates blockchain configuration from client placement, configures execution/consensus/validator clients separately, provides APIs for genesis/peer connections/client software, uses a transaction generator informed by mainnet activity and rich monitoring. It applies memory reductions, execution-client memory allocation, and validator-client multiplexing to scale large experiments on limited hardware.",
+        "contributions_zh": [
+          "设计并实现ChainSEED，一个可扩展且高保真的区块链仿真器，支持Ethereum PoS、Monero与Solana。",
+          "将链配置与客户端放置分离，提供可定制的API与交易生成器，并支持链/节点级监控用于实验。",
+          "提出内存与客户端复用优化，使单服务器可部署数百/数万节点/验证者身份以节省硬件资源，并通过案例研究展示其实验能力。"
+        ],
+        "contributions_en": [
+          "Design and implementation of ChainSEED, a scalable, high-fidelity blockchain emulator supporting Ethereum PoS, Monero, and Solana.",
+          "Separation of chain configuration from client placement with APIs and a mainnet-informed transaction generator plus node/chain monitoring for experiments.",
+          "Memory and client-multiplexing optimizations enabling large-scale deployments on single servers, with case studies demonstrating diverse experiments (attacks, topology benchmarks, etc.)."
+        ],
+        "why_watch_zh": "若你的研究需要可控网络条件下的大规模区块链或分布式系统实验环境（例如评估网络干扰对MPC或分布式协议的影响），ChainSEED可能作为一个可用平台或参考实现；但与MPC直接相关性取决于是否支持安全计算客户端或测量网络对多方交互的影响（基于摘要）。",
+        "why_watch_en": "If you need a controllable environment for large-scale blockchain or distributed-system experiments (e.g., studying network disruptions' impact on MPC or distributed protocols), ChainSEED could be a useful platform or reference. Direct relevance to MPC depends on support for secure-computation clients or measuring network effects on multiparty interactions (based only on abstract).",
+        "direct_relation_zh": "与主要主题的间接相关性：主要是分布式/网络仿真平台，但其可控网络与客户端部署特性可用于评估WAN延迟、路由攻击或网络配置对安全多方协议性能/鲁棒性的影响（基于摘要）。",
+        "direct_relation_en": "Indirectly relevant: it's a distributed/network emulation platform, but its controllable network and client-deployment features could be used to evaluate WAN latency, routing attacks or network configurations' impact on secure multiparty protocol performance/robustness (based on abstract).",
+        "transferable_mechanisms_zh": [
+          "将链配置与客户端放置分离的设计，可迁移到MPC实验框架以灵活地映射参与方到网络拓扑/主机。",
+          "内存压缩与客户端复用技术可被用于在有限硬件上模拟大量MPC参与方或会话的场景。",
+          "主网驱动的事务/输入生成器和链/节点级监控方法可迁移为MPC负载生成与度量工具。"
+        ],
+        "transferable_mechanisms_en": [
+          "Separation of chain configuration from client placement can transfer to MPC experiment frameworks to flexibly map parties onto network topologies/hosts.",
+          "Memory reduction and client multiplexing techniques can be used to simulate many MPC parties or sessions on limited hardware.",
+          "Mainnet-driven transaction/input generation and node/chain-level monitoring approaches can be adapted for MPC workload generation and measurement."
+        ],
+        "potential_overlap_zh": "与测试/评估分布式协议、网络攻击影响评估、拓扑对性能的影响等研究高度重叠；可作为执行大规模网络可控实验的基础设施（基于摘要）。",
+        "potential_overlap_en": "High overlap with evaluation/testing of distributed protocols, studying effects of network attacks, and topology-performance studies; could serve as infrastructure for controlled large-scale network experiments (based on abstract).",
+        "potential_conflict_zh": "摘要未提及对加密/安全计算客户端的直接支持。在MPC研究中使用时可能需要额外的工作以支持受保护的计算或测量通信中隐私相关指标（仅基于摘要）。",
+        "potential_conflict_en": "The abstract does not mention direct support for encrypted/secure-computation clients. Using it for MPC may require extra work to support protected computations or measure privacy-related metrics (based only on abstract).",
+        "full_text_questions_zh": [
+          "ChainSEED如何在网络层精确模拟WAN延迟、丢包与带宽异质性？支持哪些可配置网络模型？",
+          "客户端复用与内存优化的具体技术细节是什么？是否有对一致性或行为差异的量化影响？",
+          "如何将自定义客户端（二进制/受限环境）接入？是否支持将MPC库或定制协议作为客户端运行？",
+          "实验可观察性指标与监控接口有哪些，数据输出格式与采样率如何？",
+          "系统的可扩展性边界和在不同硬件预算下的性能折衷有哪些定量结果？"
+        ],
+        "full_text_questions_en": [
+          "How does ChainSEED model WAN latency, packet loss and heterogeneous bandwidth at the network layer? What network models are configurable?",
+          "What are the concrete techniques for client multiplexing and memory optimization? Is there quantified impact on behavior or correctness?",
+          "How can custom clients (binaries or constrained environments) be integrated? Does it support running MPC libraries or custom secure-protocol clients?",
+          "What observability metrics and monitoring interfaces are provided, and what are the data formats and sampling rates?",
+          "What are the scalability limits and trade-offs under different hardware budgets, with quantitative results?"
+        ],
+        "experiment_checks_zh": [
+          "复现论文给出的规模实验（如400 beacon/exec节点、60k验证者身份）并验证资源占用、吞吐与延迟；核对是否能在声明的硬件预算下重复获得相似指标。",
+          "运行示例攻击/案例研究以验证路由攻击或拓扑发现实验在仿真器中的可重复性和保真度。",
+          "测试将自定义客户端（例如MPC参与方实现）接入ChainSEED并验证其网络行为与在线/真实部署的一致性。"
+        ],
+        "experiment_checks_en": [
+          "Reproduce the scale experiments reported (e.g., 400 beacon/execution nodes, 60k validator identities) and verify resource usage, throughput and latency; check whether similar metrics are achievable under the stated hardware budget.",
+          "Run the example attacks/case studies to verify repeatability and fidelity of routing attacks or topology-discovery experiments in the emulator.",
+          "Test integrating custom clients (e.g., an MPC party implementation) into ChainSEED and validate that their network behavior matches expected behavior in live/real deployments."
+        ],
+        "tracking_targets": [
+          "support for custom/secure clients (MPC libs)",
+          "network model fidelity (WAN latency/loss)",
+          "client multiplexing / memory-savings techniques",
+          "tooling for large-scale controlled experiments",
+          "observability and metrics export"
+        ],
+        "next_steps_zh": [
+          "阅读全文检视API、集成点与开源可用性，确认是否容易接入MPC/安全客户端或定制负载生成器。",
+          "如需用于MPC评测，尝试在受控小规模集群上接入一个MPC实现以评估保真度与可观察性。",
+          "关注是否有后续发布（代码仓库、容器镜像、示例实验）以便快速上手复现。"
+        ],
+        "next_steps_en": [
+          "Read the full paper to inspect APIs, integration points and availability (open-source) to confirm ease of integrating MPC/secure clients or custom generators.",
+          "If targeting MPC evaluation, try integrating an MPC implementation on a small controlled cluster to assess fidelity and observability.",
+          "Watch for follow-up releases (code repo, container images, example experiments) to enable rapid reproduction."
+        ]
+      },
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.31437",
+        "version": 1,
+        "title": "Homomorphic Encryption with Coset Code Construction",
+        "authors": [
+          "Haodong Yang",
+          "Venkata Gandikota"
+        ],
+        "abstract": "Homomorphic encryption enables computation on input data without decrypting it. This paper extends a construction based on scalar message codes, utilizing coset codes to pack $k$ message symbols into a ciphertext vector of length $n$. For a given field and vector length, this packing method reduces the number of ciphertext vectors required to transmit a message record. A compatible family of evaluation codes supports public addition and multiplication operations up to a predetermined degree. We prove that the scheme achieves bounded chosen-plaintext security under the coordinate-label distinguishability assumption.",
+        "categories": [
+          "cs.CR",
+          "cs.IT"
+        ],
+        "published": "2026-10-22T15:34:33Z",
+        "updated": "2026-10-22T15:34:33Z",
+        "abstract_url": "https://arxiv.org/abs/2610.31437v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.31437v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.31437v1",
+        "relevance_score": 8,
+        "novelty_score": 6,
+        "transferability_score": 7,
+        "systems_score": 6,
+        "confidence": 0.86,
+        "priority": "read",
+        "matched_topics": [
+          "secure computation",
+          "homomorphic encryption",
+          "protocol selection",
+          "communication rounds",
+          "privacy-preserving machine learning"
+        ],
+        "short_summary_zh": "基于标题与摘要：扩展了基于标量消息码的同态加密构造，使用coset码将k条消息符号打包到长度为n的密文向量中以减少所需密文数；并设计兼容的评估码族以支持公开加法与到预定次数的乘法。论文证明在坐标标签可区分性假设下达到有界明文选择攻击（CPA）安全性（基于题目与摘要）。",
+        "short_summary_en": "Based on title and abstract: extends a scalar-message-code-based homomorphic encryption construction by using coset codes to pack k message symbols into an n-length ciphertext vector, reducing number of ciphertexts per record; designs a compatible family of evaluation codes supporting public addition and bounded-degree multiplication and proves bounded-CPA security under a coordinate-label distinguishability assumption (based on title+abstract).",
+        "why_interesting_zh": "同态加密与消息打包直接影响安全多方与私有推理的通信/带宽开销。基于摘要，这种向量化打包与兼容的评估码族可能为MPC或HE部署中减少轮次与密文大小提供可操作技巧，值得详细检阅其假设与性能。",
+        "why_interesting_en": "Packing messages into vector ciphertexts and compatible evaluation codes directly impact communication and round complexity in HE and MPC. The coset-code packing idea may reduce ciphertext count and thus bandwidth/rounds for private inference; worth reading to assess assumptions and performance. (Based on title+abstract)",
+        "relation_to_my_work_zh": "若你的研究关注HE/MPC协议的带宽、密文压缩或在受限网络中部署私有推理，该构造可能提供新的打包/评估模式可直接借鉴或对比。",
+        "relation_to_my_work_en": "If you study HE/MPC bandwidth reduction, ciphertext packing, or private inference under network constraints, this construction could offer new packing/evaluation schemes to adopt or benchmark against. (Based on title+abstract)",
+        "possible_transfer_zh": "- 将向量化coset打包应用到MPC消息合并或批量化评估以减少交互次数。\n- 使用评估码族在受限乘法深度下设计更高效的同态电路编排。",
+        "possible_transfer_en": "- Apply vector coset packing to MPC message coalescing or batched evaluation to reduce interactions.\n- Use the family of evaluation codes to design homomorphic circuits with bounded multiplications and lower ciphertext overhead. (Based on title+abstract)",
+        "possible_overlap_or_conflict_zh": "需核实安全性假设（coordinate-label distinguishability）是否比标准HE假设更强或不可接受，以及实际编码/解码带来的开销是否抵消通信节省。",
+        "possible_overlap_or_conflict_en": "Verify whether the 'coordinate-label distinguishability' assumption is stronger/unusual vs. standard HE assumptions and whether coding/decoding costs negate communication savings. (Based on title+abstract)",
+        "questions_to_verify_zh": [
+          "coordinate-label distinguishability 假设的形式与强度如何？是否可与常见的HE安全假设对比？",
+          "打包/解包与评估的实际时间/空间开销是多少（包括错误率/域大小要求）？",
+          "支持乘法的上界是什么（degree）？在实际私有推理电路中如何映射？"
+        ],
+        "questions_to_verify_en": [
+          "What is the precise form and strength of the 'coordinate-label distinguishability' assumption and how does it compare to standard HE assumptions?",
+          "What are the practical encode/decode and evaluation costs (time/space) including field-size and error considerations?",
+          "What is the multiplication-degree bound supported, and how does it map to real private-inference circuits?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    },
+    {
+      "paper": {
+        "base_id": "2610.31246",
+        "version": 1,
+        "title": "Weaponizing the Exit: Input Privacy Leakage via Exit Routing Manipulation in Multi-Exit Networks",
+        "authors": [
+          "Yulong Tian",
+          "Lei Wang",
+          "Jincan Yang",
+          "Hao Wu",
+          "Hao Han",
+          "Fengyuan Xu",
+          "Sheng Zhong"
+        ],
+        "abstract": "Multi-exit networks improve inference efficiency by allowing inputs to terminate early at intermediate exits. We identify a privacy vulnerability in cloud deployments of these networks: a malicious Cloud Service Provider (CSP) can infer sensitive properties of individual user inputs solely from inference latency, without accessing inputs, intermediate states, or model outputs. The attack exploits the CSP's control over the model supply chain. Prior to deployment, the CSP supplies a specially crafted multi-exit network manipulated so that inputs carrying a target sensitive property are routed to a designated exit with high probability, while other inputs exit elsewhere. At serving time, the CSP infers the exit index from per-query latency, thereby determining whether each input possesses the target property without accessing inputs, outputs, or internal model states. We propose a training framework combining selective label smoothing and entropy-covariance optimization to control confidence distributions across exits and reduce premature termination. We conduct experiments on four datasets across ten target properties. The results demonstrate strong attack effectiveness and stealthiness. The attack achieves an average F1 score of 0.73, compared to 0.25 for the strongest baseline, while main task accuracy drops by less than 1.3\\% and inference speedup degradation remains below 0.1 in most settings. Our code is available at https://github.com/kazefjj/Weaponizing_the_Exit.",
+        "categories": [
+          "cs.CR"
+        ],
+        "published": "2026-10-22T13:26:03Z",
+        "updated": "2026-10-22T13:26:03Z",
+        "abstract_url": "https://arxiv.org/abs/2610.31246v1",
+        "pdf_url": "https://arxiv.org/pdf/2610.31246v1"
+      },
+      "screening": {
+        "arxiv_id": "2610.31246v1",
+        "relevance_score": 7,
+        "novelty_score": 7,
+        "transferability_score": 6,
+        "systems_score": 6,
+        "confidence": 0.72,
+        "priority": "skim",
+        "matched_topics": [
+          "secure LLM inference",
+          "privacy-preserving machine learning",
+          "supply-chain threats",
+          "pipeline execution"
+        ],
+        "short_summary_zh": "揭示并验证一种对云部署多出口（multi-exit）网络的隐私攻击：恶意 CSP 在模型供给阶段植入经过训练的网络，使具有敏感属性的输入以高概率在特定中间出口终止；CSP 在部署时仅通过推理延迟（推断出口索引）就能推断输入是否有该敏感属性。作者提出了结合选择性标签平滑与熵-协方差优化的训练框架以减弱该漏洞，并报告实验证据（若干数据集上 F1=0.73 平均）。",
+        "short_summary_en": "Describes a privacy attack on multi-exit networks where a malicious cloud provider supplies a crafted model that routes inputs with a target attribute to a particular exit; the CSP infers per-query sensitive attributes from latency alone (exit index). Proposes a defense training framework combining selective label smoothing and entropy-covariance optimization to reduce premature exits.",
+        "why_interesting_zh": "直接触及“供应链+侧信道（延迟）”导致的隐私泄露问题，与安全/保密推理场景（如在云中部署的受控/加密推理）相关；提出的训练性缓解方法可能适配到对抗供应链威胁的防御策略。",
+        "why_interesting_en": "Addresses supply-chain plus latency side-channel privacy leakage relevant to secure LLM inference in the cloud. The proposed training mitigations may be adaptable to defenses against supply-chain/backdoored models in secure inference settings.",
+        "relation_to_my_work_zh": "若研究安全的 LLM 推理或在不可信云中部署私有推理，该工作提示了新的威胁模型（通过出口路由与延迟信道），并提供可供比较或整合的缓解训练目标。",
+        "relation_to_my_work_en": "For secure LLM inference or untrusted-cloud deployment, this raises a threat model (exit-routing latency leaks) and offers mitigation techniques that could be compared or combined with cryptographic protections.",
+        "possible_transfer_zh": "将训练缓解（选择性标签平滑、熵-协方差目标）与 MPC/TEE/加密推理流水线结合，或作为供应链验证与检测的一环；还可用于设计对抗延迟侧信道的模型发布与审计流程。",
+        "possible_transfer_en": "Training mitigations (selective label smoothing, entropy-covariance objectives) could complement MPC/TEE/encrypted inference pipelines or be used in supply-chain model vetting to reduce latency side-channel leakage.",
+        "possible_overlap_or_conflict_zh": "需要核实攻击在不同模型规模/硬件/网络噪声下的稳健性，以及缓解方法对主任务延迟/准确度的实测影响。摘要不能替代对代码/实验的审查。",
+        "possible_overlap_or_conflict_en": "Must verify attack robustness across model sizes/hardware/network noise and the actual impact of mitigation on task accuracy/latency. Abstract-level information is insufficient to confirm claims.",
+        "questions_to_verify_zh": [
+          "攻击在真实云环境（异步队列、网络抖动、多租户）下的有效性如何？",
+          "提出的训练缓解在不同模型规模与任务上对准确性与速度的实测开销是多少？",
+          "作者是否发布了可复现代码与模型以便独立验证？"
+        ],
+        "questions_to_verify_en": [
+          "How effective is the attack in real cloud environments with queueing, network jitter and multi-tenancy?",
+          "What are the empirical accuracy and latency costs of the proposed training mitigations across model sizes/tasks?",
+          "Have the authors released code/models to allow independent replication?"
+        ]
+      },
+      "deep_analysis": null,
+      "analysis_basis": "title_and_abstract_only"
+    }
+  ]
+}
